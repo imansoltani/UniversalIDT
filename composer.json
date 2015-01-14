@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "jms/serializer-bundle": "*",
         "misd/guzzle-bundle": "*",
-        "sylius/cart-bundle": "*"
+        "sylius/cart-bundle": "*",
+        "fresh/doctrine-enum-bundle": "*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
