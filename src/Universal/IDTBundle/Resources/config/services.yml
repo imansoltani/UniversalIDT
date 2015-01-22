@@ -1,4 +1,13 @@
+parameters:
+    IDT:
+        username: "HellobellTEST1"
+        password: "Humbug15ay"
+        api_location: "https://app1.idt.net/debit/partner/partnerAPI.asp"
+
 services:
+    IDT:
+        class: Universal\IDTBundle\Service\IDT
+        arguments: [%IDT%, @guzzle.client, @doctrine.orm.default_entity_manager]
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

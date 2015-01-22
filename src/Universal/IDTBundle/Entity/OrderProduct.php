@@ -192,7 +192,7 @@ class OrderProduct
     /**
      * Set requestType
      *
-     * @param RequestTypeEnumType $requestType
+     * @param string $requestType
      * @return OrderProduct
      */
     public function setRequestType($requestType)
@@ -205,7 +205,7 @@ class OrderProduct
     /**
      * Get requestType
      *
-     * @return RequestTypeEnumType 
+     * @return string
      */
     public function getRequestType()
     {

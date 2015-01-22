@@ -4,14 +4,16 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Universal\IDTBundle\Service\JsonDetails;
 
 /**
  * Product
  *
  * @ORM\Table(name="product")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
-class Product
+class Product extends JsonDetails
 {
     /**
      * @var integer
