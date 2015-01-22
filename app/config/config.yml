@@ -56,7 +56,7 @@ doctrine:
         mapping_types:
             enum: string
         types:
-            PinStatusEnumType: Universal\IDTBundle\DBAL\Types\PinStatusEnumType
+            RequestTypeEnumType: Universal\IDTBundle\DBAL\Types\RequestTypeEnumType
             OrderStatusEnumType: Universal\IDTBundle\DBAL\Types\OrderStatusEnumType
             PaymentMethodEnumType: Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType
         # if using pdo_sqlite as your database driver:

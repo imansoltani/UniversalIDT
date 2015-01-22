@@ -18,7 +18,6 @@
         "sensio/distribution-bundle": "~3.0.12",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "jms/serializer-bundle": "*",
         "misd/guzzle-bundle": "*",
         "sylius/cart-bundle": "*",
         "fresh/doctrine-enum-bundle": "*"

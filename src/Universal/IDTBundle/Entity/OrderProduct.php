@@ -4,14 +4,12 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
-use Symfony\Bridge\Doctrine\Validator\Constraints as UniqueAssert;
 
 /**
  * OrderProduct
  *
  * @ORM\Table(name="order_product")
  * @ORM\Entity
- * @UniqueAssert\UniqueEntity(fields="pin", message="Pin_must_be_unique.")
  */
 class OrderProduct
 {
@@ -27,17 +25,17 @@ class OrderProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="pin", type="integer", nullable=true, unique=true)
+     * @ORM\Column(name="pin", type="integer", nullable=true)
      */
     private $pin;
 
     /**
      * @var string
      *
-     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\PinStatusEnumType")
-     * @ORM\Column(name="pin_status", type="PinStatusEnumType", nullable=true)
+     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestTypeEnumType")
+     * @ORM\Column(name="request_type", type="RequestTypeEnumType", nullable=true)
      */
-    private $pinStatus;
+    private $requestType;
 
     /**
      * @var string
@@ -146,29 +144,6 @@ class OrderProduct
     }
 
     /**
-     * Set pinStatus
-     *
-     * @param string $pinStatus
-     * @return OrderProduct
-     */
-    public function setPinStatus($pinStatus)
-    {
-        $this->pinStatus = $pinStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get pinStatus
-     *
-     * @return string
-     */
-    public function getPinStatus()
-    {
-        return $this->pinStatus;
-    }
-
-    /**
      * Set product
      *
      * @param Product $product
@@ -212,5 +187,28 @@ class OrderProduct
     public function getOrdering()
     {
         return $this->ordering;
+    }
+
+    /**
+     * Set requestType
+     *
+     * @param RequestTypeEnumType $requestType
+     * @return OrderProduct
+     */
+    public function setRequestType($requestType)
+    {
+        $this->requestType = $requestType;
+
+        return $this;
+    }
+
+    /**
+     * Get requestType
+     *
+     * @return RequestTypeEnumType 
+     */
+    public function getRequestType()
+    {
+        return $this->requestType;
     }
 }

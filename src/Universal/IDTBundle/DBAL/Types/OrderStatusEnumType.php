@@ -7,7 +7,7 @@ use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 class OrderStatusEnumType extends AbstractEnumType
 {
     const PENDING = "P";
-    const FAILED = "f";
+    const FAILED = "F";
     const SUCCEED = "S";
 
     protected static $choices = [
