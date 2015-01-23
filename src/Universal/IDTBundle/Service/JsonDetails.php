@@ -61,6 +61,8 @@ abstract class JsonDetails {
     {
         if(file_exists($this->folderPath.$this->getId().".json"))
             unlink($this->folderPath.$this->getId().".json");
+
+        $this->json = null;
     }
 
     /**
