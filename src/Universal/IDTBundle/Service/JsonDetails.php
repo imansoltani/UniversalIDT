@@ -90,26 +90,151 @@ abstract class JsonDetails {
         return isset($this->json[$parameter])?$this->json[$parameter]:"";
     }
 
-    //------------------------------
+    //-----------------------
 
     /**
-     * @param string $generalInformation
+     * @param string $parameter
+     * @param mixed $value
+     * @param string $key
      * @return $this
      */
-    public function setGeneralInformation($generalInformation)
+    private function addArrayJsonParameter($parameter, $value, $key = null)
     {
-        $this->setJsonParameter('general_information', $generalInformation);
+        $this->loadJson();
+
+        if(!isset($this->json[$parameter]))
+            $this->json[$parameter] = array();
+
+        if(is_null($key))
+            $this->json[$parameter][] = $value;
+        else
+            $this->json[$parameter][$key] = $value;
 
         return $this;
     }
 
     /**
+     * @param string $parameter
+     * @param int $key
+     * @return $this
+     */
+    private function removeArrayJsonParameter($parameter, $key)
+    {
+        $this->loadJson();
+
+        if(!isset($this->json[$parameter]))
+            $this->json[$parameter] = array();
+
+        unset($this->json[$parameter][$key]);
+
+        return $this;
+    }
+
+    /**
+     * @param string $parameter
+     * @param int $key
+     * @return mixed
+     */
+    private function getArrayJsonParameter($parameter, $key)
+    {
+        $this->loadJson();
+
+        if(!isset($this->json[$parameter]))
+            $this->json[$parameter] = array();
+
+        if(isset($this->json[$parameter][$key]))
+            return $this->json[$parameter][$key];
+        else
+            return "";
+    }
+
+    /**
+     * @param string $parameter
+     * @param string $columnName
+     * @param mixed $value
+     * @return array
+     */
+    private function findAllArrayJsonParameter($parameter, $columnName, $value)
+    {
+        $this->loadJson();
+
+        if(!isset($this->json[$parameter]))
+            $this->json[$parameter] = array();
+
+        return array_filter($this->json[$parameter], function ($row) use ($columnName, $value) {
+                return $row[$columnName] == $value;
+            });
+    }
+
+    //------------------------------ General Information
+
+    /**
+     * @param string $lang
+     * @param string $generalInformation
+     * @return $this
+     */
+    public function setGeneralInformation($lang, $generalInformation)
+    {
+        $this->addArrayJsonParameter('general_information', $generalInformation, $lang);
+
+        return $this;
+    }
+
+    /**
+     * @param string $lang
      * @return string
      */
-    public function getGeneralInformation()
+    public function getGeneralInformation($lang)
     {
-        return $this->getJsonParameter('general_information');
+        return $this->getArrayJsonParameter('general_information', $lang);
     }
+
+    /**
+     * @param string $lang
+     * @return string
+     */
+    public function removeGeneralInformation($lang)
+    {
+        $this->removeArrayJsonParameter('general_information', $lang);
+
+        return $this;
+    }
+
+    //------------------------------------------ DialingInstructions
+
+    /**
+     * @param string $lang
+     * @param string $dialingInstructions
+     * @return $this
+     */
+    public function setDialingInstructions($lang, $dialingInstructions)
+    {
+        $this->addArrayJsonParameter('dialing_instructions', $dialingInstructions, $lang);
+
+        return $this;
+    }
+
+    /**
+     * @param string $lang
+     * @return string
+     */
+    public function getDialingInstructions($lang)
+    {
+        return $this->getArrayJsonParameter('dialing_instructions', $lang);
+    }
+
+    /**
+     * @param string $lang
+     * @return string
+     */
+    public function removeDialingInstructions($lang)
+    {
+        $this->removeArrayJsonParameter('dialing_instructions', $lang);
+
+        return $this;
+    }
+
+    //---------------------------------------
 
     /**
      * @param string $accessNumbers
@@ -128,25 +253,6 @@ abstract class JsonDetails {
     public function getAccessNumbers()
     {
         return $this->getJsonParameter('access_numbers');
-    }
-
-    /**
-     * @param string $dialingInstructions
-     * @return $this
-     */
-    public function setDialingInstructions($dialingInstructions)
-    {
-        $this->setJsonParameter('dialing_instructions', $dialingInstructions);
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDialingInstructions()
-    {
-        return $this->getJsonParameter('dialing_instructions');
     }
 
     /**

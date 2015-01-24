@@ -33,9 +33,17 @@ class OrderProduct
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestTypeEnumType")
-     * @ORM\Column(name="request_type", type="RequestTypeEnumType", nullable=true)
+     * @ORM\Column(name="request_type", type="RequestTypeEnumType")
      */
     private $requestType;
+
+    /**
+     * @var string
+     *
+     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestStatusEnumType")
+     * @ORM\Column(name="request_status", type="RequestStatusEnumType")
+     */
+    private $requestStatus;
 
     /**
      * @var string
@@ -210,5 +218,28 @@ class OrderProduct
     public function getRequestType()
     {
         return $this->requestType;
+    }
+
+    /**
+     * Set requestStatus
+     *
+     * @param string $requestStatus
+     * @return OrderProduct
+     */
+    public function setRequestStatus($requestStatus)
+    {
+        $this->requestStatus = $requestStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get requestStatus
+     *
+     * @return string
+     */
+    public function getRequestStatus()
+    {
+        return $this->requestStatus;
     }
 }

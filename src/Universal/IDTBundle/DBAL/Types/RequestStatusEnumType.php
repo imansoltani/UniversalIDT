@@ -4,7 +4,7 @@ namespace Universal\IDTBundle\DBAL\Types;
 
 use Fresh\DoctrineEnumBundle\DBAL\Types\AbstractEnumType;
 
-class OrderStatusEnumType extends AbstractEnumType
+class RequestStatusEnumType extends AbstractEnumType
 {
     const PENDING = "P";
     const FAILED = "F";

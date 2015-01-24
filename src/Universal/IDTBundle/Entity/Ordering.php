@@ -33,14 +33,6 @@ class Ordering
     /**
      * @var string
      *
-     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\OrderStatusEnumType")
-     * @ORM\Column(name="status", type="OrderStatusEnumType")
-     */
-    private $status;
-
-    /**
-     * @var string
-     *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType")
      * @ORM\Column(name="paymentMethod", type="PaymentMethodEnumType")
      */
@@ -87,6 +79,15 @@ class Ordering
     protected $orderProducts;
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orderProducts = new ArrayCollection();
+        $this->date = new \DateTime();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -117,29 +118,6 @@ class Ordering
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     * @return Ordering
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
@@ -278,14 +256,6 @@ class Ordering
     public function getDeliveryMethod()
     {
         return $this->deliveryMethod;
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->orderProducts = new ArrayCollection();
     }
 
     /**

@@ -57,7 +57,7 @@ doctrine:
             enum: string
         types:
             RequestTypeEnumType: Universal\IDTBundle\DBAL\Types\RequestTypeEnumType
-            OrderStatusEnumType: Universal\IDTBundle\DBAL\Types\OrderStatusEnumType
+            RequestStatusEnumType: Universal\IDTBundle\DBAL\Types\RequestStatusEnumType
             PaymentMethodEnumType: Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
