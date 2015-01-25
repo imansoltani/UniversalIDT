@@ -49,7 +49,7 @@ abstract class JsonDetails {
     public function saveJson()
     {
         if(!is_null($this->getId()) && !is_null($this->json))
-            file_put_contents($this->folderPath.$this->getId().".json", json_encode($this->json, JSON_PRETTY_PRINT));
+            file_put_contents($this->folderPath.$this->getId().".json", json_encode($this->json, JSON_UNESCAPED_UNICODE));
     }
 
     /**
@@ -65,12 +65,14 @@ abstract class JsonDetails {
         $this->json = null;
     }
 
+    //---------------------------------
+
     /**
      * @param string $parameter
      * @param mixed $value
      * @return $this
      */
-    private function setJsonParameter($parameter, $value)
+    private function set($parameter, $value)
     {
         $this->loadJson();
 
@@ -83,7 +85,7 @@ abstract class JsonDetails {
      * @param string $parameter
      * @return mixed
      */
-    private function getJsonParameter($parameter)
+    private function get($parameter)
     {
         $this->loadJson();
 
@@ -98,7 +100,7 @@ abstract class JsonDetails {
      * @param string $key
      * @return $this
      */
-    private function addArrayJsonParameter($parameter, $value, $key = null)
+    private function arrayAdd($parameter, $value, $key = null)
     {
         $this->loadJson();
 
@@ -118,7 +120,7 @@ abstract class JsonDetails {
      * @param int $key
      * @return $this
      */
-    private function removeArrayJsonParameter($parameter, $key)
+    private function arrayRemoveByKey($parameter, $key)
     {
         $this->loadJson();
 
@@ -132,37 +134,53 @@ abstract class JsonDetails {
 
     /**
      * @param string $parameter
-     * @param int $key
-     * @return mixed
+     * @param mixed $value
+     * @return $this
      */
-    private function getArrayJsonParameter($parameter, $key)
+    private function arrayRemoveByValue($parameter, $value)
     {
         $this->loadJson();
 
         if(!isset($this->json[$parameter]))
             $this->json[$parameter] = array();
 
-        if(isset($this->json[$parameter][$key]))
-            return $this->json[$parameter][$key];
-        else
-            return "";
+        if(($key = array_search($value, $this->json[$parameter])) !== false)
+            unset($this->json[$parameter][$key]);
+
+        return $this;
     }
 
     /**
      * @param string $parameter
-     * @param string $columnName
-     * @param mixed $value
-     * @return array
+     * @param int $key
+     * @return mixed
      */
-    private function findAllArrayJsonParameter($parameter, $columnName, $value)
+    private function arrayGet($parameter, $key)
     {
         $this->loadJson();
 
         if(!isset($this->json[$parameter]))
             $this->json[$parameter] = array();
 
-        return array_filter($this->json[$parameter], function ($row) use ($columnName, $value) {
-                return $row[$columnName] == $value;
+        return isset($this->json[$parameter][$key]) ? $this->json[$parameter][$key] : "";
+    }
+
+    /**
+     * @param string $parameter
+     * @param array $criteria array(columnName => value)
+     * @return array
+     */
+    private function arrayFind($parameter, array $criteria)
+    {
+        $this->loadJson();
+
+        if(!isset($this->json[$parameter]))
+            $this->json[$parameter] = array();
+
+        return array_filter($this->json[$parameter], function ($row) use ($criteria) {
+                foreach($criteria as $columnName => $value)
+                    if ($row[$columnName] != $value) return false;
+                return true;
             });
     }
 
@@ -175,7 +193,18 @@ abstract class JsonDetails {
      */
     public function setGeneralInformation($lang, $generalInformation)
     {
-        $this->addArrayJsonParameter('general_information', $generalInformation, $lang);
+        $this->arrayAdd('general_information', $generalInformation, $lang);
+
+        return $this;
+    }
+
+    /**
+     * @param string $lang
+     * @return $this
+     */
+    public function removeGeneralInformation($lang)
+    {
+        $this->arrayRemoveByKey('general_information', $lang);
 
         return $this;
     }
@@ -186,18 +215,15 @@ abstract class JsonDetails {
      */
     public function getGeneralInformation($lang)
     {
-        return $this->getArrayJsonParameter('general_information', $lang);
+        return $this->arrayGet('general_information', $lang);
     }
 
     /**
-     * @param string $lang
-     * @return string
+     * @return array
      */
-    public function removeGeneralInformation($lang)
+    public function getAllGeneralInformation()
     {
-        $this->removeArrayJsonParameter('general_information', $lang);
-
-        return $this;
+        return $this->get('general_information');
     }
 
     //------------------------------------------ DialingInstructions
@@ -209,7 +235,18 @@ abstract class JsonDetails {
      */
     public function setDialingInstructions($lang, $dialingInstructions)
     {
-        $this->addArrayJsonParameter('dialing_instructions', $dialingInstructions, $lang);
+        $this->arrayAdd('dialing_instructions', $dialingInstructions, $lang);
+
+        return $this;
+    }
+
+    /**
+     * @param string $lang
+     * @return $this
+     */
+    public function removeDialingInstructions($lang)
+    {
+        $this->arrayRemoveByKey('dialing_instructions', $lang);
 
         return $this;
     }
@@ -220,40 +257,110 @@ abstract class JsonDetails {
      */
     public function getDialingInstructions($lang)
     {
-        return $this->getArrayJsonParameter('dialing_instructions', $lang);
+        return $this->arrayGet('dialing_instructions', $lang);
     }
 
     /**
-     * @param string $lang
-     * @return string
+     * @return array
      */
-    public function removeDialingInstructions($lang)
+    public function getAllDialingInstructions()
     {
-        $this->removeArrayJsonParameter('dialing_instructions', $lang);
-
-        return $this;
+        return $this->get('dialing_instructions');
     }
 
-    //---------------------------------------
+    //--------------------------------------- AccessNumbers
 
     /**
-     * @param string $accessNumbers
+     * @param string $type
+     * @param string $number
+     * @param string $location
      * @return $this
      */
-    public function setAccessNumbers($accessNumbers)
+    public function addAccessNumber($type, $number, $location = null)
     {
-        $this->setJsonParameter('access_numbers', $accessNumbers);
+        $this->arrayAdd('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location));
 
         return $this;
     }
 
     /**
-     * @return string
+     * @param string $type
+     * @param string $number
+     * @param string $location
+     * @return $this
      */
-    public function getAccessNumbers()
+    public function removeAccessNumber($type, $number, $location = null)
     {
-        return $this->getJsonParameter('access_numbers');
+        $this->arrayRemoveByValue('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location));
+
+        return $this;
     }
+
+    /**
+     * @param array $criteria array ($columnName => $value)
+     * @return array
+     */
+    public function findAccessNumbers(array $criteria)
+    {
+        return $this->arrayFind('access_numbers', $criteria);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllAccessNumbers()
+    {
+        return $this->get('access_numbers');
+    }
+
+    //--------------------------------------- Rates
+
+    /**
+     * @param string $destination
+     * @param float $lac Location Access
+     * @param float $tol Toll Free
+     * @param float $internet
+     * @return $this
+     */
+    public function addRate($destination, $lac, $tol, $internet)
+    {
+        $this->arrayAdd('rates', array("des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
+
+        return $this;
+    }
+
+    /**
+     * @param string $destination
+     * @param float $lac Location Access
+     * @param float $tol Toll Free
+     * @param float $internet
+     * @return $this
+     */
+    public function removeRate($destination, $lac, $tol, $internet)
+    {
+        $this->arrayRemoveByValue('rates', array("des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
+
+        return $this;
+    }
+
+    /**
+     * @param array $criteria array ($columnName => $value)
+     * @return array
+     */
+    public function findRates(array $criteria)
+    {
+        return $this->arrayFind('rates', $criteria);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllRates()
+    {
+        return $this->get('rates');
+    }
+
+    //-------------------------------------------------------------------
 
     /**
      * @param int $classId
@@ -261,7 +368,7 @@ abstract class JsonDetails {
      */
     public function setClassId($classId)
     {
-        $this->setJsonParameter('class_id', $classId);
+        $this->set('class_id', $classId);
 
         return $this;
     }
@@ -271,6 +378,6 @@ abstract class JsonDetails {
      */
     public function getClassId()
     {
-        return $this->getJsonParameter('class_id');
+        return $this->get('class_id');
     }
 }
