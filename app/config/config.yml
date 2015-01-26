@@ -5,7 +5,7 @@ imports:
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -59,6 +59,7 @@ doctrine:
             RequestTypeEnumType: Universal\IDTBundle\DBAL\Types\RequestTypeEnumType
             RequestStatusEnumType: Universal\IDTBundle\DBAL\Types\RequestStatusEnumType
             PaymentMethodEnumType: Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType
+            GenderEnumType: Universal\IDTBundle\DBAL\Types\GenderEnumType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -77,3 +78,8 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Universal\IDTBundle\Entity\User

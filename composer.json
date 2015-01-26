@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "misd/guzzle-bundle": "*",
         "sylius/cart-bundle": "*",
-        "fresh/doctrine-enum-bundle": "*"
+        "fresh/doctrine-enum-bundle": "*",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

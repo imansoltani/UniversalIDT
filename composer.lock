@@ -4,8 +4,48 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "99e8c8f910b294a416b67da09fb46037",
+    "hash": "567c26525e4e16844a278df41ac45383",
     "packages": [
+        {
+            "name": "behat/transliterator",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Behat/Transliterator.git",
+                "reference": "c93521d3462a554332d1ef5bb0e9b5b8ca4106c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/c93521d3462a554332d1ef5bb0e9b5b8ca4106c4",
+                "reference": "c93521d3462a554332d1ef5bb0e9b5b8ca4106c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Behat\\Transliterator": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Artistic-1.0"
+            ],
+            "description": "String transliterator",
+            "keywords": [
+                "i18n",
+                "slug",
+                "transliterator"
+            ],
+            "time": "2014-05-15 22:08:22"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.3",
@@ -76,16 +116,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7"
+                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/cf483685798a72c93bf4206e3dd6358ea07d64e7",
-                "reference": "cf483685798a72c93bf4206e3dd6358ea07d64e7",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/2346085d2b027b233ae1d5de59b07440b9f288c8",
+                "reference": "2346085d2b027b233ae1d5de59b07440b9f288c8",
                 "shasum": ""
             },
             "require": {
@@ -96,6 +136,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": ">=3.7",
+                "predis/predis": "~0.8",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
@@ -141,7 +182,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-09-17 14:24:04"
+            "time": "2015-01-15 20:38:55"
         },
         {
             "name": "doctrine/collections",
@@ -852,36 +893,101 @@
             "time": "2014-08-15 12:18:54"
         },
         {
-            "name": "gedmo/doctrine-extensions",
-            "version": "v2.3.9",
+            "name": "friendsofsymfony/user-bundle",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54"
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
+                "reference": "f54031a652846cd8e7b12119fe713eae90e24cf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54",
-                "reference": "35adcaae1a3f50d0d5b73aa50ed8fd28ee35ce54",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/f54031a652846cd8e7b12119fe713eae90e24cf9",
+                "reference": "f54031a652846cd8e7b12119fe713eae90e24cf9",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": ">=2.2,<2.5-dev",
+                "php": ">=5.3.2",
+                "symfony/form": "~2.3",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/security-bundle": "~2.3",
+                "symfony/twig-bundle": "~2.3"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "~1.3",
+                "swiftmailer/swiftmailer": "~4.3|~5",
+                "symfony/validator": "~2.3",
+                "symfony/yaml": "~2.3",
+                "willdurand/propel-typehintable-behavior": "~1.0"
+            },
+            "suggest": {
+                "willdurand/propel-typehintable-behavior": "Needed when using the propel implementation"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FOS\\UserBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "FriendsOfSymfony Community",
+                    "homepage": "https://github.com/friendsofsymfony/FOSUserBundle/contributors"
+                },
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com"
+                }
+            ],
+            "description": "Symfony FOSUserBundle",
+            "homepage": "http://friendsofsymfony.github.com",
+            "keywords": [
+                "User management"
+            ],
+            "time": "2015-01-20 09:35:03"
+        },
+        {
+            "name": "gedmo/doctrine-extensions",
+            "version": "v2.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
+                "reference": "4e9bbd54ebb22bb004b2ec71b1b0ce3ed5b992d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/4e9bbd54ebb22bb004b2ec71b1b0ce3ed5b992d0",
+                "reference": "4e9bbd54ebb22bb004b2ec71b1b0ce3ed5b992d0",
+                "shasum": ""
+            },
+            "require": {
+                "behat/transliterator": "~1.0",
+                "doctrine/common": "~2.4",
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "doctrine/common": ">=2.4.0-RC3",
-                "doctrine/dbal": ">=2.4.0-RC1",
-                "doctrine/mongodb": ">=1.0.3",
-                "doctrine/mongodb-odm": ">=1.0.0-BETA9",
-                "doctrine/orm": ">=2.4.0-RC1",
-                "symfony/yaml": "2.3.1"
+                "doctrine/mongodb-odm": ">=1.0.0-BETA11",
+                "doctrine/orm": "~2.4",
+                "phpunit/phpunit": "~4.4",
+                "phpunit/phpunit-mock-objects": "~2.3",
+                "symfony/yaml": "~2.3"
             },
             "suggest": {
-                "doctrine/dbal": ">=2.3.2",
-                "doctrine/mongodb": ">=1.0.1",
-                "doctrine/mongodb-odm": ">=1.0.0-BETA7",
-                "doctrine/orm": ">=2.3.2"
+                "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
+                "doctrine/orm": "to use the extensions with the ORM"
             },
             "type": "library",
             "extra": {
@@ -929,7 +1035,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2014-01-12 16:34:06"
+            "time": "2015-01-21 20:55:10"
         },
         {
             "name": "guzzle/guzzle",
@@ -1939,16 +2045,16 @@
         },
         {
             "name": "sensiolabs/security-checker",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/security-checker.git",
-                "reference": "5b4eb4743ebe68276c911c84101ecdf4a9ae76ee"
+                "reference": "134cecf1c61256bd8e973e11376891a724543820"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/5b4eb4743ebe68276c911c84101ecdf4a9ae76ee",
-                "reference": "5b4eb4743ebe68276c911c84101ecdf4a9ae76ee",
+                "url": "https://api.github.com/repos/sensiolabs/security-checker/zipball/134cecf1c61256bd8e973e11376891a724543820",
+                "reference": "134cecf1c61256bd8e973e11376891a724543820",
                 "shasum": ""
             },
             "require": {
@@ -1980,7 +2086,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
-            "time": "2014-07-19 10:52:35"
+            "time": "2015-01-26 16:25:19"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -2759,16 +2865,16 @@
         },
         {
             "name": "symfony/assetic-bundle",
-            "version": "v2.5.0",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle.git",
-                "reference": "90ea7fb66d6d5245fd4afc16e4c8070214254fec"
+                "reference": "39d0e15b63936464a9929c00f8e28a30f2331419"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/90ea7fb66d6d5245fd4afc16e4c8070214254fec",
-                "reference": "90ea7fb66d6d5245fd4afc16e4c8070214254fec",
+                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/39d0e15b63936464a9929c00f8e28a30f2331419",
+                "reference": "39d0e15b63936464a9929c00f8e28a30f2331419",
                 "shasum": ""
             },
             "require": {
@@ -2819,7 +2925,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2014-10-15 12:03:38"
+            "time": "2015-01-26 13:00:20"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -3107,16 +3213,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.17.0",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608"
+                "reference": "4cf7464348e7f9893a93f7096a90b73722be99cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
-                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/4cf7464348e7f9893a93f7096a90b73722be99cf",
+                "reference": "4cf7464348e7f9893a93f7096a90b73722be99cf",
                 "shasum": ""
             },
             "require": {
@@ -3125,7 +3231,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17-dev"
+                    "dev-master": "1.18-dev"
                 }
             },
             "autoload": {
@@ -3160,7 +3266,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-01-14 10:15:49"
+            "time": "2015-01-25 17:32:08"
         },
         {
             "name": "white-october/pagerfanta-bundle",
@@ -3525,7 +3631,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "friendsofsymfony/user-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
