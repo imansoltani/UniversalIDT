@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}UniversalIDTBundle:Guest:callingCards{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Guest:callingCards page</h1>
+
+    {% for iso, name in countries %}
+        <a href="{{ path('guest_details', {'country':iso}) }}">{{ name }}</a><br>
+    {% endfor %}
+{% endblock %}

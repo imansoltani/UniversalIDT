@@ -1,0 +1,19 @@
+guest_main:
+    path:     /
+    defaults: { _controller: UniversalIDTBundle:Guest:main }
+
+guest_calling_cards:
+    path:     /calling_cards
+    defaults: { _controller: UniversalIDTBundle:Guest:callingCards }
+
+guest_details:
+    path:     /calling_cards/{country}/country
+    defaults: { _controller: UniversalIDTBundle:Guest:details }
+
+guest_rates:
+    path:     /rates
+    defaults: { _controller: UniversalIDTBundle:Guest:rates }
+
+guest_shopping:
+    path:     /shopping
+    defaults: { _controller: UniversalIDTBundle:Guest:shopping }

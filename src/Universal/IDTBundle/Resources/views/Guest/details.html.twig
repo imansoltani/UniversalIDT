@@ -1,0 +1,31 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}UniversalIDTBundle:Guest:details{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Guest:details page</h1>
+
+    {% for product in products %}
+        <div style="border: 1px solid #000000; margin: 10px">
+            <strong>General Information:</strong><br>
+            {% for lang, info in product.allGeneralInformation %}
+                {{ lang }}: {{ info }}<br>
+            {% endfor %}
+
+            <strong>Rates:</strong><br>
+            {% for rate in product.allRates %}
+                {{ rate|json_encode() }}<br>
+            {% endfor %}
+
+            <strong>Access Number:</strong><br>
+            {% for accessNumber in product.allAccessNumbers %}
+                {{ accessNumber|json_encode() }}<br>
+            {% endfor %}
+
+            <strong>Dialing Instructions:</strong><br>
+            {% for lang, info in product.allDialingInstructions %}
+                {{ lang }}: {{ info }}<br>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

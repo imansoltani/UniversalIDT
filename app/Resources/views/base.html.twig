@@ -7,6 +7,14 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <div id="menu">
+            <a href="{{ path('guest_main') }}">Home</a>
+            <a href="{{ path('guest_calling_cards') }}">Calling Cards</a>
+            <a href="{{ path('guest_rates') }}">Rates</a>
+            <a href="#">Applications</a>
+            <a href="#">About Us</a>
+            <a href="#">Customer Service</a>
+        </div>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
