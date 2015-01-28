@@ -199,4 +199,20 @@ class Product extends JsonDetails
     {
         return $this->orderProducts;
     }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function saveJson()
+    {
+        parent::saveJson();
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function removeJson()
+    {
+        parent::removeJson();
+    }
 }

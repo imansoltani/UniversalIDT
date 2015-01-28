@@ -79,6 +79,12 @@ class Ordering
     protected $orderProducts;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="orders")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     */
+    protected $user;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -289,5 +295,28 @@ class Ordering
     public function getOrderProducts()
     {
         return $this->orderProducts;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Universal\IDTBundle\Entity\User $user
+     * @return Ordering
+     */
+    public function setUser(\Universal\IDTBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Universal\IDTBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

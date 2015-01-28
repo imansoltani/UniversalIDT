@@ -1,6 +1,7 @@
 <?php
 namespace Universal\IDTBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
@@ -38,11 +39,17 @@ class User extends BaseUser
     private $gender;
 
     /**
+     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\Ordering", mappedBy="user")
+     */
+    protected $orders;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
+        $this->orders = new ArrayCollection();
     }
 
     /**
@@ -99,5 +106,38 @@ class User extends BaseUser
     public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param Ordering $orders
+     * @return User
+     */
+    public function addOrder(Ordering $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param Ordering $orders
+     */
+    public function removeOrder(Ordering $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

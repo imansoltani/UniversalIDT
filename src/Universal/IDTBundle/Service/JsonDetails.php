@@ -42,9 +42,6 @@ abstract class JsonDetails {
 
     /**
      * Save json file
-     *
-     * @ORM\PostPersist
-     * @ORM\PreFlush
      */
     public function saveJson()
     {
@@ -54,8 +51,6 @@ abstract class JsonDetails {
 
     /**
      * Remove json file
-     *
-     * @ORM\PreRemove
      */
     public function removeJson()
     {
