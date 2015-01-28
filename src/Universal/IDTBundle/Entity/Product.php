@@ -41,9 +41,9 @@ class Product extends JsonDetails
     /**
      * @var string
      *
-     * @ORM\Column(name="denomination", type="string", length=255)
+     * @ORM\Column(name="denominations", type="string", length=255)
      */
-    private $denomination;
+    private $denominations;
 
     /**
      * @var string
@@ -114,26 +114,26 @@ class Product extends JsonDetails
     }
 
     /**
-     * Set denomination
+     * Set denominations
      *
-     * @param string $denomination
+     * @param array $denominations
      * @return Product
      */
-    public function setDenomination($denomination)
+    public function setDenominations(array $denominations)
     {
-        $this->denomination = $denomination;
+        $this->denominations = implode(";", array_unique($denominations));
 
         return $this;
     }
 
     /**
-     * Get denomination
+     * Get denominations
      *
-     * @return string 
+     * @return array
      */
-    public function getDenomination()
+    public function getDenominations()
     {
-        return $this->denomination;
+        return explode(";", $this->denominations);
     }
 
     /**

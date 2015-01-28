@@ -25,7 +25,7 @@ class DefaultController extends Controller
 //            $product->setName("aaa".$i);
 //            $product->setCurrency("USD");
 //            $product->setCountryISO("US");
-//            $product->setDenomination((int)($i.$i));
+//            $product->setDenominations(array((int)($i.$i),(int)($i.$i.$i)));
 //            $product->setClassId((int)($i.$i.$i));
 //            $em->persist($product);
 //        }

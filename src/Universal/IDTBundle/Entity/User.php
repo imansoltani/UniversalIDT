@@ -34,7 +34,7 @@ class User extends BaseUser
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\GenderEnumType")
-     * @ORM\Column(name="paymentMethod", type="GenderEnumType")
+     * @ORM\Column(name="gender", type="GenderEnumType")
      */
     private $gender;
 
