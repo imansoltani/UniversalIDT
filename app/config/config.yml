@@ -84,3 +84,8 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Universal\IDTBundle\Entity\User
+
+jms_i18n_routing:
+    default_locale: en
+    locales: [fr, en]
+    strategy: prefix

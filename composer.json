@@ -21,7 +21,8 @@
         "misd/guzzle-bundle": "*",
         "sylius/cart-bundle": "*",
         "fresh/doctrine-enum-bundle": "*",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "jms/i18n-routing-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
