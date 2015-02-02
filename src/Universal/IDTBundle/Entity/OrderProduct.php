@@ -4,6 +4,7 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
+use Sylius\Component\Cart\Model\CartItem;
 
 /**
  * OrderProduct
@@ -11,17 +12,8 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
  * @ORM\Table(name="order_product")
  * @ORM\Entity
  */
-class OrderProduct
+class OrderProduct extends CartItem
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
     /**
      * @var integer
      *
@@ -33,7 +25,7 @@ class OrderProduct
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestTypeEnumType")
-     * @ORM\Column(name="request_type", type="RequestTypeEnumType")
+     * @ORM\Column(name="request_type", type="RequestTypeEnumType", nullable=true)
      */
     private $requestType;
 
@@ -41,14 +33,14 @@ class OrderProduct
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestStatusEnumType")
-     * @ORM\Column(name="request_status", type="RequestStatusEnumType")
+     * @ORM\Column(name="request_status", type="RequestStatusEnumType", nullable=true)
      */
     private $requestStatus;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pinDenomination", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="pinDenomination", type="decimal", precision=4, scale=2, nullable=true)
      */
     private $pinDenomination;
 
@@ -66,11 +58,12 @@ class OrderProduct
     protected $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\Ordering", inversedBy="orderProducts")
-     * @ORM\JoinColumn(name="ordering_id", referencedColumnName="id", nullable=false)
+     * Constructor.
      */
-    protected $ordering;
-
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * Get id
@@ -172,29 +165,6 @@ class OrderProduct
     public function getProduct()
     {
         return $this->product;
-    }
-
-    /**
-     * Set ordering
-     *
-     * @param Ordering $ordering
-     * @return OrderProduct
-     */
-    public function setOrdering(Ordering $ordering)
-    {
-        $this->ordering = $ordering;
-
-        return $this;
-    }
-
-    /**
-     * Get ordering
-     *
-     * @return Ordering
-     */
-    public function getOrdering()
-    {
-        return $this->ordering;
     }
 
     /**

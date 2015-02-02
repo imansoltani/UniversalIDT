@@ -8,6 +8,9 @@ services:
     IDT:
         class: Universal\IDTBundle\Service\IDT
         arguments: [%IDT%, @guzzle.client, @doctrine.orm.default_entity_manager]
+    universal_idt_bundle.cart_item_resolver:
+        class: Universal\IDTBundle\Cart\ItemResolver
+        arguments: [@doctrine.orm.entity_manager]
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

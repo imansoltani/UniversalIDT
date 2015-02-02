@@ -2,9 +2,9 @@
 
 namespace Universal\IDTBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
+use Sylius\Component\Cart\Model\Cart;
 
 /**
  * Ordering
@@ -12,71 +12,64 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
  * @ORM\Table(name="ordering")
  * @ORM\Entity
  */
-class Ordering
+class Ordering extends Cart
 {
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="paid_at", type="datetime", nullable=true)
      */
-    private $id;
+    private $datePay;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
+     * @ORM\Column(name="activated_at", type="datetime", nullable=true)
      */
-    private $date;
+    private $dateActivate;
 
     /**
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType")
-     * @ORM\Column(name="paymentMethod", type="PaymentMethodEnumType")
+     * @ORM\Column(name="paymentMethod", type="PaymentMethodEnumType", nullable=true)
      */
     private $paymentMethod;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="amount", type="decimal", precision=4, scale=2, nullable=true)
      */
     private $amount;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="currency", type="string", length=2)
+     * @ORM\Column(name="currency", type="string", length=2, nullable=true)
      */
     private $currency;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="charge", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="charge", type="decimal", precision=4, scale=2, nullable=true)
      */
     private $charge;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="chargeDesc", type="string", length=45, nullable=true)
+     * @ORM\Column(name="chargeDesc", type="string", length=45, nullable=true, nullable=true)
      */
     private $chargeDesc;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="deliveryMethod", type="simple_array")
+     * @ORM\Column(name="deliveryMethod", type="simple_array", nullable=true)
      */
     private $deliveryMethod;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="ordering")
-     */
-    protected $orderProducts;
 
     /**
      * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="orders")
@@ -89,8 +82,7 @@ class Ordering
      */
     public function __construct()
     {
-        $this->orderProducts = new ArrayCollection();
-        $this->date = new \DateTime();
+        parent::__construct();
     }
 
     /**
@@ -104,26 +96,49 @@ class Ordering
     }
 
     /**
-     * Set date
+     * Set datePay
      *
-     * @param \DateTime $date
+     * @param \DateTime $datePay
      * @return Ordering
      */
-    public function setDate($date)
+    public function setDatePay($datePay)
     {
-        $this->date = $date;
+        $this->datePay = $datePay;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get datePay
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDate()
+    public function getDatePay()
     {
-        return $this->date;
+        return $this->datePay;
+    }
+
+    /**
+     * Set dateActivate
+     *
+     * @param \DateTime $dateActivate
+     * @return Ordering
+     */
+    public function setDateActivate($dateActivate)
+    {
+        $this->dateActivate = $dateActivate;
+
+        return $this;
+    }
+
+    /**
+     * Get dateActivate
+     *
+     * @return \DateTime
+     */
+    public function getDateActivate()
+    {
+        return $this->dateActivate;
     }
 
     /**
@@ -265,45 +280,12 @@ class Ordering
     }
 
     /**
-     * Add orderProducts
-     *
-     * @param OrderProduct $orderProducts
-     * @return Ordering
-     */
-    public function addOrderProduct(OrderProduct $orderProducts)
-    {
-        $this->orderProducts[] = $orderProducts;
-
-        return $this;
-    }
-
-    /**
-     * Remove orderProducts
-     *
-     * @param OrderProduct $orderProducts
-     */
-    public function removeOrderProduct(OrderProduct $orderProducts)
-    {
-        $this->orderProducts->removeElement($orderProducts);
-    }
-
-    /**
-     * Get orderProducts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getOrderProducts()
-    {
-        return $this->orderProducts;
-    }
-
-    /**
      * Set user
      *
-     * @param \Universal\IDTBundle\Entity\User $user
+     * @param User $user
      * @return Ordering
      */
-    public function setUser(\Universal\IDTBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -313,7 +295,7 @@ class Ordering
     /**
      * Get user
      *
-     * @return \Universal\IDTBundle\Entity\User 
+     * @return User
      */
     public function getUser()
     {

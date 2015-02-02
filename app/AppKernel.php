@@ -8,10 +8,10 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = array(
-//            new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
-//            new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
-//            new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
-//            new Sylius\Bundle\CartBundle\SyliusCartBundle(),
+            new Sylius\Bundle\ResourceBundle\SyliusResourceBundle(),
+            new Sylius\Bundle\MoneyBundle\SyliusMoneyBundle(),
+            new Sylius\Bundle\OrderBundle\SyliusOrderBundle(),
+            new Sylius\Bundle\CartBundle\SyliusCartBundle(),
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -25,6 +25,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
 //            new JMS\TranslationBundle\JMSTranslationBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
             new Universal\IDTBundle\UniversalIDTBundle(),
         );
 

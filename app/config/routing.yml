@@ -2,5 +2,9 @@ universal_idt:
     resource: "@UniversalIDTBundle/Resources/config/routing.yml"
     prefix:   /
 
+sylius_cart:
+    resource: @SyliusCartBundle/Resources/config/routing.yml
+    prefix: /cart
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
