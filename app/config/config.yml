@@ -25,8 +25,6 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
-    serializer:
-        enabled: true
 
 # Twig Configuration
 twig:
@@ -91,18 +89,3 @@ jms_i18n_routing:
     default_locale: en
     locales: [fr, en]
     strategy: prefix
-
-sylius_cart:
-    resolver: universal_idt_bundle.cart_item_resolver # The id of our newly created service.
-    classes: ~ # This key can be empty but it must be present in the configuration.
-
-sylius_order:
-    driver: doctrine/orm # Configure the doctrine orm driver used in documentation.
-    classes:
-        order:
-            model: Universal\IDTBundle\Entity\Ordering # If you have created a custom Cart entity.
-        order_item:
-            model: Universal\IDTBundle\Entity\OrderProduct # If you have created a custom CartItem entity.
-
-#sylius_money:
-#    driver: doctrine/orm # Configure the doctrine orm driver used in documentation.

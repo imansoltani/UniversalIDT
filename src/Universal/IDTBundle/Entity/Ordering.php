@@ -2,9 +2,9 @@
 
 namespace Universal\IDTBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
-use Sylius\Component\Cart\Model\Cart;
 
 /**
  * Ordering
@@ -12,64 +12,71 @@ use Sylius\Component\Cart\Model\Cart;
  * @ORM\Table(name="ordering")
  * @ORM\Entity
  */
-class Ordering extends Cart
+class Ordering
 {
     /**
-     * @var \DateTime
+     * @var integer
      *
-     * @ORM\Column(name="paid_at", type="datetime", nullable=true)
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $datePay;
+    private $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="activated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="date", type="datetime")
      */
-    private $dateActivate;
+    private $date;
 
     /**
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType")
-     * @ORM\Column(name="paymentMethod", type="PaymentMethodEnumType", nullable=true)
+     * @ORM\Column(name="paymentMethod", type="PaymentMethodEnumType")
      */
     private $paymentMethod;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(name="amount", type="decimal", precision=4, scale=2)
      */
     private $amount;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="currency", type="string", length=2, nullable=true)
+     * @ORM\Column(name="currency", type="string", length=2)
      */
     private $currency;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="charge", type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(name="charge", type="decimal", precision=4, scale=2)
      */
     private $charge;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="chargeDesc", type="string", length=45, nullable=true, nullable=true)
+     * @ORM\Column(name="chargeDesc", type="string", length=45, nullable=true)
      */
     private $chargeDesc;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="deliveryMethod", type="simple_array", nullable=true)
+     * @ORM\Column(name="deliveryMethod", type="simple_array")
      */
     private $deliveryMethod;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="ordering")
+     */
+    protected $orderProducts;
 
     /**
      * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="orders")
@@ -82,7 +89,8 @@ class Ordering extends Cart
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->orderProducts = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     /**
@@ -96,49 +104,26 @@ class Ordering extends Cart
     }
 
     /**
-     * Set datePay
+     * Set date
      *
-     * @param \DateTime $datePay
+     * @param \DateTime $date
      * @return Ordering
      */
-    public function setDatePay($datePay)
+    public function setDate($date)
     {
-        $this->datePay = $datePay;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get datePay
+     * Get date
      *
      * @return \DateTime
      */
-    public function getDatePay()
+    public function getDate()
     {
-        return $this->datePay;
-    }
-
-    /**
-     * Set dateActivate
-     *
-     * @param \DateTime $dateActivate
-     * @return Ordering
-     */
-    public function setDateActivate($dateActivate)
-    {
-        $this->dateActivate = $dateActivate;
-
-        return $this;
-    }
-
-    /**
-     * Get dateActivate
-     *
-     * @return \DateTime
-     */
-    public function getDateActivate()
-    {
-        return $this->dateActivate;
+        return $this->date;
     }
 
     /**
@@ -277,6 +262,39 @@ class Ordering extends Cart
     public function getDeliveryMethod()
     {
         return $this->deliveryMethod;
+    }
+
+    /**
+     * Add orderProducts
+     *
+     * @param OrderProduct $orderProducts
+     * @return Ordering
+     */
+    public function addOrderProduct(OrderProduct $orderProducts)
+    {
+        $this->orderProducts[] = $orderProducts;
+
+        return $this;
+    }
+
+    /**
+     * Remove orderProducts
+     *
+     * @param OrderProduct $orderProducts
+     */
+    public function removeOrderProduct(OrderProduct $orderProducts)
+    {
+        $this->orderProducts->removeElement($orderProducts);
+    }
+
+    /**
+     * Get orderProducts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrderProducts()
+    {
+        return $this->orderProducts;
     }
 
     /**

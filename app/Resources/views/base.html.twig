@@ -15,10 +15,6 @@
             <a href="#">About Us</a>
             <a href="#">Customer Service</a>
         </div>
-        <div>
-            {% set cart = sylius_cart_get() %}
-            Current cart totals: {{ cart.total }} for {{ cart.totalItems }} items!
-        </div>
         {% block body %}{% endblock %}
 
         <script src="{{ asset('bundles/universalidt/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script>

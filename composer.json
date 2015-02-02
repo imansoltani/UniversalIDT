@@ -19,8 +19,6 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "misd/guzzle-bundle": "*",
-        "sylius/cart-bundle": "*",
-        "sylius/currency-bundle": "*",
         "fresh/doctrine-enum-bundle": "*",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "jms/i18n-routing-bundle": "dev-master"

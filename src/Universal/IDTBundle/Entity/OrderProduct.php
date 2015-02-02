@@ -4,7 +4,6 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
-use Sylius\Component\Cart\Model\CartItem;
 
 /**
  * OrderProduct
@@ -12,8 +11,17 @@ use Sylius\Component\Cart\Model\CartItem;
  * @ORM\Table(name="order_product")
  * @ORM\Entity
  */
-class OrderProduct extends CartItem
+class OrderProduct
 {
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
     /**
      * @var integer
      *
@@ -25,7 +33,7 @@ class OrderProduct extends CartItem
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestTypeEnumType")
-     * @ORM\Column(name="request_type", type="RequestTypeEnumType", nullable=true)
+     * @ORM\Column(name="request_type", type="RequestTypeEnumType")
      */
     private $requestType;
 
@@ -33,14 +41,14 @@ class OrderProduct extends CartItem
      * @var string
      *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestStatusEnumType")
-     * @ORM\Column(name="request_status", type="RequestStatusEnumType", nullable=true)
+     * @ORM\Column(name="request_status", type="RequestStatusEnumType")
      */
     private $requestStatus;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pinDenomination", type="decimal", precision=4, scale=2, nullable=true)
+     * @ORM\Column(name="pinDenomination", type="decimal", precision=4, scale=2)
      */
     private $pinDenomination;
 
@@ -58,12 +66,11 @@ class OrderProduct extends CartItem
     protected $product;
 
     /**
-     * Constructor.
+     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\Ordering", inversedBy="orderProducts")
+     * @ORM\JoinColumn(name="ordering_id", referencedColumnName="id", nullable=false)
      */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $ordering;
+
 
     /**
      * Get id
@@ -165,6 +172,29 @@ class OrderProduct extends CartItem
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set ordering
+     *
+     * @param Ordering $ordering
+     * @return OrderProduct
+     */
+    public function setOrdering(Ordering $ordering)
+    {
+        $this->ordering = $ordering;
+
+        return $this;
+    }
+
+    /**
+     * Get ordering
+     *
+     * @return Ordering
+     */
+    public function getOrdering()
+    {
+        return $this->ordering;
     }
 
     /**
