@@ -19,17 +19,17 @@ class DefaultController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-//        for($i=1; $i<=5; $i++)
-//        {
-//            $product = new Product();
-//            $product->setName("aaa".$i);
-//            $product->setCurrency("USD");
-//            $product->setCountryISO("US");
-//            $product->setDenominations(array((int)($i.$i),(int)($i.$i.$i)));
-//            $product->setClassId((int)($i.$i.$i));
-//            $em->persist($product);
-//        }
-//        $em->flush();
+        for($i=1; $i<=5; $i++)
+        {
+            $product = new Product();
+            $product->setName("aaa".$i);
+            $product->setCurrency("USD");
+            $product->setCountryISO("US");
+            $product->setDenominations(array((int)($i.$i),(int)($i.$i.$i)));
+            $product->setClassId((int)($i.$i.$i));
+            $em->persist($product);
+        }
+        $em->flush();
 
 //        $order = new Ordering();
 //        $order->setCurrency('USD');
