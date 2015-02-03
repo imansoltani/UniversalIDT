@@ -1,0 +1,7 @@
+checkout_my_cart:
+    path:     /
+    defaults: { _controller: UniversalIDTBundle:Checkout:myCart }
+
+checkout_test:
+    path:     /test
+    defaults: { _controller: UniversalIDTBundle:Checkout:test }

@@ -3,7 +3,6 @@ namespace Universal\IDTBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Guzzle\Service\ClientInterface;
-use JMS\Serializer\SerializerInterface;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\Ordering;
@@ -16,7 +15,7 @@ use Universal\IDTBundle\Entity\OrderProduct;
 class IDT
 {
     /**
-     * @var SerializerInterface
+     * @var array
      */
     private $idt_parameters;
 

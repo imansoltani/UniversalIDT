@@ -5,3 +5,7 @@ guest:
 test:
     path:     /test
     defaults: { _controller: UniversalIDTBundle:Default:index }
+
+checkout:
+    resource: "@UniversalIDTBundle/Resources/config/routing/checkout.yml"
+    prefix:   /checkout

@@ -15,9 +15,47 @@
             <a href="#">About Us</a>
             <a href="#">Customer Service</a>
         </div>
+        Current cart totals: <span id="cart_total">--</span> for <span id="cart_total_items">--</span> items!
         {% block body %}{% endblock %}
 
         <script src="{{ asset('bundles/universalidt/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{ asset('bundles/universalidt/js/jquery.cookie.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/universalidt/js/json2.js') }}"></script>
+        <script type="text/javascript">
+            var selected_products = [];
+
+            function loadSelectedProducts() {
+                var products_json = $.cookie("products");
+                selected_products = products_json == undefined ? {} : JSON.parse(products_json);
+
+                var valid = true;
+                for(var product in selected_products) {
+                    if(selected_products[product]['product'] == undefined || selected_products[product]['count'] == undefined || selected_products[product]['denomination'] == undefined){
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if(!valid) {
+                    selected_products = [];
+                    $.cookie("products", "[]", { path: '/' });
+                }
+            }
+
+            function updateCounts() {
+                var total_count = 0;
+                for(var product in selected_products)
+                    total_count += parseInt(selected_products[product]['count']);
+
+                $("#cart_total").html(total_count == 0 ? 0 : selected_products.length);
+                $("#cart_total_items").html(total_count);
+            }
+
+            $(document).ready(function(){
+                loadSelectedProducts();
+                updateCounts();
+            });
+        </script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
