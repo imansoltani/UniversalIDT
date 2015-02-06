@@ -4,6 +4,9 @@ namespace Universal\IDTBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\Form\RatesType;
 
 class GuestController extends Controller
 {
@@ -59,11 +62,47 @@ class GuestController extends Controller
         );
     }
 
-    public function ratesAction()
+    public function ratesAction(Request $request)
     {
+        $countries = $this->container->getParameter('countries');
+
+        $form = $this->createForm(new RatesType($countries), array('from'=>'US'))
+            ->add('search', 'submit');
+
+        $result = array();
+
+        if($request->isMethod('post'))
+        {
+            $form->handleRequest($request);
+
+            if($form->isValid())
+            {
+                $data = $form->getData();
+                /** @var EntityManager $em */
+                $em = $this->getDoctrine()->getManager();
+
+                $products = $em->createQueryBuilder()
+                    ->select("product")
+                    ->from('UniversalIDTBundle:Product', 'product')
+                    ->where('product.countryISO = :from')->setParameter('from', $data['from'])
+                    ->getQuery()
+                    ->getResult();
+
+                /** @var Product $product */
+                foreach($products as $product) {
+                    foreach($product->getAllRates() as $rate) {
+                        if(isset($rate['des']) && $rate['des'] == $data['destination'])
+                            $result[] = array('product'=>$product, 'rate'=>$rate);
+                    }
+                }
+            }
+        }
+
         return $this->render(
             'UniversalIDTBundle:Guest:rates.html.twig',
-            array(// ...
+            array(
+                'form' => $form->createView(),
+                'result' => $result
             )
         );
     }

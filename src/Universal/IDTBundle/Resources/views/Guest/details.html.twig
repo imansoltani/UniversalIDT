@@ -37,6 +37,10 @@
             <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val());">Add To Cart</a>
         </div>
     {% endfor %}
+
+    <div>
+        <a href="{{ path('checkout_my_cart') }}">Buy</a>
+    </div>
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">

@@ -27,6 +27,9 @@ class DefaultController extends Controller
             $product->setCountryISO("US");
             $product->setDenominations(array((int)($i.$i),(int)($i.$i.$i)));
             $product->setClassId((int)($i.$i.$i));
+            $product->addRate("US", 1.1*$i, 1.1*$i, 1.1*$i);
+            $product->addRate("FR", 2.2*$i, 3.3*$i, 4.4*$i);
+            $product->addRate("CH", 3.3*$i, 1.1*$i, 2.2*$i);
             $em->persist($product);
         }
         $em->flush();
