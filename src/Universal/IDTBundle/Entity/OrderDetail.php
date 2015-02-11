@@ -14,6 +14,14 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
  */
 class OrderDetail
 {
+    /** Ogone constants */
+    const OGONE_RESULT_ACCEPTED = 5;
+    const OGONE_RESULT_CANCELED = 1;
+    const OGONE_RESULT_DECLINED = 2;
+    const OGONE_RESULT_EXCEPTION = 52;
+
+
+
     /**
      * @var integer
      *
@@ -57,7 +65,7 @@ class OrderDetail
      *
      * @ORM\Column(name="charge", type="decimal", precision=4, scale=2)
      */
-    private $charge;
+    private $charge = 0;
 
     /**
      * @var string

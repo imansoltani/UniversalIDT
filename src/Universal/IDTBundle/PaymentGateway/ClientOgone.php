@@ -1,12 +1,12 @@
 <?php
-namespace Universal\IDTBundle\Ogone;
+namespace Universal\IDTBundle\PaymentGateway;
 
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Router;
-use Universal\IDTBundle\Entity\User;
+use Universal\IDTBundle\Entity\OrderDetail;
 
-class ClientPHP
+class ClientOgone
 {
     /** @var EntityManager $em */
     private $em;
@@ -31,25 +31,25 @@ class ClientPHP
         $this->ogoneTemplateUrl   = $router->generate("transactions_ogone_template", [], true);
     }
 
-    private function getSortedParameters(OgonePayment $payment)
+    private function getSortedParameters(OrderDetail $payment)
     {
         return array(
             'ACCEPTURL'     => $this->resultUrl,
-            'AMOUNT'        => $payment->getOgoneAmount(),
+            'AMOUNT'        => $payment->getAmount(),
             'CANCELURL'     => $this->resultUrl,
             'CATALOGURL'    => $this->catalogUrl,
-            'CURRENCY'      => $payment->getPaymentCurrencyISO(),
+            'CURRENCY'      => $payment->getCurrency(),
             'DECLINEURL'    => $this->resultUrl,
             'EXCEPTIONURL'  => $this->resultUrl,
             'HOMEURL'       => $this->homeUrl,
-            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getEntiti()->getCountry()->getIso()),
+            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getLanguage()),
             'ORDERID'       => $payment->getOrderReference(),
             'PSPID'         => $this->pspId,
             'TP'            => $this->ogoneTemplateUrl
         );
     }
 
-    private function generateHashIn(OgonePayment $payment)
+    private function generateHashIn(OrderDetail $payment)
     {
         $fields = [];
         foreach ($this->getSortedParameters($payment) as $fieldName => $fieldValue)
@@ -86,7 +86,7 @@ class ClientPHP
         return $ogoneDigestSign === strtoupper(sha1($hashedString));
     }
 
-    public function generateForm(OgonePayment $payment)
+    public function generateForm(OrderDetail $payment)
     {
         $fields[] = sprintf('<form id="ogone_form" name="ogone_form" method="post" action="%s">', $this->submitUrl);
 
