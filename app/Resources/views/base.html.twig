@@ -33,8 +33,13 @@
                 selected_products = products_json == undefined ? [] : JSON.parse(products_json);
 
                 var valid = true;
+                var types = ["buy", "charge"];
                 for(var product in selected_products) {
-                    if(selected_products[product]['product'] == undefined || selected_products[product]['count'] == undefined || selected_products[product]['denomination'] == undefined){
+                    if(     selected_products[product]['product'] == undefined ||
+                            selected_products[product]['count'] == undefined ||
+                            selected_products[product]['denomination'] == undefined ||
+                            types.indexOf(selected_products[product]['type']) == -1
+                    ){
                         valid = false;
                         break;
                     }
@@ -51,8 +56,8 @@
                 for(var product in selected_products)
                     total_count += parseInt(selected_products[product]['count']);
 
-                $("#cart_total").html(total_count == 0 ? 0 : selected_products.length);
-                $("#cart_total_items").html(total_count);
+                $("#cart_total_items").html(total_count == 0 ? 0 : selected_products.length);
+                $("#cart_total").html(total_count);
             }
 
             $(document).ready(function(){

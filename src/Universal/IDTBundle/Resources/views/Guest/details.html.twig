@@ -34,7 +34,7 @@
                 {% endfor %}
             </select>
             <input type="number" id="pr_{{ product.id }}_count" value="1">
-            <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val());">Add To Cart</a>
+            <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val(), 'buy');">Add To Cart</a>
         </div>
     {% endfor %}
 
@@ -44,10 +44,13 @@
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript">
-        function addToCookie(_product_id, _denomination, _count) {
+        function addToCookie(_product_id, _denomination, _count, _type) {
             var _exist = false;
             for(var product in selected_products) {
-                if(+selected_products[product]['product'] == +_product_id && +selected_products[product]['denomination'] == +_denomination){
+                if(     +selected_products[product]['product'] == +_product_id &&
+                        +selected_products[product]['denomination'] == +_denomination &&
+                        selected_products[product]['type'] == _type
+                ){
                     selected_products[product]['count'] = +selected_products[product]['count'] + +_count;
                     _exist = true;
                     break;
@@ -55,7 +58,7 @@
             }
 
             if(!_exist)
-                selected_products.push({'product':+_product_id, 'count':+_count, 'denomination':+_denomination});
+                selected_products.push({'product':+_product_id, 'count':+_count, 'denomination':+_denomination, 'type':_type});
 
             var new_products_json = JSON.stringify(selected_products);
 
