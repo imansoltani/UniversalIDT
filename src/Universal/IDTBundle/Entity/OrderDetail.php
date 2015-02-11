@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
 
 /**
- * Ordering
+ * OrderDetail
  *
- * @ORM\Table(name="ordering")
+ * @ORM\Table(name="order_detail")
  * @ORM\Entity
  */
-class Ordering
+class OrderDetail
 {
     /**
      * @var integer
@@ -89,12 +89,12 @@ class Ordering
     private $paymentStatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="ordering")
+     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="OrderDetail")
      */
     protected $orderProducts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="OrderDetails")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
@@ -122,7 +122,7 @@ class Ordering
      * Set date
      *
      * @param \DateTime $date
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setDate($date)
     {
@@ -145,7 +145,7 @@ class Ordering
      * Set paymentMethod
      *
      * @param string $paymentMethod
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setPaymentMethod($paymentMethod)
     {
@@ -168,7 +168,7 @@ class Ordering
      * Set amount
      *
      * @param string $amount
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setAmount($amount)
     {
@@ -191,7 +191,7 @@ class Ordering
      * Set currency
      *
      * @param string $currency
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setCurrency($currency)
     {
@@ -214,7 +214,7 @@ class Ordering
      * Set charge
      *
      * @param string $charge
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setCharge($charge)
     {
@@ -237,7 +237,7 @@ class Ordering
      * Set chargeDesc
      *
      * @param string $chargeDesc
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setChargeDesc($chargeDesc)
     {
@@ -260,7 +260,7 @@ class Ordering
      * Add orderProducts
      *
      * @param OrderProduct $orderProducts
-     * @return Ordering
+     * @return OrderDetail
      */
     public function addOrderProduct(OrderProduct $orderProducts)
     {
@@ -293,7 +293,7 @@ class Ordering
      * Set user
      *
      * @param User $user
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setUser(User $user = null)
     {
@@ -316,7 +316,7 @@ class Ordering
      * Set deliveryEmail
      *
      * @param string $deliveryEmail
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setDeliveryEmail($deliveryEmail)
     {
@@ -339,7 +339,7 @@ class Ordering
      * Set deliverySMS
      *
      * @param string $deliverySMS
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setDeliverySMS($deliverySMS)
     {
@@ -362,7 +362,7 @@ class Ordering
      * Set paymentStatus
      *
      * @param string $paymentStatus
-     * @return Ordering
+     * @return OrderDetail
      */
     public function setPaymentStatus($paymentStatus)
     {

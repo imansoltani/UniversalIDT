@@ -66,10 +66,10 @@ class OrderProduct
     protected $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\Ordering", inversedBy="orderProducts")
-     * @ORM\JoinColumn(name="ordering_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\OrderDetail", inversedBy="orderProducts")
+     * @ORM\JoinColumn(name="order_detail_id", referencedColumnName="id", nullable=false)
      */
-    protected $ordering;
+    protected $orderDetail;
 
     /**
      * @var integer
@@ -182,26 +182,26 @@ class OrderProduct
     }
 
     /**
-     * Set ordering
+     * Set orderDetail
      *
-     * @param Ordering $ordering
+     * @param OrderDetail $orderDetail
      * @return OrderProduct
      */
-    public function setOrdering(Ordering $ordering)
+    public function setOrderDetail(OrderDetail $orderDetail)
     {
-        $this->ordering = $ordering;
+        $this->orderDetail = $orderDetail;
 
         return $this;
     }
 
     /**
-     * Get ordering
+     * Get orderDetail
      *
-     * @return Ordering
+     * @return OrderDetail
      */
-    public function getOrdering()
+    public function getOrderDetail()
     {
-        return $this->ordering;
+        return $this->orderDetail;
     }
 
     /**

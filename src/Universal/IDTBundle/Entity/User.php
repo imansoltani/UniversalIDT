@@ -39,9 +39,9 @@ class User extends BaseUser
     private $gender;
 
     /**
-     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\Ordering", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderDetail", mappedBy="user")
      */
-    protected $orders;
+    protected $orderDetails;
 
     /**
      * Constructor
@@ -49,7 +49,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->orders = new ArrayCollection();
+        $this->orderDetails = new ArrayCollection();
     }
 
     /**
@@ -109,35 +109,35 @@ class User extends BaseUser
     }
 
     /**
-     * Add orders
+     * Add orderDetails
      *
-     * @param Ordering $orders
+     * @param OrderDetail $orderDetails
      * @return User
      */
-    public function addOrder(Ordering $orders)
+    public function addOrderDetail(OrderDetail $orderDetails)
     {
-        $this->orders[] = $orders;
+        $this->orderDetails[] = $orderDetails;
 
         return $this;
     }
 
     /**
-     * Remove orders
+     * Remove orderDetails
      *
-     * @param Ordering $orders
+     * @param OrderDetail $orderDetails
      */
-    public function removeOrder(Ordering $orders)
+    public function removeOrderDetail(OrderDetail $orderDetails)
     {
-        $this->orders->removeElement($orders);
+        $this->orderDetails->removeElement($orderDetails);
     }
 
     /**
-     * Get orders
+     * Get orderDetails
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getOrders()
+    public function getOrderDetails()
     {
-        return $this->orders;
+        return $this->orderDetails;
     }
 }
