@@ -6,6 +6,16 @@
     <h1>Welcome to the User:pinDetails page</h1>
 
     <div>
+    <select id="recharge_denominations">
+        {% for denomination in pin.product.denominations %}
+            <option value="{{ denomination }}">{{ denomination }}</option>
+        {% endfor %}
+    </select>
+    <input type="number" id="recharge_count" value="1">
+    <a href="javascript:" onclick="addToCookie({{ pin.id }},$('recharge_denominations').val(),$('recharge_count').val(), 'recharge');">Add To Cart</a>
+    </div>
+
+    <div>
         <strong>General details</strong>
         <table border="1">
             <tr>

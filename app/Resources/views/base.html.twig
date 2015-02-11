@@ -33,7 +33,7 @@
                 selected_products = products_json == undefined ? [] : JSON.parse(products_json);
 
                 var valid = true;
-                var types = ["buy", "charge"];
+                var types = ["buy", "recharge"];
                 for(var product in selected_products) {
                     if(     selected_products[product]['product'] == undefined ||
                             selected_products[product]['count'] == undefined ||
@@ -58,6 +58,28 @@
 
                 $("#cart_total_items").html(total_count == 0 ? 0 : selected_products.length);
                 $("#cart_total").html(total_count);
+            }
+
+            function addToCookie(_product_id, _denomination, _count, _type) {
+                var _exist = false;
+                for(var product in selected_products) {
+                    if(     +selected_products[product]['product'] == +_product_id &&
+                            +selected_products[product]['denomination'] == +_denomination &&
+                            selected_products[product]['type'] == _type
+                    ){
+                        selected_products[product]['count'] = +selected_products[product]['count'] + +_count;
+                        _exist = true;
+                        break;
+                    }
+                }
+
+                if(!_exist)
+                    selected_products.push({'product':+_product_id, 'count':+_count, 'denomination':+_denomination, 'type':_type});
+
+                var new_products_json = JSON.stringify(selected_products);
+
+                $.cookie("products", new_products_json, { path: '/' });
+                updateCounts();
             }
 
             $(document).ready(function(){
