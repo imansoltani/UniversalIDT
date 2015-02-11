@@ -19,7 +19,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = $this->getUser();
 
-        $orders = $em->getRepository('UniversalIDTBundle:Ordering')->findBy(array('user' => $user));
+        $orders = $em->getRepository('UniversalIDTBundle:OrderDetail')->findBy(array('user' => $user));
 
         return $this->render('UniversalIDTBundle:User:billingHistory.html.twig', array(
                 'orders' => $orders
@@ -34,11 +34,11 @@ class UserController extends Controller
         $user = $this->getUser();
 
         $order = $em->createQueryBuilder()
-            ->select('ordering')
-            ->from('UniversalIDTBundle:Ordering', 'ordering')
-            ->where('ordering.id = :id')->setParameter('id', $id)
-            ->andWhere('ordering.user = :user')->setParameter('user', $user)
-            ->innerJoin('ordering.orderProducts', 'order_products')
+            ->select('orderDetail')
+            ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
+            ->where('orderDetail.id = :id')->setParameter('id', $id)
+            ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
+            ->innerJoin('orderDetail.orderProducts', 'order_products')
             ->innerJoin('order_products.product', 'product')
             ->getQuery()->getOneOrNullResult();
 
@@ -58,12 +58,12 @@ class UserController extends Controller
         $user = $this->getUser();
 
         $pins = $em->createQueryBuilder()
-            ->select('order_product', 'ordering', 'product')
+            ->select('order_product', 'orderDetail', 'product')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')
             ->where('order_product.requestType != :requestType')->setParameter('requestType', RequestTypeEnumType::RECHARGE)
             ->andWhere('order_product.requestStatus = :requestStatus')->setParameter('requestStatus', RequestStatusEnumType::SUCCEED)
-            ->innerJoin('order_product.ordering', 'ordering')
-            ->andWhere('ordering.user = :user')->setParameter('user', $user)
+            ->innerJoin('order_product.orderDetail', 'orderDetail')
+            ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
             ->innerJoin('order_product.product', 'product')
             ->getQuery()->getResult();
 
@@ -81,13 +81,13 @@ class UserController extends Controller
 
         /** @var OrderProduct $pin */
         $pin = $em->createQueryBuilder()
-            ->select('order_product', 'ordering', 'product')
+            ->select('order_product', 'orderDetail', 'product')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')
             ->where('order_product.id = :id')->setParameter('id', $id)
             ->andWhere('order_product.requestType != :requestType')->setParameter('requestType', RequestTypeEnumType::RECHARGE)
             ->andWhere('order_product.requestStatus = :requestStatus')->setParameter('requestStatus', RequestStatusEnumType::SUCCEED)
-            ->innerJoin('order_product.ordering', 'ordering')
-            ->andWhere('ordering.user = :user')->setParameter('user', $user)
+            ->innerJoin('order_product.orderDetail', 'orderDetail')
+            ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
             ->innerJoin('order_product.product', 'product')
             ->getQuery()->getOneOrNullResult();
 
@@ -106,8 +106,8 @@ class UserController extends Controller
             ->where('order_product.pin = :pin')->set('pin', $pin->getPin())
             ->andWhere('order_product.requestType = :requestType')->setParameter('requestType', RequestTypeEnumType::RECHARGE)
             ->andWhere('order_product.requestStatus = :requestStatus')->setParameter('requestStatus', RequestStatusEnumType::SUCCEED)
-            ->innerJoin('order_product.ordering', 'ordering')
-            ->andWhere('ordering.user = :user')->setParameter('user', $user)
+            ->innerJoin('order_product.orderDetail', 'orderDetail')
+            ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
             ->innerJoin('order_product.product', 'product')
             ->getQuery()->getResult();
 

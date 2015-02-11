@@ -18,10 +18,10 @@
         <tbody>
         {% for pin in pins %}
             <tr>
-                <td>{{ pin.ordering.date|date('Y-m-d H:i:s') }}</td>
+                <td>{{ pin.orderDetail.date|date('Y-m-d H:i:s') }}</td>
                 <td>{{ pin.product.name }}</td>
                 <td>{{ pin.pin }}</td>
-                <td><a href="{{ path('user_order_details', {'id':pin.ordering.id}) }}">order details</a></td>
+                <td><a href="{{ path('user_order_details', {'id':pin.orderDetail.id}) }}">order details</a></td>
                 <td><a href="{{ path('user_pin_details', {'id':pin.id}) }}">details</a></td>
             </tr>
         {% else %}

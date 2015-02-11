@@ -26,7 +26,7 @@
                 <td>Control number</td>
                 <td>{{ pin.ctrlNumber }}</td>
                 <td>Order No</td>
-                <td>{{ pin.ordering.id }}</td>
+                <td>{{ pin.orderDetail.id }}</td>
             </tr>
             <tr>
                 <td>Total amount</td>
@@ -78,7 +78,7 @@
             {% for recharge in recharges %}
                 <tr>
                     <td>{{ recharge.product.name }}</td>
-                    <td>{{ recharge.ordering.date|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
                     <td>{{ recharge.pinDenomination }}</td>
                     <td>{{ recharge.requestStatus }}</td>
                 </tr>

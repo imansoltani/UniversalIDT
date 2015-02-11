@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
-use Universal\IDTBundle\Entity\Ordering;
+use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
 use Universal\IDTBundle\Entity\Product;
 
@@ -36,16 +36,16 @@ class DefaultController extends Controller
         }
         $em->flush();
 
-//        $order = new Ordering();
+//        $order = new OrderDetail();
 //        $order->setCurrency('USD');
 //        $order->setAmount(20);
 //        $order->setCharge(0);
-//        $order->setDeliveryMethod(array('account'));
+//        $order->setDeliveryEmail("mm@ss.com");
 //        $order->setPaymentMethod(PaymentMethodEnumType::OGONE);
 //        $em->persist($order);
 //
 //        $order_product1 = new OrderProduct();
-//        $order_product1->setOrdering($order);
+//        $order_product1->setOrderDetail($order);
 //        $order_product1->setProduct($em->getRepository('UniversalIDTBundle:Product')->find(1));
 //        $order_product1->setPinDenomination(10);
 //        $order_product1->setRequestType(RequestTypeEnumType::CREATION);
@@ -54,7 +54,7 @@ class DefaultController extends Controller
 //        $em->persist($order_product1);
 //
 //        $order_product2 = new OrderProduct();
-//        $order_product2->setOrdering($order);
+//        $order_product2->setOrderDetail($order);
 //        $order_product2->setProduct($em->getRepository('UniversalIDTBundle:Product')->find(2));
 //        $order_product2->setPinDenomination(10);
 //        $order_product2->setRequestType(RequestTypeEnumType::CREATION);
@@ -63,7 +63,7 @@ class DefaultController extends Controller
 //        $em->persist($order_product2);
 //        $em->flush();
 
-//        $order = $em->getRepository('UniversalIDTBundle:Ordering')->find(4);
+//        $order = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(4);
 //
 //        die(var_dump($this->get('IDT')->doRequest($order)));
 
@@ -73,7 +73,7 @@ class DefaultController extends Controller
 //        $product->setName("aaa12345");
 //        $product->setCurrency("USD");
 //        $product->setCountryISO("US");
-//        $product->setDenomination("2222");
+//        $product->setDenominations(array("2222"));
 //        $product->setClassId(12345);
 //        $em->persist($product);
 
@@ -93,7 +93,7 @@ class DefaultController extends Controller
 
 //        $product = $em->getRepository("UniversalIDTBundle:Product")->find(42);
 //
-//        $product->addRate("shiraaaaaz",12.02,13.03,14.04);
+//        $product->addRate("IR", "shiraaaaaz",12.02,13.03,14.04);
 //        $em->flush();
 //
 //        var_dump($product->findRates(array("des"=>"isfahan")));

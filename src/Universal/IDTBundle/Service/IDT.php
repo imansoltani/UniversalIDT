@@ -5,7 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Guzzle\Service\ClientInterface;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
-use Universal\IDTBundle\Entity\Ordering;
+use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
 
 /**
@@ -53,11 +53,11 @@ class IDT
     }
 
     /**
-     * @param Ordering $order
+     * @param OrderDetail $order
      * @return array
      * @throws \Exception
      */
-    public function doRequest(Ordering $order)
+    public function doRequest(OrderDetail $order)
     {
         $this->debitRequests = "";
         $this->debitRequestsIDs->reset();
@@ -221,7 +221,7 @@ class IDT
                     <account>'.$orderProduct->getCtrlNumber().'</account>
                 </CustomerInformation>
                 <CreditCard>
-                    <amount>'.$orderProduct->getOrdering()->getAmount().'</amount>
+                    <amount>'.$orderProduct->getOrderDetail()->getAmount().'</amount>
                 </CreditCard>
             </DebitRequest>
             ';
