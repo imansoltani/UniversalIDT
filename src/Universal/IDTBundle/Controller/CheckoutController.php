@@ -22,12 +22,20 @@ class CheckoutController extends Controller
             $valid = false;
         else
             foreach($added_items as &$added_item) {
-                if(!isset($added_item['product']) || !isset($added_item['count']) || !isset($added_item['denomination'])){
+                if(
+                    !isset($added_item['product']) ||
+                    !isset($added_item['count']) ||
+                    !isset($added_item['denomination']) ||
+                    !in_array($added_item['type'], array("buy", "recharge"))
+                ){
                     $valid = false;
                     break;
                 }
 
-                $added_item['product'] = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product']);
+                $added_item['product'] = $added_item['type'] == "buy"
+                    ? $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product'])
+                    : $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
+
                 if(is_null($added_item['product'])){
                     $valid = false;
                     break;

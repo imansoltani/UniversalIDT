@@ -61,6 +61,7 @@
             }
 
             function addToCookie(_product_id, _denomination, _count, _type) {
+//                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
                 var _exist = false;
                 for(var product in selected_products) {
                     if(     +selected_products[product]['product'] == +_product_id &&

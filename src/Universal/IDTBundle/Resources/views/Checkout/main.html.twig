@@ -10,6 +10,9 @@
             <table border="1">
                 <thead>
                 <tr>
+                    <th colspan="5">Cards</th>
+                </tr>
+                <tr>
                     <th>Item</th>
                     <th>Qty</th>
                     <th>Denom.</th>
@@ -19,13 +22,45 @@
                 </thead>
                 <tbody>
                 {% for row in data %}
+                    {% if row.type == "buy" %}
+                    <tr>
+                        <td>{{ row.product.name }}</td>
+                        <td>{{ row.count }}</td>
+                        <td>{{ row.denomination }}</td>
+                        <td>{{ row.product.AllGeneralInformation }}</td>
+                        <td>remove</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <table border="1">
+                <thead>
                 <tr>
-                    <td>{{ row.product.name }}</td>
-                    <td>{{ row.count }}</td>
-                    <td>{{ row.denomination }}</td>
-                    <td>{{ row.product.AllGeneralInformation }}</td>
-                    <td>remove</td>
+                    <th colspan="6">Charges</th>
                 </tr>
+                <tr>
+                    <th>Item</th>
+                    <th>Pin</th>
+                    <th>Qty</th>
+                    <th>Denom.</th>
+                    <th>Subtitle</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in data %}
+                    {% if row.type == "recharge" %}
+                        <tr>
+                            <td>{{ row.product.product.name }}</td>
+                            <td>{{ row.product.pin }}</td>
+                            <td>{{ row.count }}</td>
+                            <td>{{ row.denomination }}</td>
+                            <td>{{ row.product.product.AllGeneralInformation }}</td>
+                            <td>remove</td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
