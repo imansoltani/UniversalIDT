@@ -71,6 +71,13 @@ class OrderProduct
      */
     protected $ordering;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="count", type="integer", nullable=false)
+     */
+    private $count = 1;
+
 
     /**
      * Get id
@@ -241,5 +248,28 @@ class OrderProduct
     public function getRequestStatus()
     {
         return $this->requestStatus;
+    }
+
+    /**
+     * Set count
+     *
+     * @param integer $count
+     * @return OrderProduct
+     */
+    public function setCount($count)
+    {
+        $this->count = $count;
+
+        return $this;
+    }
+
+    /**
+     * Get count
+     *
+     * @return integer 
+     */
+    public function getCount()
+    {
+        return $this->count;
     }
 }

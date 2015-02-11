@@ -1,7 +1,8 @@
 <?php
 namespace Universal\IDTBundle\Service;
 
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class JsonDetails
@@ -179,6 +180,7 @@ abstract class JsonDetails {
             });
     }
 
+    //++++++++++++++++++++++++++++++++++++++++++++++++++
     //------------------------------ General Information
 
     /**
@@ -311,29 +313,31 @@ abstract class JsonDetails {
     //--------------------------------------- Rates
 
     /**
+     * @param string $country
      * @param string $destination
      * @param float $lac Location Access
      * @param float $tol Toll Free
      * @param float $internet
      * @return $this
      */
-    public function addRate($destination, $lac, $tol, $internet)
+    public function addRate($country, $destination, $lac, $tol, $internet)
     {
-        $this->arrayAdd('rates', array("des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
+        $this->arrayAdd('rates', array("con" => $country, "des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
 
         return $this;
     }
 
     /**
+     * @param string $country
      * @param string $destination
      * @param float $lac Location Access
      * @param float $tol Toll Free
      * @param float $internet
      * @return $this
      */
-    public function removeRate($destination, $lac, $tol, $internet)
+    public function removeRate($country, $destination, $lac, $tol, $internet)
     {
-        $this->arrayRemoveByValue('rates', array("des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
+        $this->arrayRemoveByValue('rates', array("con" => $country, "des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
 
         return $this;
     }
@@ -355,7 +359,7 @@ abstract class JsonDetails {
         return $this->get('rates');
     }
 
-    //-------------------------------------------------------------------
+    //------------------------------------------- Class ID
 
     /**
      * @param int $classId
@@ -374,5 +378,120 @@ abstract class JsonDetails {
     public function getClassId()
     {
         return $this->get('class_id');
+    }
+
+
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++
+    //--------------------------------------------- Image
+    /**
+     * @var UploadedFile
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+
+        if($this->file !== null)
+            $this->setLogoExtension($this->file->getExtension());
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    //---------------
+
+    /**
+     * @param string $logoExtension
+     * @return $this
+     */
+    public function setLogoExtension($logoExtension)
+    {
+        $this->set('logoExtension', $logoExtension);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogoExtension()
+    {
+        return $this->get('logoExtension');
+    }
+
+    //---------------
+
+    /**
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return $this->getLogoExtension() == "" ? null : $this->getUploadRootDir().'/'.$this->getId().".".$this->getLogoExtension();
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->getLogoExtension() == ""  ? null : $this->getUploadDir().'/'.$this->getId().".".$this->getLogoExtension();
+    }
+
+    /**
+     * @return string
+     */
+    private function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * @return string
+     */
+    private function getUploadDir()
+    {
+        return 'uploads/products';
+    }
+
+    /**
+     * Upload Product Logo
+     */
+    public function uploadLogo()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getId() . '.' . $this->file->getExtension()
+        );
+
+        $this->file = null;
+    }
+
+    /**
+     * Remove Product Logo
+     */
+    public function removeLogo()
+    {
+        if(file_exists($this->getAbsolutePath()))
+            unlink($this->getAbsolutePath());
+
+        $this->setLogoExtension("");
     }
 }

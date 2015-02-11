@@ -206,6 +206,7 @@ class Product extends JsonDetails
     public function saveJson()
     {
         parent::saveJson();
+        parent::uploadLogo();
     }
 
     /**
@@ -214,5 +215,6 @@ class Product extends JsonDetails
     public function removeJson()
     {
         parent::removeJson();
+        parent::removeLogo();
     }
 }
