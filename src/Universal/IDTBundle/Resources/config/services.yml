@@ -10,7 +10,7 @@ services:
         arguments: [%IDT%, @guzzle.client, @doctrine.orm.default_entity_manager]
     universal_idt.registration.form.type:
         class: Universal\IDTBundle\Form\FOS\RegistrationFormType
-        arguments: [%locales%]
+        arguments: [%languages%]
         tags:
             - { name: form.type, alias: universal_idt_registration }
 #    universal_idt.example:

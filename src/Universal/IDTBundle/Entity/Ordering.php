@@ -67,11 +67,26 @@ class Ordering
     private $chargeDesc;
 
     /**
-     * @var array
+     * @var string
      *
-     * @ORM\Column(name="deliveryMethod", type="simple_array")
+     * @ORM\Column(name="deliveryEmail", type="string", nullable=true)
      */
-    private $deliveryMethod;
+    private $deliveryEmail;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deliverySMS", type="string", nullable=true, length=10)
+     */
+    private $deliverySMS;
+
+    /**
+     * @var string
+     *
+     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType")
+     * @ORM\Column(name="paymentStatus", type="PaymentStatusEnumType")
+     */
+    private $paymentStatus;
 
     /**
      * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="ordering")
@@ -242,29 +257,6 @@ class Ordering
     }
 
     /**
-     * Set deliveryMethod
-     *
-     * @param array $deliveryMethod
-     * @return Ordering
-     */
-    public function setDeliveryMethod($deliveryMethod)
-    {
-        $this->deliveryMethod = $deliveryMethod;
-
-        return $this;
-    }
-
-    /**
-     * Get deliveryMethod
-     *
-     * @return array 
-     */
-    public function getDeliveryMethod()
-    {
-        return $this->deliveryMethod;
-    }
-
-    /**
      * Add orderProducts
      *
      * @param OrderProduct $orderProducts
@@ -318,5 +310,74 @@ class Ordering
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set deliveryEmail
+     *
+     * @param string $deliveryEmail
+     * @return Ordering
+     */
+    public function setDeliveryEmail($deliveryEmail)
+    {
+        $this->deliveryEmail = $deliveryEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get deliveryEmail
+     *
+     * @return string
+     */
+    public function getDeliveryEmail()
+    {
+        return $this->deliveryEmail;
+    }
+
+    /**
+     * Set deliverySMS
+     *
+     * @param string $deliverySMS
+     * @return Ordering
+     */
+    public function setDeliverySMS($deliverySMS)
+    {
+        $this->deliverySMS = $deliverySMS;
+
+        return $this;
+    }
+
+    /**
+     * Get deliverySMS
+     *
+     * @return string
+     */
+    public function getDeliverySMS()
+    {
+        return $this->deliverySMS;
+    }
+
+    /**
+     * Set paymentStatus
+     *
+     * @param string $paymentStatus
+     * @return Ordering
+     */
+    public function setPaymentStatus($paymentStatus)
+    {
+        $this->paymentStatus = $paymentStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentStatus
+     *
+     * @return string
+     */
+    public function getPaymentStatus()
+    {
+        return $this->paymentStatus;
     }
 }

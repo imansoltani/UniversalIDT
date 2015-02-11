@@ -15,7 +15,15 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    locales:           [fr, en, it]
+    languages:           [fr, en, it]
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    ogone_pspid: hellodi
+    ogone_sha_in: 'MySha-In@key765?'
+    ogone_sha_out: 'MySha-ouT@Key79?'
+    ogone_submit_url: 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'
+    ogone_template: ''
+
+    currencies: [EUR, CHF, PLN, SEK, DKK, NOK, GBP]

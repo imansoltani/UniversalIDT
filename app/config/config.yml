@@ -57,9 +57,10 @@ doctrine:
         mapping_types:
             enum: string
         types:
-            RequestTypeEnumType: Universal\IDTBundle\DBAL\Types\RequestTypeEnumType
+            RequestTypeEnumType:   Universal\IDTBundle\DBAL\Types\RequestTypeEnumType
             RequestStatusEnumType: Universal\IDTBundle\DBAL\Types\RequestStatusEnumType
             PaymentMethodEnumType: Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType
+            PaymentStatusEnumType: Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType
             GenderEnumType: Universal\IDTBundle\DBAL\Types\GenderEnumType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
@@ -90,5 +91,5 @@ fos_user:
 
 jms_i18n_routing:
     default_locale: en
-    locales: %locales%
+    locales: %languages%
     strategy: prefix
