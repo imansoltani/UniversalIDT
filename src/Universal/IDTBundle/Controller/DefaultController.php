@@ -4,6 +4,7 @@ namespace Universal\IDTBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
@@ -19,7 +20,7 @@ class DefaultController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        for($i=1; $i<=5; $i++)
+        for($i=10; $i<=15; $i++)
         {
             $product = new Product();
             $product->setName("aaa".$i);
@@ -27,9 +28,10 @@ class DefaultController extends Controller
             $product->setCountryISO("US");
             $product->setDenominations(array((int)($i.$i),(int)($i.$i.$i)));
             $product->setClassId((int)($i.$i.$i));
-            $product->addRate("US", 1.1*$i, 1.1*$i, 1.1*$i);
-            $product->addRate("FR", 2.2*$i, 3.3*$i, 4.4*$i);
-            $product->addRate("CH", 3.3*$i, 1.1*$i, 2.2*$i);
+            $product->addRate("US", "", 1.1*$i, 1.1*$i, 1.1*$i);
+            $product->addRate("FR", "paris", 2.2*$i, 3.3*$i, 4.4*$i);
+            $product->addRate("CH", "shanghai", 3.3*$i, 1.1*$i, 2.2*$i);
+            $product->setFile(new UploadedFile("C:\\xampp\\htdocs\\UniversalIdt\\web\\uploads\\test\\(".$i.").png", "(".$i.").png", 'image/png', 70, null, true));
             $em->persist($product);
         }
         $em->flush();
