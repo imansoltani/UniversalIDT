@@ -2,6 +2,10 @@ guest:
     resource: "@UniversalIDTBundle/Resources/config/routing/guest.yml"
     prefix:   /
 
+user:
+    resource: "@UniversalIDTBundle/Resources/config/routing/user.yml"
+    prefix:   /app
+
 test:
     path:     /test
     defaults: { _controller: UniversalIDTBundle:Default:index }

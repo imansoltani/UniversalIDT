@@ -83,7 +83,7 @@ class IDT
         try {
             $responses = $this->send();
 
-            echo(print_r($responses, true));
+            //echo(print_r($responses, true));
 
 
             foreach($order->getOrderProducts() as $orderProduct) {
@@ -111,6 +111,24 @@ class IDT
 
             return $result;
         }
+    }
+
+    public function getCallDetails(OrderProduct $orderProduct)
+    {
+        $this->debitRequests = "";
+        $this->debitRequestsIDs->reset();
+
+        $this->callDetailsRequest($orderProduct);
+
+        try {
+            $responses = $this->send();
+
+            return $this->callDetailsResponse($orderProduct, $responses[0]);
+        }
+        catch (\Exception $e) {
+            return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'description' => $e->getMessage());
+        }
+
     }
 
     /**
@@ -221,6 +239,34 @@ class IDT
             ';
     }
 
+    /**
+     * @param OrderProduct $orderProduct
+     */
+    private function callDetailsRequest(OrderProduct $orderProduct)
+    {
+        $this->debitRequests .=
+            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="calldetails">
+                <account>'.$orderProduct->getCtrlNumber().'</account>
+                <startdate>'.date("mm/dd/yy",strtotime("-1 week")).'</startdate>
+                <enddate>'.date("mm/dd/yy",strtotime("now")).'</enddate>
+            </DebitRequest>
+            ';
+    }
+
+//    /**
+//     * @param OrderProduct $orderProduct
+//     */
+//    private function QueryRequestsRequest(OrderProduct $orderProduct, \DateTime $start_date, \DateTime $end_date)
+//    {
+//        $this->debitRequests .=
+//            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="queryrequests">
+//                <account>'.$orderProduct->getCtrlNumber().'</account>
+//                <startdate>'.date("mm/dd/yy",strtotime("-1 week")).'</startdate>
+//                <enddate>'.date("mm/dd/yy",strtotime("now")).'</enddate>
+//            </DebitRequest>
+//            ';
+//    }
+
     //--------------------------------
 
     /**
@@ -291,5 +337,15 @@ class IDT
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
             return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'code' => $debitResponse['code'], 'description' => $debitResponse['description']);
         }
+    }
+
+    /**
+     * @param OrderProduct $orderProduct
+     * @param array $debitResponse
+     * @return array
+     */
+    private function callDetailsResponse(OrderProduct $orderProduct, array $debitResponse)
+    {
+        return array('status' => 'ok', 'id'=>$orderProduct->getId(), 'data' => $debitResponse);
     }
 }

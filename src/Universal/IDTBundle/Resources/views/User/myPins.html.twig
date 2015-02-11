@@ -1,0 +1,34 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}UniversalIDTBundle:User:myPins{% endblock %}
+
+{% block body %}
+<h1>Welcome to the User:myPins page</h1>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Date purchased</th>
+            <th>Card name</th>
+            <th>PIN</th>
+            <th>Order</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for pin in pins %}
+            <tr>
+                <td>{{ pin.ordering.date|date('Y-m-d H:i:s') }}</td>
+                <td>{{ pin.product.name }}</td>
+                <td>{{ pin.pin }}</td>
+                <td><a href="{{ path('user_order_details', {'id':pin.ordering.id}) }}">order details</a></td>
+                <td><a href="{{ path('user_pin_details', {'id':pin.id}) }}">details</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No Data</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

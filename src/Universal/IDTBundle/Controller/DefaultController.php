@@ -44,7 +44,7 @@ class DefaultController extends Controller
 //
 //        $order_product1 = new OrderProduct();
 //        $order_product1->setOrdering($order);
-//        $order_product1->setProduct($em->getRepository('UniversalIDTBundle:Product')->find(38));
+//        $order_product1->setProduct($em->getRepository('UniversalIDTBundle:Product')->find(1));
 //        $order_product1->setPinDenomination(10);
 //        $order_product1->setRequestType(RequestTypeEnumType::CREATION);
 //        $order_product1->setRequestStatus(RequestStatusEnumType::SUCCEED);
@@ -53,7 +53,7 @@ class DefaultController extends Controller
 //
 //        $order_product2 = new OrderProduct();
 //        $order_product2->setOrdering($order);
-//        $order_product2->setProduct($em->getRepository('UniversalIDTBundle:Product')->find(39));
+//        $order_product2->setProduct($em->getRepository('UniversalIDTBundle:Product')->find(2));
 //        $order_product2->setPinDenomination(10);
 //        $order_product2->setRequestType(RequestTypeEnumType::CREATION);
 //        $order_product2->setRequestStatus(RequestStatusEnumType::SUCCEED);

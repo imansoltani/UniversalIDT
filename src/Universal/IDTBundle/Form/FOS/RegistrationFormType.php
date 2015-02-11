@@ -19,7 +19,7 @@ class RegistrationFormType extends AbstractType
                 'choices' => $this->locales
             ));
         $builder->add('gender', 'choice', array(
-                'choices' => array('m'=>'Male', 'f'=> 'Female')
+                'choices' => array('M'=>'Male', 'F'=> 'Female')
             ));
     }
 

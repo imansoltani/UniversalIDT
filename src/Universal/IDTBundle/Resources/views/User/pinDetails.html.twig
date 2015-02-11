@@ -1,0 +1,79 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}UniversalIDTBundle:User:pinDetails{% endblock %}
+
+{% block body %}
+    <h1>Welcome to the User:pinDetails page</h1>
+
+    <div>
+        <strong>General details</strong>
+        <table border="1">
+            <tr>
+                <td>Card name</td>
+                <td colspan="3">{{ pin.product.name }}</td>
+            </tr>
+            <tr>
+                <td>Control number</td>
+                <td>{{ pin.ctrlNumber }}</td>
+                <td>Order No</td>
+                <td>{{ pin.ordering.id }}</td>
+            </tr>
+            <tr>
+                <td>Total amount</td>
+                <td>{{ call_details.totalamount }}</td>
+                <td>Total calls</td>
+                <td>{{ call_details.totalcalls }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <strong>Call history</strong>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Date, Time</th>
+                <th>Duration</th>
+                <th>Cost</th>
+                <th>Caller Number</th>
+                <th>Called number</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for call in call_details.calls %}
+                <tr>
+                    <td>{{ call.callfulldate }}</td>
+                    <td>{{ call.minutes }}</td>
+                    <td>{{ call.amount }}</td>
+                    <td>{{ call.dialedfrom }}</td>
+                    <td>{{ call.dialedto }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <strong>Recharges</strong>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Card name</th>
+                <th>Date</th>
+                <th>Denomination</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for recharge in recharges %}
+                <tr>
+                    <td>{{ recharge.product.name }}</td>
+                    <td>{{ recharge.ordering.date|date('Y-m-d H:i:s') }}</td>
+                    <td>{{ recharge.pinDenomination }}</td>
+                    <td>{{ recharge.requestStatus }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
