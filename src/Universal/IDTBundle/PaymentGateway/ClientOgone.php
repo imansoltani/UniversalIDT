@@ -3,6 +3,7 @@ namespace Universal\IDTBundle\PaymentGateway;
 
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Universal\IDTBundle\Entity\OrderDetail;
 
@@ -10,6 +11,9 @@ class ClientOgone
 {
     /** @var EntityManager $em */
     private $em;
+
+    /** @var  Request $request */
+    private $request;
 
     private $pspId;
     private $shaIn;
@@ -20,15 +24,18 @@ class ClientOgone
     private $homeUrl;
     private $ogoneTemplateUrl;
 
-    public function __construct(Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl)
+    public function __construct(Request $request, Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl)
     {
         $this->em           = $em;
+        $this->request      = $request;
+
         $this->pspId        = $pspId;
         $this->shaIn        = $shaIn;
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
 
         $this->ogoneTemplateUrl   = $router->generate("ogone_template", [], true);
+        $this->resultUrl        = $router->generate("checkout_result", [], true);
     }
 
     private function getSortedParameters(OrderDetail $payment)
@@ -37,12 +44,12 @@ class ClientOgone
             'ACCEPTURL'     => $this->resultUrl,
             'AMOUNT'        => $payment->getAmount(),
             'CANCELURL'     => $this->resultUrl,
-            'CATALOGURL'    => $this->catalogUrl,
+            'CATALOGURL'    => $this->resultUrl,
             'CURRENCY'      => $payment->getCurrency(),
             'DECLINEURL'    => $this->resultUrl,
             'EXCEPTIONURL'  => $this->resultUrl,
-            'HOMEURL'       => $this->homeUrl,
-            'LANGUAGE'      => sprintf('%s_%s',$payment->getUser()->getLanguage(),$payment->getUser()->getLanguage()),
+            'HOMEURL'       => $this->resultUrl,
+            'LANGUAGE'      => $this->request->getLocale(),
             'ORDERID'       => $payment->getOrderReference(),
             'PSPID'         => $this->pspId,
             'TP'            => $this->ogoneTemplateUrl

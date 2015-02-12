@@ -90,6 +90,6 @@ fos_user:
             type: universal_idt_registration
 
 jms_i18n_routing:
-    default_locale: en
+    default_locale: %locale%
     locales: %languages%
     strategy: prefix

@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType;
 use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
@@ -75,7 +76,18 @@ class CheckoutController extends Controller
 
                 $em->flush();
 
-                $locale = $request->getLocale();
+                switch($order_detail->getPaymentMethod()) {
+                    case PaymentMethodEnumType::OGONE:
+                        $client = $this->get('client_ogone');
+                        return $this->render("UniversalIDTBundle:Checkout:redirectToOgone.html.twig", array(
+                                'form' => $client->generateForm($order_detail)
+                            ));
+                    case PaymentMethodEnumType::SOFORT:
+                        break;
+                    default:
+                        break;
+                }
+
                 return new Response("done");
             }
         }
@@ -103,6 +115,11 @@ class CheckoutController extends Controller
                 'data' => $added_items,
                 'form' => $form->createView()
             ));
+    }
+
+    public function paymentResultAction()
+    {
+        return new Response('returned from payment');
     }
 
     public function testAction(Request $request)

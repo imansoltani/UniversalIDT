@@ -8,11 +8,18 @@ services:
     IDT:
         class: Universal\IDTBundle\Service\IDT
         arguments: [%IDT%, @guzzle.client, @doctrine.orm.default_entity_manager]
+
     universal_idt.registration.form.type:
         class: Universal\IDTBundle\Form\FOS\RegistrationFormType
         arguments: [%languages%]
         tags:
             - { name: form.type, alias: universal_idt_registration }
+
+    client_ogone:
+        class: Universal\IDTBundle\PaymentGateway\ClientOgone
+        arguments: [@request, @router, @doctrine.orm.default_entity_manager, %ogone_pspid%, %ogone_sha_in%, %ogone_sha_out%, %ogone_submit_url%]
+        scope: request
+
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
