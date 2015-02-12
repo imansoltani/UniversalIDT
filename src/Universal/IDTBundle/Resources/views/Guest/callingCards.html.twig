@@ -7,5 +7,7 @@
 
     {% for iso, name in countries %}
         <a href="{{ path('guest_details', {'country':iso}) }}">{{ name }}</a><br>
+    {% else %}
+        No Card.
     {% endfor %}
 {% endblock %}

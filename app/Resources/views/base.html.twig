@@ -18,6 +18,7 @@
             <a href="#">Applications</a>
             <a href="#">About Us</a>
             <a href="#">Customer Service</a>
+            <a href="{{ path('checkout_basket') }}">Basket</a>
             {% if app.user %}
                 <a href="{{ path('fos_user_security_logout') }}">logout</a>
             {% else %}

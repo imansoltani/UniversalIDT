@@ -10,7 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
-    public function myCartAction(Request $request)
+    public function basketAction()
+    {
+        return $this->render('UniversalIDTBundle:Checkout:basket.html.twig');
+    }
+
+    public function checkoutAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -51,7 +56,7 @@ class CheckoutController extends Controller
             $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
         }
 
-        return $this->render('UniversalIDTBundle:Checkout:main.html.twig', array(
+        return $this->render('UniversalIDTBundle:Checkout:checkout.html.twig', array(
                 'data' => $added_items
             ), $response);
     }

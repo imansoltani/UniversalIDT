@@ -12,7 +12,7 @@ test:
 
 checkout:
     resource: "@UniversalIDTBundle/Resources/config/routing/checkout.yml"
-    prefix:   /checkout
+    prefix:   /
 
 ogone_template:
     path:   /ogone_template
