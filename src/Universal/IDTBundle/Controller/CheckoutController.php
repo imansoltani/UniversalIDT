@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
+use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
+use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
 use Universal\IDTBundle\Entity\Product;
@@ -32,9 +35,48 @@ class CheckoutController extends Controller
 
             if($form->isValid())
             {
+                $formData = $form->getData();
                 $basket = json_decode($this->get('session')->get('basket'), true);
-                $basket_currency = json_decode($this->get('session')->get('basket_currency'), true);
+                $basket_currency = $this->get('session')->get('basket_currency');
 
+                $amount = 0;
+                foreach($basket as $row)
+                    $amount += $row['count'] * $row['denomination'];
+
+                $order_detail = new OrderDetail();
+                $order_detail->setCurrency($basket_currency);
+                $order_detail->setAmount($amount);
+                $order_detail->setDeliveryEmail($formData['email']);
+                $order_detail->setDeliverySMS($formData['sms']);
+                $order_detail->setPaymentMethod($formData['method']);
+                $order_detail->setPaymentStatus(PaymentStatusEnumType::STATUS_PENDING);
+                if($this->getUser()) $order_detail->setUser($this->getUser());
+                $em->persist($order_detail);
+                $em->flush();
+
+                foreach($basket as $row) {
+                    $order_product = new OrderProduct();
+                    $order_product->setCount($row['count']);
+                    $order_product->setOrderDetail($order_detail);
+                    $order_product->setPinDenomination($row['denomination']);
+                    $order_product->setRequestStatus(RequestStatusEnumType::PENDING);
+                    if($row['type'] == "buy") {
+                        $order_product->setRequestType(RequestTypeEnumType::ACTIVATION);
+                        $order_product->setProduct($em->getRepository('UniversalIDTBundle:Product')->find($row['product']));
+                    }
+                    else {
+                        $order_product->setRequestType(RequestTypeEnumType::RECHARGE);
+                        $old_order_product = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($row['product']);
+                        $order_product->setProduct($old_order_product->getProduct());
+                        $order_product->setPin($old_order_product->getPin());
+                    }
+                    $em->persist($order_product);
+                }
+
+                $em->flush();
+
+                $locale = $request->getLocale();
+                return new Response("done");
             }
         }
         else
@@ -54,7 +96,7 @@ class CheckoutController extends Controller
             }
 
             $this->get('session')->set('basket', stripcslashes($request->cookies->get("products")));
-            $this->get('session')->set('basket_currency', stripcslashes($added_items_currency));
+            $this->get('session')->set('basket_currency', $added_items_currency);
         }
 
         return $this->render('UniversalIDTBundle:Checkout:checkout.html.twig', array(
@@ -81,12 +123,16 @@ class CheckoutController extends Controller
 
     /**
      * @param array $added_items
+     * @param string $added_items_currency
      * @param EntityManager $em
      * @return bool
      */
     private function checkCookie(array &$added_items, $added_items_currency, EntityManager $em)
     {
-        if(is_null($added_items) || is_null($added_items_currency))
+        if(is_null($added_items_currency) || !is_string($added_items_currency) || strlen($added_items_currency) != 3)
+            return false;
+
+        if(is_null($added_items) || !is_array($added_items))
             return false;
 //        die("is null");
 
