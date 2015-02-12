@@ -35,9 +35,13 @@
         <script type="text/javascript">
             var selected_products = [];
 
+            var selected_products_currency = "";
+
             function loadSelectedProducts() {
                 var products_json = $.cookie("products");
                 selected_products = products_json == undefined ? [] : JSON.parse(products_json);
+
+                selected_products_currency = $.cookie("products_currency") == undefined ? "" : $.cookie("products");
 
                 var valid = true;
                 var types = ["buy", "recharge"];
@@ -55,6 +59,9 @@
                 if(!valid) {
                     selected_products = [];
                     $.cookie("products", "[]", { path: '/' });
+
+                    selected_products_currency = "";
+                    $.cookie("products_currency", "", { path: '/' });
                 }
             }
 
@@ -67,7 +74,18 @@
                 $("#cart_total").html(total_count);
             }
 
-            function addToCookie(_product_id, _denomination, _count, _type) {
+            function addToCookie(_product_id, _denomination, _count, _currency, _type) {
+                if(selected_products_currency != "" && selected_products_currency != _currency) {
+                    alert('You must select carts with same currency.');
+                    return;
+                }
+                else if(selected_products_currency == "") {
+                    selected_products_currency = _currency;
+                    $.cookie("products_currency", _currency, { path: '/' });
+                }
+
+
+
 //                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
                 var _exist = false;
                 for(var product in selected_products) {

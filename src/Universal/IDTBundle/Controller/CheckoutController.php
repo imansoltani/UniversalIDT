@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Universal\IDTBundle\Entity\OrderDetail;
+use Universal\IDTBundle\Entity\OrderProduct;
+use Universal\IDTBundle\Entity\Product;
 use Universal\IDTBundle\Form\CheckoutType;
 
 class CheckoutController extends Controller
@@ -21,21 +24,38 @@ class CheckoutController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $added_items = json_decode(stripcslashes($request->cookies->get("products")), true);
-
-        $valid = $this->checkCookie($added_items, $em);
-
-        if(!$valid) {
-            $response = new Response("Error in cookies and cleared.");
-            $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies.');
-            $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
-
-            return $response;
-        }
-
-        $this->get('session')->set('basket', json_decode(stripcslashes($request->cookies->get("products")), true));
-
         $form = $this->createForm(new CheckoutType());
+
+        if($request->isMethod('post'))
+        {
+            $form->handleRequest($request);
+
+            if($form->isValid())
+            {
+                $basket = json_decode($this->get('session')->get('basket'), true);
+                $basket_currency = json_decode($this->get('session')->get('basket_currency'), true);
+
+            }
+        }
+        else
+        {
+            $added_items = json_decode(stripcslashes($request->cookies->get("products")), true);
+            $added_items_currency = $request->cookies->get("products_currency");
+
+            $valid = $this->checkCookie($added_items, $added_items_currency, $em);
+
+            if(!$valid) {
+                $response = new Response("Error in cookies and cleared.");
+                $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies.');
+                $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+                $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+
+                return $response;
+            }
+
+            $this->get('session')->set('basket', stripcslashes($request->cookies->get("products")));
+            $this->get('session')->set('basket_currency', stripcslashes($added_items_currency));
+        }
 
         return $this->render('UniversalIDTBundle:Checkout:checkout.html.twig', array(
                 'data' => $added_items,
@@ -64,9 +84,9 @@ class CheckoutController extends Controller
      * @param EntityManager $em
      * @return bool
      */
-    private function checkCookie(array &$added_items, EntityManager $em)
+    private function checkCookie(array &$added_items, $added_items_currency, EntityManager $em)
     {
-        if(is_null($added_items))
+        if(is_null($added_items) || is_null($added_items_currency))
             return false;
 //        die("is null");
 
@@ -80,13 +100,28 @@ class CheckoutController extends Controller
                 return false;
 //                die("field error");
 
-            $added_item['product'] = $added_item['type'] == "buy"
-                ? $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product'])
-                : $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
+            if($added_item['type'] == "buy") {
+                /** @var Product $row */
+                $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product']);
+                if(!$row) return false;
 
-            if(is_null($added_item['product']))
-                return false;
-//                die("not found id");
+                $added_item['product'] = $row;
+
+                if($row->getCurrency() !== $added_items_currency) return false;
+
+                if(!in_array($added_item['denomination'], $row->getDenominations())) return false;
+            }
+            else {
+                /** @var OrderProduct $row */
+                $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
+                if(!$row) return false;
+
+                $added_item['product'] = $row;
+
+                if($row->getProduct()->getCurrency() !== $added_items_currency) return false;
+
+                if(!in_array($added_item['denomination'], $row->getProduct()->getDenominations())) return false;
+            }
         }
 
         return true;

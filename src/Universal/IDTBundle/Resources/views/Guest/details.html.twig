@@ -34,7 +34,7 @@
                 {% endfor %}
             </select>
             <input type="number" id="{{ "pr_" ~ product.id ~ "_count" }}" value="1">
-            <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val(), 'buy');">Add To Cart</a>
+            <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val(), '{{ product.currency }}', 'buy');">Add To Cart</a>
         </div>
     {% else %}
         No Card.
