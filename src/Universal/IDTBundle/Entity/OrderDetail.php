@@ -5,6 +5,7 @@ namespace Universal\IDTBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
+use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
 
 /**
  * OrderDetail
@@ -97,12 +98,12 @@ class OrderDetail
     private $paymentStatus;
 
     /**
-     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="OrderDetail")
+     * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="orderDetail")
      */
     protected $orderProducts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="OrderDetails")
+     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="orderDetails")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
@@ -387,5 +388,37 @@ class OrderDetail
     public function getPaymentStatus()
     {
         return $this->paymentStatus;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProcessed()
+    {
+        return PaymentStatusEnumType::STATUS_PENDING !== $this->getPaymentStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAccepted()
+    {
+        return PaymentStatusEnumType::STATUS_ACCEPTED === $this->getPaymentStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCanceled()
+    {
+        return PaymentStatusEnumType::STATUS_CANCELED === $this->getPaymentStatus();
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderReference()
+    {
+        return $this->getDate()->format("ymdHi").$this->getId();
     }
 }

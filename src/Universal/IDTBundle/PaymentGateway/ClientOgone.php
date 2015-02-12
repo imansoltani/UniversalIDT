@@ -28,7 +28,7 @@ class ClientOgone
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
 
-        $this->ogoneTemplateUrl   = $router->generate("transactions_ogone_template", [], true);
+        $this->ogoneTemplateUrl   = $router->generate("ogone_template", [], true);
     }
 
     private function getSortedParameters(OrderDetail $payment)

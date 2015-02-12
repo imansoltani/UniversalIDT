@@ -13,3 +13,9 @@ test:
 checkout:
     resource: "@UniversalIDTBundle/Resources/config/routing/checkout.yml"
     prefix:   /checkout
+
+ogone_template:
+    path:   /ogone_template
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: UniversalIDTBundle:PaymentGateWay:ogoneTemplate.html.twig
