@@ -18,6 +18,12 @@
             <a href="#">Applications</a>
             <a href="#">About Us</a>
             <a href="#">Customer Service</a>
+            {% if app.user %}
+                <a href="{{ path('fos_user_security_logout') }}">logout</a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">login</a>
+            {% endif %}
+
         </div>
         Current cart totals: <span id="cart_total">--</span> for <span id="cart_total_items">--</span> items!
         {% block body %}{% endblock %}
