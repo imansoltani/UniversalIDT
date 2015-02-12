@@ -52,7 +52,7 @@ class CheckoutController extends Controller
                 $order_detail->setPaymentStatus(PaymentStatusEnumType::STATUS_PENDING);
                 if($this->getUser()) $order_detail->setUser($this->getUser());
                 $em->persist($order_detail);
-                $em->flush();
+
 
                 foreach($basket as $row) {
                     $order_product = new OrderProduct();
