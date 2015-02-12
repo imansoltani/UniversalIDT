@@ -1,5 +1,5 @@
 checkout_checkout:
-    path:     /
+    path:     /checkout
     defaults: { _controller: UniversalIDTBundle:Checkout:checkout }
 
 checkout_basket:

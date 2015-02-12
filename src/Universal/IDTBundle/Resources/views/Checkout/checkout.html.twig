@@ -3,8 +3,27 @@
 {% block title %}UniversalIDTBundle:Checkout:MyCart{% endblock %}
 
 {% block body %}
-    <form>
-        <div id="my_cart">
+    {{ form_start(form) }}
+        <div id="delivery">
+            <h1>Welcome to the Checkout:Delivery page</h1>
+
+            {{ form_row(form.email) }}
+            {{ form_row(form.sms) }}
+
+            <a href="{{ path('checkout_basket') }}">Back to basket</a>
+            <a href="#" onclick="$('#delivery').hide();$('#payment').show();">continue to payment method</a>
+        </div>
+
+        <div id="payment" style="display: none">
+            <h1>Welcome to the Checkout:Payment page</h1>
+
+            {{ form_row(form.method) }}
+
+            <a href="#" onclick="$('#payment').hide();$('#delivery').show();">Back to delivery method</a>
+            <a href="#" onclick="$('#payment').hide();$('#order').show();">Continue to order review</a>
+        </div>
+
+        <div id="order" style="display: none">
             <h1>Welcome to the Checkout:MyCart page</h1>
 
             <table border="1">
@@ -23,13 +42,13 @@
                 <tbody>
                 {% for row in data %}
                     {% if row.type == "buy" %}
-                    <tr>
-                        <td>{{ row.product.name }}</td>
-                        <td>{{ row.count }}</td>
-                        <td>{{ row.denomination }}</td>
-                        <td>{{ row.product.AllGeneralInformation }}</td>
-                        <td>remove</td>
-                    </tr>
+                        <tr>
+                            <td>{{ row.product.name }}</td>
+                            <td>{{ row.count }}</td>
+                            <td>{{ row.denomination }}</td>
+                            <td>{{ row.product.AllGeneralInformation }}</td>
+                            <td>remove</td>
+                        </tr>
                     {% endif %}
                 {% endfor %}
                 </tbody>
@@ -65,20 +84,8 @@
                 </tbody>
             </table>
 
-            <a href="#" onclick="$('#my_cart').hide();$('#delivery').show();">continue to delivery method</a>
+            <a href="#" onclick="$('#order').hide();$('#payment').show();">Back to payment method</a>
+            {{ form_row(form.submit) }}
         </div>
-        <div id="delivery" style="display: none">
-            <h1>Welcome to the Checkout:Delivery page</h1>
-
-            <input type="checkbox"/> Email <br>
-            <a href="#" onclick="$('#delivery').hide();$('#payment').show();">continue to payment method</a>
-        </div>
-        <div id="payment" style="display: none">
-            <h1>Welcome to the Checkout:Payment page</h1>
-
-            <input type="checkbox"/> credit cards <br>
-            <input type="checkbox"/> sofrt <br>
-            <input type="submit" value="complete payment"/>
-        </div>
-    </form>
+    {{ form_end(form) }}
 {% endblock %}
