@@ -74,9 +74,31 @@ class CheckoutController extends Controller
         try {
             $orderDetail = $this->get('client_ogone')->processResult($request->query->all());
 
-            return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                    'result' => $orderDetail->getPaymentStatus()
-                ));
+            try {
+                if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED)
+                {
+                    $idt = $this->get('idt');
+
+                    $orderDetail = $idt->doRequest($orderDetail);
+
+                    $result = "";
+                    /** @var OrderProduct $orderProduct */
+                    foreach($orderDetail as $orderProduct) {
+
+                    }
+                }
+                else
+                {
+                    return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                            'result' => "Payment failed: " . $orderDetail->getPaymentStatus()
+                        ));
+                }
+            } catch (\Exception $e) {
+                return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                        'result' => $orderDetail->getPaymentStatus()
+                    ));
+            }
+
         } catch (\Exception $e) {
             return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
                     'result' => 'Error in process result of Ogone: '. $e->getMessage()
@@ -175,7 +197,7 @@ class CheckoutController extends Controller
             $order_product->setCount($row['count']);
             $order_product->setOrderDetail($order_detail);
             $order_product->setPinDenomination($row['denomination']);
-            $order_product->setRequestStatus(RequestStatusEnumType::PENDING);
+            $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
             switch ($row['type']) {
                 case $this->BASKET_BUY:
                     $order_product->setRequestType(RequestTypeEnumType::ACTIVATION);
