@@ -79,13 +79,25 @@ class CheckoutController extends Controller
                 {
                     $idt = $this->get('idt');
 
-                    $orderDetail = $idt->doRequest($orderDetail);
+                    $orderDetail = $idt->processOrder($orderDetail);
 
                     $result = "";
                     /** @var OrderProduct $orderProduct */
                     foreach($orderDetail as $orderProduct) {
-
+                        $result .=
+                            "id: ". $orderProduct->getId()
+                            ."name: ". $orderProduct->getProduct()->getName()
+                            ."denom: ". $orderProduct->getPinDenomination()
+                            ."ctrlNumber: ". $orderProduct->getCtrlNumber()?:"--"
+                            ."pin: ". $orderProduct->getPin()?:"--"
+                            ."request type: ". $orderProduct->getRequestType()
+                            ."request status: ". $orderProduct->getRequestStatus()
+                            ."<br>";
                     }
+
+                    return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                            'result' => "succeed: <br>".$result
+                        ));
                 }
                 else
                 {
@@ -193,25 +205,30 @@ class CheckoutController extends Controller
 
         //create order_products
         foreach($basket as $row) {
-            $order_product = new OrderProduct();
-            $order_product->setCount($row['count']);
-            $order_product->setOrderDetail($order_detail);
-            $order_product->setPinDenomination($row['denomination']);
-            $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
-            switch ($row['type']) {
-                case $this->BASKET_BUY:
-                    $order_product->setRequestType(RequestTypeEnumType::CREATION);
-                    $order_product->setProduct($em->getRepository('UniversalIDTBundle:Product')->find($row['product']));
-                    break;
+            for($i=1; $i<=$row['count']; $i++) {
+                $order_product = new OrderProduct();
+                $order_product->setOrderDetail($order_detail);
+                $order_product->setPinDenomination($row['denomination']);
+                $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
+                switch ($row['type']) {
+                    case $this->BASKET_BUY:
+                        $order_product->setRequestType(RequestTypeEnumType::CREATION);
+                        $order_product->setProduct(
+                            $em->getRepository('UniversalIDTBundle:Product')->find($row['product'])
+                        );
+                        break;
 
-                case $this->BASKET_RECHARGE:
-                    $order_product->setRequestType(RequestTypeEnumType::RECHARGE);
-                    $old_order_product = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($row['product']);
-                    $order_product->setProduct($old_order_product->getProduct());
-                    $order_product->setPin($old_order_product->getPin());
-                    break;
+                    case $this->BASKET_RECHARGE:
+                        $order_product->setRequestType(RequestTypeEnumType::RECHARGE);
+                        $old_order_product = $em->getRepository('UniversalIDTBundle:OrderProduct')->find(
+                            $row['product']
+                        );
+                        $order_product->setProduct($old_order_product->getProduct());
+                        $order_product->setPin($old_order_product->getPin());
+                        break;
+                }
+                $em->persist($order_product);
             }
-            $em->persist($order_product);
         }
 
         $em->flush();
