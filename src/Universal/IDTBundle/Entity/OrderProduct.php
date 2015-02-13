@@ -60,6 +60,13 @@ class OrderProduct
     private $ctrlNumber;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="status_desc", type="string", nullable=true, length=100)
+     */
+    private $statusDesc;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\Product", inversedBy="orderProducts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
      */
@@ -271,5 +278,28 @@ class OrderProduct
     public function getCount()
     {
         return $this->count;
+    }
+
+    /**
+     * Set statusDesc
+     *
+     * @param string $statusDesc
+     * @return OrderProduct
+     */
+    public function setStatusDesc($statusDesc)
+    {
+        $this->statusDesc = $statusDesc;
+
+        return $this;
+    }
+
+    /**
+     * Get statusDesc
+     *
+     * @return string 
+     */
+    public function getStatusDesc()
+    {
+        return $this->statusDesc;
     }
 }

@@ -4,7 +4,7 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Universal\IDTBundle\Service\JsonDetails;
+use Universal\IDTBundle\Json\JsonParser;
 
 /**
  * Product
@@ -13,7 +13,7 @@ use Universal\IDTBundle\Service\JsonDetails;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class Product extends JsonDetails
+class Product extends JsonParser
 {
     /**
      * @var integer

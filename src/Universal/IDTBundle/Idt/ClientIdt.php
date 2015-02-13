@@ -1,5 +1,5 @@
 <?php
-namespace Universal\IDTBundle\Service;
+namespace Universal\IDTBundle\Idt;
 
 use Doctrine\ORM\EntityManager;
 use Guzzle\Service\ClientInterface;
@@ -12,7 +12,7 @@ use Universal\IDTBundle\Entity\OrderProduct;
  * Class IDT
  * @package Universal\IDTBundle\Service
  */
-class IDT
+class ClientIdt
 {
     /**
      * @var array
@@ -54,7 +54,7 @@ class IDT
 
     /**
      * @param OrderDetail $order
-     * @return array
+     * @return OrderDetail
      * @throws \Exception
      */
     public function doRequest(OrderDetail $order)
@@ -78,8 +78,6 @@ class IDT
         }
         $this->em->flush();
 
-        $result = array();
-
         try {
             $responses = $this->generateAndPostRequestAndGetResponse();
             //echo(print_r($responses, true));
@@ -99,26 +97,24 @@ class IDT
                     throw new \Exception('Error in count of responses.');
 
                 switch ($orderProduct->getRequestType()) {
-                    case RequestTypeEnumType::CREATION: $result []= $this->accountCreationResponse($orderProduct, $response); break;
-                    case RequestTypeEnumType::ACTIVATION: $result []= $this->cardActivationResponse($orderProduct, $response); break;
-                    case RequestTypeEnumType::RECHARGE: $result []= $this->rechargeAccountResponse($orderProduct, $response); break;
-                    case RequestTypeEnumType::DEACTIVATION: $result []= $this->cardDeactivationResponse($orderProduct, $response); break;
+                    case RequestTypeEnumType::CREATION: $this->accountCreationResponse($orderProduct, $response); break;
+                    case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
+                    case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
+                    case RequestTypeEnumType::DEACTIVATION: $this->cardDeactivationResponse($orderProduct, $response); break;
                 }
             }
+
             $this->em->flush();
 
-            return $result;
-        }
-        catch (\Exception $e) {
+            return $order;
+        } catch (\Exception $e) {
             /** @var OrderProduct $orderProduct */
             foreach($order->getOrderProducts() as $orderProduct) {
                 $this->em->refresh($orderProduct);
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-                $result []= array('status' => 'serverError', 'id'=>$orderProduct->getId(), 'description' => $e->getMessage());
             }
-            $this->em->flush();
 
-            return $result;
+            throw new \Exception($e->getMessage());
         }
     }
 
@@ -132,7 +128,7 @@ class IDT
         try {
             $responses = $this->generateAndPostRequestAndGetResponse();
 
-            return $this->callDetailsResponse($orderProduct, $responses[0]);
+            return $responses[0];
         }
         catch (\Exception $e) {
             return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'description' => $e->getMessage());
@@ -243,26 +239,11 @@ class IDT
             ';
     }
 
-//    /**
-//     * @param OrderProduct $orderProduct
-//     */
-//    private function QueryRequestsRequest(OrderProduct $orderProduct, \DateTime $start_date, \DateTime $end_date)
-//    {
-//        $this->debitRequests .=
-//            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="queryrequests">
-//                <account>'.$orderProduct->getCtrlNumber().'</account>
-//                <startdate>'.date("mm/dd/yy",strtotime("-1 week")).'</startdate>
-//                <enddate>'.date("mm/dd/yy",strtotime("now")).'</enddate>
-//            </DebitRequest>
-//            ';
-//    }
-
     //--------------------------------
 
     /**
      * @param OrderProduct $orderProduct
      * @param array $debitResponse
-     * @return array
      */
     private function accountCreationResponse(OrderProduct $orderProduct, array $debitResponse)
     {
@@ -270,72 +251,55 @@ class IDT
             $orderProduct->setCtrlNumber($debitResponse['account']);
             $orderProduct->setPin($debitResponse['pin']);
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-            return array('status' => 'ok', 'id'=>$orderProduct->getId());
         }
         else {
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'code' => $debitResponse['code'], 'description' => $debitResponse['description']);
+            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
         }
     }
 
     /**
      * @param OrderProduct $orderProduct
      * @param array $debitResponse
-     * @return array
      */
     private function cardActivationResponse(OrderProduct $orderProduct, array $debitResponse)
     {
         if($debitResponse['status'] == 'OK') {
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-            return array('status' => 'ok', 'id'=>$orderProduct->getId());
         }
         else {
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'code' => $debitResponse['code'], 'description' => $debitResponse['description']);
+            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
         }
     }
 
     /**
      * @param OrderProduct $orderProduct
      * @param array $debitResponse
-     * @return array
      */
     private function rechargeAccountResponse(OrderProduct $orderProduct, array $debitResponse)
     {
         if($debitResponse['status'] == 'OK') {
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-            return array('status' => 'ok', 'id'=>$orderProduct->getId());
         }
         else {
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'code' => $debitResponse['code'], 'description' => $debitResponse['description']);
+            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
         }
     }
 
     /**
      * @param OrderProduct $orderProduct
      * @param array $debitResponse
-     * @return array
      */
     private function cardDeactivationResponse(OrderProduct $orderProduct, array $debitResponse)
     {
         if($debitResponse['status'] == 'OK') {
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-            return array('status' => 'ok', 'id'=>$orderProduct->getId());
         }
         else {
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'code' => $debitResponse['code'], 'description' => $debitResponse['description']);
+            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
         }
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     * @param array $debitResponse
-     * @return array
-     */
-    private function callDetailsResponse(OrderProduct $orderProduct, array $debitResponse)
-    {
-        return array('status' => 'ok', 'id'=>$orderProduct->getId(), 'data' => $debitResponse);
     }
 }

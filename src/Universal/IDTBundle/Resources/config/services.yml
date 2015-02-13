@@ -6,7 +6,7 @@ parameters:
 
 services:
     IDT:
-        class: Universal\IDTBundle\Service\IDT
+        class: Universal\IDTBundle\Idt\ClientIdt
         arguments: [%IDT%, @guzzle.client, @doctrine.orm.default_entity_manager]
 
     universal_idt.registration.form.type:

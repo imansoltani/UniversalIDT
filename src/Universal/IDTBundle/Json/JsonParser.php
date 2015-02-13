@@ -1,5 +1,5 @@
 <?php
-namespace Universal\IDTBundle\Service;
+namespace Universal\IDTBundle\Json;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class JsonDetails
  * @package Universal\IDTBundle\Service
  */
-abstract class JsonDetails {
+abstract class JsonParser {
 
     /**
      * @var array
