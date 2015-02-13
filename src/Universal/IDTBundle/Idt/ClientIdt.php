@@ -52,75 +52,59 @@ class ClientIdt
         $this->debitRequestsIDs = new ArrayKey();
     }
 
-    private function processCreationRequests(OrderDetail $order)
+    private function processCreationRequests(array $productsToCreate)
     {
         $this->debitRequests = "";
         $this->debitRequestsIDs->reset();
 
         /** @var OrderProduct $orderProduct */
-        foreach($order->getOrderProducts() as $orderProduct) {
-            if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
-                $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
-                $this->accountCreationRequest($orderProduct);
-            }
+        foreach($productsToCreate as $orderProduct) {
+            $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
+            $this->accountCreationRequest($orderProduct);
         }
         $this->em->flush();
 
         try {
             $responses = $this->generateAndPostRequestAndGetResponse();
 
-            usort($result, function($a, $b){
+            usort($responses, function($a, $b){
                     if ($a['@attributes']['id'] == $b['@attributes']['id'])
                         return 0;
-
                     return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
                 });
 
             $i = 0;
-            foreach($order->getOrderProducts() as $orderProduct) {
-                if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
-                    $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
-                    $response = $responses[$i++];
-                    if ($response['@attributes']['id'] != $responseID) {
-                        throw new \Exception('Error in count of responses.');
-                    }
+            foreach($productsToCreate as $orderProduct) {
+                $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
+                $response = $responses[$i++];
+                if ($response['@attributes']['id'] != $responseID)
+                    throw new \Exception('Error in count of responses.');
 
-                    $this->accountCreationResponse($orderProduct, $response);
-                }
+                $this->accountCreationResponse($orderProduct, $response);
             }
             $this->em->flush();
 
-            return $order;
         } catch (\Exception $e) {
             /** @var OrderProduct $orderProduct */
-            foreach($order->getOrderProducts() as $orderProduct) {
+            foreach($productsToCreate as $orderProduct) {
                 $this->em->refresh($orderProduct);
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
             }
+            $this->em->flush();
 
-            throw new \Exception($e->getMessage());
+            throw new \Exception($e->getMessage(), $e->getCode());
         }
     }
 
-    /**
-     * @param OrderDetail $order
-     * @return OrderDetail
-     * @throws \Exception
-     */
-    public function doRequest(OrderDetail $order)
+    private function processSecondaryRequests(OrderDetail $orderDetail)
     {
         $this->debitRequests = "";
         $this->debitRequestsIDs->reset();
 
-
         /** @var OrderProduct $orderProduct */
-        foreach($order->getOrderProducts() as $orderProduct) {
-            if($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
-                throw new \Exception("OrderProduct status with ID '". $orderProduct->getId(). "' is NOT registered.");
-
+        foreach($orderDetail->getOrderProducts() as $orderProduct) {
             $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
             switch ($orderProduct->getRequestType()) {
-                case RequestTypeEnumType::CREATION: $this->accountCreationRequest($orderProduct); break;
                 case RequestTypeEnumType::ACTIVATION: $this->cardActivationRequest($orderProduct); break;
                 case RequestTypeEnumType::RECHARGE: $this->rechargeAccountRequest($orderProduct); break;
             }
@@ -129,41 +113,61 @@ class ClientIdt
 
         try {
             $responses = $this->generateAndPostRequestAndGetResponse();
-            //echo(print_r($responses, true));
 
-            usort($result, function($a, $b){
+            usort($responses, function($a, $b){
                     if ($a['@attributes']['id'] == $b['@attributes']['id'])
                         return 0;
-
                     return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
                 });
 
             $i = 0;
-            foreach($order->getOrderProducts() as $orderProduct) {
+            foreach($orderDetail->getOrderProducts() as $orderProduct) {
                 $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
                 $response = $responses[$i++];
                 if($response['@attributes']['id'] != $responseID)
                     throw new \Exception('Error in count of responses.');
 
                 switch ($orderProduct->getRequestType()) {
-                    case RequestTypeEnumType::CREATION: $this->accountCreationResponse($orderProduct, $response); break;
                     case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
                     case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
                 }
             }
-
             $this->em->flush();
 
-            return $order;
         } catch (\Exception $e) {
             /** @var OrderProduct $orderProduct */
-            foreach($order->getOrderProducts() as $orderProduct) {
+            foreach($orderDetail->getOrderProducts() as $orderProduct) {
                 $this->em->refresh($orderProduct);
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
             }
+            $this->em->flush();
 
             throw new \Exception($e->getMessage());
         }
+    }
+
+    /**
+     * @param OrderDetail $orderDetail
+     * @return OrderDetail
+     * @throws \Exception
+     */
+    public function processOrder(OrderDetail $orderDetail)
+    {
+        $productsToCreate = array();
+
+        /** @var OrderProduct $orderProduct */
+        foreach($orderDetail->getOrderProducts() as $orderProduct) {
+            if($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
+                throw new \Exception("OrderProduct status with ID '". $orderProduct->getId(). "' is NOT registered.");
+
+            if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION)
+                $productsToCreate []= $orderProduct;
+        }
+
+        $this->processCreationRequests($productsToCreate);
+        $this->processSecondaryRequests($orderDetail);
+
+        return $orderDetail;
     }
 
     public function getCallDetails(OrderProduct $orderProduct)
@@ -287,6 +291,7 @@ class ClientIdt
             $orderProduct->setCtrlNumber($debitResponse['account']);
             $orderProduct->setPin($debitResponse['pin']);
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
+            $orderProduct->setRequestType(RequestTypeEnumType::ACTIVATION);
         }
         else {
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);

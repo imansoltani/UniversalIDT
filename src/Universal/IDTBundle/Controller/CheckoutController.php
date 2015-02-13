@@ -200,7 +200,7 @@ class CheckoutController extends Controller
             $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
             switch ($row['type']) {
                 case $this->BASKET_BUY:
-                    $order_product->setRequestType(RequestTypeEnumType::ACTIVATION);
+                    $order_product->setRequestType(RequestTypeEnumType::CREATION);
                     $order_product->setProduct($em->getRepository('UniversalIDTBundle:Product')->find($row['product']));
                     break;
 
