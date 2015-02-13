@@ -31,7 +31,7 @@ class DefaultController extends Controller
             $product->addRate("US", "", 1.1*$i, 1.1*$i, 1.1*$i);
             $product->addRate("FR", "paris", 2.2*$i, 3.3*$i, 4.4*$i);
             $product->addRate("CH", "shanghai", 3.3*$i, 1.1*$i, 2.2*$i);
-            $product->setFile(new UploadedFile("C:\\xampp\\htdocs\\UniversalIdt\\web\\uploads\\test\\(".$i.").png", "(".$i.").png", 'image/png', 70, null, true));
+//            $product->setFile(new UploadedFile("C:\\xampp\\htdocs\\UniversalIdt\\web\\uploads\\test\\(".$i.").png", "(".$i.").png", 'image/png', 70, null, true));
             $em->persist($product);
         }
         $em->flush();
