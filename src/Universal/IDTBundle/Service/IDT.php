@@ -61,12 +61,12 @@ class IDT
     {
         $this->debitRequests = "";
         $this->debitRequestsIDs->reset();
-        $order->setDate(new \DateTime());
+
 
         /** @var OrderProduct $orderProduct */
         foreach($order->getOrderProducts() as $orderProduct) {
-            if($orderProduct->getRequestStatus() == RequestStatusEnumType::PENDING)
-                throw new \Exception("OrderProduct with ID '". $orderProduct->getId(). "' is in working.");
+            if($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
+                throw new \Exception("OrderProduct status with ID '". $orderProduct->getId(). "' is NOT registered.");
 
             $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
             switch ($orderProduct->getRequestType()) {
@@ -81,13 +81,22 @@ class IDT
         $result = array();
 
         try {
-            $responses = $this->send();
-
+            $responses = $this->generateAndPostRequestAndGetResponse();
             //echo(print_r($responses, true));
 
+            usort($result, function($a, $b){
+                    if ($a['@attributes']['id'] == $b['@attributes']['id'])
+                        return 0;
 
+                    return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
+                });
+
+            $i = 0;
             foreach($order->getOrderProducts() as $orderProduct) {
-                $response = $this->getResponseByOrderProductId($responses, $orderProduct->getId());
+                $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
+                $response = $responses[$i++];
+                if($response['@attributes']['id'] != $responseID)
+                    throw new \Exception('Error in count of responses.');
 
                 switch ($orderProduct->getRequestType()) {
                     case RequestTypeEnumType::CREATION: $result []= $this->accountCreationResponse($orderProduct, $response); break;
@@ -121,7 +130,7 @@ class IDT
         $this->callDetailsRequest($orderProduct);
 
         try {
-            $responses = $this->send();
+            $responses = $this->generateAndPostRequestAndGetResponse();
 
             return $this->callDetailsResponse($orderProduct, $responses[0]);
         }
@@ -136,7 +145,7 @@ class IDT
      * @return array
      * @throws \Exception
      */
-    private function send($reportSuccesses = true)
+    private function generateAndPostRequestAndGetResponse($reportSuccesses = true)
     {
         $request =
             '<?xml version="1.0"?>
@@ -159,25 +168,6 @@ class IDT
 
         $arrayResponses = json_decode(json_encode((array) $result->DebitResponses), true);
         return $arrayResponses['DebitResponse'];
-    }
-
-    /**
-     * @param array $responses
-     * @param int $id
-     * @return null
-     */
-    private function getResponseByOrderProductId($responses, $id)
-    {
-        $requestID = $this->debitRequestsIDs->get($id);
-
-        if(isset($responses[$requestID - 1]['@attributes']['id']) && $responses[$requestID - 1]['@attributes']['id'] == $requestID)
-            return $responses[$requestID - 1];
-
-        foreach ($responses as $response)
-            if($response['@attributes']['id'] == $requestID)
-                return $response;
-
-        return null;
     }
 
     //--------------------------------
