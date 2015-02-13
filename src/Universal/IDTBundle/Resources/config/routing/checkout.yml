@@ -2,10 +2,14 @@ checkout_checkout:
     path:     /checkout
     defaults: { _controller: UniversalIDTBundle:Checkout:checkout }
 
-checkout_result:
-    path:     /checkout/result
-    defaults: { _controller: UniversalIDTBundle:Checkout:paymentResult }
-
 checkout_basket:
     path:     /basket
     defaults: { _controller: UniversalIDTBundle:Checkout:basket }
+
+checkout_ogone_result:
+    path:     /checkout/ogone-result
+    defaults: { _controller: UniversalIDTBundle:Checkout:ogoneResult }
+
+checkout_sofort_result:
+    path:     /checkout/sofort-result
+    defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }

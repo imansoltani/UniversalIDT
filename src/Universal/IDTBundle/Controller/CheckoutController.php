@@ -20,6 +20,7 @@ class CheckoutController extends Controller
 {
     private $BASKET_BUY = "buy";
     private $BASKET_RECHARGE = "recharge";
+
     public function basketAction()
     {
         return $this->render('UniversalIDTBundle:Checkout:basket.html.twig');
@@ -68,9 +69,14 @@ class CheckoutController extends Controller
             ));
     }
 
-    public function paymentResultAction()
+    public function ogoneResultAction()
     {
-        return new Response('returned from payment');
+        return new Response('returned from ogone');
+    }
+
+    public function sofortResultAction()
+    {
+        return new Response('returned from sofort');
     }
 
     /**

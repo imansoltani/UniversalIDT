@@ -34,7 +34,7 @@ class ClientOgone
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
 
-        $this->resultUrl    = $router->generate("checkout_result", [], true);
+        $this->resultUrl    = $router->generate("checkout_ogone_result", [], true);
         $this->catalogUrl   = $router->generate("checkout_basket", [], true);
         $this->homeUrl      = $router->generate("guest_main", [], true);
 
