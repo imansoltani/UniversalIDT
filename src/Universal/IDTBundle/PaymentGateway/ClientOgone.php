@@ -42,7 +42,7 @@ class ClientOgone
     {
         return array(
             'ACCEPTURL'     => $this->resultUrl,
-            'AMOUNT'        => $payment->getAmount(),
+            'AMOUNT'        => $payment->getOgoneAmount(),
             'CANCELURL'     => $this->resultUrl,
             'CATALOGURL'    => $this->resultUrl,
             'CURRENCY'      => $payment->getCurrency(),

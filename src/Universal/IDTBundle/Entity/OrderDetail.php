@@ -181,7 +181,7 @@ class OrderDetail
      */
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $this->amount = round($amount, 2);
 
         return $this;
     }
@@ -420,5 +420,10 @@ class OrderDetail
     public function getOrderReference()
     {
         return $this->getDate()->format("ymdHi").$this->getId();
+    }
+
+    public function getOgoneAmount()
+    {
+        return $this->amount * 100;
     }
 }
