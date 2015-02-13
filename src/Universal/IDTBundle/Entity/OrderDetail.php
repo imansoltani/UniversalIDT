@@ -11,7 +11,7 @@ use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
  * OrderDetail
  *
  * @ORM\Table(name="order_detail")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Universal\IDTBundle\Entity\OrderDetailRepository")
  */
 class OrderDetail
 {
@@ -96,6 +96,13 @@ class OrderDetail
      * @ORM\Column(name="paymentStatus", type="PaymentStatusEnumType")
      */
     private $paymentStatus;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="paymentId", type="integer", nullable=true)
+     */
+    private $paymentId;
 
     /**
      * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="orderDetail")
@@ -425,5 +432,28 @@ class OrderDetail
     public function getOgoneAmount()
     {
         return $this->amount * 100;
+    }
+
+    /**
+     * Set paymentId
+     *
+     * @param integer $paymentId
+     * @return OrderDetail
+     */
+    public function setPaymentId($paymentId)
+    {
+        $this->paymentId = $paymentId;
+
+        return $this;
+    }
+
+    /**
+     * Get paymentId
+     *
+     * @return integer 
+     */
+    public function getPaymentId()
+    {
+        return $this->paymentId;
     }
 }

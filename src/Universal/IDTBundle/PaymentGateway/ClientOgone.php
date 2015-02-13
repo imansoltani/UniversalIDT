@@ -5,6 +5,7 @@ namespace Universal\IDTBundle\PaymentGateway;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
+use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 
 class ClientOgone
@@ -68,6 +69,56 @@ class ClientOgone
         }
         $fields[] = '';
         return sha1(implode($this->shaIn, $fields));
+    }
+
+    public function processResult($fields)
+    {
+        if (false === $this->checkHashOut($fields)) {
+            throw new \Exception("Invalid Ogone data's.");
+        }
+
+        $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneByOrderReference(
+            $fields['orderID']
+        );
+
+        if (null === $orderDetail) {
+            throw new \Exception('Invalid payment');
+        }
+
+        if ($orderDetail->isProcessed())
+        {
+            return $orderDetail;
+        }
+
+        $orderDetail->setPaymentId($fields['PAYID']);
+
+        switch ($fields['STATUS'])
+        {
+            case OrderDetail::OGONE_RESULT_ACCEPTED:
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_ACCEPTED);
+                break;
+
+            case OrderDetail::OGONE_RESULT_DECLINED:
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_DECLINED);
+                break;
+
+            case OrderDetail::OGONE_RESULT_CANCELED:
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_CANCELED);
+                break;
+
+            case OrderDetail::OGONE_RESULT_EXCEPTION:
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_UNCERTAIN);
+                break;
+
+            default:
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_UNKNOWN);
+
+        }
+
+        $this->em->flush();
+
+        return $orderDetail;
+
     }
 
     private function checkHashOut(array $fields)

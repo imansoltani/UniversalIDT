@@ -69,9 +69,20 @@ class CheckoutController extends Controller
             ));
     }
 
-    public function ogoneResultAction()
+    public function ogoneResultAction(Request $request)
     {
-        return new Response('returned from ogone');
+        try {
+            $orderDetail = $this->get('client_ogone')->processResult($request->query->all());
+
+            return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                    'result' => $orderDetail->getPaymentStatus()
+                ));
+
+        } catch (\Exception $e) {
+            return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                    'result' => 'Error in process result of Ogone: '. $e->getMessage()
+                ));
+        }
     }
 
     public function sofortResultAction()
@@ -198,5 +209,12 @@ class CheckoutController extends Controller
         }
 
         return new Response("done");
+    }
+
+    public function checkoutResultAction($result)
+    {
+        return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
+                'result' => $result
+            ));
     }
 }
