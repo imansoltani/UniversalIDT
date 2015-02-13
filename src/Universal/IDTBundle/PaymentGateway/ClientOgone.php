@@ -22,7 +22,7 @@ class ClientOgone
     private $resultUrl;
     private $catalogUrl;
     private $homeUrl;
-    private $ogoneTemplateUrl;
+    private $templateUrl;
 
     public function __construct(Request $request, Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl)
     {
@@ -34,8 +34,11 @@ class ClientOgone
         $this->shaOut       = $shaOut;
         $this->submitUrl    = $submitUrl;
 
-        $this->ogoneTemplateUrl   = $router->generate("ogone_template", [], true);
-        $this->resultUrl        = $router->generate("checkout_result", [], true);
+        $this->resultUrl    = $router->generate("checkout_result", [], true);
+        $this->catalogUrl   = $router->generate("checkout_basket", [], true);
+        $this->homeUrl      = $router->generate("guest_main", [], true);
+
+        $this->templateUrl = $router->generate("ogone_template", [], true);
     }
 
     private function getSortedParameters(OrderDetail $payment)
@@ -44,15 +47,15 @@ class ClientOgone
             'ACCEPTURL'     => $this->resultUrl,
             'AMOUNT'        => $payment->getOgoneAmount(),
             'CANCELURL'     => $this->resultUrl,
-            'CATALOGURL'    => $this->resultUrl,
+            'CATALOGURL'    => $this->catalogUrl,
             'CURRENCY'      => $payment->getCurrency(),
             'DECLINEURL'    => $this->resultUrl,
             'EXCEPTIONURL'  => $this->resultUrl,
-            'HOMEURL'       => $this->resultUrl,
+            'HOMEURL'       => $this->homeUrl,
             'LANGUAGE'      => $this->request->getLocale(),
             'ORDERID'       => $payment->getOrderReference(),
             'PSPID'         => $this->pspId,
-            'TP'            => $this->ogoneTemplateUrl
+            'TP'            => $this->templateUrl
         );
     }
 
