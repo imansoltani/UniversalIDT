@@ -77,7 +77,6 @@ class CheckoutController extends Controller
             return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
                     'result' => $orderDetail->getPaymentStatus()
                 ));
-
         } catch (\Exception $e) {
             return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
                     'result' => 'Error in process result of Ogone: '. $e->getMessage()
@@ -213,8 +212,12 @@ class CheckoutController extends Controller
 
     public function checkoutResultAction($result)
     {
+        $response = new Response();
+        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+
         return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
                 'result' => $result
-            ));
+            ), $response);
     }
 }

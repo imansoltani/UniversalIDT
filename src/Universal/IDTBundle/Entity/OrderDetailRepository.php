@@ -21,7 +21,7 @@ class OrderDetailRepository extends EntityRepository
 
         /** @var OrderDetail $orderDetail */
         $orderDetail = $this->find($id);
-        if (null === $orderDetail || strval($orderDetail->getOrderReference()) !== strval($orderDetail))
+        if (null === $orderDetail || strval($orderDetail->getOrderReference()) !== strval($orderRef))
             return null;
 
         return $orderDetail;
