@@ -1,5 +1,5 @@
 <?php
-namespace Universal\IDTBundle\Service;
+namespace Universal\IDTBundle\Idt;
 
 class ArrayKey {
     private $array;

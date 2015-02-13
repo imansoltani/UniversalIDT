@@ -52,6 +52,56 @@ class ClientIdt
         $this->debitRequestsIDs = new ArrayKey();
     }
 
+    private function processCreationRequests(OrderDetail $order)
+    {
+        $this->debitRequests = "";
+        $this->debitRequestsIDs->reset();
+
+        /** @var OrderProduct $orderProduct */
+        foreach($order->getOrderProducts() as $orderProduct) {
+            if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
+                $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
+                $this->accountCreationRequest($orderProduct);
+            }
+        }
+        $this->em->flush();
+
+        try {
+            $responses = $this->generateAndPostRequestAndGetResponse();
+
+            usort($result, function($a, $b){
+                    if ($a['@attributes']['id'] == $b['@attributes']['id'])
+                        return 0;
+
+                    return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
+                });
+
+            $i = 0;
+            foreach($order->getOrderProducts() as $orderProduct) {
+                if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
+                    $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
+                    $response = $responses[$i++];
+                    if ($response['@attributes']['id'] != $responseID) {
+                        throw new \Exception('Error in count of responses.');
+                    }
+
+                    $this->accountCreationResponse($orderProduct, $response);
+                }
+            }
+            $this->em->flush();
+
+            return $order;
+        } catch (\Exception $e) {
+            /** @var OrderProduct $orderProduct */
+            foreach($order->getOrderProducts() as $orderProduct) {
+                $this->em->refresh($orderProduct);
+                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
+            }
+
+            throw new \Exception($e->getMessage());
+        }
+    }
+
     /**
      * @param OrderDetail $order
      * @return OrderDetail
@@ -73,7 +123,6 @@ class ClientIdt
                 case RequestTypeEnumType::CREATION: $this->accountCreationRequest($orderProduct); break;
                 case RequestTypeEnumType::ACTIVATION: $this->cardActivationRequest($orderProduct); break;
                 case RequestTypeEnumType::RECHARGE: $this->rechargeAccountRequest($orderProduct); break;
-                case RequestTypeEnumType::DEACTIVATION: $this->cardDeactivationRequest($orderProduct); break;
             }
         }
         $this->em->flush();
@@ -100,7 +149,6 @@ class ClientIdt
                     case RequestTypeEnumType::CREATION: $this->accountCreationResponse($orderProduct, $response); break;
                     case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
                     case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
-                    case RequestTypeEnumType::DEACTIVATION: $this->cardDeactivationResponse($orderProduct, $response); break;
                 }
             }
 
@@ -216,18 +264,6 @@ class ClientIdt
     /**
      * @param OrderProduct $orderProduct
      */
-    private function cardDeactivationRequest(OrderProduct $orderProduct)
-    {
-        $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="deactivation">
-                <account>'.$orderProduct->getCtrlNumber().'</account>
-            </DebitRequest>
-            ';
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     */
     private function callDetailsRequest(OrderProduct $orderProduct)
     {
         $this->debitRequests .=
@@ -278,21 +314,6 @@ class ClientIdt
      * @param array $debitResponse
      */
     private function rechargeAccountResponse(OrderProduct $orderProduct, array $debitResponse)
-    {
-        if($debitResponse['status'] == 'OK') {
-            $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-        }
-        else {
-            $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
-        }
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     * @param array $debitResponse
-     */
-    private function cardDeactivationResponse(OrderProduct $orderProduct, array $debitResponse)
     {
         if($debitResponse['status'] == 'OK') {
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
