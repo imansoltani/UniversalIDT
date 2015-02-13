@@ -18,6 +18,8 @@ use Universal\IDTBundle\Form\CheckoutType;
 
 class CheckoutController extends Controller
 {
+    private $BASKET_BUY = "buy";
+    private $BASKET_RECHARGE = "recharge";
     public function basketAction()
     {
         return $this->render('UniversalIDTBundle:Checkout:basket.html.twig');
@@ -30,86 +32,35 @@ class CheckoutController extends Controller
 
         $form = $this->createForm(new CheckoutType());
 
-        if($request->isMethod('post'))
-        {
+        if($request->isMethod('post')) {
             $form->handleRequest($request);
 
-            if($form->isValid())
-            {
+            if($form->isValid()) {
                 $formData = $form->getData();
-                $basket = json_decode($this->get('session')->get('basket'), true);
-                $basket_currency = $this->get('session')->get('basket_currency');
-
-                $amount = 0;
-                foreach($basket as $row)
-                    $amount += $row['count'] * $row['denomination'];
-
-                $order_detail = new OrderDetail();
-                $order_detail->setCurrency($basket_currency);
-                $order_detail->setAmount($amount);
-                $order_detail->setDeliveryEmail($formData['email']);
-                $order_detail->setDeliverySMS($formData['sms']);
-                $order_detail->setPaymentMethod($formData['method']);
-                $order_detail->setPaymentStatus(PaymentStatusEnumType::STATUS_PENDING);
-                if($this->getUser()) $order_detail->setUser($this->getUser());
-                $em->persist($order_detail);
-
-
-                foreach($basket as $row) {
-                    $order_product = new OrderProduct();
-                    $order_product->setCount($row['count']);
-                    $order_product->setOrderDetail($order_detail);
-                    $order_product->setPinDenomination($row['denomination']);
-                    $order_product->setRequestStatus(RequestStatusEnumType::PENDING);
-                    if($row['type'] == "buy") {
-                        $order_product->setRequestType(RequestTypeEnumType::ACTIVATION);
-                        $order_product->setProduct($em->getRepository('UniversalIDTBundle:Product')->find($row['product']));
-                    }
-                    else {
-                        $order_product->setRequestType(RequestTypeEnumType::RECHARGE);
-                        $old_order_product = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($row['product']);
-                        $order_product->setProduct($old_order_product->getProduct());
-                        $order_product->setPin($old_order_product->getPin());
-                    }
-                    $em->persist($order_product);
-                }
-
-                $em->flush();
-
-                switch($order_detail->getPaymentMethod()) {
-                    case PaymentMethodEnumType::OGONE:
-                        $client = $this->get('client_ogone');
-                        return $this->render("UniversalIDTBundle:Checkout:redirectToOgone.html.twig", array(
-                                'form' => $client->generateForm($order_detail)
-                            ));
-                    case PaymentMethodEnumType::SOFORT:
-                        break;
-                    default:
-                        break;
-                }
-
-                return new Response("done");
+                return $this->forward("UniversalIDTBundle:Checkout:placeOrder", array('formData' => $formData));
             }
         }
-        else
-        {
-            $added_items = json_decode(stripcslashes($request->cookies->get("products")), true);
-            $added_items_currency = $request->cookies->get("products_currency");
 
-            $valid = $this->checkCookie($added_items, $added_items_currency, $em);
+        //read from cookie
+        $added_items = json_decode(stripcslashes($request->cookies->get("products")), true);
+        $added_items_currency = $request->cookies->get("products_currency");
 
-            if(!$valid) {
-                $response = new Response("Error in cookies and cleared.");
-                $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies.');
-                $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
-                $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+        //check cookie validation
+        $valid = $this->checkCookie($added_items, $added_items_currency, $em);
 
-                return $response;
-            }
+        //unset cookie if not valid
+        if(!$valid) {
+            $response = new Response("Error in cookies and cleared.");
+            $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies.');
+            $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+            $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
-            $this->get('session')->set('basket', stripcslashes($request->cookies->get("products")));
-            $this->get('session')->set('basket_currency', $added_items_currency);
+            return $response;
         }
+
+        //write in session
+        $this->get('session')->set('basket', stripcslashes($request->cookies->get("products")));
+        $this->get('session')->set('basket_currency', $added_items_currency);
 
         return $this->render('UniversalIDTBundle:Checkout:checkout.html.twig', array(
                 'data' => $added_items,
@@ -120,22 +71,6 @@ class CheckoutController extends Controller
     public function paymentResultAction()
     {
         return new Response('returned from payment');
-    }
-
-    public function testAction(Request $request)
-    {
-        $data= array(
-            array('product'=>1, 'count'=>2, 'denomination'=>5),
-            array('product'=>2, 'count'=>1, 'denomination'=>4),
-            array('product'=>3, 'count'=>1, 'denomination'=>3),
-            array('product'=>4, 'count'=>3, 'denomination'=>6),
-        );
-//        die(var_dump($response->headers->getCookies(ResponseHeaderBag::COOKIES_FLAT)));
-
-//        die(var_dump(json_decode(stripcslashes($request->cookies->get("products")), true)));
-        $response = new Response("aaaa");
-        $response->headers->setCookie(new Cookie("products", json_encode($data),0,"/",null,false,false ));
-        return $response;
     }
 
     /**
@@ -158,35 +93,104 @@ class CheckoutController extends Controller
                 !isset($added_item['product']) ||
                 !isset($added_item['count']) ||
                 !isset($added_item['denomination']) ||
-                !in_array($added_item['type'], array("buy", "recharge"))
+                !in_array($added_item['type'], array($this->BASKET_BUY, $this->BASKET_RECHARGE))
             )
                 return false;
 //                die("field error");
 
-            if($added_item['type'] == "buy") {
-                /** @var Product $row */
-                $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product']);
-                if(!$row) return false;
+            switch ($added_item['type']) {
+                case $this->BASKET_BUY:
+                    /** @var Product $row */
+                    $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product']);
+                    if(!$row) return false;
 
-                $added_item['product'] = $row;
+                    $added_item['product'] = $row;
 
-                if($row->getCurrency() !== $added_items_currency) return false;
+                    if($row->getCurrency() !== $added_items_currency) return false;
 
-                if(!in_array($added_item['denomination'], $row->getDenominations())) return false;
-            }
-            else {
-                /** @var OrderProduct $row */
-                $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
-                if(!$row) return false;
+                    if(!in_array($added_item['denomination'], $row->getDenominations())) return false;
+                    break;
 
-                $added_item['product'] = $row;
+                case $this->BASKET_RECHARGE:
+                    /** @var OrderProduct $row */
+                    $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
+                    if(!$row) return false;
 
-                if($row->getProduct()->getCurrency() !== $added_items_currency) return false;
+                    $added_item['product'] = $row;
 
-                if(!in_array($added_item['denomination'], $row->getProduct()->getDenominations())) return false;
+                    if($row->getProduct()->getCurrency() !== $added_items_currency) return false;
+
+                    if(!in_array($added_item['denomination'], $row->getProduct()->getDenominations())) return false;
+                    break;
             }
         }
 
         return true;
+    }
+
+    public function placeOrderAction(array $formData)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        //read for session
+        $basket = json_decode($this->get('session')->get('basket'), true);
+        $basket_currency = $this->get('session')->get('basket_currency');
+
+        //calc sum amount
+        $amount = 0;
+        foreach($basket as $row)
+            $amount += $row['count'] * $row['denomination'];
+
+        //create order_detail
+        $order_detail = new OrderDetail();
+        $order_detail->setCurrency($basket_currency);
+        $order_detail->setAmount($amount);
+        $order_detail->setDeliveryEmail($formData['email']);
+        $order_detail->setDeliverySMS($formData['sms']);
+        $order_detail->setPaymentMethod($formData['method']);
+        $order_detail->setPaymentStatus(PaymentStatusEnumType::STATUS_PENDING);
+        if($this->getUser()) $order_detail->setUser($this->getUser());
+        $em->persist($order_detail);
+
+        //create order_products
+        foreach($basket as $row) {
+            $order_product = new OrderProduct();
+            $order_product->setCount($row['count']);
+            $order_product->setOrderDetail($order_detail);
+            $order_product->setPinDenomination($row['denomination']);
+            $order_product->setRequestStatus(RequestStatusEnumType::PENDING);
+            switch ($row['type']) {
+                case $this->BASKET_BUY:
+                    $order_product->setRequestType(RequestTypeEnumType::ACTIVATION);
+                    $order_product->setProduct($em->getRepository('UniversalIDTBundle:Product')->find($row['product']));
+                    break;
+
+                case $this->BASKET_RECHARGE:
+                    $order_product->setRequestType(RequestTypeEnumType::RECHARGE);
+                    $old_order_product = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($row['product']);
+                    $order_product->setProduct($old_order_product->getProduct());
+                    $order_product->setPin($old_order_product->getPin());
+                    break;
+            }
+            $em->persist($order_product);
+        }
+
+        $em->flush();
+
+        //go to redirect page for methods
+        switch($order_detail->getPaymentMethod()) {
+            case PaymentMethodEnumType::OGONE:
+                $client = $this->get('client_ogone');
+                return $this->render("UniversalIDTBundle:Checkout:redirectToOgone.html.twig", array(
+                        'form' => $client->generateForm($order_detail)
+                    ));
+            case PaymentMethodEnumType::SOFORT:
+                break;
+            default:
+                break;
+        }
+
+        return new Response("done");
     }
 }
