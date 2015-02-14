@@ -58,6 +58,21 @@ class Product extends JsonParser
     protected $orderProducts;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="class_id", type="integer", nullable=false)
+     */
+    private $classId;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->orderProducts = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -160,14 +175,6 @@ class Product extends JsonParser
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->orderProducts = new ArrayCollection();
-    }
-
-    /**
      * Add orderProducts
      *
      * @param OrderProduct $orderProducts
@@ -216,5 +223,28 @@ class Product extends JsonParser
     {
         parent::removeJson();
         parent::removeLogo();
+    }
+
+    /**
+     * Set classId
+     *
+     * @param integer $classId
+     * @return Product
+     */
+    public function setClassId($classId)
+    {
+        $this->classId = $classId;
+
+        return $this;
+    }
+
+    /**
+     * Get classId
+     *
+     * @return integer 
+     */
+    public function getClassId()
+    {
+        return $this->classId;
     }
 }

@@ -190,7 +190,7 @@ abstract class JsonParser {
      */
     public function setGeneralInformation($lang, $generalInformation)
     {
-        $this->arrayAdd('general_information', $generalInformation, $lang);
+        $this->arrayAdd('general_information', $generalInformation, strtoupper($lang));
 
         return $this;
     }
@@ -201,7 +201,7 @@ abstract class JsonParser {
      */
     public function removeGeneralInformation($lang)
     {
-        $this->arrayRemoveByKey('general_information', $lang);
+        $this->arrayRemoveByKey('general_information', strtoupper($lang));
 
         return $this;
     }
@@ -212,7 +212,7 @@ abstract class JsonParser {
      */
     public function getGeneralInformation($lang)
     {
-        return $this->arrayGet('general_information', $lang);
+        return $this->arrayGet('general_information', strtoupper($lang));
     }
 
     /**
@@ -232,7 +232,7 @@ abstract class JsonParser {
      */
     public function setDialingInstructions($lang, $dialingInstructions)
     {
-        $this->arrayAdd('dialing_instructions', $dialingInstructions, $lang);
+        $this->arrayAdd('dialing_instructions', $dialingInstructions, strtoupper($lang));
 
         return $this;
     }
@@ -243,7 +243,7 @@ abstract class JsonParser {
      */
     public function removeDialingInstructions($lang)
     {
-        $this->arrayRemoveByKey('dialing_instructions', $lang);
+        $this->arrayRemoveByKey('dialing_instructions', strtoupper($lang));
 
         return $this;
     }
@@ -254,7 +254,7 @@ abstract class JsonParser {
      */
     public function getDialingInstructions($lang)
     {
-        return $this->arrayGet('dialing_instructions', $lang);
+        return $this->arrayGet('dialing_instructions', strtoupper($lang));
     }
 
     /**
@@ -271,11 +271,12 @@ abstract class JsonParser {
      * @param string $type
      * @param string $number
      * @param string $location
+     * @param string $languages comma separated
      * @return $this
      */
-    public function addAccessNumber($type, $number, $location = null)
+    public function addAccessNumber($type, $number, $location, $languages)
     {
-        $this->arrayAdd('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location));
+        $this->arrayAdd('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location, "lang" => strtoupper($languages)));
 
         return $this;
     }
@@ -284,11 +285,12 @@ abstract class JsonParser {
      * @param string $type
      * @param string $number
      * @param string $location
+     * @param string $languages comma separated
      * @return $this
      */
-    public function removeAccessNumber($type, $number, $location = null)
+    public function removeAccessNumber($type, $number, $location, $languages)
     {
-        $this->arrayRemoveByValue('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location));
+        $this->arrayRemoveByValue('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location, "lang" => strtoupper($languages)));
 
         return $this;
     }
@@ -309,77 +311,6 @@ abstract class JsonParser {
     {
         return $this->get('access_numbers');
     }
-
-    //--------------------------------------- Rates
-
-    /**
-     * @param string $country
-     * @param string $destination
-     * @param float $lac Location Access
-     * @param float $tol Toll Free
-     * @param float $internet
-     * @return $this
-     */
-    public function addRate($country, $destination, $lac, $tol, $internet)
-    {
-        $this->arrayAdd('rates', array("con" => $country, "des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
-
-        return $this;
-    }
-
-    /**
-     * @param string $country
-     * @param string $destination
-     * @param float $lac Location Access
-     * @param float $tol Toll Free
-     * @param float $internet
-     * @return $this
-     */
-    public function removeRate($country, $destination, $lac, $tol, $internet)
-    {
-        $this->arrayRemoveByValue('rates', array("con" => $country, "des" => $destination, "lac" => $lac, "tol" => $tol, "net" => $internet));
-
-        return $this;
-    }
-
-    /**
-     * @param array $criteria array ($columnName => $value)
-     * @return array
-     */
-    public function findRates(array $criteria)
-    {
-        return $this->arrayFind('rates', $criteria);
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllRates()
-    {
-        return $this->get('rates');
-    }
-
-    //------------------------------------------- Class ID
-
-    /**
-     * @param int $classId
-     * @return $this
-     */
-    public function setClassId($classId)
-    {
-        $this->set('class_id', $classId);
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getClassId()
-    {
-        return $this->get('class_id');
-    }
-
 
     //+++++++++++++++++++++++++++++++++++++++++++++++++++
     //--------------------------------------------- Image
