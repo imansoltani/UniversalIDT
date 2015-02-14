@@ -12,10 +12,10 @@
                 {{ lang }}: {{ info }}<br>
             {% endfor %}
 
-            <strong>Rates:</strong><br>
-            {% for rate in product.allRates %}
-                {{ rate|json_encode() }}<br>
-            {% endfor %}
+            {#<strong>Rates:</strong><br>#}
+            {#{% for rate in product.allRates %}#}
+                {#{{ rate|json_encode() }}<br>#}
+            {#{% endfor %}#}
 
             <strong>Access Number:</strong><br>
             {% for accessNumber in product.allAccessNumbers %}

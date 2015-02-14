@@ -3,6 +3,7 @@
 namespace Universal\IDTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
 
 /**
  * Rate
@@ -31,16 +32,17 @@ class Rate
     /**
      * @var string
      *
-     * @ORM\Column(name="tollFree", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="cost", type="decimal", precision=4, scale=2)
      */
-    private $tollFree;
+    private $cost;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="localAccess", type="decimal", precision=4, scale=2)
+     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RateEnumType")
+     * @ORM\Column(name="type", type="RateEnumType")
      */
-    private $localAccess;
+    private $type;
 
     /**
      * @var string
@@ -90,49 +92,49 @@ class Rate
     }
 
     /**
-     * Set tollFree
+     * Set cost
      *
-     * @param string $tollFree
+     * @param string $cost
      * @return Rate
      */
-    public function setTollFree($tollFree)
+    public function setCost($cost)
     {
-        $this->tollFree = $tollFree;
+        $this->cost = $cost;
 
         return $this;
     }
 
     /**
-     * Get tollFree
+     * Get cost
      *
-     * @return string 
+     * @return string
      */
-    public function getTollFree()
+    public function getCost()
     {
-        return $this->tollFree;
+        return $this->cost;
     }
 
     /**
-     * Set localAccess
+     * Set type
      *
-     * @param string $localAccess
+     * @param string $type
      * @return Rate
      */
-    public function setLocalAccess($localAccess)
+    public function setType($type)
     {
-        $this->localAccess = $localAccess;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get localAccess
+     * Get type
      *
-     * @return string 
+     * @return string
      */
-    public function getLocalAccess()
+    public function getType()
     {
-        return $this->localAccess;
+        return $this->type;
     }
 
     /**
