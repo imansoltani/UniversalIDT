@@ -25,7 +25,7 @@ abstract class JsonParser {
      *
      * @return integer
      */
-    abstract public function getId();
+    abstract public function getClassId();
 
     /**
      * Load json file
@@ -35,7 +35,7 @@ abstract class JsonParser {
         if(!is_null($this->json))
             return;
 
-        if(!is_null($this->getId()) && file_exists($this->folderPath.$this->getId().".json") && $jsonString = file_get_contents($this->folderPath.$this->getId().".json"))
+        if(!is_null($this->getClassId()) && file_exists($this->folderPath.$this->getClassId().".json") && $jsonString = file_get_contents($this->folderPath.$this->getClassId().".json"))
             $this->json = json_decode($jsonString, true);
         else
             $this->json = array();
@@ -46,8 +46,8 @@ abstract class JsonParser {
      */
     public function saveJson()
     {
-        if(!is_null($this->getId()) && !is_null($this->json))
-            file_put_contents($this->folderPath.$this->getId().".json", json_encode($this->json, JSON_UNESCAPED_UNICODE));
+        if(!is_null($this->getClassId()) && !is_null($this->json))
+            file_put_contents($this->folderPath.$this->getClassId().".json", json_encode($this->json, JSON_UNESCAPED_UNICODE));
     }
 
     /**
@@ -55,8 +55,8 @@ abstract class JsonParser {
      */
     public function removeJson()
     {
-        if(file_exists($this->folderPath.$this->getId().".json"))
-            unlink($this->folderPath.$this->getId().".json");
+        if(file_exists($this->folderPath.$this->getClassId().".json"))
+            unlink($this->folderPath.$this->getClassId().".json");
 
         $this->json = null;
     }
@@ -371,7 +371,7 @@ abstract class JsonParser {
      */
     public function getAbsolutePath()
     {
-        return $this->getLogoExtension() == "" ? null : $this->getUploadRootDir().'/'.$this->getId().".".$this->getLogoExtension();
+        return $this->getLogoExtension() == "" ? null : $this->getUploadRootDir().'/'.$this->getClassId().".".$this->getLogoExtension();
     }
 
     /**
@@ -379,7 +379,7 @@ abstract class JsonParser {
      */
     public function getWebPath()
     {
-        return $this->getLogoExtension() == ""  ? null : $this->getUploadDir().'/'.$this->getId().".".$this->getLogoExtension();
+        return $this->getLogoExtension() == ""  ? null : $this->getUploadDir().'/'.$this->getClassId().".".$this->getLogoExtension();
     }
 
     /**
@@ -409,7 +409,7 @@ abstract class JsonParser {
 
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getId() . '.' . $this->file->getExtension()
+            $this->getClassId() . '.' . $this->file->getExtension()
         );
 
         $this->file = null;
