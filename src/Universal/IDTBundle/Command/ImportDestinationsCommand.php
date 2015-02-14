@@ -5,18 +5,16 @@ namespace Universal\IDTBundle\Command;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\Entity\Destination;
 
-class ImportProductsCommand extends ContainerAwareCommand
+class ImportDestinationsCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('import:products')
-            ->setDescription('import Product from CSV in app/Resources/Import/CSV/products.csv')
-            ->addOption('clear', null, InputOption::VALUE_NONE, 'Clear product entity.')
+            ->setName('import:destinations')
+            ->setDescription('import destinations from CSV in app/Resources/Import/CSV/destinations.csv')
         ;
     }
 
@@ -50,31 +48,20 @@ class ImportProductsCommand extends ContainerAwareCommand
         /** @var EntityManager $em */
         $em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
 
-        if ($input->getOption('clear')) {
-            $em->createQueryBuilder()
-                ->delete('UniversalIDTBundle:Product', 'product')
-                ->getQuery()
-                ->execute();
-
-            $output->writeln("Product entity cleared.");
-        }
-
-        $data = $this->csv_to_array($this->getFile("CSV", "products.csv"));
+        $data = $this->csv_to_array($this->getFile("CSV", "destinations.csv"));
 
         $i = 0;
         foreach($data as $row) {
-            $product = new Product();
-            $product->setName($row['Card']);
-            $product->setCountryISO($row['CNT']);
-            $product->setCurrency($row['Currency']);
-            $product->setClassId($row['CID']);
-            $product->setDenominations(array($row['Denom0'],$row['Denom1'],$row['Denom2']));
-            $em->persist($product);
+            if(!$destination = $em->getRepository("UniversalIDTBundle:Destination")->findOneBy(array("countryIso"=>$row['ISO'],"location"=>null))) {
+                $destination = new Destination();
+                $destination->setCountryIso($row['ISO']);
+                $em->persist($destination);
+            }
             $i++;
         }
         $em->flush();
 
-        $output->writeln("done ($i products)");
+        $output->writeln("done ($i destinations)");
 
     }
 }
