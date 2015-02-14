@@ -113,7 +113,7 @@ class Product extends JsonParser
      */
     public function setCountryISO($countryISO)
     {
-        $this->countryISO = $countryISO;
+        $this->countryISO = strtoupper($countryISO);
 
         return $this;
     }
@@ -159,7 +159,7 @@ class Product extends JsonParser
      */
     public function setCurrency($currency)
     {
-        $this->currency = $currency;
+        $this->currency = strtoupper($currency);
 
         return $this;
     }
