@@ -25,13 +25,6 @@ class Destination
     /**
      * @var string
      *
-     * @ORM\Column(name="countryName", type="string", length=30)
-     */
-    private $countryName;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="countryIso", type="string", length=2)
      */
     private $countryIso;
@@ -65,29 +58,6 @@ class Destination
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set countryName
-     *
-     * @param string $countryName
-     * @return Destination
-     */
-    public function setCountryName($countryName)
-    {
-        $this->countryName = $countryName;
-
-        return $this;
-    }
-
-    /**
-     * Get countryName
-     *
-     * @return string 
-     */
-    public function getCountryName()
-    {
-        return $this->countryName;
     }
 
     /**
