@@ -4,7 +4,9 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Universal\IDTBundle\Json\JsonParser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Product
@@ -63,6 +65,13 @@ class Product extends JsonParser
      * @ORM\Column(name="class_id", type="integer", nullable=false)
      */
     private $classId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo_extension", type="string", length=4, nullable=true)
+     */
+    private $logoExtension;
 
     /**
      * Constructor
@@ -213,7 +222,7 @@ class Product extends JsonParser
     public function saveJson()
     {
         parent::saveJson();
-        parent::uploadLogo();
+        $this->uploadLogo();
     }
 
     /**
@@ -222,7 +231,7 @@ class Product extends JsonParser
     public function removeJson()
     {
         parent::removeJson();
-        parent::removeLogo();
+        $this->removeLogo();
     }
 
     /**
@@ -246,5 +255,121 @@ class Product extends JsonParser
     public function getClassId()
     {
         return $this->classId;
+    }
+
+    //--------------------------------------------- Image
+    /**
+     * Set logoExtension
+     *
+     * @param string $logoExtension
+     * @return Product
+     */
+    public function setLogoExtension($logoExtension)
+    {
+        $this->logoExtension = $logoExtension;
+
+        return $this;
+    }
+
+    /**
+     * Get logoExtension
+     *
+     * @return string
+     */
+    public function getLogoExtension()
+    {
+        return $this->logoExtension;
+    }
+    //-----------------
+
+    /**
+     * @var UploadedFile
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+
+        if($this->file !== null)
+            $this->setLogoExtension($this->file->getExtension());
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    //---------------
+
+    /**
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return $this->getLogoExtension() == "" ? null : $this->getUploadRootDir().'/'.$this->getClassId().".".$this->getLogoExtension();
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->getLogoExtension() == ""  ? null : $this->getUploadDir().'/'.$this->getClassId().".".$this->getLogoExtension();
+    }
+
+    /**
+     * @return string
+     */
+    private function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    /**
+     * @return string
+     */
+    private function getUploadDir()
+    {
+        return 'uploads/products';
+    }
+
+    /**
+     * Upload Product Logo
+     */
+    public function uploadLogo()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->getClassId() . '.' . $this->file->getExtension()
+        );
+
+        $this->file = null;
+    }
+
+    /**
+     * Remove Product Logo
+     */
+    public function removeLogo()
+    {
+        if(file_exists($this->getAbsolutePath()))
+            unlink($this->getAbsolutePath());
+
+        $this->setLogoExtension(null);
     }
 }
