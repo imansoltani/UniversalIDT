@@ -25,15 +25,15 @@ class ClientOgone
     private $homeUrl;
     private $templateUrl;
 
-    public function __construct(Request $request, Router $router, EntityManager $em, $pspId, $shaIn, $shaOut, $submitUrl)
+    public function __construct(Request $request, Router $router, EntityManager $em, array $idt_parameters)
     {
         $this->em           = $em;
         $this->request      = $request;
 
-        $this->pspId        = $pspId;
-        $this->shaIn        = $shaIn;
-        $this->shaOut       = $shaOut;
-        $this->submitUrl    = $submitUrl;
+        $this->pspId        = $idt_parameters['pspId'];
+        $this->shaIn        = $idt_parameters['shaIn'];
+        $this->shaOut       = $idt_parameters['shaOut'];
+        $this->submitUrl    = $idt_parameters['submitUrl'];
 
         $this->resultUrl    = $router->generate("checkout_ogone_result", [], true);
         $this->catalogUrl   = $router->generate("checkout_basket", [], true);

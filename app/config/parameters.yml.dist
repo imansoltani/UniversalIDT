@@ -16,14 +16,18 @@ parameters:
 
     locale: en_US
     languages: [fr_FR, en_US, it_IT]
+    currencies: [EUR, CHF, PLN, SEK, DKK, NOK, GBP]
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    ogone_pspid: hellodi
-    ogone_sha_in: 'MySha-In@key765?'
-    ogone_sha_out: 'MySha-ouT@Key79?'
-    ogone_submit_url: 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'
-    ogone_template: ''
+    Ogone:
+        pspid: hellodi
+        sha_in: 'MySha-In@key765?'
+        sha_out: 'MySha-ouT@Key79?'
+        submit_url: 'https://secure.ogone.com/ncol/test/orderstandard_utf8.asp'
 
-    currencies: [EUR, CHF, PLN, SEK, DKK, NOK, GBP]
+    IDT:
+        username: "HellobellTEST1"
+        password: "Humbug15ay"
+        api_location: "https://app1.idt.net/debit/partner/partnerAPI.asp"

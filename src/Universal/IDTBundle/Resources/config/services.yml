@@ -1,9 +1,3 @@
-parameters:
-    IDT:
-        username: "HellobellTEST1"
-        password: "Humbug15ay"
-        api_location: "https://app1.idt.net/debit/partner/partnerAPI.asp"
-
 services:
     IDT:
         class: Universal\IDTBundle\Idt\ClientIdt
@@ -17,7 +11,7 @@ services:
 
     client_ogone:
         class: Universal\IDTBundle\PaymentGateway\ClientOgone
-        arguments: [@request, @router, @doctrine.orm.default_entity_manager, %ogone_pspid%, %ogone_sha_in%, %ogone_sha_out%, %ogone_submit_url%]
+        arguments: [@request, @router, @doctrine.orm.default_entity_manager, %Ogone%]
         scope: request
 
     universal_idt.fos_listener:
