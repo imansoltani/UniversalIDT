@@ -36,12 +36,15 @@
         <tbody id="cookie_recharge"></tbody>
     </table>
 
+    <a href="#" onclick="cookieClear();updateCounts();updateBasketTable()">Clear Basket</a><br/>
     <a href="{{ path('checkout_checkout') }}">Go to Checkout</a>
 {% endblock %}
 
 {% block javascripts %}
     <script type="text/javascript">
         function updateBasketTable() {
+            $("#cookie_buy").html("");
+            $("#cookie_recharge").html("");
             for (var product in selected_products) {
                 if(selected_products[product]['type'] == "buy")
                     $("#cookie_buy").append("<tr>" +

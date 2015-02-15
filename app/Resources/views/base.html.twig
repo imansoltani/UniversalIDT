@@ -37,11 +37,19 @@
 
             var selected_products_currency = "";
 
+            function cookieClear() {
+                selected_products = [];
+                $.cookie("products", "[]", { path: '/' });
+
+                selected_products_currency = "";
+                $.cookie("products_currency", "", { path: '/' });
+            }
+
             function loadSelectedProducts() {
                 var products_json = $.cookie("products");
                 selected_products = products_json == undefined ? [] : JSON.parse(products_json);
 
-                selected_products_currency = $.cookie("products_currency") == undefined ? "" : $.cookie("products");
+                selected_products_currency = $.cookie("products_currency") == undefined ? "" : $.cookie("products_currency");
 
                 var valid = true;
                 var types = ["buy", "recharge"];
@@ -56,13 +64,8 @@
                     }
                 }
 
-                if(!valid) {
-                    selected_products = [];
-                    $.cookie("products", "[]", { path: '/' });
-
-                    selected_products_currency = "";
-                    $.cookie("products_currency", "", { path: '/' });
-                }
+                if(!valid)
+                    cookieClear();
             }
 
             function updateCounts() {
@@ -83,8 +86,6 @@
                     selected_products_currency = _currency;
                     $.cookie("products_currency", _currency, { path: '/' });
                 }
-
-
 
 //                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
                 var _exist = false;
