@@ -20,6 +20,11 @@ services:
         arguments: [@request, @router, @doctrine.orm.default_entity_manager, %ogone_pspid%, %ogone_sha_in%, %ogone_sha_out%, %ogone_submit_url%]
         scope: request
 
+    universal_idt.fos_listener:
+        class: Universal\IDTBundle\EventListener\FOSListener
+        tags:
+            - { name: kernel.event_subscriber }
+
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

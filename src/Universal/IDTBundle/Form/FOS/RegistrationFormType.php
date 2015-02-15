@@ -17,9 +17,12 @@ class RegistrationFormType extends AbstractType
     {
         $builder->add('language', 'choice', array(
                 'choices' => $this->locales
-            ));
-        $builder->add('gender', 'choice', array(
+            ))
+            ->add('gender', 'choice', array(
                 'choices' => array('M'=>'Male', 'F'=> 'Female')
+            ))
+            ->add('username', null, array(
+                'label' => 'form.username', 'translation_domain' => 'FOSUserBundle', 'required' =>false
             ));
     }
 
