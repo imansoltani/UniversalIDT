@@ -231,7 +231,7 @@ class ClientIdt
             throw new \Exception($result->DebitError->errordescription, 1234);
 
         $arrayResponses = json_decode(json_encode((array) $result->DebitResponses), true);
-        return $arrayResponses['DebitResponse'];
+        return $this->debitRequestsIDs->count() <= 1 ? array($arrayResponses['DebitResponse']) : $arrayResponses['DebitResponse'];
     }
 
     //--------------------------------
@@ -255,11 +255,11 @@ class ClientIdt
      */
     private function cardActivationRequest(OrderProduct $orderProduct)
     {
-        $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="activation">
-                <account>'.$orderProduct->getCtrlNumber().'</account>
-            </DebitRequest>
-            ';
+//        $this->debitRequests .=
+//            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="activation">
+//                <account>'.$orderProduct->getCtrlNumber().'</account>
+//            </DebitRequest>
+//            ';
 
         $this->rechargeAccountRequest($orderProduct);
     }
@@ -270,13 +270,12 @@ class ClientIdt
     private function rechargeAccountRequest(OrderProduct $orderProduct)
     {
         $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="recharge">
-                <CustomerInformation>
-                    <account>'.$orderProduct->getCtrlNumber().'</account>
-                </CustomerInformation>
-                <CreditCard>
-                    <amount>'.$orderProduct->getOrderDetail()->getAmount().'</amount>
-                </CreditCard>
+            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="misctrans">
+                <account>'.$orderProduct->getCtrlNumber().'</account>
+                <amount>'.$orderProduct->getPinDenomination().'</amount>
+                <transtype>vendorcredit</transtype>
+                <note>recharge</note>
+                <balancetozero>n</balancetozero>
             </DebitRequest>
             ';
     }
@@ -303,9 +302,9 @@ class ClientIdt
      */
     private function accountCreationResponse(OrderProduct $orderProduct, array $debitResponse)
     {
-        if($debitResponse['status'] == 'OK') {
+        if(strtolower($debitResponse['status']) == 'ok') {
             $orderProduct->setCtrlNumber($debitResponse['account']);
-            $orderProduct->setPin($debitResponse['pin']);
+            $orderProduct->setPin($debitResponse['authcode']);
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
             $orderProduct->setRequestType(RequestTypeEnumType::ACTIVATION);
         }
@@ -321,7 +320,7 @@ class ClientIdt
      */
     private function cardActivationResponse(OrderProduct $orderProduct, array $debitResponse)
     {
-        if($debitResponse['status'] == 'OK') {
+        if(strtolower($debitResponse['status']) == 'ok') {
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
         }
         else {
@@ -336,7 +335,7 @@ class ClientIdt
      */
     private function rechargeAccountResponse(OrderProduct $orderProduct, array $debitResponse)
     {
-        if($debitResponse['status'] == 'OK') {
+        if(strtolower($debitResponse['status']) == 'ok') {
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
         }
         else {

@@ -229,6 +229,7 @@ class CheckoutController extends Controller
                         );
                         $order_product->setProduct($old_order_product->getProduct());
                         $order_product->setPin($old_order_product->getPin());
+                        $order_product->setCtrlNumber($old_order_product->getCtrlNumber());
                         break;
                 }
                 $em->persist($order_product);

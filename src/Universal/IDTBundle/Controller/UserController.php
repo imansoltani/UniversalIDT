@@ -103,7 +103,7 @@ class UserController extends Controller
         $recharges = $em->createQueryBuilder()
             ->select('order_product')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')
-            ->where('order_product.pin = :pin')->set('pin', $pin->getPin())
+            ->where('order_product.pin = :pin')->setParameter('pin', $pin->getPin())
             ->andWhere('order_product.requestType = :requestType')->setParameter('requestType', RequestTypeEnumType::RECHARGE)
             ->andWhere('order_product.requestStatus = :requestStatus')->setParameter('requestStatus', RequestStatusEnumType::SUCCEED)
             ->innerJoin('order_product.orderDetail', 'orderDetail')

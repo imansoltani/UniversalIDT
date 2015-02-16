@@ -27,4 +27,9 @@ class ArrayKey {
         $this->array = array();
         $this->id = 0;
     }
+
+    public function count()
+    {
+        return count($this->array);
+    }
 }

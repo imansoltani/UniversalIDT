@@ -4,6 +4,7 @@ namespace Universal\IDTBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
+use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 
 /**
  * OrderProduct
@@ -23,9 +24,9 @@ class OrderProduct
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="pin", type="integer", nullable=true)
+     * @ORM\Column(name="pin", type="string", length=11, nullable=true)
      */
     private $pin;
 
@@ -53,9 +54,9 @@ class OrderProduct
     private $pinDenomination;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="ctrlNumber", type="integer", nullable=true)
+     * @ORM\Column(name="ctrlNumber", type="string", nullable=true, length=10)
      */
     private $ctrlNumber;
 
@@ -92,7 +93,7 @@ class OrderProduct
     /**
      * Set pin
      *
-     * @param integer $pin
+     * @param string $pin
      * @return OrderProduct
      */
     public function setPin($pin)
@@ -105,7 +106,7 @@ class OrderProduct
     /**
      * Get pin
      *
-     * @return integer 
+     * @return string
      */
     public function getPin()
     {
@@ -138,7 +139,7 @@ class OrderProduct
     /**
      * Set ctrlNumber
      *
-     * @param integer $ctrlNumber
+     * @param string $ctrlNumber
      * @return OrderProduct
      */
     public function setCtrlNumber($ctrlNumber)
@@ -151,7 +152,7 @@ class OrderProduct
     /**
      * Get ctrlNumber
      *
-     * @return integer 
+     * @return string
      */
     public function getCtrlNumber()
     {
@@ -271,5 +272,37 @@ class OrderProduct
     public function getStatusDesc()
     {
         return $this->statusDesc;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isProcessed()
+    {
+        return RequestStatusEnumType::PENDING !== $this->getRequestStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRegistered()
+    {
+        return RequestStatusEnumType::REGISTERED === $this->getRequestStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSucceed()
+    {
+        return RequestStatusEnumType::SUCCEED === $this->getRequestStatus();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFailed()
+    {
+        return RequestStatusEnumType::FAILED === $this->getRequestStatus();
     }
 }
