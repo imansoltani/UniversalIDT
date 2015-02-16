@@ -64,6 +64,12 @@ class ClientIdt
         }
         $this->em->flush();
 
+        if($this->debitRequests == "")
+        {
+            Log::save("No Data","idt_no_data");
+            return;
+        }
+
         try {
             $responses = $this->generateAndPostRequestAndGetResponse();
 
@@ -110,6 +116,12 @@ class ClientIdt
             }
         }
         $this->em->flush();
+
+        if($this->debitRequests == "")
+        {
+            Log::save("No Data","idt_no_data");
+            return;
+        }
 
         try {
             $responses = $this->generateAndPostRequestAndGetResponse();
@@ -211,7 +223,7 @@ class ClientIdt
 
         $response = $this->guzzle->post($this->idt_parameters['api_location'], null, $request)->send();
 
-        Log::save(print_r($response->getBody(), true),"idt_response");
+        Log::save($response->getBody(),"idt_response");
 
         $result = simplexml_load_string($response->getBody());
 
