@@ -207,7 +207,11 @@ class ClientIdt
             </DebitRequests>
             </IDTDebitInterface>';
 
+        Log::save(print_r($request, true),"idt_request");
+
         $response = $this->guzzle->post($this->idt_parameters['api_location'], null, $request)->send();
+
+        Log::save(print_r($response->getBody(), true),"idt_response");
 
         $result = simplexml_load_string($response->getBody());
 

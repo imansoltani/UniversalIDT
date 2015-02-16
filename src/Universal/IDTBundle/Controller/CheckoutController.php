@@ -15,6 +15,7 @@ use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
 use Universal\IDTBundle\Entity\Product;
 use Universal\IDTBundle\Form\CheckoutType;
+use Universal\IDTBundle\Idt\Log;
 
 class CheckoutController extends Controller
 {
@@ -73,6 +74,8 @@ class CheckoutController extends Controller
     {
         try {
             $orderDetail = $this->get('client_ogone')->processResult($request->query->all());
+
+        Log::save($orderDetail->getId(),"order_id_after_ogone");
 
             try {
                 if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED)
@@ -208,6 +211,7 @@ class CheckoutController extends Controller
             for($i=1; $i<=$row['count']; $i++) {
                 $order_product = new OrderProduct();
                 $order_product->setOrderDetail($order_detail);
+                $order_detail->addOrderProduct($order_product);
                 $order_product->setPinDenomination($row['denomination']);
                 $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
                 switch ($row['type']) {
@@ -232,6 +236,8 @@ class CheckoutController extends Controller
         }
 
         $em->flush();
+
+        Log::save($order_detail->getId(),"order_id_before_ogone");
 
         //go to redirect page for methods
         switch($order_detail->getPaymentMethod()) {
