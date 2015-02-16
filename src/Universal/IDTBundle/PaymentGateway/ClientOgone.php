@@ -30,10 +30,10 @@ class ClientOgone
         $this->em           = $em;
         $this->request      = $request;
 
-        $this->pspId        = $idt_parameters['pspId'];
-        $this->shaIn        = $idt_parameters['shaIn'];
-        $this->shaOut       = $idt_parameters['shaOut'];
-        $this->submitUrl    = $idt_parameters['submitUrl'];
+        $this->pspId        = $idt_parameters['pspid'];
+        $this->shaIn        = $idt_parameters['sha_in'];
+        $this->shaOut       = $idt_parameters['sha_out'];
+        $this->submitUrl    = $idt_parameters['submit_url'];
 
         $this->resultUrl    = $router->generate("checkout_ogone_result", [], true);
         $this->catalogUrl   = $router->generate("checkout_basket", [], true);
