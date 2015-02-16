@@ -141,6 +141,7 @@ class ClientIdt
 
                 switch ($orderProduct->getRequestType()) {
                     case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
+                    case RequestTypeEnumType::DEACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
                     case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
                 }
             }
@@ -255,13 +256,11 @@ class ClientIdt
      */
     private function cardActivationRequest(OrderProduct $orderProduct)
     {
-//        $this->debitRequests .=
-//            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="activation">
-//                <account>'.$orderProduct->getCtrlNumber().'</account>
-//            </DebitRequest>
-//            ';
-
-        $this->rechargeAccountRequest($orderProduct);
+        $this->debitRequests .=
+            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="activation">
+                <account>'.$orderProduct->getCtrlNumber().'</account>
+            </DebitRequest>
+            ';
     }
 
     /**
@@ -306,7 +305,7 @@ class ClientIdt
             $orderProduct->setCtrlNumber($debitResponse['account']);
             $orderProduct->setPin($debitResponse['authcode']);
             $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-            $orderProduct->setRequestType(RequestTypeEnumType::ACTIVATION);
+            $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
         }
         else {
             $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
