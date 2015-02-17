@@ -70,36 +70,25 @@ class ClientIdt
             return;
         }
 
-        try {
-            $responses = $this->generateAndPostRequestAndGetResponse();
+        $responses = $this->generateAndPostRequestAndGetResponse();
 
-            usort($responses, function($a, $b){
-                    if ($a['@attributes']['id'] == $b['@attributes']['id'])
-                        return 0;
-                    return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
-                });
+        usort($responses, function($a, $b){
+                if ($a['@attributes']['id'] == $b['@attributes']['id'])
+                    return 0;
+                return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
+            });
 
-            $i = 0;
-            foreach($productsToCreate as $orderProduct) {
-                $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
-                $response = $responses[$i++];
-                if ($response['@attributes']['id'] != $responseID)
-                    throw new \Exception('Error in count of responses.');
+        $i = 0;
+        foreach($productsToCreate as $orderProduct) {
+            $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
+            if($responseID === false) continue;
+            $response = $responses[$i++];
+            if ($response['@attributes']['id'] != $responseID)
+                throw new \Exception('Error in count of responses.');
 
-                $this->accountCreationResponse($orderProduct, $response);
-            }
-            $this->em->flush();
-
-        } catch (\Exception $e) {
-            /** @var OrderProduct $orderProduct */
-            foreach($productsToCreate as $orderProduct) {
-                $this->em->refresh($orderProduct);
-                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            }
-            $this->em->flush();
-
-            throw new \Exception($e->getMessage(), $e->getCode());
+            $this->accountCreationResponse($orderProduct, $response);
         }
+        $this->em->flush();
     }
 
     private function processSecondaryRequests(OrderDetail $orderDetail)
@@ -123,40 +112,28 @@ class ClientIdt
             return;
         }
 
-        try {
-            $responses = $this->generateAndPostRequestAndGetResponse();
+        $responses = $this->generateAndPostRequestAndGetResponse();
 
-            usort($responses, function($a, $b){
-                    if ($a['@attributes']['id'] == $b['@attributes']['id'])
-                        return 0;
-                    return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
-                });
+        usort($responses, function($a, $b){
+                if ($a['@attributes']['id'] == $b['@attributes']['id'])
+                    return 0;
+                return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
+            });
 
-            $i = 0;
-            foreach($orderDetail->getOrderProducts() as $orderProduct) {
-                $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
-                $response = $responses[$i++];
-                if($response['@attributes']['id'] != $responseID)
-                    throw new \Exception('Error in count of responses.');
+        $i = 0;
+        foreach($orderDetail->getOrderProducts() as $orderProduct) {
+            $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
+            if($responseID === false) continue;
+            $response = $responses[$i++];
+            if($response['@attributes']['id'] != $responseID)
+                throw new \Exception('Error in count of responses.');
 
-                switch ($orderProduct->getRequestType()) {
-                    case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
-                    case RequestTypeEnumType::DEACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
-                    case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
-                }
+            switch ($orderProduct->getRequestType()) {
+                case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
+                case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
             }
-            $this->em->flush();
-
-        } catch (\Exception $e) {
-            /** @var OrderProduct $orderProduct */
-            foreach($orderDetail->getOrderProducts() as $orderProduct) {
-                $this->em->refresh($orderProduct);
-                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            }
-            $this->em->flush();
-
-            throw new \Exception($e->getMessage());
         }
+        $this->em->flush();
     }
 
     /**
@@ -177,8 +154,19 @@ class ClientIdt
                 $productsToCreate []= $orderProduct;
         }
 
-        $this->processCreationRequests($productsToCreate);
-        $this->processSecondaryRequests($orderDetail);
+        try {
+            $this->processCreationRequests($productsToCreate);
+            $this->processSecondaryRequests($orderDetail);
+        } catch (\Exception $e) {
+            /** @var OrderProduct $orderProduct */
+            foreach($orderDetail->getOrderProducts() as $orderProduct) {
+                $this->em->refresh($orderProduct);
+                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
+            }
+            $this->em->flush();
+
+            throw new \Exception($e->getMessage());
+        }
 
         return $orderDetail;
     }

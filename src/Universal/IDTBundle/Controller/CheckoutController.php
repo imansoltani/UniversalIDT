@@ -86,7 +86,7 @@ class CheckoutController extends Controller
 
                     $result = "";
                     /** @var OrderProduct $orderProduct */
-                    foreach($orderDetail as $orderProduct) {
+                    foreach($orderDetail->getOrderProducts() as $orderProduct) {
                         $result .=
                             "id: ". $orderProduct->getId()
                             ."name: ". $orderProduct->getProduct()->getName()
