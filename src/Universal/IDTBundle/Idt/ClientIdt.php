@@ -79,8 +79,10 @@ class ClientIdt
             if ($response['@attributes']['id'] != $responseID)
                 throw new \Exception('Error in count of responses.');
 
-            if(strtolower($response['status']) !== 'ok')
+            if(strtolower($response['status']) !== 'ok') {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
+                $orderProduct->setStatusDesc(substr($response['code'].":".$response['description'], 0, 100));
+            }
 
             $this->accountCreationResponse($orderProduct, $response);
         }
@@ -99,6 +101,7 @@ class ClientIdt
             switch ($orderProduct->getRequestType()) {
                 case RequestTypeEnumType::ACTIVATION: $this->cardActivationRequest($orderProduct); break;
                 case RequestTypeEnumType::RECHARGE: $this->rechargeAccountRequest($orderProduct); break;
+                default: throw new \Exception('unknown Request Type in order product with id: '.$orderProduct->getId());
             }
         }
         $this->em->flush();
@@ -124,14 +127,11 @@ class ClientIdt
             if($response['@attributes']['id'] != $responseID)
                 throw new \Exception('Error in count of responses.');
 
-            if(strtolower($response['status']) === 'ok')
+            if(strtolower($response['status']) === 'ok') {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
-            else
+            } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-
-            switch ($orderProduct->getRequestType()) {
-                case RequestTypeEnumType::ACTIVATION: $this->cardActivationResponse($orderProduct, $response); break;
-                case RequestTypeEnumType::RECHARGE: $this->rechargeAccountResponse($orderProduct, $response); break;
+                $orderProduct->setStatusDesc(substr($response['code'].":".$response['description'], 0, 100));
             }
         }
         $this->em->flush();
@@ -296,33 +296,6 @@ class ClientIdt
             $orderProduct->setCtrlNumber($debitResponse['account']);
             $orderProduct->setPin($debitResponse['authcode']);
             $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
-        }
-        else {
-            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
-        }
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     * @param array $debitResponse
-     */
-    private function cardActivationResponse(OrderProduct $orderProduct, array $debitResponse)
-    {
-        if(strtolower($debitResponse['status']) !== 'ok') {
-            $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
-        }
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     * @param array $debitResponse
-     */
-    private function rechargeAccountResponse(OrderProduct $orderProduct, array $debitResponse)
-    {
-        if(strtolower($debitResponse['status']) !== 'ok') {
-            $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            $orderProduct->setStatusDesc(substr($debitResponse['code'].":".$debitResponse['description'], 0, 100));
         }
     }
 }
