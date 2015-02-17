@@ -63,12 +63,6 @@ class ClientIdt
         }
         $this->em->flush();
 
-        if($this->debitRequests == "")
-        {
-            Log::save("No Data","idt_no_data");
-            return;
-        }
-
         $responses = $this->generateAndPostRequestAndGetResponse();
 
         usort($responses, function($a, $b){
@@ -109,8 +103,7 @@ class ClientIdt
         }
         $this->em->flush();
 
-        if($this->debitRequests == "")
-        {
+        if($this->debitRequestsIDs->count() === 0) {
             Log::save("No Data","idt_no_data");
             return;
         }
