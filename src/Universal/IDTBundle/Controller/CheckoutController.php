@@ -88,14 +88,14 @@ class CheckoutController extends Controller
                     /** @var OrderProduct $orderProduct */
                     foreach($orderDetail->getOrderProducts() as $orderProduct) {
                         $result .=
-                            "id: ". $orderProduct->getId()
-                            ."name: ". $orderProduct->getProduct()->getName()
-                            ."denom: ". $orderProduct->getPinDenomination()
-                            ."ctrlNumber: ". $orderProduct->getCtrlNumber()?:"--"
-                            ."pin: ". $orderProduct->getPin()?:"--"
-                            ."request type: ". $orderProduct->getRequestType()
-                            ."request status: ". $orderProduct->getRequestStatus()
-                            ."<br>";
+                            " id: ". $orderProduct->getId()." - ".
+                            " name: ". $orderProduct->getProduct()->getName()." - ".
+                            " denom: ". $orderProduct->getPinDenomination()." - ".
+                            " ctrlNumber: ". ($orderProduct->getCtrlNumber()?:"--") ." - ".
+                            " pin: ". ($orderProduct->getPin()?:"--") ." - ".
+                            " request type: ". $orderProduct->getRequestType()." - ".
+                            " request status: ". $orderProduct->getRequestStatus()." - ".
+                            "<br>";
                     }
 
                     return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
