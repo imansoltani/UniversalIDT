@@ -50,7 +50,7 @@ class OrderDetail
     /**
      * @var string
      *
-     * @ORM\Column(name="amount", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="amount", type="decimal", precision=8, scale=2)
      */
     private $amount;
 
@@ -64,7 +64,7 @@ class OrderDetail
     /**
      * @var string
      *
-     * @ORM\Column(name="charge", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="charge", type="decimal", precision=6, scale=2)
      */
     private $charge = 0;
 

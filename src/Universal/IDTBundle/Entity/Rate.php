@@ -32,7 +32,7 @@ class Rate
     /**
      * @var string
      *
-     * @ORM\Column(name="cost", type="decimal", precision=4, scale=2)
+     * @ORM\Column(name="cost", type="decimal", precision=6, scale=2)
      */
     private $cost;
 
