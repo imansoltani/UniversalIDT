@@ -181,15 +181,12 @@ class ClientIdt
 
         $this->callDetailsRequest($orderProduct);
 
-        try {
-            $responses = $this->generateAndPostRequestAndGetResponse();
+        $responses = $this->generateAndPostRequestAndGetResponse();
 
-            return $responses[0];
-        }
-        catch (\Exception $e) {
-            return array('status' => 'fail', 'id'=>$orderProduct->getId(), 'description' => $e->getMessage());
-        }
+        if(isset($responses[0]['status']))
+            throw new \Exception("Error in IDT: ". $responses[0]['description']. " (".$responses[0]['code'].")");
 
+        return $responses[0];
     }
 
     /**
@@ -278,8 +275,8 @@ class ClientIdt
         $this->debitRequests .=
             '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="calldetails">
                 <account>'.$orderProduct->getCtrlNumber().'</account>
-                <startdate>'.date("mm/dd/yy",strtotime("-1 week")).'</startdate>
-                <enddate>'.date("mm/dd/yy",strtotime("now")).'</enddate>
+                <startdate>'.date("m/d/y",strtotime("-1 week")).'</startdate>
+                <enddate>'.date("m/d/y",strtotime("now")).'</enddate>
             </DebitRequest>
             ';
     }

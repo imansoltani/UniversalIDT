@@ -90,6 +90,7 @@ class CheckoutController extends Controller
                         $result .=
                             " id: ". $orderProduct->getId()." - ".
                             " name: ". $orderProduct->getProduct()->getName()." - ".
+                            " class_id: ". $orderProduct->getProduct()->getClassId()." - ".
                             " denom: ". $orderProduct->getPinDenomination()." - ".
                             " ctrlNumber: ". ($orderProduct->getCtrlNumber()?:"--") ." - ".
                             " pin: ". ($orderProduct->getPin()?:"--") ." - ".

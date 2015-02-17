@@ -58,6 +58,10 @@
                     <td>{{ call.dialedfrom }}</td>
                     <td>{{ call.dialedto }}</td>
                 </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">No Data</td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
@@ -81,6 +85,10 @@
                     <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
                     <td>{{ recharge.pinDenomination }}</td>
                     <td>{{ recharge.requestStatus }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">No Data</td>
                 </tr>
             {% endfor %}
             </tbody>
