@@ -8,6 +8,7 @@
     {% for product in products %}
         <div style="border: 1px solid #000000; margin: 10px">
             <strong>General Information:</strong> {{ product.name }}<br>
+            <strong>Class ID:</strong> {{ product.classId }}<br>
             <strong>General Information:</strong><br>
             {% for lang, info in product.allGeneralInformation %}
                 {{ lang }}: {{ info }}<br>

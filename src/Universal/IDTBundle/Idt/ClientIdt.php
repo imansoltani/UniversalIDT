@@ -59,7 +59,6 @@ class ClientIdt
 
         /** @var OrderProduct $orderProduct */
         foreach($productsToCreate as $orderProduct) {
-            $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
             $this->accountCreationRequest($orderProduct);
         }
         $this->em->flush();
@@ -98,7 +97,6 @@ class ClientIdt
 
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
-            $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
             switch ($orderProduct->getRequestType()) {
                 case RequestTypeEnumType::ACTIVATION: $this->cardActivationRequest($orderProduct); break;
                 case RequestTypeEnumType::RECHARGE: $this->rechargeAccountRequest($orderProduct); break;
@@ -230,6 +228,7 @@ class ClientIdt
      */
     private function accountCreationRequest(OrderProduct $orderProduct)
     {
+        $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
         $class_id = $orderProduct->getProduct()->getClassId();
 
         $this->debitRequests .=
@@ -244,6 +243,7 @@ class ClientIdt
      */
     private function cardActivationRequest(OrderProduct $orderProduct)
     {
+        $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
         $this->debitRequests .=
             '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="activation">
                 <account>'.$orderProduct->getCtrlNumber().'</account>
@@ -256,6 +256,7 @@ class ClientIdt
      */
     private function rechargeAccountRequest(OrderProduct $orderProduct)
     {
+        $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
         $this->debitRequests .=
             '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="misctrans">
                 <account>'.$orderProduct->getCtrlNumber().'</account>
@@ -272,6 +273,7 @@ class ClientIdt
      */
     private function callDetailsRequest(OrderProduct $orderProduct)
     {
+        $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
         $this->debitRequests .=
             '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="calldetails">
                 <account>'.$orderProduct->getCtrlNumber().'</account>
