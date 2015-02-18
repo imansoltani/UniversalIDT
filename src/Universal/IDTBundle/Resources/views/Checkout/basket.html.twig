@@ -5,6 +5,8 @@
 {% block body %}
     <h1>Welcome to the Checkout:Basket page</h1>
 
+    <a href="#" onclick="cookieClear();updateCounts();updateBasketTable()">Clear Basket</a><br/>
+
     <table border="1">
         <thead>
         <tr>
@@ -36,8 +38,7 @@
         <tbody id="cookie_recharge"></tbody>
     </table>
 
-    <a href="#" onclick="cookieClear();updateCounts();updateBasketTable()">Clear Basket</a><br/>
-    <a href="{{ path('checkout_checkout') }}">Go to Checkout</a>
+    {{ form(form) }}
 {% endblock %}
 
 {% block javascripts %}

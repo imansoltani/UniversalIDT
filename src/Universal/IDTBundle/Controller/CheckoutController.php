@@ -14,6 +14,7 @@ use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
 use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\Form\BasketType;
 use Universal\IDTBundle\Form\CheckoutType;
 use Universal\IDTBundle\Idt\Log;
 
@@ -24,11 +25,26 @@ class CheckoutController extends Controller
 
     public function basketAction()
     {
-        return $this->render('UniversalIDTBundle:Checkout:basket.html.twig');
+        $form = $this->createForm(new BasketType($this->getUser()), null, array(
+                'method' => 'get',
+                'action' => $this->generateUrl('checkout_checkout')
+            ));
+
+        return $this->render('UniversalIDTBundle:Checkout:basket.html.twig', array(
+                'form' => $form->createView()
+            ));
     }
 
     public function checkoutAction(Request $request)
     {
+        if($request->query->has('account'))
+        {
+            switch($request->query->get('account')) {
+                case "login": return $this->redirect($this->generateUrl('fos_user_security_login'));
+                case "register": return $this->redirect($this->generateUrl('fos_user_registration_register'));
+            }
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -260,8 +276,8 @@ class CheckoutController extends Controller
     public function checkoutResultAction($result)
     {
         $response = new Response();
-        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
-        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+//        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+//        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
         return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
                 'result' => $result

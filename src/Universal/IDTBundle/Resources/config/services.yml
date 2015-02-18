@@ -19,6 +19,16 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    universal_idt.login_handler:
+        class: Universal\IDTBundle\EventListener\AuthenticationSuccessHandler
+        arguments: [ @router, @security.http_utils, [] ]
+        calls:
+            - [ setProviderKey, ["main"] ]
+
+    universal_idt.logout_success_handler:
+            class: Universal\IDTBundle\EventListener\LogoutSuccessHandler
+            arguments: [ @security.http_utils, "/" ]
+
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
