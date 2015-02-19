@@ -1,0 +1,81 @@
+{% extends '@UniversalIDT/layout.html.twig' %}
+
+{% block subtitle %}
+    Pins|trans
+{% endblock subtitle %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/universalidt/dataTable/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget stacked">
+
+                <div class="widget-header">
+                    <i class="icon-book"></i>
+
+                    <h3>My Pins</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+                    <table id="table" class="display" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Date purchased</th>
+                            <th>Card name</th>
+                            <th>PIN</th>
+                            <th>Order</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tfoot>
+                        <tr>
+                            <th>Date purchased</th>
+                            <th>Card name</th>
+                            <th>PIN</th>
+                            <th>Order</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+
+                        <tbody>
+                        {% for pin in pins %}
+                            <tr>
+                                <td>{{ pin.orderDetail.date|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ pin.product.name }}</td>
+                                <td>{{ pin.pin }}</td>
+                                <td><a href="{{ path('user_order_details', {'id':pin.orderDetail.id}) }}">order
+                                        details</a></td>
+                                <td><a href="{{ path('user_pin_details', {'id':pin.id}) }}">details</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /widget-content -->
+
+            </div>
+            <!-- /widget -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("bundles/universalidt/dataTable/js/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table').DataTable();
+
+            $('#table').find('tbody').on('click', 'tr', function () {
+                window.location.href = "{{ path("user_pin_details",{'id':1}) }}";
+            });
+        });
+    </script>
+{% endblock javascripts %}
+

@@ -1,0 +1,157 @@
+{% extends '@UniversalIDT/layout.html.twig' %}
+
+{% block subtitle %}
+    Pins details|trans
+{% endblock subtitle %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/universalidt/dataTable/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block page_title %}
+    <i class="icon-user"></i>
+    <h3>PIN 123-456-789</h3>
+    <div class="btn btn-primary pull-right btn-sm">Recharge</div>
+{% endblock page_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget stacked">
+
+                <div class="widget-header">
+                    <i class="icon-book"></i>
+
+                    <h3>Pin {{ pin.pin }}</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#detailTab" data-toggle="tab">Details</a></li>
+                            <li><a href="#historyTab" data-toggle="tab">Call history</a></li>
+                            <li><a href="#rechargeTab" data-toggle="tab">Recharges</a></li>
+                        </ul>
+
+                        <br>
+
+                        <div class="tab-content">
+                            <div class="tab-pane tab-row active" id="detailTab">
+                                <div class="row field-data">
+                                    <div class="col-sm-3 col-md-2 h5">Card name</div>
+                                    <div class="col-sm-8 col-md-6">{{ pin.product.name }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="field-data">
+                                        <div class="col-sm-3 col-md-2 h5">Control number</div>
+                                        <div class="col-sm-8 col-md-2">{{ pin.ctrlNumber }}</div>
+                                    </div>
+                                    <div class="field-data">
+                                        <div class="col-sm-3 col-md-2 h5">Order No</div>
+                                        <div class="col-sm-8 col-md-2">{{ pin.orderDetail.id }}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="field-data">
+                                        <div class="col-sm-3 col-md-2 h5">Total amount</div>
+                                        <div class="col-sm-8 col-md-2">{{ call_details.totalamount }}</div>
+                                    </div>
+                                    <div class="field-data">
+                                        <div class="col-sm-3 col-md-2 h5">Total calls</div>
+                                        <div class="col-sm-8 col-md-2">{{ call_details.totalcalls }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="historyTab">
+                                <table id="table1" class="display" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Date, Time</th>
+                                        <th>Duration</th>
+                                        <th>Cost</th>
+                                        <th>Caller Number</th>
+                                        <th>Called number</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>Date, Time</th>
+                                        <th>Duration</th>
+                                        <th>Cost</th>
+                                        <th>Caller Number</th>
+                                        <th>Called number</th>
+                                    </tr>
+                                    </tfoot>
+
+                                    <tbody>
+                                    {% for call in call_details.calls %}
+                                        <tr>
+                                            <td>{{ call.callfulldate }}</td>
+                                            <td>{{ call.minutes }}</td>
+                                            <td>{{ call.amount }}</td>
+                                            <td>{{ call.dialedfrom }}</td>
+                                            <td>{{ call.dialedto }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="tab-pane" id="rechargeTab">
+                                <table id="table2" class="display" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Card name</th>
+                                        <th>Date</th>
+                                        <th>Denomination</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>Card name</th>
+                                        <th>Date</th>
+                                        <th>Denomination</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </tfoot>
+
+                                    <tbody>
+                                    {% for recharge in recharges %}
+                                        <tr>
+                                            <td>{{ recharge.product.name }}</td>
+                                            <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
+                                            <td>{{ recharge.pinDenomination }}</td>
+                                            <td>{{ recharge.requestStatus }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+        <!-- /widget -->
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("bundles/universalidt/dataTable/js/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table1').DataTable();
+            $('#table2').DataTable();
+        });
+    </script>
+{% endblock javascripts %}

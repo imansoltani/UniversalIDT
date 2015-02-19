@@ -4,6 +4,7 @@ namespace Universal\IDTBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\User;
 
 class OrdersController extends Controller
@@ -30,6 +31,7 @@ class OrdersController extends Controller
         /** @var User $user */
         $user = $this->getUser();
 
+        /** @var OrderDetail $order */
         $order = $em->createQueryBuilder()
             ->select('orderDetail')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')

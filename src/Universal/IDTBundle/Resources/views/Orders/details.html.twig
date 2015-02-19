@@ -1,0 +1,125 @@
+{% extends '@UniversalIDT/layout.html.twig' %}
+
+{% block subtitle %}
+    Order Details|trans
+{% endblock subtitle %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/universalidt/dataTable/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('bundles/universalidt/js/plugins/msgbox/jquery.msgbox.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget stacked">
+
+                <div class="widget-header">
+                    <i class="icon-book"></i>
+                    <h3>General information|trans</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+                    <table id="table1" class="display" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Payment method</th>
+                            <th>Delivery method</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                            <td>--</td>
+                            <td>{{ order.paymentMethod }}</td>
+                            <td>{{ order.deliveryEmail ~ order.deliverySMS }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /widget-content -->
+
+            </div>
+            <!-- /widget -->
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget stacked">
+
+                <div class="widget-header">
+                    <i class="icon-book"></i>
+                    <h3>Order Details|trans</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+                    <table id="table2" class="display" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Card name</th>
+                            <th>Denomination</th>
+                            <th>quantity</th>
+                            <th>Subtotal</th>
+                            <th>Serial number</th>
+                        </tr>
+                        </thead>
+
+                        <tfoot>
+                        <tr>
+                            <th>Card name</th>
+                            <th>Denomination</th>
+                            <th>quantity</th>
+                            <th>Subtotal</th>
+                            <th>Serial number</th>
+                        </tr>
+                        </tfoot>
+
+                        <tbody>
+                        {% for orderProduct in order.orderProducts %}
+                            <tr>
+                                <td>{{ orderProduct.product.name }}</td>
+                                <td>{{ orderProduct.pinDenomination }}</td>
+                                <td>--</td>
+                                <td>--</td>
+                                <td>{{ orderProduct.ctrlNumber }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /widget-content -->
+
+            </div>
+            <!-- /widget -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("bundles/universalidt/js/plugins/msgbox/jquery.msgbox.min.js") }}"></script>
+    <script src="{{ asset("bundles/universalidt/dataTable/js/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table1').DataTable();
+            $('#table2').DataTable();
+
+            $('#table1').find('tbody').on('click', 'tr', function () {
+                $.msgbox("sdfsdf sdf", {type: "info"});
+            });
+            $('#table2').find('tbody').on('click', 'tr', function () {
+                $.msgbox("sdfsdf sdf", {type: "info"});
+            });
+        });
+    </script>
+{% endblock javascripts %}
+

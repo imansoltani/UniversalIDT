@@ -1,15 +1,15 @@
 user_billing_history:
     path:     /transactions/billing-history
-    defaults: { _controller: UniversalIDTBundle:User:billingHistory }
+    defaults: { _controller: UniversalIDTBundle:Orders:index }
 
 user_order_details:
     path:     /transactions/{id}/order
-    defaults: { _controller: UniversalIDTBundle:User:orderDetails }
+    defaults: { _controller: UniversalIDTBundle:Orders:details }
 
 user_my_pins:
     path:     /my-pins
-    defaults: { _controller: UniversalIDTBundle:User:myPins }
+    defaults: { _controller: UniversalIDTBundle:Pins:index }
 
 user_pin_details:
     path:     /my-pins/{id}/details
-    defaults: { _controller: UniversalIDTBundle:User:pinDetails }
+    defaults: { _controller: UniversalIDTBundle:Pins:details }

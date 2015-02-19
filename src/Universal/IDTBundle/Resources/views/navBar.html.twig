@@ -8,21 +8,21 @@
     <ul class="mainnav">
 
         <li class="active">
-            <a href="{{ path('universal_idt_user') }}">
+            <a href="{{ path('guest_main') }}">
                 <i class="icon-home"></i>
                 <span>{{ 'Home'|trans({},'navBar') }}</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ path('universal_idt_user_myPins') }}">
+            <a href="{{ path('user_my_pins') }}">
                 <i class="icon-th"></i>
                 <span>{{ 'My PINs'|trans({},'navBar') }}</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ path('universal_idt_user_billingHistory') }}">
+            <a href="{{ path('user_billing_history') }}">
                 <i class="icon-copy"></i>
                 <span>{{ 'Billing History'|trans({},'navBar') }}</span>
             </a>
@@ -43,21 +43,21 @@
         </li>
 
         <li>
-            <a href="{{ path('universal_idt_user_login') }}">
+            <a href="{{ path('fos_user_security_login') }}">
                 <i class="icon-signin"></i>
                 <span>{{ 'Login'|trans({},'signin') }}</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ path('universal_idt_user_signUp') }}">
+            <a href="{{ path('fos_user_registration_register') }}">
                 <i class="icon-lock"></i>
                 <span>{{ 'Sign Up'|trans({},'signin') }}</span>
             </a>
         </li>
 
         <li>
-            <a href="{{ path('universal_idt_user_checkout') }}">
+            <a href="{{ path('checkout_checkout') }}">
                 <i class="icon-check"></i>
                 <span>Checkout</span>
             </a>

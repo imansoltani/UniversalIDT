@@ -23,7 +23,7 @@
                 <span class="sr-only">Toggle navigation</span>
                 <i class="icon-cog"></i>
             </button>
-            <a class="navbar-brand" href="{{ path('universal_idt_user') }}">
+            <a class="navbar-brand" href="{{ path('guest_main') }}">
                 Universal IDT
             </a>
         </div>
@@ -39,7 +39,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:;">{{ 'Sign Out'|trans({},'user') }}</a></li>
-                        <li><a href="{{ path('universal_idt_user_accountSettings') }}">{{ 'Settings'|trans({},'user') }}</a></li>
+                        <li><a href="#">{{ 'Settings'|trans({},'user') }}</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -59,27 +59,35 @@
     </div> <!-- /.container -->
 </nav>
 
-    <div class="subnavbar">
-        <div class="subnavbar-inner">
-            <div class="container">
-                {% include '@UniversalIDT/User/navBar.html.twig' %}
-            </div> <!-- /container -->
-        </div> <!-- /subnavbar-inner -->
-    </div> <!-- /subnavbar -->
+<div class="subnavbar">
+    <div class="subnavbar-inner">
+        <div class="container">
+            {% include '@UniversalIDT/navBar.html.twig' %}
+        </div> <!-- /container -->
+    </div> <!-- /subnavbar-inner -->
+</div> <!-- /subnavbar -->
 
-    <div class="breadcrumbs">
-        <div class="breadcrumbs-inner">
-            <div class="container">
-                {% include '@UniversalIDT/User/breadcrumbs.html.twig' %}
-            </div> <!-- /container -->
-        </div> <!-- /subnavbar-inner -->
-    </div> <!-- /subnavbar -->
+<div class="main">
+    <div class="container">
+        <div class="breadcrumbs">
+            <div class="breadcrumbs-inner">
+                <div class="container">
+                    {% include '@UniversalIDT/breadcrumbs.html.twig' %}
+                </div> <!-- /container -->
+            </div> <!-- /subnavbar-inner -->
+        </div> <!-- /subnavbar -->
 
-    {% block content '' %}
+        {#{% block flashes %}#}
+        {#<div class="alert alert-{{type}}">{{ message }}</div>#}
+        {#{% endblock %}#}
+
+        {% block content '' %}
+    </div> <!-- /container -->
+</div> <!-- /main -->
 
     <div class="extra">
         <div class="container">
-            {% include '@UniversalIDT/bottomLinks.html.twig' %}
+            {% include '@UniversalIDT/extra.html.twig' %}
         </div> <!-- /container -->
     </div> <!-- /extra -->
 
