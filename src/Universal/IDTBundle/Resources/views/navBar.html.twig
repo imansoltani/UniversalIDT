@@ -1,0 +1,67 @@
+<a href="javascript:;" class="subnav-toggle" data-toggle="collapse" data-target=".subnav-collapse">
+    <span class="sr-only">Toggle navigation</span>
+    <i class="icon-reorder"></i>
+
+</a>
+
+<div class="collapse subnav-collapse">
+    <ul class="mainnav">
+
+        <li class="active">
+            <a href="{{ path('universal_idt_user') }}">
+                <i class="icon-home"></i>
+                <span>{{ 'Home'|trans({},'navBar') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('universal_idt_user_myPins') }}">
+                <i class="icon-th"></i>
+                <span>{{ 'My PINs'|trans({},'navBar') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('universal_idt_user_billingHistory') }}">
+                <i class="icon-copy"></i>
+                <span>{{ 'Billing History'|trans({},'navBar') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:;">
+                <i class="icon-external-link"></i>
+                <span>{{ 'Rates'|trans({},'navBar') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:;">
+                <i class="icon-info-sign"></i>
+                <span>{{ 'Help'|trans({},'navBar') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('universal_idt_user_login') }}">
+                <i class="icon-signin"></i>
+                <span>{{ 'Login'|trans({},'signin') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('universal_idt_user_signUp') }}">
+                <i class="icon-lock"></i>
+                <span>{{ 'Sign Up'|trans({},'signin') }}</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ path('universal_idt_user_checkout') }}">
+                <i class="icon-check"></i>
+                <span>Checkout</span>
+            </a>
+        </li>
+
+    </ul>
+</div> <!-- /.subnav-collapse -->

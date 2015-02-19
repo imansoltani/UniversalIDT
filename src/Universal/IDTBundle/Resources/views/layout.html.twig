@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% block subtitle '' %} :: Universal IDT{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/universalidt/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/base-admin-3.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/base-admin-3-responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/custom.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block body %}
+<nav class="navbar navbar-inverse" role="navigation">
+
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="icon-cog"></i>
+            </button>
+            <a class="navbar-brand" href="{{ path('universal_idt_user') }}">
+                Universal IDT
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="javscript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-cog"></i>
+                        Rod Howard
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:;">{{ 'Sign Out'|trans({},'user') }}</a></li>
+                        <li><a href="{{ path('universal_idt_user_accountSettings') }}">{{ 'Settings'|trans({},'user') }}</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="javscript:;" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i>
+                        Language
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:;">English</a></li>
+                        <li><a href="javascript:;">French</a></li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div> <!-- /.container -->
+</nav>
+
+    <div class="subnavbar">
+        <div class="subnavbar-inner">
+            <div class="container">
+                {% include '@UniversalIDT/User/navBar.html.twig' %}
+            </div> <!-- /container -->
+        </div> <!-- /subnavbar-inner -->
+    </div> <!-- /subnavbar -->
+
+    <div class="breadcrumbs">
+        <div class="breadcrumbs-inner">
+            <div class="container">
+                {% include '@UniversalIDT/User/breadcrumbs.html.twig' %}
+            </div> <!-- /container -->
+        </div> <!-- /subnavbar-inner -->
+    </div> <!-- /subnavbar -->
+
+    {% block content '' %}
+
+    <div class="extra">
+        <div class="container">
+            {% include '@UniversalIDT/bottomLinks.html.twig' %}
+        </div> <!-- /container -->
+    </div> <!-- /extra -->
+
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div id="footer-copyright" class="col-lg-6">
+                    &copy; 2012-13 Jumpstart UI.
+                </div> <!-- /span6 -->
+                <div id="footer-terms" class="col-lg-6">
+                    Theme by <a href="http://jumpstartui.com" target="_blank">Jumpstart UI</a>
+                </div> <!-- /.span6 -->
+            </div> <!-- /row -->
+        </div> <!-- /container -->
+    </div> <!-- /footer -->
+
+{% endblock body %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ asset("bundles/universalidt/js/jquery-1.9.1.min.js") }}"></script>
+    <script src="{{ asset("bundles/universalidt/js/jquery-ui-1.10.0.custom.min.js") }}"></script>
+    <script src="{{ asset("bundles/universalidt/js/bootstrap.min.js") }}"></script>
+    <script src="{{ asset("bundles/universalidt/js/Application.js") }}"></script>
+{% endblock javascripts %}

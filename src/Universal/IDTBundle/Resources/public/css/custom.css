@@ -1,0 +1,95 @@
+/*------------------------------------------------------------------
+
+[Custom Stylesheet]
+
+
+Last change:	03/25/2013
+Assigned to:	You
+
+-------------------------------------------------------------------*/
+/*
+[ Subnavbar / .subnavbar ]
+*/
+.subnavbar {
+    margin-bottom: 0;
+    border-top: 1px solid #595959;
+}
+
+/*------------------------------------------------------------------
+[ breadcrumbs / .breadcrumbs ]
+*/
+.breadcrumbs {
+    margin-bottom: 2.5em;
+    border-top: 1px solid #595959;
+}
+.breadcrumbs .breadcrumbs-inner {
+    background: #292929;
+    border-bottom: 1px solid #000;
+}
+.breadcrumbs .breadcrumb {
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+.breadcrumbs .breadcrumb > li{
+    padding: 5px 3px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.breadcrumbs .breadcrumb > li.active {
+    color: #b8b8b8;
+}
+.breadcrumbs .breadcrumb > li.active:before {
+    margin-right: 5px;
+}
+.breadcrumbs .breadcrumb > li > a {
+    color: #dbdbdb;
+}
+.breadcrumbs .breadcrumb > li > a:hover {
+    color: #888;
+    text-decoration: none;
+}
+
+.breadcrumbs .breadcrumbs.collapse {
+    height: auto\9;
+    overflow: visible\9;
+}
+
+@media (max-width: 768px) {
+    .breadcrumbs {
+        display: none;
+    }
+    .subnavbar {
+        margin-bottom: 2.5em;
+    }
+}
+
+/* --------------------------------------------------------------------
+tab row
+*/
+.tab-pane.tab-row .row{
+    margin-left: 0;
+}
+.tab-pane.tab-row .field-data{
+    margin-bottom: 10px;
+}
+
+.widget-header .btn{
+    margin-right: 4px;
+    margin-top: 4px;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .breadcrumbs_collapse.collapse {
+        display: block!important;
+        height: auto!important;
+        padding-bottom: 0;
+        overflow: visible!important;
+    }
+    .subnavbar {
+        margin-bottom: 0;
+    }
+}
