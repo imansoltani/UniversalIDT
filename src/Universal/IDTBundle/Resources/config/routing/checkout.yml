@@ -4,7 +4,7 @@ checkout_checkout:
 
 checkout_basket:
     path:     /basket
-    defaults: { _controller: UniversalIDTBundle:Checkout:basket }
+    defaults: { _controller: UniversalIDTBundle:Guest:basket }
 
 checkout_ogone_result:
     path:     /checkout/ogone-result

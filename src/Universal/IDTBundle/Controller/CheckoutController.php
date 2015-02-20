@@ -14,7 +14,6 @@ use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
 use Universal\IDTBundle\Entity\Product;
-use Universal\IDTBundle\Form\BasketType;
 use Universal\IDTBundle\Form\CheckoutType;
 use Universal\IDTBundle\Idt\Log;
 
@@ -22,18 +21,6 @@ class CheckoutController extends Controller
 {
     private $BASKET_BUY = "buy";
     private $BASKET_RECHARGE = "recharge";
-
-    public function basketAction()
-    {
-        $form = $this->createForm(new BasketType($this->getUser()), null, array(
-                'method' => 'get',
-                'action' => $this->generateUrl('checkout_checkout')
-            ));
-
-        return $this->render('UniversalIDTBundle:Checkout:basket.html.twig', array(
-                'form' => $form->createView()
-            ));
-    }
 
     public function checkoutAction(Request $request)
     {

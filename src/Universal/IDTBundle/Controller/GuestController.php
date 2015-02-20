@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\Form\BasketType;
 use Universal\IDTBundle\Form\RatesType;
 
 class GuestController extends Controller
@@ -116,4 +117,15 @@ class GuestController extends Controller
         );
     }
 
+    public function basketAction()
+    {
+        $form = $this->createForm(new BasketType($this->getUser()), null, array(
+                'method' => 'get',
+                'action' => $this->generateUrl('checkout_checkout')
+            ));
+
+        return $this->render('UniversalIDTBundle:Guest:basket.html.twig', array(
+                'form' => $form->createView()
+            ));
+    }
 }
