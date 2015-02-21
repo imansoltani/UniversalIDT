@@ -28,6 +28,7 @@ class FOSListener implements EventSubscriberInterface
             FOSUserEvents::REGISTRATION_INITIALIZE => 'onRegistrationInitialize',
 //            FOSUserEvents::REGISTRATION_CONFIRM => 'onRegistrationConfirm',
             FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationConfirm',
+            FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onChangePassword',
         );
     }
 
@@ -45,7 +46,12 @@ class FOSListener implements EventSubscriberInterface
         if (null !== $event->getRequest()->cookies->get("products") &&
             null !== $event->getRequest()->cookies->get("products_currency")
         ) {
-            $event->setResponse(new RedirectResponse($this->router->generate('checkout_checkout')));
+            $event->setResponse(new RedirectResponse($this->router->generate('user_checkout')));
         }
+    }
+
+    public function onChangePassword(FormEvent $event)
+    {
+        $event->setResponse(new RedirectResponse($this->router->generate('fos_user_change_password')));
     }
 }
