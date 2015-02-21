@@ -24,13 +24,12 @@ class NotificationType extends AbstractType
     {
         $builder
             ->add('notifications', 'choice', array(
-                        'choices' => $this->notifications,
-                        'expanded' => true,
-                        'multiple' => true,
-                        'required' => false
-                    ));
-
-        $builder
+                    'choices' => $this->notifications,
+                    'expanded' => true,
+                    'multiple' => true,
+                        'required' => false,
+                    'label' => 'Subscribe to notifications'
+                ))
             ->add('submit', 'submit', array(
                     'label' => 'Save notifications'
                 ))

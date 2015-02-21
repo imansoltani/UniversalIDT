@@ -4,7 +4,7 @@ namespace Universal\IDTBundle\Form\FOS;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class RegistrationFormType extends AbstractType
+class ProfileFormType extends AbstractType
 {
     private $locales;
 
@@ -29,11 +29,11 @@ class RegistrationFormType extends AbstractType
 
     public function getParent()
     {
-        return 'fos_user_registration';
+        return 'fos_user_profile';
     }
 
     public function getName()
     {
-        return 'universal_idt_registration';
+        return 'universal_idt_profile';
     }
 }

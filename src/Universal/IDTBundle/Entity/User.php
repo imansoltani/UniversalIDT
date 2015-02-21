@@ -40,7 +40,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="notifications", type="json_array")
+     * @ORM\Column(name="notifications", type="json_array", nullable=true)
      */
     private $notifications;
 
