@@ -33,6 +33,20 @@ class User extends BaseUser
     /**
      * @var string
      *
+     * @ORM\Column(name="phone", type="string", length=11)
+     */
+    private $phone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="notifications", type="json_array")
+     */
+    private $notifications;
+
+    /**
+     * @var string
+     *
      * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\GenderEnumType")
      * @ORM\Column(name="gender", type="GenderEnumType")
      */
@@ -139,5 +153,51 @@ class User extends BaseUser
     public function getOrderDetails()
     {
         return $this->orderDetails;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set notifications
+     *
+     * @param array $notifications
+     * @return User
+     */
+    public function setNotifications($notifications)
+    {
+        $this->notifications = $notifications;
+
+        return $this;
+    }
+
+    /**
+     * Get notifications
+     *
+     * @return array 
+     */
+    public function getNotifications()
+    {
+        return $this->notifications;
     }
 }

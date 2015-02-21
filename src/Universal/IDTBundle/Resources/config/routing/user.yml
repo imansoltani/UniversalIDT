@@ -1,17 +1,21 @@
+user_profile_notification:
+    path:     /setting/notification
+    defaults: { _controller: UniversalIDTBundle:User:notification }
+
 user_billing_history:
-    path:     /transactions/billing-history
+    path:     /transactions
     defaults: { _controller: UniversalIDTBundle:Orders:index }
 
 user_order_details:
-    path:     /transactions/{id}/order
+    path:     /transactions/{id}
     defaults: { _controller: UniversalIDTBundle:Orders:details }
 
 user_my_pins:
-    path:     /my-pins
+    path:     /pins
     defaults: { _controller: UniversalIDTBundle:Pins:index }
 
 user_pin_details:
-    path:     /my-pins/{id}/details
+    path:     /pins/{id}
     defaults: { _controller: UniversalIDTBundle:Pins:details }
 
 user_checkout:

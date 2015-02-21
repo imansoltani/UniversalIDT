@@ -6,6 +6,10 @@ user:
     resource: "@UniversalIDTBundle/Resources/config/routing/user.yml"
     prefix:   /app
 
+fos_user:
+    resource: "@UniversalIDTBundle/Resources/config/routing/fos_user.yml"
+    prefix:   /
+
 test:
     path:     /test
     defaults: { _controller: UniversalIDTBundle:Default:index }
