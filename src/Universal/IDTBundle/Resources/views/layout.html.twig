@@ -24,7 +24,7 @@
                 <span class="sr-only">Toggle navigation</span>
                 <i class="icon-cog"></i>
             </button>
-            <a class="navbar-brand" href="{{ path('guest_main') }}">
+            <a class="navbar-brand" href="{{ path('WebPage_main') }}">
                 Universal IDT
             </a>
         </div>
@@ -39,7 +39,7 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:;">{{ 'Sign Out'|trans({},'user') }}</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">{{ 'Sign Out'|trans({},'user') }}</a></li>
                         <li><a href="#">{{ 'Settings'|trans({},'user') }}</a></li>
                     </ul>
                 </li>

@@ -7,9 +7,8 @@ fos_user_profile:
     prefix:   /
 
 fos_user_profile_show:
-    path:     /app/setting
-    defaults: { _controller: FOSUserBundle:Profile:show }
-    methods:  [GET]
+    path:     /app/setting/profile
+    defaults: { _controller: FOSUserBundle:Profile:edit }
 
 fos_user_profile_edit:
     path:     /app/setting/profile

@@ -33,7 +33,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->render("UniversalIDTBundle::notifications.html.twig", array(
+        return $this->render("UniversalIDTBundle:Settings:notifications.html.twig", array(
                 'form' => $form->createView()
             ));
     }

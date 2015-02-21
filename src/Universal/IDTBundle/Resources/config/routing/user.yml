@@ -10,7 +10,7 @@ user_order_details:
     path:     /transactions/{id}
     defaults: { _controller: UniversalIDTBundle:Orders:details }
 
-user_my_pins:
+user_pins:
     path:     /pins
     defaults: { _controller: UniversalIDTBundle:Pins:index }
 
