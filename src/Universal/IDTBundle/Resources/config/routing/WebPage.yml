@@ -1,0 +1,36 @@
+WebPage_main:
+    path:     /
+    defaults: { _controller: UniversalIDTBundle:WebPage:main }
+
+WebPage_calling_cards:
+    path:     /calling_cards
+    defaults: { _controller: UniversalIDTBundle:WebPage:callingCards }
+
+WebPage_details:
+    path:     /calling_cards/{country}/country
+    defaults: { _controller: UniversalIDTBundle:WebPage:details }
+
+WebPage_rates:
+    path:     /rates
+    defaults: { _controller: UniversalIDTBundle:WebPage:rates }
+
+WebPage_shopping:
+    path:     /shopping
+    defaults: { _controller: UniversalIDTBundle:WebPage:shopping }
+
+WebPage_basket:
+    path:     /basket
+    defaults: { _controller: UniversalIDTBundle:WebPage:basket }
+
+WebPage_checkout:
+    path:     /checkout
+    defaults: { _controller: UniversalIDTBundle:Checkout:checkout }
+
+WebPage_ogone_result:
+    path:     /checkout/ogone-result
+    defaults: { _controller: UniversalIDTBundle:Checkout:ogoneResult }
+
+WebPage_sofort_result:
+    path:     /checkout/sofort-result
+    defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }
+

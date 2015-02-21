@@ -13,3 +13,15 @@ user_my_pins:
 user_pin_details:
     path:     /my-pins/{id}/details
     defaults: { _controller: UniversalIDTBundle:Pins:details }
+
+user_checkout:
+    path:     /checkout
+    defaults: { _controller: UniversalIDTBundle:Checkout:checkout }
+
+user_ogone_result:
+    path:     /checkout/ogone-result
+    defaults: { _controller: UniversalIDTBundle:Checkout:ogoneResult }
+
+user_sofort_result:
+    path:     /checkout/sofort-result
+    defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }

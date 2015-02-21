@@ -6,7 +6,7 @@
 <h1>Welcome to the Guest:callingCards page</h1>
 
     {% for iso, name in countries %}
-        <a href="{{ path('guest_details', {'country':iso}) }}">{{ name }}</a><br>
+        <a href="{{ path('WebPage_details', {'country':iso}) }}">{{ name }}</a><br>
     {% else %}
         No Card.
     {% endfor %}

@@ -6,10 +6,11 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\Entity\Rate;
 use Universal\IDTBundle\Form\BasketType;
 use Universal\IDTBundle\Form\RatesType;
 
-class GuestController extends Controller
+class WebPageController extends Controller
 {
     public function mainAction()
     {
@@ -70,6 +71,7 @@ class GuestController extends Controller
         $form = $this->createForm(new RatesType($countries), array('from'=>'US'))
             ->add('search', 'submit');
 
+        /** @var Rate[] $rates */
         $result = array();
 
         if($request->isMethod('post'))
@@ -91,10 +93,16 @@ class GuestController extends Controller
 
                 /** @var Product $product */
                 foreach($products as $product) {
-                    foreach($product->getAllRates() as $rate) {
-                        if(isset($rate['des']) && $rate['des'] == $data['destination'])
-                            $result[] = array('product'=>$product, 'rate'=>$rate);
-                    }
+
+                    /** @var Rate[] $rates */
+                    $rates = $em->createQueryBuilder()
+                        ->select('rate', 'destination')
+                        ->from('UniversalIDTBundle:Rate', 'rate')
+                        ->where('rate.classId = :class_id')->setParameter('class_id', $product->getClassId())
+                        ->innerJoin('rate.destination', 'destination')
+                        ->getQuery()->getResult();
+
+                    $result = array_merge($result, $rates);
                 }
             }
         }
@@ -121,7 +129,7 @@ class GuestController extends Controller
     {
         $form = $this->createForm(new BasketType($this->getUser()), null, array(
                 'method' => 'get',
-                'action' => $this->generateUrl('checkout_checkout')
+                'action' => $this->getUser() ? $this->generateUrl('user_checkout') : $this->generateUrl('WebPage_checkout')
             ));
 
         return $this->render('UniversalIDTBundle:Guest:basket.html.twig', array(

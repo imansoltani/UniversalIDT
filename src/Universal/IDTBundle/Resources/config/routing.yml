@@ -1,5 +1,5 @@
-guest:
-    resource: "@UniversalIDTBundle/Resources/config/routing/guest.yml"
+WebPage:
+    resource: "@UniversalIDTBundle/Resources/config/routing/WebPage.yml"
     prefix:   /
 
 user:
@@ -9,10 +9,6 @@ user:
 test:
     path:     /test
     defaults: { _controller: UniversalIDTBundle:Default:index }
-
-checkout:
-    resource: "@UniversalIDTBundle/Resources/config/routing/checkout.yml"
-    prefix:   /
 
 ogone_template:
     path:   /ogone_template
