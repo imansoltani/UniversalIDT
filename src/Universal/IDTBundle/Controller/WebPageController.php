@@ -42,7 +42,6 @@ class WebPageController extends Controller
         }
 
         return $this->render(
-//            'UniversalIDTBundle:Guest:callingCards.html.twig',
             'UniversalIDTBundle:WebPage:callingCards.html.twig',
             array(
                 'countries' => $countriesResult
@@ -53,6 +52,10 @@ class WebPageController extends Controller
     public function cardsListAction(Request $request)
     {
         $country = strtoupper($request->query->get('country'));
+
+        if(strlen($country) != 2)
+            throw $this->createNotFoundException('Invalid Country ISO.');
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -71,22 +74,25 @@ class WebPageController extends Controller
         );
     }
 
-    public function detailsAction($country)
+    public function cardDetailsAction(Request $request)
     {
+        $id = $request->query->get('id');
+
+        if(!is_numeric($id))
+            throw $this->createNotFoundException('Invalid Card ID.');
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $countries = $this->container->getParameter('countries');
+        $product = $em->getRepository('UniversalIDTBundle:Product')->find($id);
 
-        if(!isset($countries[$country]))
-            throw $this->createNotFoundException('Invalid Country ISO.');
-
-        $products = $em->getRepository('UniversalIDTBundle:Product')->findBy(array('countryISO'=>$country));
+        if(!$product)
+            throw $this->createNotFoundException('Invalid Card ID.');
 
         return $this->render(
-            'UniversalIDTBundle:Guest:details.html.twig',
+            'UniversalIDTBundle:WebPage:cardDetails.html.twig',
             array(
-                'products' => $products
+                'product' => $product
             )
         );
     }

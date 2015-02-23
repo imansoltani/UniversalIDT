@@ -10,9 +10,9 @@ WebPage_card_list:
     path:     /calling_cards/list
     defaults: { _controller: UniversalIDTBundle:WebPage:cardsList }
 
-WebPage_details:
-    path:     /calling_cards/{country}/country
-    defaults: { _controller: UniversalIDTBundle:WebPage:details }
+WebPage_card_details:
+    path:     /calling_cards/details
+    defaults: { _controller: UniversalIDTBundle:WebPage:cardDetails }
 
 WebPage_rates:
     path:     /rates
