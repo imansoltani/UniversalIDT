@@ -35,12 +35,12 @@
                 <li class="dropdown">
                     <a href="javscript:;" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="icon-cog"></i>
-                        Rod Howard
+                        {{ app.user.username }}
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('fos_user_security_logout') }}">{{ 'Sign Out'|trans({},'user') }}</a></li>
-                        <li><a href="#">{{ 'Settings'|trans({},'user') }}</a></li>
+                        <li><a href="{{ path('fos_user_profile_show') }}">{{ 'Settings'|trans({},'user') }}</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

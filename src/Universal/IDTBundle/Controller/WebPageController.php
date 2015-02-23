@@ -14,7 +14,12 @@ class WebPageController extends Controller
 {
     public function mainAction()
     {
-        return $this->render('UniversalIDTBundle:Guest:main.html.twig');
+        return $this->render('UniversalIDTBundle:WebPage:layout.html.twig');
+    }
+
+    public function sliderAction()
+    {
+        return $this->render('UniversalIDTBundle:WebPage:slider.html.twig');
     }
 
     public function callingCardsAction()
@@ -37,9 +42,31 @@ class WebPageController extends Controller
         }
 
         return $this->render(
-            'UniversalIDTBundle:Guest:callingCards.html.twig',
+//            'UniversalIDTBundle:Guest:callingCards.html.twig',
+            'UniversalIDTBundle:WebPage:callingCards.html.twig',
             array(
                 'countries' => $countriesResult
+            )
+        );
+    }
+
+    public function cardsListAction(Request $request)
+    {
+        $country = strtoupper($request->query->get('country'));
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $countries = $this->container->getParameter('countries');
+
+        if(!isset($countries[$country]))
+            throw $this->createNotFoundException('Invalid Country ISO.');
+
+        $products = $em->getRepository('UniversalIDTBundle:Product')->findBy(array('countryISO'=>$country));
+
+        return $this->render(
+            'UniversalIDTBundle:WebPage:cardsList.html.twig',
+            array(
+                'products' => $products
             )
         );
     }

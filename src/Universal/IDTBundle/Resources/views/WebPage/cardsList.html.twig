@@ -1,0 +1,9 @@
+{% for product in products %}
+    <div class="item"><!-- SINGLE CALLING CARD -->
+        <div class="single-card clearfix">
+            <a href="#calling-card-modal" data-toggle="modal">
+                <img src="{{ asset(product.webPath) }}" alt="{{ product.id }}">
+            </a>
+        </div>
+    </div>
+{% endfor %}

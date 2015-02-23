@@ -1,0 +1,77 @@
+<div class="calling-card-section clearfix" id="calling_cards"><!-- CALLING CARDS SECTION -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-head clearfix"><!-- SECTION HEAD -->
+                    <h1>Calling Cards</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                    <span class="underline"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-content clearfix"><!-- SECTION CONTENT -->
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4">
+                            <div class="map-note clearfix"><!-- MAP NOTE -->
+                                <h4>Please select the country you would call from to see the available cads or check the best rates</h4>
+                            </div>
+                            <div class="calling-card-countries-list clearfix"><!-- AVAILABLE COUNTRY LIST -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Select Country <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        {% for iso, name in countries %}
+                                        <li>
+                                            <a href="#calling-card-by-country" data-iso="{{ iso }}" data-name="{{ name }}">
+                                                <img src="{{ asset("bundles/universalidt/home/img/flags/"~iso~".png") }}" alt="{{ iso }}"> {{ name }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div id="map"></div><!-- MAP -->
+                        </div>
+                    </div>
+
+                    <div class="calling-card-by-country clearfix" id="calling-card-by-country"><!-- CALLING CARDS -->
+                        <div class="page-header clearfix">
+                            <h3>Available Calling Cards for <span class="country-name">Hong Kong</span></h3>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><br>
+                        <div class="calling-cards owl-carousel owl-theme"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- END CALLING CARDS SECTION -->
+
+
+<script type="text/javascript">
+    /*
+     ==CALLING CARDS COUNTRY LIST==
+     */
+    $('.calling-card-countries-list .dropdown-menu li a').click(function() {
+        var country_name = $(this).data('name');
+        var country_iso = $(this).data('iso');
+        $('.country-name').text(country_name);
+        waitingDialog.show(undefined, {dialogSize: 'sm'});
+        $.ajax({
+            type: "get",
+            url: "{{ path('WebPage_card_list') }}",
+            data: {"country":country_iso},
+            cache: false,
+            success: function(result)
+            {
+                $(".calling-cards").html(result);
+                $(".calling-cards").data('owlCarousel').reinit();
+                waitingDialog.hide();
+            }
+        });
+    });
+</script>

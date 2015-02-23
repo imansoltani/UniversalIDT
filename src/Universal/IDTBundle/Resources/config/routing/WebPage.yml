@@ -6,6 +6,10 @@ WebPage_calling_cards:
     path:     /calling_cards
     defaults: { _controller: UniversalIDTBundle:WebPage:callingCards }
 
+WebPage_card_list:
+    path:     /calling_cards/list
+    defaults: { _controller: UniversalIDTBundle:WebPage:cardsList }
+
 WebPage_details:
     path:     /calling_cards/{country}/country
     defaults: { _controller: UniversalIDTBundle:WebPage:details }
