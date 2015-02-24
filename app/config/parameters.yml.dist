@@ -15,7 +15,7 @@ parameters:
     mailer_password:   ~
 
     locale: en_US
-    languages: [fr_FR, en_US, it_IT]
+    languages: {French: fr_FR, English: en_US, Italiano: it_IT}
     currencies: [EUR, CHF, PLN, SEK, DKK, NOK, GBP]
 
     # A secret key that's used to generate certain security-related tokens

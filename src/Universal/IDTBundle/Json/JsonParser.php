@@ -302,7 +302,7 @@ abstract class JsonParser {
     }
 
     /**
-     * @return array
+     * @return array array with fields: {"typ" => type, "num" => number, "loc" => location, "lang" => languages}
      */
     public function getAllAccessNumbers()
     {

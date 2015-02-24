@@ -119,7 +119,30 @@
                     </div>
                     <div id="collapse-3" class="panel-collapse collapse">
                         <div class="panel-body">
-                            {{ product.allAccessNumbers|json_encode() }}
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>type</th>
+                                    <th>num</th>
+                                    <th>loc</th>
+                                    <th>lang</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for access_number in product.allAccessNumbers %}
+                                    <tr>
+                                        <td>access_number.typ</td>
+                                        <td>access_number.num</td>
+                                        <td>access_number.loc</td>
+                                        <td>access_number.lang</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">No Data</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
