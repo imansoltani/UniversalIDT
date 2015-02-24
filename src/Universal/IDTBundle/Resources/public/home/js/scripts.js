@@ -395,51 +395,6 @@ $(document).ready(function() {
 			content: '<h5>United Kingdom</h5><p><a href="#calling-card-by-country" data-toggle="target">Lorem ipsum dolor sit amet,<br> consectetuer adipiscing elit</a></p>'
 		}
 	});
-	
-	
-	
-	
-	
-	
-	/*
-	==ADD TO CART NOTIFICATION==
-	*/
-	$('.growl-type').live('click', function (e) {
-		e.preventDefault();
-		$.msgGrowl ({
-			type: $(this).attr ('data-type'),
-			title: $(this).attr ('title'),
-			text: $(this).attr ('data-content')
-		});
-	});
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 });

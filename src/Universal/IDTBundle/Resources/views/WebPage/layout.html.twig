@@ -198,8 +198,14 @@
                 }
             }
 
-            if(!valid)
+            if(!valid) {
                 cookieClear();
+                $.msgGrowl ({
+                    type: "error",
+                    title: "Cookie is invalid",
+                    text: 'Basket cleared.'
+                });
+            }
         }
 
         function updateCounts() {
@@ -213,7 +219,11 @@
 
         function addToCookie(_product_id, _denomination, _count, _currency, _type) {
             if(selected_products_currency != "" && selected_products_currency != _currency) {
-                alert('You must select carts with same currency.');
+                $.msgGrowl ({
+                    type: "warning",
+                    title: "Currency Error",
+                    text: ('You must select carts with same currency. this='+_currency+ ' basket='+selected_products_currency)
+                });
                 return;
             }
             else if(selected_products_currency == "") {
@@ -240,6 +250,11 @@
             var new_products_json = JSON.stringify(selected_products);
 
             $.cookie("products", new_products_json, { path: '/' });
+            $.msgGrowl ({
+                type: "success",
+                title: "Added to Cart",
+                text: 'Item successfully added to your cart.'
+            });
             updateCounts();
         }
 

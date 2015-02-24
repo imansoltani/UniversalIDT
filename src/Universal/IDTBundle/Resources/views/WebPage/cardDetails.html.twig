@@ -10,7 +10,7 @@
                         <div class="form-group row">
                             <label class="col-sm-6">Denominations</label>
                             <div class="col-sm-6">
-                                <select class="form-control" id="{{ "pr_" ~ product.id ~ "_denominations" }}">
+                                <select class="form-control" id="pr_denominations">
                                     {% for denomination in product.denominations %}
                                         <option value="{{ denomination }}">{{ denomination }}</option>
                                     {% endfor %}
@@ -22,7 +22,9 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="calling-card-action-btn clearfix">
-                            <button class="btn btn-primary growl-type" data-type="success" title="Added to Cart" data-content="{{ product.name }} successfully added to your cart."><i class="fa fa-shopping-cart"></i> Add To Cart</button>
+                            <button class="btn btn-primary" onclick="addToCookie({{ product.id }},$('#pr_denominations').val(), 1, '{{ product.currency }}', 'buy');">
+                                <i class="fa fa-shopping-cart"></i> Add To Cart
+                            </button>
                         </div>
                     </div>
                     <div class="col-sm-6">
