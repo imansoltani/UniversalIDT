@@ -1,7 +1,7 @@
 {% for product in products %}
     <div class="item"><!-- SINGLE CALLING CARD -->
         <div class="single-card clearfix">
-            <a href="#calling-card-modal" data-toggle="modal">
+            <a href="javascript:openDetails({{ product.id }})">
                 <img src="{{ asset(product.webPath) }}" alt="{{ product.id }}">
             </a>
         </div>

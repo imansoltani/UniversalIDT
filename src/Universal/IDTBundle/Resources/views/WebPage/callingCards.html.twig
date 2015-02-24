@@ -43,7 +43,9 @@
                             <h3>Available Calling Cards for <span class="country-name">Hong Kong</span></h3>
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><br>
-                        <div class="calling-cards owl-carousel owl-theme"></div>
+                        <div class="calling-cards owl-carousel owl-theme">
+                            <div class="item"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,4 +76,21 @@
             }
         });
     });
+
+    function openDetails(product_id)
+    {
+        waitingDialog.show(undefined, {dialogSize: 'sm'});
+        $.ajax({
+            type: "get",
+            url: "{{ path('WebPage_card_details') }}",
+            data: {"id":product_id},
+            cache: false,
+            success: function(result)
+            {
+                $(".modal#calling-card-modal .modal-body").html(result);
+                waitingDialog.hide();
+                $('#calling-card-modal').modal('show');
+            }
+        });
+    }
 </script>

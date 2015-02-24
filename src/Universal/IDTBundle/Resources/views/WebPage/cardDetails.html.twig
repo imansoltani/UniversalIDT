@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="calling-card-preview clearfix">
             <div class="calling-card-thumb clearfix"><!-- CALLING CARD THUMBNAIL -->
-                <img src="{{ asset("bundles/universalidt/home/img/cc2.png") }}" alt="Calling Card">
+                <img style="max-height: 320px;" src="{{ asset(product.webPath) }}" alt="Calling Card">
             </div>
             <div class="calling-card-action clearfix"><!-- CALLING CARD ACTION -->
                 <div class="row">
@@ -10,12 +10,10 @@
                         <div class="form-group row">
                             <label class="col-sm-6">Denominations</label>
                             <div class="col-sm-6">
-                                <select class="form-control">
-                                    <option value="">Choose</option>
-                                    <option>HK$50</option>
-                                    <option>BD$15</option>
-                                    <option>US$10</option>
-                                    <option>UK$5</option>
+                                <select class="form-control" id="{{ "pr_" ~ product.id ~ "_denominations" }}">
+                                    {% for denomination in product.denominations %}
+                                        <option value="{{ denomination }}">{{ denomination }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -24,7 +22,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="calling-card-action-btn clearfix">
-                            <button class="btn btn-primary growl-type" data-type="success" title="Added to Cart" data-content="Calling card successfully added to your cart."><i class="fa fa-shopping-cart"></i> Add To Cart</button>
+                            <button class="btn btn-primary growl-type" data-type="success" title="Added to Cart" data-content="{{ product.name }} successfully added to your cart."><i class="fa fa-shopping-cart"></i> Add To Cart</button>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -48,7 +46,7 @@
                     </div>
                     <div id="collapse-1" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+                            {{ product.generalInformation(app.request.locale) }}
                         </div>
                     </div>
                 </div>
@@ -121,7 +119,7 @@
                     </div>
                     <div id="collapse-3" class="panel-collapse collapse">
                         <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+                            {{ product.allAccessNumbers|json_encode() }}
                         </div>
                     </div>
                 </div>
@@ -133,7 +131,7 @@
                     </div>
                     <div id="collapse-4" class="panel-collapse collapse">
                         <div class="panel-body">
-                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.
+                            {{ product.dialingInstructions(app.request.locale) }}
                         </div>
                     </div>
                 </div>
