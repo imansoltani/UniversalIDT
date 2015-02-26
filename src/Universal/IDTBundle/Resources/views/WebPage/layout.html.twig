@@ -188,7 +188,9 @@
             var valid = true;
             var types = ["buy", "recharge"];
             for(var product in selected_products) {
-                if(     selected_products[product]['product'] == undefined ||
+                if(     selected_products[product]['id'] == undefined ||
+                        selected_products[product]['name'] == undefined ||
+                        selected_products[product]['image'] == undefined ||
                         selected_products[product]['count'] == undefined ||
                         selected_products[product]['denomination'] == undefined ||
                         types.indexOf(selected_products[product]['type']) == -1
@@ -206,18 +208,20 @@
                     text: 'Basket cleared.'
                 });
             }
+
+//            console.log(selected_products);
         }
 
         function updateCounts() {
-//            var total_count = 0;
-//            for(var product in selected_products)
-//                total_count += parseInt(selected_products[product]['count']);
+            var total_count = 0;
+            for(var product in selected_products)
+                total_count += parseInt(selected_products[product]['count']);
 
-            $("#cart_total_items").html(selected_products.length);//total_count == 0 ? 0 : selected_products.length);
-//            $("#cart_total").html(total_count);
+//            $("#cart_total_items").html(selected_products.length);//total_count == 0 ? 0 : selected_products.length);
+            $("#cart_total_items").html(total_count);
         }
 
-        function addToCookie(_product_id, _denomination, _count, _currency, _type) {
+        function addToCookie(_id, _name, _image, _denomination, _count, _currency, _type) {
             if(selected_products_currency != "" && selected_products_currency != _currency) {
                 $.msgGrowl ({
                     type: "warning",
@@ -234,7 +238,7 @@
 //                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
             var _exist = false;
             for(var product in selected_products) {
-                if(     +selected_products[product]['product'] == +_product_id &&
+                if(     +selected_products[product]['id'] == +_id &&
                         +selected_products[product]['denomination'] == +_denomination &&
                         selected_products[product]['type'] == _type
                 ){
@@ -245,7 +249,9 @@
             }
 
             if(!_exist)
-                selected_products.push({'product':+_product_id, 'count':+_count, 'denomination':+_denomination, 'type':_type});
+                selected_products.push({'id':+_id, 'name':_name, 'image':_image, 'denomination':+_denomination, 'count':+_count, 'type':_type});
+
+//            console.log(selected_products);
 
             var new_products_json = JSON.stringify(selected_products);
 

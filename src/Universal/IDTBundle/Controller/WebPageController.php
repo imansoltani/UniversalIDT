@@ -165,7 +165,7 @@ class WebPageController extends Controller
                 'action' => $this->getUser() ? $this->generateUrl('user_checkout') : $this->generateUrl('WebPage_checkout')
             ));
 
-        return $this->render('UniversalIDTBundle:Guest:basket.html.twig', array(
+        return $this->render('UniversalIDTBundle:WebPage:basket.html.twig', array(
                 'form' => $form->createView()
             ));
     }

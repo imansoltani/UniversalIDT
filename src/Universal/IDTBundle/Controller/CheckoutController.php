@@ -136,18 +136,21 @@ class CheckoutController extends Controller
      * @param EntityManager $em
      * @return bool
      */
-    private function checkCookie(array &$added_items, $added_items_currency, EntityManager $em)
+    private function checkCookie(&$added_items, $added_items_currency, EntityManager $em)
     {
-        if(is_null($added_items_currency) || !is_string($added_items_currency) || strlen($added_items_currency) != 3)
-            return false;
-
         if(is_null($added_items) || !is_array($added_items))
             return false;
-//        die("is null");
+//            die("is null");
+
+        if(is_null($added_items_currency) || !is_string($added_items_currency) || strlen($added_items_currency) != 3)
+            return false;
+//            die("currency length");
 
         foreach($added_items as &$added_item) {
             if(
-                !isset($added_item['product']) ||
+                !isset($added_item['id']) ||
+                !isset($added_item['name']) ||
+                !isset($added_item['image']) ||
                 !isset($added_item['count']) ||
                 !isset($added_item['denomination']) ||
                 !in_array($added_item['type'], array($this->BASKET_BUY, $this->BASKET_RECHARGE))
@@ -159,25 +162,37 @@ class CheckoutController extends Controller
                 case $this->BASKET_BUY:
                     /** @var Product $row */
                     $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product']);
-                    if(!$row) return false;
+                    if(!$row || $row->getName() != $added_item['name'])
+                        return false;
+//                        die("not exist or error name");
 
                     $added_item['product'] = $row;
 
-                    if($row->getCurrency() !== $added_items_currency) return false;
+                    if($row->getCurrency() !== $added_items_currency)
+                        return false;
+//                        die("error currency");
 
-                    if(!in_array($added_item['denomination'], $row->getDenominations())) return false;
+                    if(!in_array($added_item['denomination'], $row->getDenominations()))
+                        return false;
+//                        die("error denom");
                     break;
 
                 case $this->BASKET_RECHARGE:
                     /** @var OrderProduct $row */
                     $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
-                    if(!$row) return false;
+                    if(!$row)
+                        return false;
+//                        die("not exist2");
 
                     $added_item['product'] = $row;
 
-                    if($row->getProduct()->getCurrency() !== $added_items_currency) return false;
+                    if($row->getProduct()->getCurrency() !== $added_items_currency)
+                        return false;
+//                        die("error currency2");
 
-                    if(!in_array($added_item['denomination'], $row->getProduct()->getDenominations())) return false;
+                    if(!in_array($added_item['denomination'], $row->getProduct()->getDenominations()))
+                        return false;
+//                        die("error denom");
                     break;
             }
         }
