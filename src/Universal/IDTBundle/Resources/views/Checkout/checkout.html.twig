@@ -10,7 +10,7 @@
             {{ form_row(form.email) }}
             {{ form_row(form.sms) }}
 
-            <a href="{{ path('checkout_basket') }}">Back to basket</a>
+            <a href="{{ path('WebPage_main')~"#basket" }}">Back to basket</a>
             <a href="#" onclick="$('#delivery').hide();$('#payment').show();">continue to payment method</a>
         </div>
 

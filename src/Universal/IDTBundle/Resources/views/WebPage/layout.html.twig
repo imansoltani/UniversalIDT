@@ -219,6 +219,8 @@
 
 //            $("#cart_total_items").html(selected_products.length);//total_count == 0 ? 0 : selected_products.length);
             $("#cart_total_items").html(total_count);
+
+            updateBasketTable();
         }
 
         function addToCookie(_id, _name, _image, _denomination, _count, _currency, _type) {

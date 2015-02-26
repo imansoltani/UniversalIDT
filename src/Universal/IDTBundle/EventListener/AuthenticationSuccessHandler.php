@@ -23,7 +23,7 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         if(null !== $request->cookies->get("products") && null !== $request->cookies->get("products_currency") )
-            return new RedirectResponse($this->router->generate('checkout_checkout'));
+            return new RedirectResponse($this->router->generate('user_checkout'));
 
         return parent::onAuthenticationSuccess($request, $token);
     }

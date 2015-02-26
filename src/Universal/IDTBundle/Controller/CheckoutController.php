@@ -161,7 +161,7 @@ class CheckoutController extends Controller
             switch ($added_item['type']) {
                 case $this->BASKET_BUY:
                     /** @var Product $row */
-                    $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['product']);
+                    $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['id']);
                     if(!$row || $row->getName() != $added_item['name'])
                         return false;
 //                        die("not exist or error name");
@@ -179,7 +179,7 @@ class CheckoutController extends Controller
 
                 case $this->BASKET_RECHARGE:
                     /** @var OrderProduct $row */
-                    $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['product']);
+                    $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['id']);
                     if(!$row)
                         return false;
 //                        die("not exist2");

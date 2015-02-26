@@ -26,17 +26,17 @@ class BasketType extends AbstractType
             $builder
                 ->add('account', 'choice', array(
                         'choices' => array(
-                            'login' => 'I have an Account',
-                            'register' => 'I want have an Account'
+                            'login' => 'I have an account',
+                            'register' => 'I would like to create an account'
                         ),
                         'expanded' => true,
-                        'empty_value' => 'None',
+                        'empty_value' => 'I would like to buy without creating account',
                         'required' => false
                     ));
 
         $builder
             ->add('submit', 'submit', array(
-                    'label' => 'Go to checkout'
+                    'label' => 'Checkout'
                 ))
         ;
     }

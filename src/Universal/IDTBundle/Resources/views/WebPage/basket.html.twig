@@ -26,65 +26,64 @@
                                             <th colspan="2">Total</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="basket_table_items">
                                         <tr>
-                                            <td>
-                                                <a href="#calling-card-modal" data-toggle="modal"><img src="http://placehold.it/40x40" alt="Product Title"></a>
-                                            </td>
-                                            <td><a href="#calling-card-modal" data-toggle="modal">White Blouse Armani</a></td>
-                                            <td>
-                                                <input type="number" value="2" class="form-control">
-                                            </td>
-                                            <td>$75.00</td>
-                                            <td>$0.00</td>
-                                            <td>$150.00</td>
-                                            <td><a href="#" class="growl-type" data-type="error" title="Removed from Cart" data-content="Calling card successfully removed from your cart."><i class="fa fa-trash-o"></i></a>
-                                            </td>
+                                            {#<td>#}
+                                                {#<a href="#calling-card-modal" data-toggle="modal"><img src="http://placehold.it/40x40" alt="Product Title"></a>#}
+                                            {#</td>#}
+                                            {#<td><a href="#calling-card-modal" data-toggle="modal">White Blouse Armani</a></td>#}
+                                            {#<td>#}
+                                                {#<input type="number" value="2" class="form-control">#}
+                                            {#</td>#}
+                                            {#<td>$75.00</td>#}
+                                            {#<td>$0.00</td>#}
+                                            {#<td>$150.00</td>#}
+                                            {#<td><a href="#" class="growl-type" data-type="error" title="Removed from Cart" data-content="Calling card successfully removed from your cart."><i class="fa fa-trash-o"></i></a>#}
+                                            {#</td>#}
                                         </tr>
                                         </tbody>
                                         <tfoot>
                                         <tr class="total">
                                             <td colspan="5">Total</td>
-                                            <td colspan="2">$200.00</td>
+                                            <td id="basket_table_total" colspan="2">$200.00</td>
                                         </tr>
                                         </tfoot>
                                     </table>
                                 </div>
 
+                                {{ form_start(form) }}
+
+                                {% if form.account is defined %}
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="account-type clearfix">
+                                            {% for account_type in form.account %}
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="account"> I have an account
+                                                    {{ form_widget(account_type) }} {{ form_label(account_type) }}
                                                 </label>
                                             </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="account"> I would like to create an account
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label>
-                                                    <input type="radio" name="account"> I would like to buy without creating account
-                                                </label>
-                                            </div>
+                                            {% endfor %}
                                         </div>
+                                        {{ form_errors(form.account) }}
                                     </div>
                                 </div>
+                                {% endif %}
 
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <div class="clearfix">
                                             <a href="#calling_cards" data-toggle="target" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Calling Cards</a>
+                                            <a href="#basket" onclick="cookieClear();updateCounts();updateBasketTable()" class="btn btn-danger">Clear Basket</a>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="text-right clearfix">
-                                            <a href="checkout.html" class="btn btn-primary">Checkout <i class="fa fa-chevron-right"></i></a>
+                                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
                                         </div>
                                     </div>
                                 </div>
+                                {{ form_end(form) }}
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-12">
@@ -108,21 +107,21 @@
                                                 <tbody>
                                                 <tr>
                                                     <td>Order subtotal</td>
-                                                    <td>$200.00</td>
+                                                    <td id="basket_summary_subtotal">$200.00</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Tax</td>
-                                                    <td>$0.00</td>
+                                                    <td id="basket_summary_tax">$0.00</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Delivery Method</td>
-                                                    <td>Email</td>
+                                                    <td id="basket_summary_email">Email</td>
                                                 </tr>
                                                 </tbody>
                                                 <tfoot>
                                                 <tr class="total">
                                                     <td>Total</td>
-                                                    <td>$200.00</td>
+                                                    <td id="basket_summary_total">$200.00</td>
                                                 </tr>
                                                 </tfoot>
                                             </table>
@@ -139,9 +138,40 @@
 </div><!-- END BASKET SECTION -->
 
 <script type="text/javascript">
-//    function updateCounts() {
-//
-//        $("#cart_total_items").html(selected_products.length);//total_count == 0 ? 0 : selected_products.length);
-////            $("#cart_total").html(total_count);
-//    }
+    function updateBasketTable() {
+        var total = 0;
+        $("#basket_table_items").html("");
+        for (var product in selected_products) {
+            total += selected_products[product]['count'] * selected_products[product]['denomination'];
+
+//            if(selected_products[product]['type'] == "buy")
+                $("#basket_table_items").append('<tr>' +
+                '<td><a href="javascript:openDetails('+selected_products[product]['id']+')"><img style="max-height: 40px;" src="'+selected_products[product]['image']+'" alt="'+selected_products[product]['name']+'"></a></td>'+
+                '<td><a href="javascript:openDetails('+selected_products[product]['id']+')">'+selected_products[product]['name']+'</a></td>'+
+                '<td><div class="stepper "><input value="'+selected_products[product]['count']+'" class="form-control stepper-input" type="number"><span class="stepper-arrow up">Up</span><span class="stepper-arrow down">Down</span></div></td>'+
+                '<td>'+selected_products[product]['denomination']+'</td>' +
+                '<td>'+'0.00'+'</td>' +
+                '<td>'+(selected_products[product]['count'] * selected_products[product]['denomination'])+'</td>' +
+                '<td><a href="#"><i class="fa fa-trash-o"></i></a></td>' +
+                '</tr>');
+//            else
+//                $("#cookie_recharge").append("<tr>" +
+//                "<td>"+selected_products[product]['product']+"</td>" +
+//                "<td>"+"</td>" +
+//                "<td>"+selected_products[product]['count']+"</td>" +
+//                "<td>"+selected_products[product]['denomination']+"</td>" +
+//                "<td>"+"remove"+"</td>" +
+//                "</tr>");
+        }
+
+        if(selected_products.length == 0)
+            $("#basket_table_items").append('<tr><td colspan="7">'+'No Item'+'</td></tr>');
+
+        $("#basket_table_total").html(total);
+
+        $("#basket_summary_subtotal").html(total);
+//        $("#basket_summary_tax").html(0);
+//        $("#basket_summary_email").html("Email");
+        $("#basket_summary_total").html(total);
+    }
 </script>
