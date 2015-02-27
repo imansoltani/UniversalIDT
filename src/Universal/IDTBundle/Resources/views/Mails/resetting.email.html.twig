@@ -1,0 +1,12 @@
+{% block subject %}Resetting your password{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+    Hello {{ user.username }} !
+
+    You can reset your email by accessing {{ confirmationUrl }}
+
+    Greetings,
+    the IDT Universal Team
+    {% endautoescape %}
+{% endblock %}

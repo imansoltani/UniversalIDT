@@ -91,9 +91,18 @@ fos_user:
     registration:
         form:
             type: universal_idt_registration
+        confirmation:
+            enabled:    true
+            template: UniversalIDTBundle:Mails:registration.email.html.twig
     profile:
         form:
             type: universal_idt_profile
+    resetting:
+        email:
+            template: UniversalIDTBundle:Mails:resetting.email.html.twig
+    from_email:
+        address:        %mailer_sender_address%
+        sender_name:    %mailer_sender_name%
 
 jms_i18n_routing:
     default_locale: %locale%

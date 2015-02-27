@@ -26,8 +26,8 @@ class FOSListener implements EventSubscriberInterface
     {
         return array(
             FOSUserEvents::REGISTRATION_INITIALIZE => 'onRegistrationInitialize',
-//            FOSUserEvents::REGISTRATION_CONFIRM => 'onRegistrationConfirm',
-            FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationConfirm',
+            FOSUserEvents::REGISTRATION_CONFIRM => 'onRegistrationConfirm',
+//            FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationConfirm',
             FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onChangePassword',
         );
     }

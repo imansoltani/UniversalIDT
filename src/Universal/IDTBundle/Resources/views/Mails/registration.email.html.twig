@@ -1,0 +1,12 @@
+{% block subject %}Email Confirmation{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+    Hello {{ user.username }} !
+
+    Please confirm your email by accessing {{ confirmationUrl }}
+
+    Greetings,
+    the IDT Universal Team
+    {% endautoescape %}
+{% endblock %}

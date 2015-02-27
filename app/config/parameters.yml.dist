@@ -10,9 +10,12 @@ parameters:
     # database_path: "%kernel.root_dir%/data.db3"
 
     mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
+    mailer_host:       in.mailjet.com
+    mailer_port:       587
+    mailer_user:       039ab8ef3e3bf82b932424e66c4260f4
+    mailer_password:   16e30577dbdba3579bf87c0b881285f3
+    mailer_sender_address: no-replay@idtuniversal.com
+    mailer_sender_name: "IDT Universal Team"
 
     locale: en_US
     languages: {French: fr_FR, English: en_US, Italiano: it_IT}
