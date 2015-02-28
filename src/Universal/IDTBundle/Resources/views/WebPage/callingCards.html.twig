@@ -25,7 +25,7 @@
                                         {% for iso, name in countries %}
                                         <li>
                                             <a href="#calling-card-by-country" data-iso="{{ iso }}" data-name="{{ name }}">
-                                                <img src="{{ asset("bundles/universalidt/home/img/flags/"~iso~".png") }}" alt="{{ iso }}"> {{ name }}
+                                                <img src="{{ asset("bundles/universalidt/home/img/flags/"~iso|lower~".png") }}" alt="{{ iso }}"> {{ name }}
                                             </a>
                                         </li>
                                         {% endfor %}
