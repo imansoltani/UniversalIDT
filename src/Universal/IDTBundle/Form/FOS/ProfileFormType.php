@@ -21,9 +21,8 @@ class ProfileFormType extends AbstractType
             ->add('gender', 'choice', array(
                 'choices' => array('M'=>'Male', 'F'=> 'Female')
             ))
-            ->add('username', null, array(
-                'label' => 'form.username', 'translation_domain' => 'FOSUserBundle', 'required' =>false
-            ))
+            ->remove('username')
+            ->remove('email')
             ->add('phone', "text");
     }
 

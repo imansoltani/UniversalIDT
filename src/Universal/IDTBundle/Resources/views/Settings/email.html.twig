@@ -1,7 +1,7 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    Notifications|trans
+    Email settings|trans
 {% endblock subtitle %}
 
 {% block content %}
@@ -12,7 +12,7 @@
                 <div class="widget-header">
                     <i class="icon-user"></i>
 
-                    <h3>Notifications</h3>
+                    <h3>Email settings</h3>
                 </div>
                 <!-- /widget-header -->
 
@@ -21,36 +21,32 @@
 
                         <ul class="nav nav-tabs">
                             <li><a href="{{ path('fos_user_profile_edit') }}">Profile settings</a></li>
-                            <li><a href="{{ path('user_profile_email') }}">Email Settings</a></li>
+                            <li class="active"><a href="{{ path('user_profile_email') }}">Email Settings</a></li>
                             <li><a href="{{ path('fos_user_change_password') }}">Password Settings</a></li>
-                            <li class="active"><a href="{{ path('user_profile_notification') }}">Notifications</a></li>
+                            <li><a href="{{ path('user_profile_notification') }}">Notifications</a></li>
                         </ul>
 
                         <div class="tab-content">
                             <div class="tab-pane active">
+                                <div class="col-md-7" style="font-weight: bold;">Your current email is {{ email }}</div>
                                 {{ form_start(form, {'attr': {'class': 'form-horizontal col-md-7'}}) }}
                                 <fieldset>
                                     <div class="form-group">
-                                        <div class="col-lg-4">
-                                            <p class="help-block">{{ form_label(form.notifications) }}</p>
-                                        </div>
+                                        {{ form_label(form.email, "", {'label_attr': {'class': 'col-lg-4'} }) }}
                                         <div class="col-lg-8">
-                                            <div class="row">
-                                                {% for notify in form.notifications %}
-                                                    <div class="col-sm-6">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                {{ form_widget(notify) }}
-                                                                {{ form_label(notify) }}
-                                                                {{ form_errors(notify) }}
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-                                                {{ form_errors(form.notifications) }}
-                                            </div>
-                                        </div>
-                                    </div>
+                                            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.email) }}
+                                        </div> <!-- /col-lg-8 -->
+                                    </div> <!-- /form-group -->
+
+                                    <div class="form-group">
+                                        {{ form_label(form.current_password, "", {'label_attr': {'class': 'col-lg-4'} }) }}
+                                        <div class="col-lg-8">
+                                            {{ form_widget(form.current_password, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.current_password) }}
+                                        </div> <!-- /col-lg-8 -->
+                                    </div> <!-- /form-group -->
+
                                     <div class="form-group">
                                         <div class="col-lg-4"></div>
 
