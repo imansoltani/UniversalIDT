@@ -27,7 +27,6 @@ class FOSListener implements EventSubscriberInterface
         return array(
             FOSUserEvents::REGISTRATION_INITIALIZE => 'onRegistrationInitialize',
             FOSUserEvents::REGISTRATION_CONFIRM => 'onRegistrationConfirm',
-//            FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationConfirm',
             FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onChangePassword',
         );
     }
@@ -41,7 +40,7 @@ class FOSListener implements EventSubscriberInterface
         $event->getRequest()->request->set("fos_user_registration_form", $form_request);
     }
 
-    public function onRegistrationConfirm(FormEvent $event)
+    public function onRegistrationConfirm(GetResponseUserEvent $event)
     {
         if (null !== $event->getRequest()->cookies->get("products") &&
             null !== $event->getRequest()->cookies->get("products_currency")

@@ -26,6 +26,10 @@ WebPage_basket:
     path:     /basket
     defaults: { _controller: UniversalIDTBundle:WebPage:basket }
 
+WebPage_contact:
+    path:     /contact
+    defaults: { _controller: UniversalIDTBundle:WebPage:contact }
+
 WebPage_checkout:
     path:     /checkout
     defaults: { _controller: UniversalIDTBundle:Checkout:checkout }

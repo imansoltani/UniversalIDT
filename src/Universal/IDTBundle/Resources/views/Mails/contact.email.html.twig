@@ -1,0 +1,7 @@
+{% block subject %}Contact From: {{ name }} {{ email }}{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+        {{ message|raw }}
+    {% endautoescape %}
+{% endblock %}

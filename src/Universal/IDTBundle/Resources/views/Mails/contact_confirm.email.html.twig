@@ -1,0 +1,12 @@
+{% block subject %}Contact Email Confirmation{% endblock %}
+
+{% block body_text %}
+    {% autoescape false %}
+    Hello {{ name }} !
+
+    Your Email sent.
+
+    Greetings,
+    the IDT Universal Team
+    {% endautoescape %}
+{% endblock %}

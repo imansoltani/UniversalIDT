@@ -5,9 +5,11 @@ namespace Universal\IDTBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Universal\IDTBundle\Entity\Product;
 use Universal\IDTBundle\Entity\Rate;
 use Universal\IDTBundle\Form\BasketType;
+use Universal\IDTBundle\Form\ContactType;
 use Universal\IDTBundle\Form\RatesType;
 
 class WebPageController extends Controller
@@ -168,5 +170,68 @@ class WebPageController extends Controller
         return $this->render('UniversalIDTBundle:WebPage:basket.html.twig', array(
                 'form' => $form->createView()
             ));
+    }
+
+    public function contactAction(Request $request)
+    {
+        $form = $this->createForm(new ContactType());
+
+        if($request->isMethod('post')) {
+            $form->handleRequest($request);
+
+            if($form->isValid()) {
+                try {
+                    $this->sendEmailMessage(
+                        $this->render(
+                            'UniversalIDTBundle:Mails:contact.email.html.twig',
+                            array(
+                                'name' => $form->get('name')->getData(),
+                                'email' => $form->get('email')->getData(),
+                                'message' => $form->get('message')->getData(),
+                            )
+                        )->getContent(),
+                        $this->container->getParameter('mailer_sender_address'),
+                        $this->container->getParameter('mailer_support')
+                    );
+
+                    $this->sendEmailMessage(
+                        $this->render(
+                            'UniversalIDTBundle:Mails:contact_confirm.email.html.twig',
+                            array(
+                                'name' => $form->get('name')->getData()
+                            )
+                        )->getContent(),
+                        $this->container->getParameter('mailer_sender_address'),
+                        $form->get('email')->getData()
+                    );
+
+                    return new Response('S');
+                } catch (\Exception $e) {
+                    return new Response('F');
+                }
+            }
+
+            return new Response('F');
+        }
+
+        return $this->render('UniversalIDTBundle:WebPage:contact.html.twig', array(
+                'form' => $form->createView()
+            ));
+    }
+
+    private function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)
+    {
+        // Render the email, use the first line as the subject, and the rest as the body
+        $renderedLines = explode("\n", trim($renderedTemplate));
+        $subject = $renderedLines[0];
+        $body = implode("\n", array_slice($renderedLines, 1));
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($subject)
+            ->setFrom($fromEmail)
+            ->setTo($toEmail)
+            ->setBody($body);
+
+        $this->get('mailer')->send($message);
     }
 }

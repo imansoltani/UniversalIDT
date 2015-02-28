@@ -14,7 +14,8 @@ parameters:
     mailer_port:       587
     mailer_user:       039ab8ef3e3bf82b932424e66c4260f4
     mailer_password:   16e30577dbdba3579bf87c0b881285f3
-    mailer_sender_address: no-replay@idtuniversal.com
+    mailer_sender_address: i.soltani@hellobell.com
+    mailer_support: msajadi824@hotmail.com
     mailer_sender_name: "IDT Universal Team"
 
     locale: en_US

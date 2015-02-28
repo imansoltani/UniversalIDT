@@ -15,18 +15,21 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="contact-form clearfix"><!-- CONTACT FORM -->
-                                <form id="contact-form">
+                                {{ form_start(form, {'attr': {'onsubmit':'contact_send(event, $(this))'}}) }}
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+                                        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Your Name'} }) }}
+                                        {{ form_errors(form.name) }}
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Your Email'} }) }}
+                                        {{ form_errors(form.email) }}
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" id="message" name="message" rows="8" placeholder="Your Message"></textarea>
+                                        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'placeholder': 'Your Message', 'rows': 8} }) }}
+                                        {{ form_errors(form.message) }}
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-block">SEND MESSAGE</button>
-                                </form>
+                                    {{ form_widget(form.send, {'attr': {'class': 'btn btn-primary btn-block'} }) }}
+                                {{ form_end(form) }}
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
@@ -47,3 +50,31 @@
         </div>
     </div>
 </div><!-- END CONTACT SECTION -->
+
+<script type="text/javascript">
+    function contact_send( event ,form) {
+        event.preventDefault();
+        waitingDialog.show(undefined, {dialogSize: 'sm'});
+        $.ajax({
+            type: "post",
+            url: "{{ path('WebPage_contact') }}",
+            data: form.serialize(),
+            cache: false,
+            success: function(result) {
+                waitingDialog.hide();
+                if(result == "S")
+                    $.msgGrowl ({
+                        type: "success",
+                        title: "Message Sent",
+                        text: 'Message successfully Sent.'
+                    });
+                else
+                    $.msgGrowl ({
+                        type: "error",
+                        title: "Message Not Send",
+                        text: 'An Error occurred.'
+                    });
+            }
+        });
+    }
+</script>
