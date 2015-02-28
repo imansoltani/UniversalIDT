@@ -104,6 +104,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user->setConfirmationToken(null);
+        $user->setEmail($new_email);
         $this->get('fos_user.user_manager')->updateCanonicalFields($user);
 
         $em->flush();
