@@ -3,6 +3,9 @@ namespace Universal\IDTBundle\Form\FOS;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Universal\IDTBundle\Entity\User;
 
 class RegistrationFormType extends AbstractType
 {
@@ -21,6 +24,15 @@ class RegistrationFormType extends AbstractType
             ->add('gender', 'choice', array(
                 'choices' => array('M'=>'Male', 'F'=> 'Female')
             ))
+            ->addEventListener(FormEvents::SUBMIT,function(FormEvent $event){
+                    $data = $event->getData();
+//                    $form = $event->getForm();
+                    if (!$data instanceof User) {
+                        return;
+                    }
+
+                    $data->setUsername($data->getEmail());
+                })
             ->remove('username')
             ->add('phone', "text");
     }
