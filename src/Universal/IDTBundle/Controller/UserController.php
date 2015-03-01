@@ -104,7 +104,7 @@ class UserController extends Controller
         else
         {
             $user->setEmail($user->getNewEmail());
-            $user->setUsername($user->getNewEmail());
+
             $this->get('fos_user.user_manager')->updateCanonicalFields($user);
 
             $this->get('session')->getFlashBag()->add('success', "Email successfully changed.");
