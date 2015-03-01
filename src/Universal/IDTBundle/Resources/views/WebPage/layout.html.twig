@@ -54,7 +54,7 @@
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language<span class="caret"></span></a>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 {% for name, iso in languages %}
-                                                    <li><a href="{{ path('WebPage_main', {'_locale':iso}) }}">{{ name }}</a></li>
+                                                    <li><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale':iso})) }}">{{ name }}</a></li>
                                                 {% endfor %}
                                             </ul>
                                         </li>
