@@ -1,24 +1,80 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "@UniversalIDT/layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block fos_user_content %}
-{% if error %}
-    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-{% endif %}
+{% block subtitle %}
+    Login
+{% endblock subtitle %}
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget stacked">
 
-    <label for="username">{{ 'security.login.username'|trans }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            <div class="widget-header">
+                <i class="icon-book"></i>
+                <h3>Login</h3>
+            </div>
+            <!-- /widget-header -->
 
-    <label for="password">{{ 'security.login.password'|trans }}</label>
-    <input type="password" id="password" name="_password" required="required" />
+            <div class="widget-content">
 
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                <form class="form-horizontal col-md-7" action="{{ path("fos_user_security_check") }}" method="post">
+                    <fieldset>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-</form>
-{% endblock fos_user_content %}
+                        <div class="form-group">
+                            <label for="username" class="col-lg-4">{{ 'security.login.username'|trans }}</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                            </div> <!-- /col-lg-8 -->
+                        </div> <!-- /form-group -->
+
+                        <div class="form-group">
+                            <label for="password" class="col-lg-4">{{ 'security.login.password'|trans }}</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="password" id="password" name="_password" required="required" />
+                            </div> <!-- /col-lg-8 -->
+                        </div> <!-- /form-group -->
+
+                        <div class="form-group">
+                            <span class="col-lg-4"></span>
+                            <div class="col-lg-8">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                            </div> <!-- /col-lg-8 -->
+                        </div> <!-- /form-group -->
+
+                        <div class="form-group">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-8">
+                                <input class="btn btn-primary" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                                <a class="btn btn-default pull-right" href="{{ path('fos_user_resetting_request') }}">{{ 'resetting.request.submit'|trans }}</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+        <!-- /widget -->
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if error %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.msgGrowl ({
+                type: 'error',
+                title: 'Message',
+                text: '{{ error.messageKey|trans(error.messageData, 'security') }}'
+            });
+        });
+    </script>
+    {% endif %}
+{% endblock %}

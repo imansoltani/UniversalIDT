@@ -1,9 +1,23 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "@UniversalIDT/layout.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block fos_user_content %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+{% block subtitle %}
+    Check Email
+{% endblock subtitle %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget stacked">
+
+            <div class="widget-content">
+                {{ 'resetting.check_email'|trans({'%email%': email}) }}
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+        <!-- /widget -->
+    </div>
+</div>
 {% endblock %}

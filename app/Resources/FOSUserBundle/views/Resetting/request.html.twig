@@ -1,5 +1,61 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "@UniversalIDT/layout.html.twig" %}
 
-{% block fos_user_content %}
-{% include "FOSUserBundle:Resetting:request_content.html.twig" %}
-{% endblock fos_user_content %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block subtitle %}
+    Resetting Request
+{% endblock subtitle %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-book"></i>
+                <h3>Resetting Request</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request form-horizontal col-md-7">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="username" class="col-lg-4">{{ 'resetting.request.username'|trans }}</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" id="username" name="username" required="required" />
+                            </div> <!-- /col-lg-8 -->
+                        </div> <!-- /form-group -->
+
+                        <div class="form-group">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-8">
+                                <input class="btn btn-primary" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+        <!-- /widget -->
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% if invalid_username is defined %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.msgGrowl ({
+                    type: 'error',
+                    title: 'Message',
+                    text: '{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}'
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}
