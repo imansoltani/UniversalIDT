@@ -82,6 +82,8 @@ class UserController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        $email_canonicalizer = $this->get('fos_user.util.email_canonicalizer');
+
         $user = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('confirmationToken'=>$token));
 
         if(!$user)
@@ -95,7 +97,7 @@ class UserController extends Controller
         {
             $this->get('session')->getFlashBag()->add('failed', "Token expired");
         }
-        elseif($findUserEmail = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('emailCanonical' => strtolower($user->getNewEmail()))))
+        elseif($findUserEmail = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('emailCanonical' => $email_canonicalizer->canonicalize($user->getNewEmail()))))
         {
             $this->get('session')->getFlashBag()->add('failed', "user with this email already exist.");
         }
