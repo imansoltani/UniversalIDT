@@ -84,18 +84,28 @@ class UserController extends Controller
 
         $user = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('confirmationToken'=>$token));
 
-        if(!$user) {
-            $this->get('session')->getFlashBag()->add('failed', "Token not found. Email change failed");
+        if(!$user)
+        {
+            $this->get('session')->getFlashBag()->add('failed', "Token not found. Email change failed.");
+
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
 
-        if(new \DateTime() > $user->getNewEmailExpireAt()) {
+        if(new \DateTime() > $user->getNewEmailExpireAt())
+        {
             $this->get('session')->getFlashBag()->add('failed', "Token expired");
         }
-        else {
+        elseif($findUserEmail = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('emailCanonical' => strtolower($user->getNewEmail()))))
+        {
+            $this->get('session')->getFlashBag()->add('failed', "user with this email already exist.");
+        }
+        else
+        {
             $user->setEmail($user->getNewEmail());
+            $user->setUsername($user->getNewEmail());
             $this->get('fos_user.user_manager')->updateCanonicalFields($user);
 
-            $this->get('session')->getFlashBag()->add('success', "Email changed.");
+            $this->get('session')->getFlashBag()->add('success', "Email successfully changed.");
         }
 
         $user->setConfirmationToken(null);
