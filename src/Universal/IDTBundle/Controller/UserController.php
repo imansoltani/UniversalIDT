@@ -51,13 +51,11 @@ class UserController extends Controller
             $form->handleRequest($request);
 
             if($form->isValid()) {
-                $new_email = $user->getEmail();
-
                 /** @var EntityManager $em */
                 $em = $this->getDoctrine()->getManager();
-                $em->refresh($user);
+
                 $user->setConfirmationToken($this->get('fos_user.util.token_generator')->generateToken());
-                $em->flush();
+                $user->setNewEmailExpireAt(new \DateTime("+24 hours"));
 
                 $this->sendEmailMessage(
                     $this->render("UniversalIDTBundle:Mails:changing_email.email.html.twig", array(
@@ -65,13 +63,11 @@ class UserController extends Controller
                             'confirmationUrl' =>  $this->generateUrl('user_profile_email_confirm', array('token'=> $user->getConfirmationToken()), true)
                         ))->getContent(),
                     $this->container->getParameter('mailer_sender_address'),
-                    $new_email
+                    $user->getNewEmail()
                 );
 
-                $this->get('session')->set('new_email', $new_email);
-                $this->get('session')->set('new_email_token', $user->getConfirmationToken());
-
                 $this->get('session')->getFlashBag()->add('success', "Email sent.");
+                $em->flush();
             }
         }
 
@@ -83,38 +79,32 @@ class UserController extends Controller
 
     public function emailConfirmedAction($token)
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $db_token = $user->getConfirmationToken();
-        $session_token = $this->get('session')->get('new_email_token');
-        $new_email = $this->get('session')->get('new_email');
-
-        if(!$session_token || !$new_email) {
-            throw $this->createNotFoundException('No email change request.');
-        }
-
-        if(!$db_token || $db_token != $session_token || $db_token != $token) {
-            $this->get('session')->remove('new_email_token');
-            $this->get('session')->remove('new_email');
-            throw $this->createNotFoundException('Email change request expired.');
-        }
-
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        $user = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('confirmationToken'=>$token));
+
+        if(!$user) {
+            $this->get('session')->getFlashBag()->add('failed', "Token not found. Email change failed");
+        }
+
+        if(new \DateTime() > $user->getNewEmailExpireAt()) {
+            $this->get('session')->getFlashBag()->add('failed', "Token expired");
+        }
+        else {
+            $user->setEmail($user->getNewEmail());
+            $this->get('fos_user.user_manager')->updateCanonicalFields($user);
+
+            $this->get('session')->getFlashBag()->add('success', "Email changed.");
+        }
+
         $user->setConfirmationToken(null);
-        $user->setEmail($new_email);
-        $this->get('fos_user.user_manager')->updateCanonicalFields($user);
+        $user->setNewEmail(null);
+        $user->setNewEmailExpireAt(null);
 
         $em->flush();
 
-        $this->get('session')->remove('new_email_token');
-        $this->get('session')->remove('new_email');
-
-        $this->get('session')->getFlashBag()->add('success', "Email changed.");
-
-        return $this->redirect($this->generateUrl('user_profile_email'));
+        return $this->redirect($this->generateUrl('fos_user_security_login'));
     }
 
     private function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)

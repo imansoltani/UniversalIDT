@@ -6,10 +6,6 @@ user_profile_email:
     path:     /setting/email
     defaults: { _controller: UniversalIDTBundle:User:email }
 
-user_profile_email_confirm:
-    path:     /setting/email/confirm/{token}
-    defaults: { _controller: UniversalIDTBundle:User:emailConfirmed }
-
 user_billing_history:
     path:     /transactions
     defaults: { _controller: UniversalIDTBundle:Orders:index }

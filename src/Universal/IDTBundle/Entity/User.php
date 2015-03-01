@@ -58,6 +58,20 @@ class User extends BaseUser
     protected $orderDetails;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="new_email", type="string", length=255, nullable=true)
+     */
+    private $newEmail;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="new_email_expire_at", type="datetime", nullable=true)
+     */
+    private $newEmailExpireAt;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -199,5 +213,51 @@ class User extends BaseUser
     public function getNotifications()
     {
         return $this->notifications;
+    }
+
+    /**
+     * Set newEmail
+     *
+     * @param string $newEmail
+     * @return User
+     */
+    public function setNewEmail($newEmail)
+    {
+        $this->newEmail = $newEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get newEmail
+     *
+     * @return string 
+     */
+    public function getNewEmail()
+    {
+        return $this->newEmail;
+    }
+
+    /**
+     * Set newEmailExpireAt
+     *
+     * @param \DateTime $newEmailExpireAt
+     * @return User
+     */
+    public function setNewEmailExpireAt($newEmailExpireAt)
+    {
+        $this->newEmailExpireAt = $newEmailExpireAt;
+
+        return $this;
+    }
+
+    /**
+     * Get newEmailExpireAt
+     *
+     * @return \DateTime 
+     */
+    public function getNewEmailExpireAt()
+    {
+        return $this->newEmailExpireAt;
     }
 }

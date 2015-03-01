@@ -19,3 +19,7 @@ ogone_template:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: UniversalIDTBundle:PaymentGateWay:ogoneTemplate.html.twig
+
+user_profile_email_confirm:
+    path:     /change-email/confirm/{token}
+    defaults: { _controller: UniversalIDTBundle:User:emailConfirmed }
