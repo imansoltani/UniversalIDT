@@ -5,13 +5,13 @@ services:
 
     universal_idt.registration.form.type:
         class: Universal\IDTBundle\Form\FOS\RegistrationFormType
-        arguments: [%languages%]
+        arguments: [%languages%, %countries%]
         tags:
             - { name: form.type, alias: universal_idt_registration }
 
     universal_idt.profile.form.type:
         class: Universal\IDTBundle\Form\FOS\ProfileFormType
-        arguments: [%languages%]
+        arguments: [%languages%, %countries%]
         tags:
             - { name: form.type, alias: universal_idt_profile }
 

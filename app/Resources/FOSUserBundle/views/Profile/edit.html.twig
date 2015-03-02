@@ -32,6 +32,30 @@
                                     <fieldset>
 
                                         <div class="form-group">
+                                            {{ form_label(form.firstName, "", {'label_attr': {'class': 'col-lg-4'} }) }}
+                                            <div class="col-lg-8">
+                                                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.firstName) }}
+                                            </div> <!-- /col-lg-8 -->
+                                        </div> <!-- /form-group -->
+
+                                        <div class="form-group">
+                                            {{ form_label(form.lastName, "", {'label_attr': {'class': 'col-lg-4'} }) }}
+                                            <div class="col-lg-8">
+                                                {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.lastName) }}
+                                            </div> <!-- /col-lg-8 -->
+                                        </div> <!-- /form-group -->
+
+                                        <div class="form-group">
+                                            {{ form_label(form.country, "", {'label_attr': {'class': 'col-lg-4'} }) }}
+                                            <div class="col-lg-8">
+                                                {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.country) }}
+                                            </div> <!-- /col-lg-8 -->
+                                        </div> <!-- /form-group -->
+
+                                        <div class="form-group">
                                             {{ form_label(form.language, "", {'label_attr': {'class': 'col-lg-4'} }) }}
                                             <div class="col-lg-8">
                                                 {{ form_widget(form.language, {'attr': {'class': 'form-control'}}) }}

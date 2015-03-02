@@ -10,31 +10,38 @@ use Universal\IDTBundle\Entity\User;
 class RegistrationFormType extends AbstractType
 {
     private $locales;
+    private $countries;
 
-    public function __construct(array $locales)
+    public function __construct(array $locales, array $countries)
     {
-        $this->locales = array_combine($locales, $locales);
+        $this->locales = array_flip($locales);
+        $this->countries = $countries;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('language', 'choice', array(
+        $builder
+            ->add('firstName', 'text')
+            ->add('lastName', 'text')
+            ->add('country', 'choice', array(
+                    'choices' => $this->countries
+                ))
+            ->add('language', 'choice', array(
                 'choices' => $this->locales
             ))
             ->add('gender', 'choice', array(
                 'choices' => array('M'=>'Male', 'F'=> 'Female')
             ))
+            ->add('phone', "text")
+            ->remove('username')
             ->addEventListener(FormEvents::SUBMIT,function(FormEvent $event){
                     $data = $event->getData();
 //                    $form = $event->getForm();
                     if (!$data instanceof User) {
                         return;
                     }
-
                     $data->setUsername($data->getEmail());
-                })
-            ->remove('username')
-            ->add('phone', "text");
+                });
     }
 
     public function getParent()

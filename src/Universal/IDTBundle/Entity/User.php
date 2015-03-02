@@ -86,6 +86,13 @@ class User extends BaseUser
     private $lastName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=2)
+     */
+    private $country;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -327,5 +334,28 @@ class User extends BaseUser
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     * @return User
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string 
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }
