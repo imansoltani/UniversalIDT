@@ -1,3 +1,7 @@
+user_home:
+    path:     /
+    defaults: { _controller: UniversalIDTBundle:User:Home }
+
 user_profile_notification:
     path:     /setting/notification
     defaults: { _controller: UniversalIDTBundle:User:notification }

@@ -40,18 +40,12 @@
                                 <ul>
                                     <li><a href="#basket" data-toggle="target"><i class="fa fa-shopping-cart"></i> Cart(<span id="cart_total_items">-</span>)</a></li>
                                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }}<span class="caret"></span></a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
-                                                <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
-                                            </ul>
-                                        </li>
+                                        <li><a href="{{ path('user_home') }}"><i class="fa fa-user"></i> {{ app.user.username }}</a></li>
                                     {% else %}
                                         <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
                                         <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
                                         <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language<span class="caret"></span></a>
+                                            <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">Language<span class="caret"></span></a>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 {% for name, iso in languages %}
                                                     <li><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale':iso})) }}">{{ name }}</a></li>
@@ -162,111 +156,4 @@
     <script type="text/javascript" src="{{ asset("bundles/universalidt/js/plugins/lightbox/jquery.lightbox.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/universalidt/js/Application.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/scripts.js") }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/universalidt/js/jquery.cookie.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/universalidt/js/json2.js') }}"></script>
-    <script type="text/javascript">
-        var selected_products = [];
-
-        var selected_products_currency = "";
-
-        function cookieClear() {
-            selected_products = [];
-            $.cookie("products", "[]", { path: '/' });
-
-            selected_products_currency = "";
-            $.cookie("products_currency", "", { path: '/' });
-        }
-
-        function loadSelectedProducts() {
-            var products_json = $.cookie("products");
-            selected_products = products_json == undefined ? [] : JSON.parse(products_json);
-
-            selected_products_currency = $.cookie("products_currency") == undefined ? "" : $.cookie("products_currency");
-
-            var valid = true;
-            var types = ["buy", "recharge"];
-            for(var product in selected_products) {
-                if(     selected_products[product]['id'] == undefined ||
-                        selected_products[product]['name'] == undefined ||
-                        selected_products[product]['image'] == undefined ||
-                        selected_products[product]['count'] == undefined ||
-                        selected_products[product]['denomination'] == undefined ||
-                        types.indexOf(selected_products[product]['type']) == -1
-                ){
-                    valid = false;
-                    break;
-                }
-            }
-
-            if(!valid) {
-                cookieClear();
-                $.msgGrowl ({
-                    type: "error",
-                    title: "Cookie is invalid",
-                    text: 'Basket cleared.'
-                });
-            }
-
-//            console.log(selected_products);
-        }
-
-        function updateCounts() {
-            var total_count = 0;
-            for(var product in selected_products)
-                total_count += parseInt(selected_products[product]['count']);
-
-//            $("#cart_total_items").html(selected_products.length);//total_count == 0 ? 0 : selected_products.length);
-            $("#cart_total_items").html(total_count);
-
-            updateBasketTable();
-        }
-
-        function addToCookie(_id, _name, _image, _denomination, _count, _currency, _type) {
-            if(selected_products_currency != "" && selected_products_currency != _currency) {
-                $.msgGrowl ({
-                    type: "warning",
-                    title: "Currency Error",
-                    text: ('You must select carts with same currency. this='+_currency+ ' basket='+selected_products_currency)
-                });
-                return;
-            }
-            else if(selected_products_currency == "") {
-                selected_products_currency = _currency;
-                $.cookie("products_currency", _currency, { path: '/' });
-            }
-
-//                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
-            var _exist = false;
-            for(var product in selected_products) {
-                if(     +selected_products[product]['id'] == +_id &&
-                        +selected_products[product]['denomination'] == +_denomination &&
-                        selected_products[product]['type'] == _type
-                ){
-                    selected_products[product]['count'] = +selected_products[product]['count'] + +_count;
-                    _exist = true;
-                    break;
-                }
-            }
-
-            if(!_exist)
-                selected_products.push({'id':+_id, 'name':_name, 'image':_image, 'denomination':+_denomination, 'count':+_count, 'type':_type});
-
-//            console.log(selected_products);
-
-            var new_products_json = JSON.stringify(selected_products);
-
-            $.cookie("products", new_products_json, { path: '/' });
-            $.msgGrowl ({
-                type: "success",
-                title: "Added to Cart",
-                text: 'Item successfully added to your cart.'
-            });
-            updateCounts();
-        }
-
-        $(document).ready(function(){
-            loadSelectedProducts();
-            updateCounts();
-        });
-    </script>
 {% endblock javascripts %}

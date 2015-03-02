@@ -15,6 +15,7 @@ security:
                 check_path: fos_user_security_check
                 login_path: fos_user_security_login
                 success_handler: universal_idt.login_handler
+                default_target_path: user_home
             remember_me:
                 key: 8regj4wtu4bh3o
             logout:

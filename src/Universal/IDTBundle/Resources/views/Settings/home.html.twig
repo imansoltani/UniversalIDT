@@ -1,0 +1,85 @@
+{% extends '@UniversalIDT/layout.html.twig' %}
+
+{% block subtitle %}
+    Home
+{% endblock subtitle %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <style type="text/css">
+        .subnavbar.home-menu {
+            border: none;
+        }
+
+        .subnavbar.home-menu .subnavbar-inner {
+            background-image: none;
+            border: none;
+        }
+
+        .subnavbar.home-menu ul {
+            border: none;
+        }
+
+        .subnavbar.home-menu li {
+            border: 1px solid #636363;
+            margin-right: 10px;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget stacked">
+
+                <div class="widget-header">
+                    <i class="icon-home"></i>
+
+                    <h3>Home</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+
+                    <div class="subnavbar home-menu">
+                        <div class="subnavbar-inner">
+                            <div class="container">
+                                <div class="collapse subnav-collapse">
+                                    <ul class="mainnav">
+
+                                        <li>
+                                            <a href="{{ path('WebPage_main') }}">
+                                                <i class="icon-home"></i>
+                                                <span>{{ 'Home'|trans({},'navBar') }}</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="icon-external-link"></i>
+                                                <span>{{ 'Rates'|trans({},'navBar') }}</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="icon-info-sign"></i>
+                                                <span>{{ 'Help'|trans({},'navBar') }}</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div> <!-- /.subnav-collapse -->
+                            </div> <!-- /container -->
+                        </div> <!-- /subnavbar-inner -->
+                    </div> <!-- /subnavbar -->
+
+
+                </div>
+                <!-- /widget-content -->
+            </div>
+            <!-- /widget -->
+        </div>
+    </div>
+{% endblock %}

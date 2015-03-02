@@ -11,6 +11,10 @@ use Universal\IDTBundle\Form\NotificationType;
 
 class UserController extends Controller
 {
+    public function HomeAction()
+    {
+        return $this->render('UniversalIDTBundle:Settings:home.html.twig');
+    }
     public function notificationAction(Request $request)
     {
         $notifications = array(
