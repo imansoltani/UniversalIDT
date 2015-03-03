@@ -24,6 +24,16 @@ class CheckoutController extends Controller
 
     public function checkoutAction(Request $request)
     {
+        $granted = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        if($granted)
+            $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+        else
+            $breadcrumbs->addItem("Home", $this->get("router")->generate("WebPage_main"));
+        $breadcrumbs->addItem("Transactions", $this->get("router")->generate("user_orders"));
+        $breadcrumbs->addItem("order details");
+
         if($request->query->has('account'))
         {
             switch($request->query->get('account')) {

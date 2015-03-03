@@ -13,10 +13,18 @@ class UserController extends Controller
 {
     public function HomeAction()
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+
         return $this->render('UniversalIDTBundle:Settings:home.html.twig');
     }
     public function notificationAction(Request $request)
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem("My Account");
+        $breadcrumbs->addItem("Notifications");
+
         $notifications = array(
             'a' => 'abc',
             'b' => 'def',
@@ -46,6 +54,11 @@ class UserController extends Controller
 
     public function emailAction(Request $request)
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem("My Account");
+        $breadcrumbs->addItem("Email Settings");
+
         /** @var User $user */
         $user = $this->getUser();
 

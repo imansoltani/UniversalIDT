@@ -10,7 +10,7 @@ user_profile_email:
     path:     /setting/email
     defaults: { _controller: UniversalIDTBundle:User:email }
 
-user_billing_history:
+user_orders:
     path:     /transactions
     defaults: { _controller: UniversalIDTBundle:Orders:index }
 

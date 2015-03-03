@@ -27,7 +27,7 @@ class Builder extends ContainerAware
                     'route' => 'user_pins', 'extras' => array('icon' => 'th')
                 ));
             $menu->addChild('Billing History', array(
-                    'route' => 'user_billing_history', 'extras' => array('icon' => 'copy')
+                    'route' => 'user_orders', 'extras' => array('icon' => 'copy')
                 ));
         }
 

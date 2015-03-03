@@ -108,3 +108,7 @@ jms_i18n_routing:
     default_locale: %locale%
     locales: %languages%
     strategy: prefix
+
+white_october_breadcrumbs:
+    listClass: breadcrumb
+    viewTemplate: "UniversalIDTBundle:Menu:breadcrumbs.html.twig"

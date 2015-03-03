@@ -9,14 +9,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Universal\IDTBundle\Entity\User;
+use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
 class FOSListener implements EventSubscriberInterface
 {
     protected $router;
 
-    public function __construct(RouterInterface $router)
+    protected $breadcrumbs;
+
+    public function __construct(RouterInterface $router, Breadcrumbs $breadcrumbs)
     {
         $this->router = $router;
+        $this->breadcrumbs = $breadcrumbs;
     }
 
     /**
@@ -26,9 +30,10 @@ class FOSListener implements EventSubscriberInterface
     {
         return array(
             FOSUserEvents::REGISTRATION_CONFIRM => 'onRegistrationConfirm',
-            FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onChangePassword',
+            FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onChangePasswordSuccess',
+            FOSUserEvents::PROFILE_EDIT_INITIALIZE => 'onProfileEditInitialize',
             FOSUserEvents::PROFILE_EDIT_SUCCESS => 'onProfileEditSuccess',
-
+            FOSUserEvents::CHANGE_PASSWORD_INITIALIZE => 'onChangePasswordInitialize',
         );
     }
 
@@ -41,9 +46,16 @@ class FOSListener implements EventSubscriberInterface
         }
     }
 
-    public function onChangePassword(FormEvent $event)
+    public function onChangePasswordSuccess(FormEvent $event)
     {
         $event->setResponse(new RedirectResponse($this->router->generate('fos_user_change_password')));
+    }
+
+    public function onProfileEditInitialize(GetResponseUserEvent $event)
+    {
+        $this->breadcrumbs->addItem("Home", $this->router->generate("user_home"));
+        $this->breadcrumbs->addItem("My Account");
+        $this->breadcrumbs->addItem("Profile Settings");
     }
 
     public function onProfileEditSuccess(FormEvent $event)
@@ -51,5 +63,12 @@ class FOSListener implements EventSubscriberInterface
         /** @var User $user */
         $user = $event->getForm()->getData();
         $event->setResponse(new RedirectResponse($this->router->generate('fos_user_profile_show', array('_locale'=>$user->getLanguage()))));
+    }
+
+    public function onChangePasswordInitialize(GetResponseUserEvent $event)
+    {
+        $this->breadcrumbs->addItem("Home", $this->router->generate("user_home"));
+        $this->breadcrumbs->addItem("My Account");
+        $this->breadcrumbs->addItem("Password Settings");
     }
 }

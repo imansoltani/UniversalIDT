@@ -11,6 +11,10 @@ class OrdersController extends Controller
 {
     public function indexAction()
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem("Transactions", $this->get("router")->generate("user_orders"));
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -25,6 +29,11 @@ class OrdersController extends Controller
 
     public function detailsAction($id)
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem("Transactions", $this->get("router")->generate("user_orders"));
+        $breadcrumbs->addItem("order details");
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 

@@ -22,7 +22,7 @@ services:
 
     universal_idt.fos_listener:
         class: Universal\IDTBundle\EventListener\FOSListener
-        arguments: [ @router ]
+        arguments: [ @router, @white_october_breadcrumbs ]
         tags:
             - { name: kernel.event_subscriber }
 
