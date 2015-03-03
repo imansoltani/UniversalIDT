@@ -5,53 +5,5 @@
 </a>
 
 <div class="collapse subnav-collapse">
-    <ul class="mainnav">
-
-        <li class="active">
-            <a href="{{ path('WebPage_main') }}">
-                <i class="icon-home"></i>
-                <span>{{ 'Home'|trans({},'navBar') }}</span>
-            </a>
-        </li>
-
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li>
-            <a href="{{ path('user_pins') }}">
-                <i class="icon-th"></i>
-                <span>{{ 'My PINs'|trans({},'navBar') }}</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ path('user_billing_history') }}">
-                <i class="icon-copy"></i>
-                <span>{{ 'Billing History'|trans({},'navBar') }}</span>
-            </a>
-        </li>
-        {% endif %}
-
-        <li>
-            <a href="javascript:;">
-                <i class="icon-external-link"></i>
-                <span>{{ 'Rates'|trans({},'navBar') }}</span>
-            </a>
-        </li>
-
-        <li>
-            <a href="javascript:;">
-                <i class="icon-info-sign"></i>
-                <span>{{ 'Help'|trans({},'navBar') }}</span>
-            </a>
-        </li>
-
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li>
-            <a href="{{ path('user_checkout') }}">
-                <i class="icon-check"></i>
-                <span>Checkout</span>
-            </a>
-        </li>
-        {% endif %}
-
-    </ul>
+    {{ knp_menu_render('UniversalIDTBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'UniversalIDTBundle:Menu:my_knp_menu.html.twig'}) }}
 </div> <!-- /.subnav-collapse -->
