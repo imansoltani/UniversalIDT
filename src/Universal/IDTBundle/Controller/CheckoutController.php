@@ -5,6 +5,7 @@ namespace Universal\IDTBundle\Controller;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType;
@@ -24,20 +25,16 @@ class CheckoutController extends Controller
 
     public function checkoutAction(Request $request)
     {
-        return $this->render('UniversalIDTBundle:Checkout:checkout1.html.twig');
-
-        $granted = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         if($granted)
             $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
         else
             $breadcrumbs->addItem("Home", $this->get("router")->generate("WebPage_main"));
-        $breadcrumbs->addItem("Transactions", $this->get("router")->generate("user_orders"));
-        $breadcrumbs->addItem("order details");
+        $breadcrumbs->addItem("Checkout");
 
-        if($request->query->has('account'))
-        {
+        if($request->query->has('account') && !$granted) {
             switch($request->query->get('account')) {
                 case "login": return $this->redirect($this->generateUrl('fos_user_security_login'));
                 case "register": return $this->redirect($this->generateUrl('fos_user_registration_register'));
@@ -63,12 +60,18 @@ class CheckoutController extends Controller
         $added_items_currency = $request->cookies->get("products_currency");
 
         //check cookie validation
-        $valid = $this->checkCookie($added_items, $added_items_currency, $em);
+        if(is_null($added_items) || !is_array($added_items) || count($added_items) == 0) {
+            $this->get('session')->getFlashBag()->add('warning','Basket is Empty.');
+            $valid = false;
+        }
+        elseif (!$valid = $this->checkCookie($added_items, $added_items_currency, $em)) {
+            $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies and Basket cleared.');
+        }
 
         //unset cookie if not valid
         if(!$valid) {
-            $response = new Response("Error in cookies and cleared.");
-            $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies.');
+            $response = new RedirectResponse($request->headers->get('referer')?:($this->generateUrl('WebPage_main')."#basket"));
+
             $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
             $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
@@ -150,10 +153,6 @@ class CheckoutController extends Controller
      */
     private function checkCookie(&$added_items, $added_items_currency, EntityManager $em)
     {
-        if(is_null($added_items) || !is_array($added_items))
-            return false;
-//            die("is null");
-
         if(is_null($added_items_currency) || !is_string($added_items_currency) || strlen($added_items_currency) != 3)
             return false;
 //            die("currency length");
