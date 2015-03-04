@@ -71,11 +71,7 @@
 <div class="main">
     <div class="container">
         <div class="breadcrumbs">
-            <div class="breadcrumbs-inner">
-                <div class="container">
-                    {% include '@UniversalIDT/breadcrumbs.html.twig' %}
-                </div> <!-- /container -->
-            </div> <!-- /subnavbar-inner -->
+            {{ wo_render_breadcrumbs() }}
         </div> <!-- /subnavbar -->
 
         {#{% block flashes %}#}

@@ -20,10 +20,11 @@ Assigned to:	You
 */
 .breadcrumbs {
     margin-bottom: 2.5em;
-    border-top: 1px solid #595959;
+    margin-left: -15px;
 }
 .breadcrumbs .breadcrumbs-inner {
     background: #292929;
+    border-top: 1px solid #595959;
     border-bottom: 1px solid #000;
 }
 .breadcrumbs .breadcrumb {
