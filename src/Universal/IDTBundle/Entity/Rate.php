@@ -8,7 +8,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
 /**
  * Rate
  *
- * @ORM\Table()
+ * @ORM\Table(name="rate")
  * @ORM\Entity
  */
 class Rate
