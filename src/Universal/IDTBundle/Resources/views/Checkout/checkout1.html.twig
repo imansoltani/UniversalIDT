@@ -6,246 +6,228 @@
 {% endblock %}
 
 {% block content %}
-<div class="main">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-8">
-                <div class="widget stacked">
-
-                    <div class="widget-header">
-                        <i class="icon-book"></i>
-                        <h3>Checkout</h3>
-                    </div> <!-- /widget-header -->
-
-                    <div class="widget-content">
-
-                        <div class="tabbable">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#cartTab" data-toggle="tab">My Cart</a></li>
-                                <li><a href="#deliveryTab" data-toggle="tab">Delivery method</a></li>
-                                <li><a href="#paymentTab" data-toggle="tab">Payment method</a></li>
-                            </ul>
-
-                            <br>
-
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="cartTab">
-                                    <table id="table" class="display" width="100%" cellspacing="0">
-                                        <thead>
-                                        <tr>
-                                            <th>Item</th>
-                                            <th>Qty</th>
-                                            <th>Denom.</th>
-                                            <th>Subtitle</th>
-                                            <th></th>
-                                        </tr>
-                                        </thead>
-
-                                        <tfoot>
-                                        <tr>
-                                            <th>Total</th>
-                                            <th colspan="3"></th>
-                                            <th></th>
-                                        </tr>
-                                        </tfoot>
-
-                                        <tbody>
-                                        <tr>
-                                            <td>aa</td>
-                                            <td>12</td>
-                                            <td>$170,750</td>
-                                            <td>213412314</td>
-                                            <td><div class="btn btn-danger">remove</div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>bb</td>
-                                            <td>15</td>
-                                            <td>$175,750</td>
-                                            <td>262346234</td>
-                                            <td><div class="btn btn-danger">remove</div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>cc</td>
-                                            <td>15</td>
-                                            <td>$175,750</td>
-                                            <td>262346234</td>
-                                            <td><div class="btn btn-danger">remove</div></td>
-                                        </tr>
-                                        <tr>
-                                            <td>dd</td>
-                                            <td>15</td>
-                                            <td>$175,750</td>
-                                            <td>262346234</td>
-                                            <td><div class="btn btn-danger">remove</div></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Back to calling cards</button>
-                                        <button type="submit" class="btn btn-primary pull-right">Proceed</button>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane" id="deliveryTab">
-                                    <h5>The PIN(s) will be deliver via:</h5>
-                                    <table class="table" style="width: inherit">
-                                        <tr>
-                                            <td>
-                                                <label>
-                                                    <input type="checkbox"> Email
-                                                </label>
-                                            </td>
-                                            <td>example@gmail.com</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>
-                                                    <input type="checkbox"> SMS
-                                                </label>
-                                            </td>
-                                            <td>+1234567890</td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>
-                                                    <input type="checkbox"> My account
-                                                </label>
-                                            </td>
-                                            <td>+1234567890</td>
-                                        </tr>
-                                    </table>
-                                    <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Back to basket</button>
-                                        <button type="submit" class="btn btn-primary pull-right">Continue to Payment method</button>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane tab-row" id="paymentTab">
-                                    <h4>Last method used:</h4>
-                                    <div class="row">
-                                        <div class="col-sm-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="widget stacked">
+                <div class="widget-header">
+                    <i class="icon-book"></i>
+                    <h3>Checkout</h3>
+                </div> <!-- /widget-header -->
+                <div class="widget-content">
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#deliveryTab" data-toggle="tab">Delivery method</a></li>
+                            <li><a href="#paymentTab" data-toggle="tab">Payment method</a></li>
+                            <li><a href="#orderTab" data-toggle="tab">Order review</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="deliveryTab">
+                                <h5>The PIN(s) will be deliver via:</h5>
+                                <table class="table" style="width: inherit">
+                                    <tr>
+                                        <td>
                                             <label>
-                                                <input type="checkbox"> Visa
+                                                <input type="checkbox"> Email
                                             </label>
-                                        </div>
-                                    </div>
-                                    <br />
-
-
-                                    <h4>Payment Methods for <span style="text-decoration: underline">country</span></h4>
-
-                                    <h5>Cerdit and Debit cards</h5>
-                                    <div class="row">
-                                        <div class="col-sm-3">
+                                        </td>
+                                        <td>example@gmail.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             <label>
-                                                <input type="checkbox"> Visa
+                                                <input type="checkbox"> SMS
                                             </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
+                                        </td>
+                                        <td>+1234567890</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox"> My account
                                             </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <br />
-
-                                    <h5>Other methods</h5>
-                                    <div class="row">
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                        <div class="col-sm-3">
-                                            <label for="email">
-                                                <input type="checkbox"> Visa
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <br />
-
-                                    <div class="form-actions">
-                                        <button type="submit" class="btn btn-primary">Back to Delivery method</button>
-                                        <button type="submit" class="btn btn-primary pull-right">Continue to Complete Payment</button>
-                                    </div>
+                                        </td>
+                                        <td>+1234567890</td>
+                                    </tr>
+                                </table>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary prev_tab">Back to basket</button>
+                                    <button type="submit" class="btn btn-primary pull-right next_tab">Continue to Payment method</button>
                                 </div>
                             </div>
 
+                            <div class="tab-pane tab-row" id="paymentTab">
+                                <h4>Last method used:</h4>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label>
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
 
+                                <h4>Payment Methods for <span style="text-decoration: underline">country</span></h4>
+                                <h5>Cerdit and Debit cards</h5>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <h5>Other methods</h5>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="email">
+                                            <input type="checkbox"> Visa
+                                        </label>
+                                    </div>
+                                </div>
+                                <br />
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary prev_tab">Back to Delivery method</button>
+                                    <button type="submit" class="btn btn-primary pull-right next_tab">Continue to Order Review</button>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="orderTab">
+                                <table id="table" class="display" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                        <th>Denom.</th>
+                                        <th>Subtitle</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>Total</th>
+                                        <th colspan="3"></th>
+                                        <th></th>
+                                    </tr>
+                                    </tfoot>
+
+                                    <tbody>
+                                    <tr>
+                                        <td>aa</td>
+                                        <td>12</td>
+                                        <td>$170,750</td>
+                                        <td>213412314</td>
+                                        <td><div class="btn btn-danger">remove</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>bb</td>
+                                        <td>15</td>
+                                        <td>$175,750</td>
+                                        <td>262346234</td>
+                                        <td><div class="btn btn-danger">remove</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>cc</td>
+                                        <td>15</td>
+                                        <td>$175,750</td>
+                                        <td>262346234</td>
+                                        <td><div class="btn btn-danger">remove</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>dd</td>
+                                        <td>15</td>
+                                        <td>$175,750</td>
+                                        <td>262346234</td>
+                                        <td><div class="btn btn-danger">remove</div></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary prev_tab">Back to Payment Method</button>
+                                    <button type="submit" class="btn btn-primary pull-right next_tab">Place an Order</button>
+                                </div>
+                            </div>
                         </div>
 
-                    </div> <!-- /widget-content -->
 
-                </div> <!-- /widget -->
-            </div>
+                    </div>
 
-            <div class="col-md-4">
-                <div class="widget stacked">
+                </div> <!-- /widget-content -->
 
-                    <div class="widget-header">
-                        <h3>Order summary</h3>
-                    </div> <!-- /widget-header -->
-
-                    <div class="widget-content">
-                        <p>Tax is ...</p>
-                        <table class="table table-hover input-mini">
-                            <tbody>
-                            <tr>
-                                <td>Order subtotal</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Tax</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>Delivery method</td>
-                                <td>Email</td>
-                            </tr>
-                            <tr class="info">
-                                <td><b>Total</b></td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div> <!-- /widget-content -->
-
-                </div> <!-- /widget -->
-            </div>
+            </div> <!-- /widget -->
         </div>
 
-    </div> <!-- /container -->
+        <div class="col-md-4">
+            <div class="widget stacked">
 
-</div> <!-- /main -->
+                <div class="widget-header">
+                    <h3>Order summary</h3>
+                </div> <!-- /widget-header -->
 
+                <div class="widget-content">
+                    <p>Tax is ...</p>
+                    <table class="table table-hover input-mini">
+                        <tbody>
+                        <tr>
+                            <td>Order subtotal</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Delivery method</td>
+                            <td>Email</td>
+                        </tr>
+                        <tr class="info">
+                            <td><b>Total</b></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- /widget-content -->
 
+            </div> <!-- /widget -->
+        </div>
+    </div>
 {% endblock content %}
 
 {% block javascripts %}
@@ -259,8 +241,14 @@
                 "bFilter":   false
             });
 
-            $('#table').on( 'click', 'div.btn', function () {
-                table.row($(this).closest("tr")).remove().draw( false );
+            var $tabs = $('.tabbable li');
+
+            $('.prev_tab').on('click', function() {
+                $tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').tab('show');
+            });
+
+            $('.next_tab').on('click', function() {
+                $tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
             });
         } );
     </script>

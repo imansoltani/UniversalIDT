@@ -24,6 +24,8 @@ class CheckoutController extends Controller
 
     public function checkoutAction(Request $request)
     {
+        return $this->render('UniversalIDTBundle:Checkout:checkout1.html.twig');
+
         $granted = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
         $breadcrumbs = $this->get("white_october_breadcrumbs");
