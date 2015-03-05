@@ -47,11 +47,11 @@ class CheckoutController extends Controller
         $form = $this->createForm(new CheckoutType());
 
         if($request->isMethod('post')) {
-            die(var_dump($request->request->all()));
             $form->handleRequest($request);
 
             if($form->isValid()) {
                 $formData = $form->getData();
+                $formData['sms'] = "";
                 return $this->forward("UniversalIDTBundle:Checkout:placeOrder", array('formData' => $formData));
             }
         }
