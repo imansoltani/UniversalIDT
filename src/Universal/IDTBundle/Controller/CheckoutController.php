@@ -47,6 +47,7 @@ class CheckoutController extends Controller
         $form = $this->createForm(new CheckoutType());
 
         if($request->isMethod('post')) {
+            die(var_dump($request->request->all()));
             $form->handleRequest($request);
 
             if($form->isValid()) {

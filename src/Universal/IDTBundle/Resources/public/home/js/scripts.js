@@ -30,7 +30,7 @@ $(document).ready(function() {
 
 	var validationObj = $.extend (rules, Application.validationRules);
 
-	$('#checkout-form').validate(validationObj);
+	//$('#checkout-form').validate(validationObj);
 	
 	
 	

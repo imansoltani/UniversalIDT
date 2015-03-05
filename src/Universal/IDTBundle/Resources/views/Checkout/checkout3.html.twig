@@ -21,7 +21,7 @@
 							<div class="col-md-8">
 								<div class="checkout-tabs clearfix"><!-- START CHECKOUT TAB -->
 
-									<form id="checkout-form">
+									<form id="checkout-form" method="post">
 
 										<ul class="nav nav-tabs" role="tablist"><!-- TAB BUTTONS -->
 											<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
@@ -57,18 +57,21 @@
 											<div class="tab-pane" id="payment_method_tab"><!-- PAYMENT TAB -->
 												<div class="payment-methods clearfix">
 													<div class="btn-group clearfix" data-toggle="buttons">
-														<div class="btn">
+														{{ form_errors(form.method) }}
+
+														{% for method in form.method %}
+														<div class="btn" onclick="$('#go_to_order').prop('disabled', false)">
 															<div class="row">
 																<div class="col-sm-4">
 																	<div class="button-title clearfix">
-																		<h4>Sega Pay</h4>
-																		<p>Payment made by Sega Pay</p>
+																		<h4>{{ method.vars.label }} Pay</h4>
+																		<p>Payment made by {{ method.vars.label }} Pay</p>
 																	</div>
 																</div>
 																<div class="col-sm-5">
 																	<div class="button-thumb clearfix">
-																		<img src="one-page/img/sagePay.png" alt="SegaPay">
-																		<input type="radio" name="payment-method" id="segapay" value="segapay">
+																		<img src="{{ asset('bundles/universalidt/home/img/' ~ method.vars.label ~ '.png') }}" alt="{{ method.vars.label }}">
+																		{{ form_widget(method) }}
 																	</div>
 																</div>
 																<div class="col-md-3">
@@ -79,28 +82,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="btn">
-															<div class="row">
-																<div class="col-sm-4">
-																	<div class="button-title clearfix">
-																		<h4>Sofort</h4>
-																		<p>Payment made by Sofort</p>
-																	</div>
-																</div>
-																<div class="col-sm-4">
-																	<div class="button-thumb clearfix">
-																		<img src="one-page/img/sofort.png" alt="Sofort">
-																		<input type="radio" name="payment-method" id="sofort" value="sofort">
-																	</div>
-																</div>
-																<div class="col-md-4">
-																	<div class="button-select clearfix">
-																		<span class="select-btn btn-primary">Select</span>
-																		<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
-																	</div>
-																</div>
-															</div>
-														</div>
+														{% endfor %}
 													</div>
 												</div>
 												<div class="row">
@@ -111,7 +93,7 @@
 													</div>
 													<div class="col-md-6 col-sm-6">
 														<div class="text-right clearfix">
-															<button type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary">Continue to Order Review <i class="fa fa-chevron-right"></i></button>
+															<button id="go_to_order" type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary" disabled>Continue to Order Review <i class="fa fa-chevron-right"></i></button>
 														</div>
 													</div>
 												</div>
@@ -131,8 +113,10 @@
 																</tr>
 															</thead>
 															<tbody>
+															{% set sum = 0 %}
 															{% for row in data %}
 																{% if row.type == "buy" %}
+																	{% set sum = sum + row.count * row.denomination %}
 																	<tr>
 																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
 																		<td>{{ row.product.name }}</td>
@@ -146,7 +130,7 @@
 															<tfoot>
 																<tr class="total">
 																	<td>Total</td>
-																	<td colspan="4" class="text-right">$200.00</td>
+																	<td colspan="4" class="text-right">{{ sum }}</td>
 																</tr>
 															</tfoot>
 														</table>
@@ -158,7 +142,7 @@
 													<div class="form-group">
 														<div class="checkbox">
 															<label>
-																<input type="checkbox" name="agree" id="agree" value="yes"> * I hereby accept <a href="#">General items and conditions</a> of <a href="#">universal.com</a>
+																{{ form_widget(form.agree) }} I hereby accept <a href="#">General items and conditions</a> of <a href="#">universal.com</a>
 															</label>
 														</div>
 													</div>
@@ -193,7 +177,7 @@
 													<tbody>
 														<tr>
 															<td>Order subtotal</td>
-															<td>$200.00</td>
+															<td>{{ sum }}</td>
 														</tr>
 														<tr>
 															<td>Tax</td>
@@ -207,7 +191,7 @@
 													<tfoot>
 														<tr class="total">
 															<td>Total</td>
-															<td>$200.00</td>
+															<td>{{ sum }}</td>
 														</tr>
 													</tfoot>
 												</table>
