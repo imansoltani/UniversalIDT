@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- META -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- TITLE -->
+		<title>Universal | Checkout</title>
+		
+		<!-- FAVICON -->
+		<link href="one-page/img/favicon.ico" rel="icon">
+		
+		<!-- FONT -->
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+		<link href="one-page/css/font-awesome.min.css" rel="stylesheet">
+		
+		<!-- STYLESHEET -->
+		<link href="one-page/css/bootstrap.min.css" rel="stylesheet">
+		<link href="js/plugins/lightbox/themes/evolution-dark/jquery.lightbox.css" rel="stylesheet">	
+		<link href="js/plugins/msgbox/jquery.msgbox.css" rel="stylesheet">	
+		<link href="css/base-admin-3.css" rel="stylesheet">
+		<link href="css/base-admin-3-responsive.css" rel="stylesheet">
+		<link href="one-page/css/style.css" rel="stylesheet">
+		<link href="one-page/css/style-responsive.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body id="checkout-page">
+		
+		<div class="header clearfix"><!-- START HEADER SECTION-->
+			
+			<div class="header-top clearfix"><!-- HEADER TOP -->
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="header-top-menu clearfix">
+								<a href="#header-top-menu" data-toggle="collapse" class="header-top-menu-collapse"><i class="fa fa-gear"></i></a>
+								<div class="collapse" id="header-top-menu"><!-- HEADER TOP MENU -->
+									<ul>
+										<li><a href="#">Sign In</a></li>
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <span class="caret"></span></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												<li><a href="#">Bengali</a></li>
+												<li><a href="#">English</a></li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="navbar navbar-inverse"><!-- HEADER BOTTOM -->
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"><img src="one-page/img/logo.png" alt="Universal"></a><!-- LOGO -->
+					</div>
+					
+					<div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
+						<ul class="nav navbar-nav navbar-right">
+							<li class="active"><a href="one-page.html">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div><!-- END HEADER SECTION -->
+		
+		<div class="main clearfix">
+			<div class="checkout-section clearfix" id="checkout">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-head clearfix"><!-- SECTION HEAD -->
+								<h1>Checkout</h1>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+								<span class="underline"></span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-content clearfix"><!-- SECTION CONTENT -->
+								<div class="row">
+									<div class="col-md-8">										
+										<div class="checkout-tabs clearfix"><!-- START CHECKOUT TAB -->
+											
+											<form id="checkout-form">
+												
+												<ul class="nav nav-tabs" role="tablist"><!-- TAB BUTTONS -->
+													<li class="active"><a href="#address_tab" data-toggle="tab"><i class="fa fa-map-marker"></i> Address</a></li>
+													<li><a href="#delivery_method_tab" data-toggle="tab"><i class="fa fa-truck"></i> Delivery Method</a></li>
+													<li><a href="#payment_method_tab" data-toggle="tab"><i class="fa fa-money"></i> Payment Method</a></li>
+													<li><a href="#order_review_tab" data-toggle="tab"><i class="fa fa-eye"></i> Order Review</a></li>
+												</ul>
+												
+												<div class="tab-content">
+													<div class="tab-pane active" id="address_tab"><!-- ADDRESS TAB -->
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="f_name">First Name</label>
+																	<input type="text" class="form-control" id="f_name">
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="l_name">Last Name</label>
+																	<input type="text" class="form-control" id="l_name">
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="company">Company</label>
+																	<input type="text" class="form-control" id="company">
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="street">Street</label>
+																	<input type="text" class="form-control" id="street">
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-sm-3">
+																<div class="form-group">
+																	<label for="city">City</label>
+																	<input type="text" class="form-control" id="city">
+																</div>
+															</div>
+															<div class="col-sm-3">
+																<div class="form-group">
+																	<label for="zip">Zip</label>
+																	<input type="text" class="form-control" id="zip">
+																</div>
+															</div>
+															<div class="col-sm-3">
+																<div class="form-group">
+																	<label for="state">State</label>
+																	<select class="form-control" id="state">
+																		<option value="">Select State</option>
+																		<option>State 1</option>
+																		<option>State 2</option>
+																		<option>State 3</option>
+																	</select>
+																</div>
+															</div>
+															<div class="col-sm-3">
+																<div class="form-group">
+																	<label for="country">Country</label>
+																	<select class="form-control" id="country">
+																		<option value="">Select Country</option>
+																		<option>Bangladesh</option>
+																		<option>Canada</option>
+																		<option>United State</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6 col-sm-6">
+																<div class="clearfix">
+																	<a href="#" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Basket</a>
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6">
+																<div class="text-right clearfix">
+																	<button type="button" data-target="#delivery_method_tab" data-toggle="tab" class="btn btn-primary">Continue to Delivery Method <i class="fa fa-chevron-right"></i></button>
+																</div>
+															</div>
+														</div>														
+													</div>
+													
+													<div class="tab-pane" id="delivery_method_tab"><!-- DELIVERY TAB -->
+														<div class="form-horizontal clearfix">
+															<div class="form-group">
+																<label for="email" class="col-sm-2 control-label">Email</label>
+																<div class="col-sm-6">
+																	<input type="email" class="form-control" id="email" placeholder="Email">
+																</div>
+															</div>
+															<div class="form-group">
+																<label for="sms" class="col-sm-2 control-label">SMS</label>
+																<div class="col-sm-6">
+																	<input type="text" class="form-control" id="sms" placeholder="+1234567890">
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6 col-sm-6">
+																<div class="clearfix">
+																	<button type="button" data-target="#address_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Address</button>
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6">
+																<div class="text-right clearfix">
+																	<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="tab-pane" id="payment_method_tab"><!-- PAYMENT TAB -->
+														<div class="payment-methods clearfix">
+															<div class="btn-group clearfix" data-toggle="buttons">
+																<div class="btn">
+																	<div class="row">
+																		<div class="col-sm-4">
+																			<div class="button-title clearfix">
+																				<h4>Paypal</h4>
+																				<p>Payment made by PayPal</p>
+																			</div>
+																		</div>
+																		<div class="col-sm-4">
+																			<div class="button-thumb clearfix">
+																				<img src="one-page/img/paypal.png" alt="PayPal">
+																				<input type="radio" name="payment-method" id="paypal" value="paypal">
+																			</div>
+																		</div>
+																		<div class="col-md-4">
+																			<div class="button-select clearfix">
+																				<span class="select-btn btn-primary">Select</span>
+																				<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="btn">
+																	<div class="row">
+																		<div class="col-sm-4">
+																			<div class="button-title clearfix">
+																				<h4>Sega Pay</h4>
+																				<p>Payment made by Sega Pay</p>
+																			</div>
+																		</div>
+																		<div class="col-sm-5">
+																			<div class="button-thumb clearfix">
+																				<img src="one-page/img/sagePay.png" alt="SegaPay">
+																				<input type="radio" name="payment-method" id="segapay" value="segapay">
+																			</div>
+																		</div>
+																		<div class="col-md-3">
+																			<div class="button-select clearfix">
+																				<span class="select-btn btn-primary">Select</span>
+																				<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="btn">
+																	<div class="row">
+																		<div class="col-sm-4">
+																			<div class="button-title clearfix">
+																				<h4>Sofort</h4>
+																				<p>Payment made by Sofort</p>
+																			</div>
+																		</div>
+																		<div class="col-sm-4">
+																			<div class="button-thumb clearfix">
+																				<img src="one-page/img/sofort.png" alt="Sofort">
+																				<input type="radio" name="payment-method" id="sofort" value="sofort">
+																			</div>
+																		</div>
+																		<div class="col-md-4">
+																			<div class="button-select clearfix">
+																				<span class="select-btn btn-primary">Select</span>
+																				<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="btn">
+																	<div class="row">
+																		<div class="col-sm-4">
+																			<div class="button-title clearfix">
+																				<h4>Money Transfer</h4>
+																				<p>Payment made by Bank Transfer</p>
+																			</div>
+																		</div>
+																		<div class="col-sm-4">
+																			<div class="button-thumb clearfix">
+																				<img src="one-page/img/bankTransfer.png" alt="Bank Transfer">
+																				<input type="radio" name="payment-method" id="banktransfer" value="bank">
+																			</div>
+																		</div>
+																		<div class="col-md-4">
+																			<div class="button-select clearfix">
+																				<span class="select-btn btn-primary">Select</span>
+																				<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-12">
+																			<div class="bank-info clearfix">
+																				<h6>Oponeo.co.uk Ltd.</h6>
+																				<p>Santander Corporate Banking, IBAN: GB59ABBY 09022210080254, SWIFT: ABBYGB2L Account number: 10080254, Sort code: 090222</p>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6 col-sm-6">
+																<div class="clearfix">
+																	<button type="button" data-target="#delivery_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Delivery Method</button>
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6">
+																<div class="text-right clearfix">
+																	<button type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary">Continue to Order Review <i class="fa fa-chevron-right"></i></button>
+																</div>
+															</div>
+														</div>
+													</div>
+													
+													<div class="tab-pane" id="order_review_tab"><!-- ORDER TAB -->
+														<div class="basket clearfix">
+															<div class="table-responsive">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Item</th>
+																			<th>Qty</th>
+																			<th>Denom.</th>
+																			<th>Subtitle</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr>
+																			<td><img src="https://placehold.it/40x40" alt="Thumbnail"></td>
+																			<td>2</td>
+																			<td>Happy Bangladesh</td>
+																			<td>Product Name</td>
+																		</tr>
+																	</tbody>
+																	<tfoot>
+																		<tr class="total">
+																			<td>Total</td>
+																			<td colspan="3" class="text-right">$200.00</td>
+																		</tr>
+																	</tfoot>
+																</table>
+															</div>
+															
+															<h4><strong>Agree:</strong> </h4>
+															<p><span style="color:#ff0000">*</span> Required Field</p>
+															
+															<div class="form-group">
+																<div class="checkbox">
+																	<label>
+																		<input type="checkbox" name="agree" id="agree" value="yes"> * I hereby accept <a href="#">General items and conditions</a> of <a href="#">universal.com</a>
+																	</label>
+																</div>
+															</div>															
+															<div class="row">
+																<div class="col-md-6 col-sm-6">
+																	<div class="clearfix">
+																		<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Payment Method</button>
+																	</div>
+																</div>
+																<div class="col-md-6 col-sm-6">
+																	<div class="text-right clearfix">
+																		<button type="submit" class="btn btn-primary">Place an Order <i class="fa fa-chevron-right"></i></button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="order-summary clearfix"><!-- ORDER SUMMARY -->
+											<div class="widget">
+												<div class="widget-header">
+													<h3><i class="fa fa-gift"></i> Order Summary</h3>
+												</div>
+												<div class="widget-content">
+													<p>Shipping and additional costs are calculated based on the values you have entered.</p>
+													<div class="table-responsive">
+														<table class="table table-bordered">
+															<tbody>
+																<tr>
+																	<td>Order subtotal</td>
+																	<td>$200.00</td>
+																</tr>
+																<tr>
+																	<td>Tax</td>
+																	<td>$0.00</td>
+																</tr>
+																<tr>
+																	<td>Delivery Method</td>
+																	<td>Email</td>
+																</tr>
+															</tbody>
+															<tfoot>
+																<tr class="total">
+																	<td>Total</td>
+																	<td>$200.00</td>
+																</tr>
+															</tfoot>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+		
+		<div class="extra clearfix"><!-- START FOOTER TOP SECTION -->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3">
+						<h4>About</h4>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Twitter</a></li>
+							<li><a href="#">Facebook</a></li>
+							<li><a href="#">Google+</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Support</h4>
+						<ul>
+							<li><a href="#">Frequently Asked Questions</a></li>
+							<li><a href="#">Ask a Question</a></li>
+							<li><a href="#">Video Tutorial</a></li>
+							<li><a href="#">Feedback</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Legal</h4>
+						<ul>
+							<li><a href="#">License</a></li>
+							<li><a href="#">Terms of Use</a></li>
+							<li><a href="#">Privacy Policy</a></li>
+							<li><a href="#">Security</a></li>
+						</ul>
+					</div>
+					<div class="col-md-3">
+						<h4>Settings</h4>
+						<ul>
+							<li><a href="#">Consectetur adipisicing</a></li>
+							<li><a href="#">Eiusmod tempor </a></li>
+							<li><a href="#">Fugiat nulla pariatur</a></li>
+							<li><a href="#">Officia deserunt</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div><!-- END FOOTER TOP SECTION -->
+		
+		<div class="footer clearfix"><!-- START FOOTER BOTTOM SECTION -->
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="copyright clearfix">
+							<p>&copy; 2015 Universal. All Right Reserved</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- END FOOTER BOTTOM SECTION -->
+		
+		
+
+		
+		
+		<!-- SET ALL SCRIPT AT BODY BOTTOM TO LOAD PAGE FAST -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="one-page/js/bootstrap.min.js"></script>
+		<script src="js/plugins/validate/jquery.validate.js"></script>
+		<script src="js/Application.js"></script>
+		<script src="one-page/js/scripts.js"></script>
+	</body>
+</html>
