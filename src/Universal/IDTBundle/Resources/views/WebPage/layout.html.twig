@@ -38,7 +38,7 @@
                             <a href="#header-top-menu" data-toggle="collapse" class="header-top-menu-collapse"><i class="fa fa-gear"></i></a>
                             <div class="collapse" id="header-top-menu"><!-- HEADER TOP MENU -->
                                 <ul>
-                                    <li><a href="#basket" data-toggle="target"><i class="fa fa-shopping-cart"></i> Cart(<span id="cart_total_items">-</span>)</a></li>
+                                    <li><a href="{{ path('WebPage_main') }}#basket" data-toggle="target"><i class="fa fa-shopping-cart"></i> Cart(<span id="cart_total_items">-</span>)</a></li>
                                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                         <li><a href="{{ path('user_home') }}"><i class="fa fa-user"></i> {{ app.user.firstName }}</a></li>
                                     {% else %}
@@ -70,17 +70,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"><img src="{{ asset('bundles/universalidt/home/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
+                    <a class="navbar-brand" href="{{ path('WebPage_main') }}"><img src="{{ asset('bundles/universalidt/home/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
                 </div>
 
                 <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="#top">Home</a></li>
-                        <li><a href="#calling_cards">Calling Cards</a></li>
-                        <li><a href="#rates">Rates</a></li>
-                        <li><a href="#application">Applications</a></li>
-                        <li><a href="#basket">Basket</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li class="active"><a href="{{ path('WebPage_main') }}#top">Home</a></li>
+                        <li><a href="{{ path('WebPage_main') }}#calling_cards">Calling Cards</a></li>
+                        <li><a href="{{ path('WebPage_main') }}#rates">Rates</a></li>
+                        <li><a href="{{ path('WebPage_main') }}#application">Applications</a></li>
+                        <li><a href="{{ path('WebPage_main') }}#basket">Basket</a></li>
+                        <li><a href="{{ path('WebPage_main') }}#contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
