@@ -249,14 +249,14 @@ class CheckoutController extends Controller
                     case $this->BASKET_BUY:
                         $order_product->setRequestType(RequestTypeEnumType::CREATION);
                         $order_product->setProduct(
-                            $em->getRepository('UniversalIDTBundle:Product')->find($row['product'])
+                            $em->getRepository('UniversalIDTBundle:Product')->find($row['id'])
                         );
                         break;
 
                     case $this->BASKET_RECHARGE:
                         $order_product->setRequestType(RequestTypeEnumType::RECHARGE);
                         $old_order_product = $em->getRepository('UniversalIDTBundle:OrderProduct')->find(
-                            $row['product']
+                            $row['id']
                         );
                         $order_product->setProduct($old_order_product->getProduct());
                         $order_product->setPin($old_order_product->getPin());

@@ -35,9 +35,9 @@ class ClientOgone
         $this->shaOut       = $idt_parameters['sha_out'];
         $this->submitUrl    = $idt_parameters['submit_url'];
 
-        $this->resultUrl    = $router->generate("checkout_ogone_result", [], true);
-        $this->catalogUrl   = $router->generate("checkout_basket", [], true);
-        $this->homeUrl      = $router->generate("guest_main", [], true);
+        $this->resultUrl    = $router->generate("WebPage_ogone_result", [], true);
+        $this->catalogUrl   = $router->generate("WebPage_main", [], true)."#basket";
+        $this->homeUrl      = $router->generate("WebPage_main", [], true);
 
         $this->templateUrl = $router->generate("ogone_template", [], true);
     }
