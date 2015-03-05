@@ -19,14 +19,10 @@ class CheckoutType extends AbstractType
             ->add('email', 'email', array(
                     'required' => false
                 ))
-            ->add('sms', 'text', array(
-                    'required' => false
-                ))
-            ->add('method', 'choice', array(
-                    'choices' => array(PaymentMethodEnumType::OGONE => "ogone", PaymentMethodEnumType::SOFORT => "sofort"),
-                    'expanded' => true,
-                    'required' => true
-                ))
+//            ->add('sms', 'text', array(
+//                    'required' => false
+//                ))
+            ->add('method', 'hidden')
             ->add('submit', 'submit', array(
                     'label' => 'Place an order'
                 ))
