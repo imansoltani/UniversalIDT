@@ -82,7 +82,7 @@ class CheckoutController extends Controller
         $this->get('session')->set('basket', stripcslashes($request->cookies->get("products")));
         $this->get('session')->set('basket_currency', $added_items_currency);
 
-        return $this->render('UniversalIDTBundle:Checkout:checkout.html.twig', array(
+        return $this->render('UniversalIDTBundle:Checkout:checkout3.html.twig', array(
                 'data' => $added_items,
                 'form' => $form->createView()
             ));
