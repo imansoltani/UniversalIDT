@@ -62,7 +62,7 @@ class Product extends JsonParser
     /**
      * @var integer
      *
-     * @ORM\Column(name="class_id", type="integer", nullable=false)
+     * @ORM\Column(name="class_id", type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $classId;
 

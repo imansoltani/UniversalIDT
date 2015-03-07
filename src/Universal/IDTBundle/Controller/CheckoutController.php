@@ -44,7 +44,7 @@ class CheckoutController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(new CheckoutType());
+        $form = $this->createForm(new CheckoutType(), array('email' => $granted ? $this->getUser()->getEmail() : ""));
 
         if($request->isMethod('post')) {
             $form->handleRequest($request);

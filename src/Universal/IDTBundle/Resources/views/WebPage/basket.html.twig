@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="col-md-6 col-sm-6">
                                         <div class="text-right clearfix">
-                                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                                            {{ form_widget(form.submit, {'id':'basket_form_submit', 'attr': {'class': 'btn btn-primary', 'disabled':'disabled'}}) }}
                                         </div>
                                     </div>
                                 </div>
@@ -164,8 +164,13 @@
 //                "</tr>");
         }
 
-        if(selected_products.length == 0)
+        if(selected_products.length == 0) {
             $("#basket_table_items").append('<tr><td colspan="7">'+'No Item'+'</td></tr>');
+            $("#basket_form_submit").prop('disabled', true);
+        }
+        else {
+            $("#basket_form_submit").prop('disabled', false);
+        }
 
         $("#basket_table_total").html(total);
 

@@ -25,7 +25,7 @@ class Rate
     /**
      * @var integer
      *
-     * @ORM\Column(name="classId", type="integer")
+     * @ORM\Column(name="classId", type="integer", options={"unsigned"=true})
      */
     private $classId;
 

@@ -5,17 +5,20 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\Request;
 use Universal\IDTBundle\Entity\User;
 
 class RegistrationFormType extends AbstractType
 {
     private $locales;
     private $countries;
+    private $request;
 
-    public function __construct(array $locales, array $countries)
+    public function __construct(array $locales, array $countries, Request $request)
     {
         $this->locales = array_flip($locales);
         $this->countries = $countries;
+        $this->request = $request;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -24,10 +27,12 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', 'text')
             ->add('lastName', 'text')
             ->add('country', 'choice', array(
+                    'placeholder' => 'Choose a Country',
                     'choices' => $this->countries
                 ))
             ->add('language', 'choice', array(
-                'choices' => $this->locales
+                'choices' => $this->locales,
+                'preferred_choices' => array($this->request->get('_locale'))
             ))
             ->add('gender', 'choice', array(
                 'choices' => array('M'=>'Male', 'F'=> 'Female')

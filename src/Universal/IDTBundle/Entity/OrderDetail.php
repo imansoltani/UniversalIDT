@@ -85,7 +85,7 @@ class OrderDetail
     /**
      * @var string
      *
-     * @ORM\Column(name="deliverySMS", type="string", nullable=true, length=10)
+     * @ORM\Column(name="deliverySMS", type="integer", options={"unsigned"=true}, nullable=true)
      */
     private $deliverySMS;
 
@@ -100,7 +100,7 @@ class OrderDetail
     /**
      * @var integer
      *
-     * @ORM\Column(name="paymentId", type="integer", nullable=true)
+     * @ORM\Column(name="paymentId", type="integer", options={"unsigned"=true}, nullable=true)
      */
     private $paymentId;
 
