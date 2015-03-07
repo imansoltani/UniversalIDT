@@ -798,6 +798,10 @@ img{
 	color: #5cb85c;
 }
 
+.payment-status .failed{
+	color: #e5201d;
+}
+
 .payment-status p{
 	font-size: 16px;
 	margin-bottom: 20px;

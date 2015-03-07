@@ -89,47 +89,49 @@ class CheckoutController extends Controller
 
             Log::save($orderDetail->getId(),"order_id_after_ogone");
 
-            try {
-                if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED)
-                {
-                    $idt = $this->get('idt');
-
-                    $orderDetail = $idt->processOrder($orderDetail);
-
-                    $result = "";
-                    /** @var OrderProduct $orderProduct */
-                    foreach($orderDetail->getOrderProducts() as $orderProduct) {
-                        $result .=
-                            " id: ". $orderProduct->getId()." - ".
-                            " name: ". $orderProduct->getProduct()->getName()." - ".
-                            " class_id: ". $orderProduct->getProduct()->getClassId()." - ".
-                            " denom: ". $orderProduct->getPinDenomination()." - ".
-                            " ctrlNumber: ". ($orderProduct->getCtrlNumber()?:"--") ." - ".
-                            " pin: ". ($orderProduct->getPin()?:"--") ." - ".
-                            " request type: ". $orderProduct->getRequestType()." - ".
-                            " request status: ". $orderProduct->getRequestStatus()." - ".
-                            "<br>";
-                    }
-
-                    return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                            'result' => "succeed: <br>".$result
-                        ));
-                }
-                else
-                {
-                    return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                            'result' => "Payment failed: " . $orderDetail->getPaymentStatus()
-                        ));
-                }
-            } catch (\Exception $e) {
-                return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                        'result' => $orderDetail->getPaymentStatus()
-                    ));
-            }
-
         } catch (\Exception $e) {
             return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                    'status' => 'U',
                     'result' => 'Error in process result of Ogone: '. $e->getMessage()
+                ));
+        }
+
+        try {
+            if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED) {
+
+                $orderDetail = $this->get('idt')->processOrder($orderDetail);
+
+                $result = "";
+                /** @var OrderProduct $orderProduct */
+                foreach($orderDetail->getOrderProducts() as $orderProduct) {
+                    $result .=
+                        " id: ". $orderProduct->getId()." - ".
+                        " name: ". $orderProduct->getProduct()->getName()." - ".
+                        " class_id: ". $orderProduct->getProduct()->getClassId()." - ".
+                        " denom: ". $orderProduct->getPinDenomination()." - ".
+                        " ctrlNumber: ". ($orderProduct->getCtrlNumber()?:"--") ." - ".
+                        " pin: ". ($orderProduct->getPin()?:"--") ." - ".
+                        " request type: ". $orderProduct->getRequestType()." - ".
+                        " request status: ". $orderProduct->getRequestStatus()." - ".
+                        "<br>";
+                }
+
+                return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                        'status' => 'S',
+                        'result' => "Your transaction was successfully done! <br>" . $result
+                    ));
+            }
+            else
+            {
+                return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                        'status' => 'F',
+                        'result' => "Unfortunately transaction failed!"
+                    ));
+            }
+        } catch (\Exception $e) {
+            return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
+                    'status' => 'U',
+                    'result' => 'Error in IDT process: '. $e->getMessage()
                 ));
         }
     }
@@ -280,13 +282,14 @@ class CheckoutController extends Controller
         return new Response("done");
     }
 
-    public function checkoutResultAction($result)
+    public function checkoutResultAction($status, $result)
     {
         $response = new Response();
 //        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
 //        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
         return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
+                'status' => $status,
                 'result' => $result
             ), $response);
     }

@@ -7,18 +7,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="section-head clearfix"><!-- SECTION HEAD -->
-                        <h1>Checkout Result</h1>
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                        <span class="underline"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div style="text-align: center">
-                        {{ result|raw }}
+                    <div class="section-content clearfix">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="payment-status clearfix"><!-- PAYMENT STATUS -->
+                                    <h4>Payment Status: <span class="{{ status == 'S' ? 'success' : 'failed' }}">{{ status == 'S' ? 'Success' : 'Failed' }}</span></h4>
+                                    <div class="text-center clearfix">
+                                        <p>{{ result|raw }}</p>
+                                        <a href="{{ path('WebPage_main') }}" class="btn btn-primary btn-lg"><i class="fa fa-home"></i> Back to Home</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
