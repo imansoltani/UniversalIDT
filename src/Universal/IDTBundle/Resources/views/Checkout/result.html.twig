@@ -1,11 +1,27 @@
-{% extends "::base.html.twig" %}
+{% extends '@UniversalIDT/WebPage/layout.html.twig' %}
 
-{% block title %}UniversalIDTBundle:Checkout:Result{% endblock %}
+{% block title %}Universal IDT | Checkout Result{% endblock %}
 
-{% block body %}
-    <h1>Welcome to the Checkout:Result page</h1>
+{% block content %}
+    <div class="checkout-section clearfix" id="checkout">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-head clearfix"><!-- SECTION HEAD -->
+                        <h1>Checkout Result</h1>
 
-    <div style="text-align: center">
-        {{ result|raw }}
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                        <span class="underline"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div style="text-align: center">
+                        {{ result|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-{% endblock %}
+{% endblock content %}
