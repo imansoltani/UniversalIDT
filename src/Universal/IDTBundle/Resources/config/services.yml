@@ -18,7 +18,7 @@ services:
 
     client_ogone:
         class: Universal\IDTBundle\PaymentGateway\ClientOgone
-        arguments: [@request, @router, @doctrine.orm.default_entity_manager, %Ogone%]
+        arguments: [@request, @router, @doctrine.orm.default_entity_manager, @security.authorization_checker, %Ogone%]
         scope: request
 
     universal_idt.fos_listener:

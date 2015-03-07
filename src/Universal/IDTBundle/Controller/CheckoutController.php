@@ -27,13 +27,6 @@ class CheckoutController extends Controller
     {
         $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        if($granted)
-            $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
-        else
-            $breadcrumbs->addItem("Home", $this->get("router")->generate("WebPage_main"));
-        $breadcrumbs->addItem("Checkout");
-
         if($request->query->has('account') && !$granted) {
             switch($request->query->get('account')) {
                 case "login": return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -94,7 +87,7 @@ class CheckoutController extends Controller
         try {
             $orderDetail = $this->get('client_ogone')->processResult($request->query->all());
 
-        Log::save($orderDetail->getId(),"order_id_after_ogone");
+            Log::save($orderDetail->getId(),"order_id_after_ogone");
 
             try {
                 if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED)

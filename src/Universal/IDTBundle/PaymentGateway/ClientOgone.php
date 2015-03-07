@@ -5,6 +5,7 @@ namespace Universal\IDTBundle\PaymentGateway;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 
@@ -25,7 +26,7 @@ class ClientOgone
     private $homeUrl;
     private $templateUrl;
 
-    public function __construct(Request $request, Router $router, EntityManager $em, array $idt_parameters)
+    public function __construct(Request $request, Router $router, EntityManager $em,AuthorizationChecker $ac, array $idt_parameters)
     {
         $this->em           = $em;
         $this->request      = $request;
@@ -35,7 +36,7 @@ class ClientOgone
         $this->shaOut       = $idt_parameters['sha_out'];
         $this->submitUrl    = $idt_parameters['submit_url'];
 
-        $this->resultUrl    = $router->generate("WebPage_ogone_result", [], true);
+        $this->resultUrl    = $ac->isGranted('IS_AUTHENTICATED_REMEMBERED') ? $router->generate("user_ogone_result", [], true) : $router->generate("WebPage_ogone_result", [], true);
         $this->catalogUrl   = $router->generate("WebPage_main", [], true)."#basket";
         $this->homeUrl      = $router->generate("WebPage_main", [], true);
 
