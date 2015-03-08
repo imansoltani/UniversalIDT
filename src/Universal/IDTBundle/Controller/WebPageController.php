@@ -16,7 +16,7 @@ class WebPageController extends Controller
 {
     public function mainAction()
     {
-        return $this->render('UniversalIDTBundle:WebPage:layout.html.twig');
+        return $this->render('UniversalIDTBundle:WebPage:layout.html.twig', array('main_nav_bar'=>''));
     }
 
     //---------------------------------
