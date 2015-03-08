@@ -11,97 +11,133 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="widget stacked">
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget stacked">
 
-                <div class="widget-header">
-                    <i class="icon-book"></i>
-                    <h3>General information|trans</h3>
+                    <div class="widget-header">
+                        <i class="icon-book"></i>
+                        <h3>General information|trans</h3>
+                    </div>
+                    <!-- /widget-header -->
+
+                    <div class="widget-content">
+                        <table id="table1" class="display" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Payment Status</th>
+                                <th>Payment method</th>
+                                <th>Delivery method</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                                <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+                                <td>
+                                    {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                                    {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                                    {{ delivery != "" ? delivery|raw : "--" }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+
                 </div>
-                <!-- /widget-header -->
-
-                <div class="widget-content">
-                    <table id="table1" class="display" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Payment method</th>
-                            <th>Delivery method</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr>
-                            <td>{{ order.id }}</td>
-                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-                            <td>--</td>
-                            <td>{{ order.paymentMethod }}</td>
-                            <td>{{ order.deliveryEmail ~ order.deliverySMS }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /widget-content -->
-
+                <!-- /widget -->
             </div>
-            <!-- /widget -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget stacked">
+
+                    <div class="widget-header">
+                        <i class="icon-book"></i>
+                        <h3>Order Details|trans</h3>
+                    </div>
+                    <!-- /widget-header -->
+
+                    <div class="widget-content">
+                        <table id="table2" class="display" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Card name</th>
+                                <th>Denomination</th>
+                                <th>Serial number</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for orderProduct in order.orderProducts %}
+                                <tr>
+                                    <td>{{ orderProduct.product.name }}</td>
+                                    <td>{{ orderProduct.pinDenomination }}</td>
+                                    <td>{{ orderProduct.ctrlNumber }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+
+                </div>
+                <!-- /widget -->
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="widget stacked">
+    <div class="col-md-4">
+        <div class="widget stacked">
 
-                <div class="widget-header">
-                    <i class="icon-book"></i>
-                    <h3>Order Details|trans</h3>
-                </div>
-                <!-- /widget-header -->
-
-                <div class="widget-content">
-                    <table id="table2" class="display" width="100%" cellspacing="0">
-                        <thead>
+            <div class="widget-header">
+                <h3><i class="fa fa-gift"></i> Order Summary</h3>
+            </div>
+            <div class="widget-content">
+                <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
                         <tr>
-                            <th>Card name</th>
-                            <th>Denomination</th>
-                            <th>quantity</th>
-                            <th>Subtotal</th>
-                            <th>Serial number</th>
+                            <td>Order subtotal</td>
+                            <td id="basket_summary_subtotal">{{ order.amount }}</td>
                         </tr>
-                        </thead>
-
-                        <tfoot>
                         <tr>
-                            <th>Card name</th>
-                            <th>Denomination</th>
-                            <th>quantity</th>
-                            <th>Subtotal</th>
-                            <th>Serial number</th>
+                            <td>Tax</td>
+                            <td id="basket_summary_tax">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Method</td>
+                            <td id="basket_summary_email">
+                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                                {{ delivery != "" ? delivery|raw : "--" }}
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr class="total">
+                            <td>Total</td>
+                            <td id="basket_summary_total">{{ order.amount }}</td>
                         </tr>
                         </tfoot>
-
-                        <tbody>
-                        {% for orderProduct in order.orderProducts %}
-                            <tr>
-                                <td>{{ orderProduct.product.name }}</td>
-                                <td>{{ orderProduct.pinDenomination }}</td>
-                                <td>--</td>
-                                <td>--</td>
-                                <td>{{ orderProduct.ctrlNumber }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
                     </table>
                 </div>
-                <!-- /widget-content -->
-
             </div>
-            <!-- /widget -->
         </div>
+        <!-- /widget-content -->
+
     </div>
+    <!-- /widget -->
+</div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -113,12 +149,9 @@
             $('#table1').DataTable();
             $('#table2').DataTable();
 
-            $('#table1').find('tbody').on('click', 'tr', function () {
-                $.msgbox("sdfsdf sdf", {type: "info"});
-            });
-            $('#table2').find('tbody').on('click', 'tr', function () {
-                $.msgbox("sdfsdf sdf", {type: "info"});
-            });
+//            $('#table1').find('tbody').on('click', 'tr', function () {
+//                $.msgbox("sdfsdf sdf", {type: "info"});
+//            });
         });
     </script>
 {% endblock javascripts %}

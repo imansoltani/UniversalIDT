@@ -43,7 +43,7 @@ class OrdersController extends Controller
 
         /** @var OrderDetail $order */
         $order = $em->createQueryBuilder()
-            ->select('orderDetail')
+            ->select('orderDetail', 'order_products', 'product')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
             ->where('orderDetail.id = :id')->setParameter('id', $id)
             ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
