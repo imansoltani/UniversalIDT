@@ -14,11 +14,11 @@ class PaymentStatusEnumType extends AbstractEnumType
     const STATUS_UNKNOWN  = 'U';
 
     protected static $choices = [
-        self::STATUS_ACCEPTED => 'accepted',
-        self::STATUS_CANCELED => 'canceled',
-        self::STATUS_DECLINED => 'declined',
-        self::STATUS_PENDING  => 'pending',
-        self::STATUS_UNCERTAIN => 'uncertain',
-        self::STATUS_UNKNOWN  => 'unknown'
+        self::STATUS_ACCEPTED => 'Accepted',
+        self::STATUS_CANCELED => 'Canceled',
+        self::STATUS_DECLINED => 'Declined',
+        self::STATUS_PENDING  => 'Pending',
+        self::STATUS_UNCERTAIN => 'Uncertain',
+        self::STATUS_UNKNOWN  => 'Unknown'
     ];
 }

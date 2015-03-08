@@ -25,30 +25,20 @@
                 <table id="table" class="display" width="100%" cellspacing="0">
                     <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Date, Time</th>
-                        <th>Description</th>
-                        <th>Status</th>
+                        <th>Payment Status</th>
                         <th>Amount</th>
                         <th>Action</th>
                     </tr>
                     </thead>
 
-                    <tfoot>
-                    <tr>
-                        <th>Date, Time</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Amount</th>
-                        <th>Action</th>
-                    </tr>
-                    </tfoot>
-
                     <tbody>
                     {% for order in orders %}
                         <tr>
+                            <td>{{ order.id }}</td>
                             <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                             <td>{{ order.amount }} ({{ order.currency|upper }})</td>
                             <td><a href="{{ path('user_order_details', {'id':order.id}) }}">details</a></td>
                         </tr>
@@ -70,10 +60,14 @@
     <script src="{{ asset("bundles/universalidt/dataTable/js/jquery.dataTables.min.js") }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table').DataTable();
-
-            $('#table').find('tbody').on('click', 'tr', function () {
-                $.msgbox("sdfsdf sdf", {type: "info"});
+            $('#table').DataTable({
+                "aoColumnDefs": [
+                    { "aTargets": [ 3 ], "sType": "numeric", "mRender": function ( data, type ) {
+                        if(type === 'display' && data.split(" ")[0] < 0)
+                            return '<span style="color: red">' + data + '</span>';
+                        return data;
+                    } }
+                ]
             });
         });
     </script>

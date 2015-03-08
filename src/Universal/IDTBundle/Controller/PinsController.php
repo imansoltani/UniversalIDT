@@ -72,7 +72,7 @@ class PinsController extends Controller
 
         /** @var OrderProduct[] $recharges */
         $recharges = $em->createQueryBuilder()
-            ->select('order_product')
+            ->select('order_product','product','orderDetail')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')
             ->where('order_product.pin = :pin')->setParameter('pin', $pin->getPin())
             ->andWhere('order_product.requestType = :requestType')->setParameter('requestType', RequestTypeEnumType::RECHARGE)
