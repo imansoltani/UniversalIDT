@@ -90,15 +90,15 @@
     <div class="main clearfix">
         {% block content %}
 
-        {#{{ render(controller('UniversalIDTBundle:Home:sliderSection')) }}#}
+        {{ render(controller('UniversalIDTBundle:WebPage:slider')) }}
 
         {{ render(controller('UniversalIDTBundle:WebPage:callingCards')) }}
 
-        {{ render(controller('UniversalIDTBundle:WebPage:rates')) }}
+        {#{{ render(controller('UniversalIDTBundle:WebPage:rates')) }}#}
 
-        {#{{ render(controller('UniversalIDTBundle:Home:applicationSection')) }}#}
+        {{ render(controller('UniversalIDTBundle:WebPage:application')) }}
 
-        {#{{ render(controller('UniversalIDTBundle:Home:downloadSection')) }}#}
+        {{ render(controller('UniversalIDTBundle:WebPage:download')) }}
 
         {{ render(controller('UniversalIDTBundle:WebPage:basket')) }}
 

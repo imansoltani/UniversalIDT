@@ -19,6 +19,8 @@ class WebPageController extends Controller
         return $this->render('UniversalIDTBundle:WebPage:layout.html.twig');
     }
 
+    //---------------------------------
+
     public function sliderAction()
     {
         return $this->render('UniversalIDTBundle:WebPage:slider.html.twig');
@@ -151,12 +153,17 @@ class WebPageController extends Controller
         );
     }
 
-    public function shoppingAction()
+    public function applicationAction()
     {
         return $this->render(
-            'UniversalIDTBundle:Guest:shopping.html.twig',
-            array(// ...
-            )
+            'UniversalIDTBundle:WebPage:application.html.twig'
+        );
+    }
+
+    public function downloadAction()
+    {
+        return $this->render(
+            'UniversalIDTBundle:WebPage:download.html.twig'
         );
     }
 
@@ -218,6 +225,8 @@ class WebPageController extends Controller
                 'form' => $form->createView()
             ));
     }
+
+    //-----------------------------------
 
     private function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)
     {

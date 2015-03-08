@@ -2,10 +2,6 @@ WebPage_main:
     path:     /
     defaults: { _controller: UniversalIDTBundle:WebPage:main }
 
-WebPage_calling_cards:
-    path:     /calling_cards
-    defaults: { _controller: UniversalIDTBundle:WebPage:callingCards }
-
 WebPage_card_list:
     path:     /calling_cards/list
     defaults: { _controller: UniversalIDTBundle:WebPage:cardsList }
@@ -17,10 +13,6 @@ WebPage_card_details:
 WebPage_rates:
     path:     /rates
     defaults: { _controller: UniversalIDTBundle:WebPage:rates }
-
-WebPage_shopping:
-    path:     /shopping
-    defaults: { _controller: UniversalIDTBundle:WebPage:shopping }
 
 WebPage_basket:
     path:     /basket
