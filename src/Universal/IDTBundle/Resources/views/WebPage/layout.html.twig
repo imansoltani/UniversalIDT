@@ -73,16 +73,29 @@
                     <a class="navbar-brand" href="{{ path('WebPage_main') }}"><img src="{{ asset('bundles/universalidt/home/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
                 </div>
 
-                <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="active"><a href="{{ path('WebPage_main') }}#top">Home</a></li>
-                        <li><a href="{{ path('WebPage_main') }}#calling_cards">Calling Cards</a></li>
-                        <li><a href="{{ path('WebPage_main') }}#rates">Rates</a></li>
-                        <li><a href="{{ path('WebPage_main') }}#application">Applications</a></li>
-                        <li><a href="{{ path('WebPage_main') }}#basket">Basket</a></li>
-                        <li><a href="{{ path('WebPage_main') }}#contact">Contact</a></li>
-                    </ul>
-                </div>
+                {% if main_nav_bar is defined %}
+                    <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#top">Home</a></li>
+                            <li><a href="#calling_cards">Calling Cards</a></li>
+                            <li><a href="#rates">Rates</a></li>
+                            <li><a href="#application">Applications</a></li>
+                            <li><a href="#basket">Basket</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="{{ path('WebPage_main') }}#top">Home</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#calling_cards">Calling Cards</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#rates">Rates</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#application">Applications</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#basket">Basket</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div><!-- END HEADER SECTION -->
