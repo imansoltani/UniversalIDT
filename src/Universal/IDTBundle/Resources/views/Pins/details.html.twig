@@ -17,7 +17,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-9">
             <div class="widget stacked">
 
                 <div class="widget-header">
@@ -34,8 +34,6 @@
                             <li><a href="#historyTab" data-toggle="tab">Call history</a></li>
                             <li><a href="#rechargeTab" data-toggle="tab">Recharges</a></li>
                         </ul>
-
-                        <br>
 
                         <div class="tab-content">
                             <div class="tab-pane tab-row active" id="detailTab">
@@ -55,7 +53,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="field-data">
-                                        <div class="col-sm-3 col-md-2 h5">Total amount</div>
+                                        <div class="col-sm-3 col-md-2 h5">Total usage</div>
                                         <div class="col-sm-8 col-md-2">{{ call_details.totalamount }}</div>
                                     </div>
                                     <div class="field-data">
@@ -76,16 +74,6 @@
                                         <th>Called number</th>
                                     </tr>
                                     </thead>
-
-                                    <tfoot>
-                                    <tr>
-                                        <th>Date, Time</th>
-                                        <th>Duration</th>
-                                        <th>Cost</th>
-                                        <th>Caller Number</th>
-                                        <th>Called number</th>
-                                    </tr>
-                                    </tfoot>
 
                                     <tbody>
                                     {% for call in call_details.calls %}
@@ -112,22 +100,13 @@
                                     </tr>
                                     </thead>
 
-                                    <tfoot>
-                                    <tr>
-                                        <th>Card name</th>
-                                        <th>Date</th>
-                                        <th>Denomination</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </tfoot>
-
                                     <tbody>
                                     {% for recharge in recharges %}
                                         <tr>
                                             <td>{{ recharge.product.name }}</td>
                                             <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
                                             <td>{{ recharge.pinDenomination }}</td>
-                                            <td>{{ recharge.requestStatus }}</td>
+                                            <td>{{ recharge.requestStatus|readable('RequestStatusEnumType') }}</td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -136,6 +115,25 @@
 
                         </div>
                     </div>
+                </div>
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+        <!-- /widget -->
+
+        <div class="col-md-3">
+            <div class="widget stacked">
+
+                <div class="widget-header">
+                    <i class="icon-book"></i>
+
+                    <h3>Recharge</h3>
+                </div>
+                <!-- /widget-header -->
+
+                <div class="widget-content">
+                    Recharge
                 </div>
             </div>
             <!-- /widget-content -->

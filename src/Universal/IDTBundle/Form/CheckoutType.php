@@ -23,7 +23,7 @@ class CheckoutType extends AbstractType
 //                    'required' => false
 //                ))
             ->add('method', 'choice', array(
-                    'choices' => array(PaymentMethodEnumType::OGONE => "ogone", PaymentMethodEnumType::SOFORT => "sofort"),
+                    'choices' => PaymentMethodEnumType::getChoices(),
                     'expanded' => true,
                     'required' => true
                 ))

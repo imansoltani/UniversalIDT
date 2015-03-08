@@ -70,7 +70,7 @@
 																</div>
 																<div class="col-sm-5">
 																	<div class="button-thumb clearfix">
-																		<img src="{{ asset('bundles/universalidt/home/img/' ~ method.vars.label ~ '.png') }}" alt="{{ method.vars.label }}">
+																		<img src="{{ asset('bundles/universalidt/home/img/' ~ method.vars.label|lower ~ '.png') }}" alt="{{ method.vars.label }}">
 																		{{ form_widget(method) }}
 																	</div>
 																</div>

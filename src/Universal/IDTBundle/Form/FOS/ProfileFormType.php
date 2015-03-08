@@ -26,9 +26,7 @@ class ProfileFormType extends AbstractType
             ->add('language', 'choice', array(
                 'choices' => $this->locales
             ))
-            ->add('gender', 'choice', array(
-                'choices' => array('M'=>'Male', 'F'=> 'Female')
-            ))
+            ->add('gender')
             ->add('phone', "text")
             ->remove('username')
             ->remove('email');

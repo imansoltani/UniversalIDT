@@ -9,7 +9,7 @@ class PaymentMethodEnumType extends AbstractEnumType
     const SOFORT = "S";
 
     protected static $choices = [
-        self::OGONE => 'Credit Card (ogone)',
-        self::SOFORT => 'Banking Payment (sofort)'
+        self::OGONE => 'Ogone',
+        self::SOFORT => 'Sofort'
     ];
 }
