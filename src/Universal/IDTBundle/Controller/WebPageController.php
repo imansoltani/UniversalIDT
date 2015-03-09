@@ -32,6 +32,8 @@ class WebPageController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $countries = $this->container->getParameter('countries');
+        $defaultCountryISO = strtoupper($this->container->getParameter('country'));
+        $defaultCountryName = $countries[$defaultCountryISO];
 
         $countriesISO = $em->createQueryBuilder()
             ->select('product.countryISO')
@@ -48,7 +50,9 @@ class WebPageController extends Controller
         return $this->render(
             'UniversalIDTBundle:WebPage:callingCards.html.twig',
             array(
-                'countries' => $countriesResult
+                'countries' => $countriesResult,
+                'countryISO' => $defaultCountryISO,
+                'countryName' => $defaultCountryName
             )
         );
     }

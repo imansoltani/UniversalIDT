@@ -40,11 +40,11 @@
 
                     <div class="calling-card-by-country clearfix" id="calling-card-by-country"><!-- CALLING CARDS -->
                         <div class="page-header clearfix">
-                            <h3>Available Calling Cards for <span class="country-name">Hong Kong</span></h3>
+                            <h3>Available Calling Cards for <span class="country-name">{{ countryName }}</span></h3>
                         </div>
                         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><br>
                         <div class="calling-cards owl-carousel owl-theme">
-                            <div class="item"></div>
+                            {{ render(controller('UniversalIDTBundle:WebPage:cardsList',{}, {'country': countryISO})) }}
                         </div>
                     </div>
                 </div>

@@ -19,6 +19,7 @@ parameters:
     mailer_sender_name: "IDT Universal Team"
 
     locale: en_US
+    country: fr
     languages: {French: fr_FR, English: en_US, Italiano: it_IT}
     currencies: [EUR, CHF, PLN, SEK, DKK, NOK, GBP]
 
