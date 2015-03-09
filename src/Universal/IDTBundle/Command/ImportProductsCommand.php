@@ -64,11 +64,12 @@ class ImportProductsCommand extends ContainerAwareCommand
         $i = 0;
         foreach($data as $row) {
             $product = new Product();
-            $product->setName($row['Card']);
-            $product->setCountryISO($row['CNT']);
-            $product->setCurrency($row['Currency']);
-            $product->setClassId($row['CID']);
-            $product->setDenominations(array($row['Denom0'],$row['Denom1'],$row['Denom2']));
+            $product->setName($row['name']);
+            $product->setCountryISO($row['country']);
+            $product->setCurrency($row['currency']);
+            $product->setClassId($row['cid']);
+            $product->setDenominations(array($row['denom1'],$row['denom2'],$row['denom3']));
+            $product->setFreeAmountDenomination1($row['free_amount_denom1']);
             $em->persist($product);
             $i++;
         }

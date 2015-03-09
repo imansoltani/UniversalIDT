@@ -67,6 +67,13 @@ class Product extends JsonParser
     private $classId;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="free_amount_denomination_1", type="decimal", precision=6, scale=2, nullable=false)
+     */
+    private $freeAmountDenomination1 = 0;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="logo_extension", type="string", length=4, nullable=true)
@@ -255,6 +262,38 @@ class Product extends JsonParser
     public function getClassId()
     {
         return $this->classId;
+    }
+
+    /**
+     * Set freeAmountDenomination1
+     *
+     * @param string $freeAmountDenomination1
+     * @return Product
+     */
+    public function setFreeAmountDenomination1($freeAmountDenomination1)
+    {
+        $this->freeAmountDenomination1 = $freeAmountDenomination1;
+
+        return $this;
+    }
+
+    /**
+     * Get freeAmountDenomination1
+     *
+     * @return string
+     */
+    public function getFreeAmountDenomination1()
+    {
+        return $this->freeAmountDenomination1;
+    }
+
+    /**
+     * @param float $amount
+     * @return float
+     */
+    public function getReducedFreeAmount($amount)
+    {
+        return $amount - $amount * $this->getDenominations()[0];
     }
 
     //--------------------------------------------- Image
