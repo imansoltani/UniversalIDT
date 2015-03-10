@@ -1,0 +1,455 @@
+iso,country,location,connection_fee,rate
+AF,Afghanistan,#VALUE!,0,0.3225
+AF,Afghanistan,Cellular,0,0.3225
+AL,Albania,#VALUE!,0,0.3125
+AL,Albania,Cellular,0,1.6666
+AL,Albania,Tirana,0,0.1666
+DZ,Algeria,#VALUE!,0,0.2083
+DZ,Algeria,Cellular,0,0.7142
+DZ,Algeria,Algiers,0,0.2083
+AS,American Samoa,#VALUE!,0,0.2222
+AD,Andorra,#VALUE!,0,0.2222
+AD,Andorra,Cellular,0,1.6666
+AO,Angola,#VALUE!,0,0.3571
+AO,Angola,Cellular,0,0.5882
+AI,Anguilla,#VALUE!,0,0.4761
+,,,,
+AQ,Antarctica,#VALUE!,0,0.7692
+AR,Argentina,#VALUE!,0,0.125
+AR,Argentina,Cellular,0,0.4761
+AR,Argentina,Buenos Aires,0,0.125
+AM,Armenia,#VALUE!,0,0.4761
+AM,Armenia,Cellular,0,0.7692
+AM,Armenia,Yerevan,0,0.4761
+AW,Aruba,#VALUE!,0,0.4761
+,,,,
+,,,,
+,,,,
+AU,Australia,#VALUE!,0,0.1
+AU,Australia,Cellular,0,0.3571
+AT,Austria,#VALUE!,0,0.1
+AT,Austria,Cellular,0,0.3571
+AZ,Azerbaijan,#VALUE!,0,1.6666
+AZ,Azerbaijan,Cellular,0,1.6666
+BS,Bahamas,#VALUE!,0,0.4761
+BH,Bahrain,#VALUE!,0,0.1428
+BH,Bahrain,Cellular,0,0.3125
+BD,Bangladesh,#VALUE!,0,0.2199
+BD,Bangladesh,Cellular,0,0.242
+BD,Bangladesh,Chittagong,0,0.2199
+BD,Bangladesh,Dhaka,0,0.2199
+BD,Bangladesh,Syhlet,0,0.2199
+BB,Barbados,#VALUE!,0,0.3125
+BB,Barbados,Cellular,0,0.7692
+BY,Belarus,#VALUE!,0,1.6666
+BY,Belarus,Cellular,0,1.6666
+BY,Belarus,Minsk,0,1.6666
+BE,Belgium,#VALUE!,0,0.1
+BE,Belgium,Cellular,0,0.3571
+BZ,Belize,#VALUE!,0,1.6666
+BJ,Benin,#VALUE!,0,0.5263
+BJ,Benin,Cellular,0,1.4285
+BM,Bermuda,#VALUE!,0,0.2222
+BT,Bhutan,#VALUE!,0,0.4761
+BT,Bhutan,#VALUE!,0,0.5257
+BO,Bolivia (Plurinational State of),Cellular,0,0.6737
+BO,Bolivia (Plurinational State of),Cochabamba,0,0.388
+BO,Bolivia (Plurinational State of),La Paz,0,0.388
+BO,Bolivia (Plurinational State of),Santa Cruz,0,0.388
+BA,Bosnia and Herzegovina,#VALUE!,0,0.4761
+BA,Bosnia and Herzegovina,Cellular,0,1.6666
+BW,Botswana,#VALUE!,0,0.3571
+BW,Botswana,Cellular,0,0.8333
+BR,Brazil,#VALUE!,0,0.119
+BR,Brazil,Cellular-Debit,0,0.4761
+BR,Brazil,Rio de Janeiro,0,0.125
+BR,Brazil,Sao Paulo,0,0.125
+IO,British Indian Ocean Territory,#VALUE!,0,1.6666
+IO,British Indian Ocean Territory,#VALUE!,0,0.1666
+BN,Brunei Darussalam,Cellular,0,0.1666
+BG,Bulgaria,#VALUE!,0,0.2222
+BG,Bulgaria,Cellular,0,3.1936
+BG,Bulgaria,Sofia,0,0.1666
+BF,Burkina Faso,#VALUE!,0,0.8333
+BF,Burkina Faso,Cellular,0,0.8333
+BI,Burundi,#VALUE!,0,2.0714
+KH,Cambodia,#VALUE!,0,0.1818
+KH,Cambodia,Cellular,0,0.4761
+CM,Cameroon,#VALUE!,0,0.4545
+CM,Cameroon,Cellular,0,0.4545
+CM,Cameroon,Cellular-MTN,0,0.4545
+CM,Cameroon,Cellular-Orange,0,0.4545
+CA,Canada,#VALUE!,0,0.1
+CV,Cabo Verde,#VALUE!,0,0.5263
+CV,Cabo Verde,Cellular,0,0.8333
+KY,Cayman Islands,#VALUE!,0,0.3125
+CF,Central African Republic,#VALUE!,0,0.8333
+TD,Chad,#VALUE!,0,0.7142
+CL,Chile,#VALUE!,0,0.119
+CL,Chile,Cellular,0,0.2222
+CN,China,#VALUE!,0,0.1
+CN,China,Cellular,0,0.1
+CO,Colombia,#VALUE!,0,0.1666
+CO,Colombia,Cellular,0,0.3125
+CO,Colombia,Bogota,0,0.1428
+CO,Colombia,Cali,0,0.125
+KM,Comoros,#VALUE!,0,3.0742
+CG,Congo,#VALUE!,0,1.0416
+CD,Congo (Democratic Republic of the),Cellular,0,1.0416
+CK,Cook Islands,#VALUE!,0,5.9808
+CR,Costa Rica,#VALUE!,0,0.2222
+CR,Costa Rica,Cellular,0,0.3125
+HR,Croatia,#VALUE!,0,0.1428
+HR,Croatia,Cellular,0,1.6666
+CU,Cuba,#VALUE!,0,8.2236
+CU,Cuba,Guantanamo Bay,0,8.2236
+CY,Cyprus,#VALUE!,0,0.125
+CY,Cyprus,Cellular,0,0.2222
+CZ,Czech Republic,#VALUE!,0,0.1428
+CZ,Czech Republic,Cellular,0,0.4761
+CZ,Czech Republic,#VALUE!,0,0.7142
+CZ,Czech Republic,Cellular,0,0.7142
+DK,Denmark,#VALUE!,0,0.1
+DK,Denmark,Cellular,0,0.3571
+DK,Denmark,#VALUE!,0,4.5061
+DJ,Djibouti,#VALUE!,0,1
+DM,Dominica,#VALUE!,0,0.4761
+DO,Dominican Republic,#VALUE!,0,0.1666
+DO,Dominican Republic,Cellular,0,0.4761
+,,,,
+EC,Ecuador,#VALUE!,0,0.4761
+EC,Ecuador,Cellular,0,1.6666
+EC,Ecuador,Cellular-Porta,0,1.6666
+EG,Egypt,#VALUE!,0,0.2941
+EG,Egypt,Cellular,0,0.238
+EG,Egypt,Cairo,0,0.3225
+SV,El Salvador,#VALUE!,0,0.7692
+SV,El Salvador,Cellular,0,0.7692
+GQ,Equatorial Guinea,#VALUE!,0,0.8333
+ER,Eritrea,#VALUE!,0,0.7142
+EE,Estonia,#VALUE!,0,0.1428
+EE,Estonia,Cellular,0,1.6666
+ET,Ethiopia,#VALUE!,0,0.625
+ET,Ethiopia,Cellular,0,0.625
+ET,Ethiopia,#VALUE!,0,0.4761
+ET,Ethiopia,#VALUE!,0,3.8699
+FJ,Fiji,#VALUE!,0,0.7692
+FI,Finland,#VALUE!,0,0.2222
+FI,Finland,Cellular,0,0.4761
+FR,France,#VALUE!,0,0.1
+FR,France,Cellular,0,0.3571
+FR,France,#VALUE!,0,0.1428
+FR,France,Cellular,0,0.1428
+GF,French Guiana,#VALUE!,0,0.1666
+GF,French Guiana,Cellular,0,0.7692
+PF,French Polynesia,#VALUE!,0,1.6666
+GA,Gabon,Cellular,0,0.8333
+GA,Gabon,#VALUE!,0,0.8333
+GM,Gambia,#VALUE!,0,2.6666
+GM,Gambia,Cellular,0,2.6666
+GE,Georgia,#VALUE!,0,0.3866
+GE,Georgia,Cellular,0,0.6825
+GE,Georgia,Tbilisi,0,0.4422
+DE,Germany,#VALUE!,0,0.1
+DE,Germany,Cellular,0,0.3571
+GH,Ghana,#VALUE!,0,0.4761
+GH,Ghana,Cellular,0,0.4761
+GH,Ghana,Accra,0,0.4761
+GI,Gibraltar,#VALUE!,0,0.2222
+GI,Gibraltar,Cellular,0,0.7692
+GR,Greece,#VALUE!,0,0.1
+GR,Greece,Cellular,0,0.3571
+GL,Greenland,#VALUE!,0,4.633
+GD,Grenada,#VALUE!,0,0.4761
+GD,Grenada,Cellular,0,1.6666
+GP,Guadeloupe,#VALUE!,0,0.1428
+GP,Guadeloupe,"Guadeloupe,Cellular",0,0.7692
+GU,Guam,#VALUE!,0,0.1428
+GT,Guatemala,#VALUE!,0,0.3125
+GT,Guatemala,Cellular,0,0.7692
+GN,Guinea,#VALUE!,0,0.5882
+GN,Guinea,Cellular,0,1.5625
+GW,Guinea-Bissau,#VALUE!,0,0.8333
+GY,Guyana,#VALUE!,0,0.8333
+HT,Haiti,#VALUE!,0,0.7692
+HT,Haiti,Cellular,0,1.6666
+HT,Haiti,Port-au-Prince,0,0.7692
+HN,Honduras,#VALUE!,0,0.7692
+HN,Honduras,Cellular,0,1.6666
+HK,Hong Kong,#VALUE!,0,0.125
+HK,Hong Kong,Cellular,0,0.125
+HU,Hungary,#VALUE!,0,0.125
+HU,Hungary,Cellular,0,0.4761
+IS,Iceland,#VALUE!,0,0.1428
+IS,Iceland,Cellular,0,0.4761
+IN,India,#VALUE!,0,0.1571
+IN,India,Cellular,0,0.1571
+,,,,
+ID,Indonesia,#VALUE!,0,0.1818
+ID,Indonesia,Cellular,0,0.1449
+ID,Indonesia,Jakarta,0,0.119
+ID,Indonesia,#VALUE!,0,0.2777
+IR,Iran (Islamic Republic of),Cellular,0,0.2777
+IR,Iran (Islamic Republic of),Tehran,0,0.2777
+IQ,Iraq,#VALUE!,0,0.5218
+IQ,Iraq,Cellular,0,0.693
+IQ,Iraq, Baghdad,0,0.4788
+IE,Ireland,#VALUE!,0,0.1
+IE,Ireland,Cellular,0,0.3571
+IL,Israel,#VALUE!,0,0.125
+IL,Israel,Cellular,0,0.4761
+IL,Israel,#VALUE!,0,0.7692
+IL,Israel,Cellular,0,0.7692
+IT,Italy,#VALUE!,0,0.1
+IT,Italy,Cellular,0,0.3571
+IT,Italy,#VALUE!,0,0.7692
+IT,Italy,Cellular,0,0.7692
+IT,Italy,Abidjan,0,0.3225
+JM,Jamaica,#VALUE!,0,0.3125
+JM,Jamaica,Cellular,0,1.6666
+JP,Japan,#VALUE!,0,0.1666
+JP,Japan,Cellular,0,0.7692
+JO,Jordan,#VALUE!,0,0.303
+JO,Jordan,Cellular,0,0.4761
+JO,Jordan,Amman,0,0.1666
+KZ,Kazakhstan,#VALUE!,0,0.1428
+KZ,Kazakhstan,Cellular,0,0.4761
+KZ,Kazakhstan,Almati,0,0.125
+KE,Kenya,#VALUE!,0,0.3333
+KE,Kenya,Cellular,0,0.3333
+KE,Kenya,Nairobi,0,0.3333
+KI,Kiribati,#VALUE!,0,5.3056
+KR,Korea (Republic of),#VALUE!,0,0.8265
+KW,Kuwait,#VALUE!,0,0.1666
+KW,Kuwait,Cellular,0,0.3125
+KG,Kyrgyzstan,#VALUE!,0,0.4761
+KG,Kyrgyzstan,Cellular,0,0.4761
+LA,Lao People's Democratic Republic,#VALUE!,0,0.2222
+LV,Latvia,#VALUE!,0,0.1666
+LV,Latvia,Cellular,0,0.4761
+LB,Lebanon,#VALUE!,0,0.303
+LB,Lebanon,Cellular,0,0.4166
+LS,Lesotho,#VALUE!,0,0.5263
+LS,Lesotho,Cellular,0,0.8333
+LR,Liberia,#VALUE!,0,0.5263
+LY,Libya,#VALUE!,0,0.909
+LI,Liechtenstein,#VALUE!,0,0.3125
+LI,Liechtenstein,Cellular,0,1.6666
+LT,Lithuania,#VALUE!,0,0.1666
+LT,Lithuania,Cellular,0,0.4761
+LU,Luxembourg,#VALUE!,0,0.1428
+LU,Luxembourg,Cellular,0,0.7692
+MO,Macao,#VALUE!,0,0.2222
+MO,Macao,Cellular,0,0.2222
+MO,Macao,#VALUE!,0,0.7692
+MK,Macedonia (the former Yugoslav Republic of),Cellular,0,1.6666
+MG,Madagascar,#VALUE!,0,0.8333
+MG,Madagascar,Cellular,0,0.8333
+MW,Malawi,#VALUE!,0,0.3333
+MW,Malawi,Cellular,0,0.3333
+MY,Malaysia,#VALUE!,0,0.125
+MY,Malaysia,Cellular,0,0.2222
+MY,Malaysia,Kuala Lumpur,0,0.1428
+MV,Maldives,#VALUE!,0,5.1398
+ML,Mali,#VALUE!,0,0.8333
+ML,Mali,Cellular-Malitel,0,0.8333
+MT,Malta,#VALUE!,0,0.119
+MT,Malta,Cellular,0,0.5263
+MH,Marshall Islands,#VALUE!,0,1.6666
+MR,Mauritania,#VALUE!,0,0.7692
+MU,Mauritius,#VALUE!,0,0.5263
+MX,Mexico,#VALUE!,0,0.2222
+MX,Mexico,Cellular,0,0.4761
+MX,Mexico,Mexico City,0,0.125
+MX,Mexico,#VALUE!,0,0.7692
+FM,Micronesia (Federated States of),#VALUE!,0,0.7692
+MD,Moldova (Republic of),Cellular,0,0.7692
+MC,Monaco,#VALUE!,0,0.2222
+MC,Monaco,Cellular,0,1.6666
+MC,Monaco,Cellular-Kosovo,0,1.6666
+MN,Mongolia,#VALUE!,0,0.2222
+MN,Mongolia,Cellular,0,0.7692
+ME,Montenegro,#VALUE!,0,0.7692
+ME,Montenegro,Cellular,0,1.6666
+MS,Montserrat,#VALUE!,0,0.7692
+MA,Morocco,#VALUE!,0,0.119
+MA,Morocco,Cellular,0,0.909
+MZ,Mozambique,#VALUE!,0,0.3571
+MZ,Mozambique,Cellular,0,0.4166
+MM,Myanmar,#VALUE!,0,0.8333
+NA,Namibia,#VALUE!,0,0.238
+NA,Namibia,Cellular,0,0.5263
+NR,Nauru,#VALUE!,0,1.6666
+NP,Nepal,#VALUE!,0,0.7692
+NP,Nepal,Cellular,0,0.5263
+NP,Nepal,Kathmandu,0,0.7692
+NL,Netherlands,#VALUE!,0,0.125
+NL,Netherlands,#VALUE!,0,0.4761
+NL,Netherlands,Cellular,0,0.4761
+NL,Netherlands,Cellular,0,0.7692
+NL,Netherlands,#VALUE!,0,0.4761
+NC,New Caledonia,#VALUE!,0,0.7692
+NZ,New Zealand,#VALUE!,0,0.125
+NZ,New Zealand,Cellular,0,0.7692
+NI,Nicaragua,#VALUE!,0,0.7692
+NI,Nicaragua,Cellular,0,0.7692
+NE,Niger,#VALUE!,0,0.7142
+NE,Niger,Cellular,0,0.7142
+NG,Nigeria,#VALUE!,0,0.238
+NG,Nigeria,Cellular,0,0.238
+NG,Nigeria,Cellular-Globacom,0,0.2381
+NG,Nigeria,Cellular-MTN,0,0.2381
+NG,Nigeria,Cellular-Zain,0,0.2381
+NG,Nigeria,Lagos,0,0.238
+NG,Nigeria,Lagos Special Servic,0,0.238
+NU,Niue,#VALUE!,0,2.7777
+NU,Niue,#VALUE!,0,0.1666
+NF,Norfolk Island,#VALUE!,0,1.6666
+NO,Norway,#VALUE!,0,0.1
+NO,Norway,Cellular,0,0.3571
+OM,Oman,#VALUE!,0,1.6666
+,,,,
+PK,Pakistan,#VALUE!,0.2,0.4
+PK,Pakistan,Cellular,0.2,0.4
+PW,Palau,#VALUE!,0,1.6666
+PA,Panama,#VALUE!,0,0.1666
+PA,Panama,Cellular,0,0.7692
+PA,Panama,Panama City,0,0.1666
+PG,Papua New Guinea,#VALUE!,0,4.9096
+PY,Paraguay,#VALUE!,0,0.2222
+PY,Paraguay,Cellular,0,0.3125
+PY,Paraguay,Asuncion,0,0.2222
+PE,Peru,#VALUE!,0,0.125
+PE,Peru,Cellular,0,0.7692
+PE,Peru,Lima,0,0.1
+PE,Peru,"Lima,Cellular",0,0.4761
+PH,Philippines,#VALUE!,0,0.4347
+PH,Philippines,Cellular,0,0.4347
+PL,Poland,#VALUE!,0,0.1
+PL,Poland,Cellular,0,0.3571
+PT,Portugal,#VALUE!,0,0.1
+PT,Portugal,Cellular,0,0.3571
+PR,Puerto Rico,#VALUE!,0,0.125
+QA,Qatar,#VALUE!,0,0.5263
+QA,Qatar,Cellular,0,0.7142
+RE,Réunion,#VALUE!,0,0.4761
+RE,Réunion,Cellular,0,0.7692
+RO,Romania,#VALUE!,0,0.1428
+RO,Romania,Cellular,0,0.3125
+RO,Romania,Bucharest,0,0.1428
+RO,Romania,#VALUE!,0,0.1666
+RO,Romania,Cellular,0,0.3125
+RO,Romania,Moscow,0,0.1428
+RO,Romania,St. Petersburg,0,0.125
+RW,Rwanda,#VALUE!,0,1.1571
+SM,San Marino,#VALUE!,0,0.1666
+SM,San Marino,#VALUE!,0,3.3566
+SA,Saudi Arabia,#VALUE!,0,0.4761
+SA,Saudi Arabia,Cellular,0,0.7692
+SA,Saudi Arabia,Jeddah,0,0.3571
+SA,Saudi Arabia,Riyadh,0,0.119
+SN,Senegal,#VALUE!,0,4
+SN,Senegal,Cellular,0,4
+RS,Serbia,#VALUE!,0,0.4761
+RS,Serbia,Cellular,0,1.6666
+RS,Serbia,Belgrade,0,0.4761
+SC,Seychelles,#VALUE!,0,1.6666
+SC,Seychelles,Cellular,0,0.4761
+SL,Sierra Leone,#VALUE!,0,0.625
+SL,Sierra Leone,Cellular,0,1.0416
+SL,Sierra Leone,Freetown,0,0.625
+SG,Singapore,#VALUE!,0,0.125
+SG,Singapore,Cellular,0,0.125
+SK,Slovakia,#VALUE!,0,0.1666
+SK,Slovakia,Cellular,0,0.7692
+SI,Slovenia,#VALUE!,0,0.1428
+SI,Slovenia,Cellular,0,1.6666
+SB,Solomon Islands,#VALUE!,0,1.6666
+SO,Somalia,#VALUE!,0,2.5
+ZA,South Africa,#VALUE!,0,0.1449
+ZA,South Africa,Cellular,0,0.5264
+ZA,South Africa,Cellular-MTN,0,2.1764
+ZA,South Africa,Cape Town,0,0.1818
+ZA,South Africa,Johannesburg,0,0.1818
+GS,South Georgia and the South Sandwich Islands,#VALUE!,0,0.125
+GS,South Georgia and the South Sandwich Islands,Cellular,0,0.2222
+GS,South Georgia and the South Sandwich Islands,Seoul,0,0.125
+ES,Spain,#VALUE!,0,0.1
+ES,Spain,Cellular,0,0.3571
+LK,Sri Lanka,#VALUE!,0,0.3225
+LK,Sri Lanka,Cellular,0,0.3225
+LK,Sri Lanka,#VALUE!,0,5.2213
+LK,Sri Lanka,#VALUE!,0,0.4761
+LK,Sri Lanka,#VALUE!,0,0.4761
+LK,Sri Lanka,#VALUE!,0,1.6666
+LK,Sri Lanka,#VALUE!,0,0.4761
+SD,Sudan,#VALUE!,0,0.5263
+SD,Sudan,Cellular,0,0.5263
+SR,Suriname,#VALUE!,0,0.5263
+SR,Suriname,Cellular,0,0.8333
+SZ,Swaziland,#VALUE!,0,0.5263
+SE,Sweden,#VALUE!,0,0.1
+SE,Sweden,Cellular,0,0.3571
+CH,Switzerland,#VALUE!,0,0.1
+CH,Switzerland,Cellular,0,0.3571
+CH,Switzerland,#VALUE!,0,0.303
+CH,Switzerland,Cellular,0,0.4166
+SY,Syrian Arab Republic,#VALUE!,0,0.125
+TW,"Taiwan, Province of China",Cellular,0,0.4761
+TW,"Taiwan, Province of China",Taipei,0,0.125
+TJ,Tajikistan,#VALUE!,0,0.4761
+TJ,Tajikistan,#VALUE!,0,2.2666
+TZ,"Tanzania, United Republic of",Cellular,0,2.2666
+TZ,"Tanzania, United Republic of",Dar Es Salaam,0,2.2666
+TH,Thailand,#VALUE!,0,0.1
+TH,Thailand,Cellular,0,0.1
+TH,Thailand,Bangkok,0,0.1
+TG,Togo,#VALUE!,0,1.0416
+TG,Togo,Cellular,0,1.0416
+TO,Tonga,#VALUE!,0,3.2249
+TO,Tonga,#VALUE!,0,0.2222
+TT,Trinidad and Tobago,Cellular,0,0.8333
+TN,Tunisia,#VALUE!,0,0.7692
+TN,Tunisia,Cellular,0,1.1904
+TR,Turkey,#VALUE!,0,0.1666
+TR,Turkey,Cellular,0,0.4
+TR,Turkey,Ankara,0,0.119
+TR,Turkey,Istanbul,0,0.119
+TM,Turkmenistan,#VALUE!,0,0.4761
+TM,Turkmenistan,#VALUE!,0,0.4761
+TV,Tuvalu,#VALUE!,0,5.0607
+UG,Uganda,#VALUE!,0,1.0703
+UG,Uganda,Cellular,0,1.0703
+UA,Ukraine,#VALUE!,0,0.4761
+UA,Ukraine,Cellular,0,0.4761
+AE,United Arab Emirates,#VALUE!,0,0.5263
+AE,United Arab Emirates,Cellular,0,0.5263
+AE,United Arab Emirates,#VALUE!,0,0.1
+GB,United Kingdom of Great Britain and Northern Ireland,Cellular,0,0.3571
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+UY,Uruguay,#VALUE!,0,0.3125
+UY,Uruguay,Cellular,0,0.7692
+UY,Uruguay,#VALUE!,0,0.1428
+UY,Uruguay,#VALUE!,0,0.1
+,,,,
+UY,Uruguay,#VALUE!,0,0.125
+UZ,Uzbekistan,#VALUE!,0,0.3125
+VU,Vanuatu,#VALUE!,0,4.061
+VU,Vanuatu,#VALUE!,0,0.385
+VE,Venezuela (Bolivarian Republic of),Cellular,0,0.8453
+VN,Viet Nam,#VALUE!,0,0.1724
+VN,Viet Nam,Cellular,0,0.1724
+VI,Virgin Islands (U.S.),#VALUE!,0,5.3925
+EH,Western Sahara,#VALUE!,0,3.3227
+YE,Yemen,#VALUE!,0,0.5263
+YE,Yemen,Cellular,0,0.5263
+ZM,Zambia,#VALUE!,0,0.238
+ZM,Zambia,Cellular,0,0.4545
+ZM,Zambia,#VALUE!,0,0.8333
+ZW,Zimbabwe,#VALUE!,0,0.3571
+ZW,Zimbabwe,Cellular,0,2.0833
+ZW,Zimbabwe,Cellular-Econet,0,1.6666

@@ -3,13 +3,12 @@
 namespace Universal\IDTBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Universal\IDTBundle\Entity\Product;
 
-class ImportProductsCommand extends ContainerAwareCommand
+class ImportProductsCommand extends AbstractImportCommand
 {
     protected function configure()
     {
@@ -18,31 +17,6 @@ class ImportProductsCommand extends ContainerAwareCommand
             ->setDescription('import Product from CSV in app/Resources/Import/CSV/products.csv')
             ->addOption('clear', null, InputOption::VALUE_NONE, 'Clear product entity.')
         ;
-    }
-
-    protected function csv_to_array($filename='', $delimiter=';')
-    {
-        if(!file_exists($filename) || !is_readable($filename))
-            return FALSE;
-        $header = NULL;
-        $data = array();
-        if (($handle = fopen($filename, 'r')) !== FALSE)
-        {
-            while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE)
-            {
-                if(!$header)
-                    $header = $row;
-                else
-                    $data[] = array_combine($header, $row);
-            }
-            fclose($handle);
-        }
-        return $data;
-    }
-
-    private function getFile($dir, $fileName)
-    {
-        return getcwd()."/app/Resources/Import/".$dir."/".$fileName;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -59,7 +33,7 @@ class ImportProductsCommand extends ContainerAwareCommand
             $output->writeln("Product entity cleared.");
         }
 
-        $data = $this->csv_to_array($this->getFile("CSV", "products.csv"));
+        $data = $this->csv_to_array($this->getFileAddressName("CSV", "products.csv"));
 
         $i = 0;
         foreach($data as $row) {
