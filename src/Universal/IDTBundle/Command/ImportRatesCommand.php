@@ -6,8 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Universal\IDTBundle\Entity\Destination;
-use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\DBAL\Types\RateEnumType;
 use Universal\IDTBundle\Entity\Rate;
 
 class ImportRatesCommand extends AbstractImportCommand
@@ -35,74 +34,58 @@ class ImportRatesCommand extends AbstractImportCommand
             $output->writeln("Rate entity cleared.");
         }
 
-        $classIdsDone = array();
+        $matching_list = $this->csv_to_array($this->getFileAddressName("CSV", "matching_cid_and_rates.csv"));
 
-        $j = 0;
-        foreach(scandir($this->getFileAddressName("CSV/Rates")) as $fileName) {
-            if ($fileName != "." && $fileName != "..")
-            {
-                $countryISO = substr($fileName, 7, 2);
-                $productName = rtrim(substr($fileName, 10, -7));
-                $type = ltrim(substr($fileName, -7, -4));
-//                echo $fileName . " -> '" . $countryISO . "', '" . $productName . "', '" . $type . "'\r\n";
+        $i = 0;
+        foreach($matching_list as $matching) {
+            //TODO: remove
+            if(explode("-",$matching['TF'], 2)[0] !== "cards_rates")
+                continue;
 
-                /** @var Product $product */
-                $product = $em->getRepository('UniversalIDTBundle:Product')->findOneBy(array(
-                        'countryISO' => $countryISO,
-                        'name' => $productName
-                    ));
+            if($matching['CID'] == "")
+                continue;
 
-                if (!$product) {
-                    echo "Error in file '" . $fileName . "': Product Not Found.\r\n";
-                    continue;
-                }
+            if($matching['TF'] != "") {
+                $count = $this->import_rate($matching['CID'], $matching['TF'], RateEnumType::TOLL_FREE, $em);
+                $i ++;
 
-                if (in_array($product->getClassId(), $classIdsDone)) {
-                    echo "Error in file '" . $fileName . "': Product Not Found.\r\n";
-                    continue;
-                }
+                $output->writeln("$i-" . $matching['TF'] . " done ($count rates)");
+            }
 
-                $classIdsDone []= $product->getClassId();
+            if($matching['LAC'] != "") {
+                $count = $this->import_rate($matching['CID'], $matching['LAC'], RateEnumType::LOCAL_ACCESS, $em);
+                $i ++;
 
-                //----------------
-                $data = $this->csv_to_array($this->getFileAddressName("CSV/Rates", $fileName), ',');
-
-                $i = 0;
-                foreach($data as $row) {
-                    if($row['iso'] == "" || $row['country'] == "" || $row['location'] == "" || $row['connection_fee'] == "" || $row['rate'] == "")
-                        continue;
-
-                    $destination = $em->getRepository('UniversalIDTBundle:Destination')->findOneBy(array(
-                            'countryIso' => $row['iso'],
-                            'location' => $row['location'] != '#VALUE!' ?: null
-                        ));
-
-                    if(!$destination) {
-                        $destination = new Destination();
-                        $destination->setCountryIso($row['iso']);
-                        $destination->setLocation($row['location'] != '#VALUE!' ?: null);
-                        $em->persist($destination);
-
-                        echo "Destination Created: " . $row['iso'] . " " . $row['location'] . "\r\n";
-                        $em->flush();
-                    }
-
-                    $rate = new Rate();
-                    $rate->setClassId($product->getClassId());
-                    $rate->setConnectionFees($row['connection_fee']);
-                    $rate->setCost($row['rate']);
-                    $rate->setDestination($destination);
-                    $rate->setType($type);
-
-                    $em->persist($rate);
-                    $em->flush();
-                    $i++;
-                }
-
-                echo "File $fileName done. (0 rates)\r\n";
+                $output->writeln("$i-" . $matching['LAC'] . " done ($count rates)");
             }
         }
 
-        $output->writeln("done ($j rates)");
+        $output->writeln("completed. ($i files)");
+    }
+
+    private function import_rate($class_id, $fileName, $type, EntityManager $em)
+    {
+        $data = $this->csv_to_array($this->getFileAddressName("CSV/Rates", $fileName), ',');
+
+        $i = 0;
+        foreach($data as $row) {
+            if($row['iso'] == "" || $row['country'] == "" || $row['location'] == "" || $row['connection_fee'] == "" || $row['rate'] == "")
+                continue;
+
+            $rate = new Rate();
+            $rate->setClassId($class_id);
+            $rate->setConnectionFees($row['connection_fee']);
+            $rate->setCost($row['rate']);
+            $rate->setType($type);
+            $rate->setLocation($row['location'] == "0" || $row['location'] == "#VALUE!" ? null : $row['location']);
+            $rate->setCountryIso($row['iso']);
+            $rate->setCountryName($row['country']);
+
+            $em->persist($rate);
+            $i++;
+        }
+
+        $em->flush();
+        return $i;
     }
 }

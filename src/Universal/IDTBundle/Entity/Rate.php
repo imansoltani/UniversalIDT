@@ -52,11 +52,25 @@ class Rate
     private $connectionFees;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\Destination", inversedBy="rates")
-     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", nullable=false)
+     * @var string
+     *
+     * @ORM\Column(name="countryIso", type="string", length=2)
      */
-    protected $destination;
+    private $countryIso;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="countryName", type="string", length=60)
+     */
+    private $countryName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=30, nullable=true)
+     */
+    private $location;
 
     /**
      * Get id
@@ -161,25 +175,71 @@ class Rate
     }
 
     /**
-     * Set destination
+     * Set countryIso
      *
-     * @param Destination $destination
+     * @param string $countryIso
      * @return Rate
      */
-    public function setDestination(Destination $destination)
+    public function setCountryIso($countryIso)
     {
-        $this->destination = $destination;
+        $this->countryIso = $countryIso;
 
         return $this;
     }
 
     /**
-     * Get destination
+     * Get countryIso
      *
-     * @return Destination
+     * @return string 
      */
-    public function getDestination()
+    public function getCountryIso()
     {
-        return $this->destination;
+        return $this->countryIso;
+    }
+
+    /**
+     * Set countryName
+     *
+     * @param string $countryName
+     * @return Rate
+     */
+    public function setCountryName($countryName)
+    {
+        $this->countryName = $countryName;
+
+        return $this;
+    }
+
+    /**
+     * Get countryName
+     *
+     * @return string 
+     */
+    public function getCountryName()
+    {
+        return $this->countryName;
+    }
+
+    /**
+     * Set location
+     *
+     * @param string $location
+     * @return Rate
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string 
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }
