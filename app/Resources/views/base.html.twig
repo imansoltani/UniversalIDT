@@ -130,14 +130,15 @@
 //            console.log(selected_products);
 
         var new_products_json = JSON.stringify(selected_products);
-
         $.cookie("products", new_products_json, { path: '/' });
+
+        updateCounts();
+
         $.msgGrowl ({
             type: "success",
             title: "Added to Cart",
             text: 'Item successfully added to your cart.'
         });
-        updateCounts();
     }
 
     loadSelectedProducts();

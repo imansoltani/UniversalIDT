@@ -140,7 +140,7 @@
                 '<td>'+selected_products[product]['denomination']+'</td>' +
                 '<td>'+'0.00'+'</td>' +
                 '<td>'+(selected_products[product]['count'] * selected_products[product]['denomination'])+'</td>' +
-                '<td><a href="#"><i class="fa fa-trash-o"></i></a></td>' +
+                '<td><a href="javascript:removeProduct('+product+')"><i class="fa fa-trash-o"></i></a></td>' +
                 '</tr>');
 //            else
 //                $("#cookie_recharge").append("<tr>" +
@@ -166,5 +166,29 @@
 //        $("#basket_summary_tax").html(0);
 //        $("#basket_summary_email").html("Email");
         $("#basket_summary_total").html(total);
+    }
+
+    function changeCount(id, denom) {
+
+    }
+
+    function removeProduct(id) {
+        selected_products.splice(id, 1);
+
+        var new_products_json = JSON.stringify(selected_products);
+        $.cookie("products", new_products_json, { path: '/' });
+
+        if(selected_products.length == 0) {
+            selected_products_currency = "";
+            $.cookie("products_currency", "", { path: '/' });
+        }
+
+        updateCounts();
+
+        $.msgGrowl ({
+            type: "success",
+            title: "Removed from Cart",
+            text: 'Item successfully removed to your cart.'
+        });
     }
 </script>
