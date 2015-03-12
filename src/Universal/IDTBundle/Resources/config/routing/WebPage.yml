@@ -14,6 +14,10 @@ WebPage_rates:
     path:     /rates
     defaults: { _controller: UniversalIDTBundle:WebPage:rates }
 
+WebPage_rates_result:
+    path:     /rates/result
+    defaults: { _controller: UniversalIDTBundle:WebPage:ratesResult }
+
 WebPage_basket:
     path:     /basket
     defaults: { _controller: UniversalIDTBundle:WebPage:basket }

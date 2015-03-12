@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Universal\IDTBundle\Entity\Destination;
 use Universal\IDTBundle\Entity\Product;
 use Universal\IDTBundle\Entity\Rate;
 use Universal\IDTBundle\Form\BasketType;
@@ -105,54 +106,83 @@ class WebPageController extends Controller
         );
     }
 
-    public function ratesAction(Request $request)
+    public function ratesAction()
     {
         $countries = $this->container->getParameter('countries');
 
-        $form = $this->createForm(new RatesType($countries), array('from'=>'US'))
-            ->add('search', 'submit');
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
 
-        /** @var Rate[] $rates */
-        $result = array();
+        /** @var Destination[] $destinationsEntity */
+        $destinationsEntity = $em->createQueryBuilder()
+            ->select('DISTINCT destination.countryIso')
+            ->from('UniversalIDTBundle:Destination', 'destination')
+            ->getQuery()->getArrayResult();
 
-        if($request->isMethod('post'))
-        {
-            $form->handleRequest($request);
+        $destinations = array();
+        foreach($destinationsEntity as $destination)
+            $destinations [$destination['countryIso']]= $countries[$destination['countryIso']];
 
-            if($form->isValid())
-            {
-                $data = $form->getData();
-                /** @var EntityManager $em */
-                $em = $this->getDoctrine()->getManager();
-
-                $products = $em->createQueryBuilder()
-                    ->select("product")
-                    ->from('UniversalIDTBundle:Product', 'product')
-                    ->where('product.countryISO = :from')->setParameter('from', $data['from'])
-                    ->getQuery()
-                    ->getResult();
-
-                /** @var Product $product */
-                foreach($products as $product) {
-
-                    /** @var Rate[] $rates */
-                    $rates = $em->createQueryBuilder()
-                        ->select('rate', 'destination')
-                        ->from('UniversalIDTBundle:Rate', 'rate')
-                        ->where('rate.classId = :class_id')->setParameter('class_id', $product->getClassId())
-                        ->innerJoin('rate.destination', 'destination')
-                        ->getQuery()->getResult();
-
-                    $result = array_merge($result, $rates);
-                }
-            }
-        }
+        $form = $this->createForm(new RatesType($countries, $destinations))
+            ->add('search', 'submit', array(
+                    'label' => 'Check the best rates'
+                ));
 
         return $this->render(
-            'UniversalIDTBundle:Guest:rates.html.twig',
+            'UniversalIDTBundle:WebPage:rates.html.twig',
             array(
-                'form' => $form->createView(),
-                'result' => $result
+                'form' => $form->createView()
+            )
+        );
+    }
+
+    public function ratesResultAction(Request $request)
+    {
+        $countries = $this->container->getParameter('countries');
+
+        $from = $request->query->get('from');
+        $destination = $request->query->get('destination');
+        $type = $request->query->get('type');
+
+        if(!$from || !isset($countries[$from]))
+            throw $this->createNotFoundException('Invalid Country From.-'. print_r($request->request->all(), true).'-');
+
+        if(!$destination || !isset($countries[$destination]))
+            throw $this->createNotFoundException('Invalid Country Destination.');
+
+        if(!$type || !in_array($type, array('LAC', 'TF', 'INT')))
+            throw $this->createNotFoundException('Invalid Rate Type.');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $ratesResult = $em->createQueryBuilder()
+            ->select('rate.classId', 'rate.cost', 'rate.connectionFees', 'rate.type')
+            ->from('UniversalIDTBundle:Rate', 'rate')
+            ->innerJoin('rate.destination', 'destination')
+            ->where('rate.type = :type')->setParameter('type', $type)
+            ->andWhere('destination.countryIso = :destination_iso')->setParameter('destination_iso', $destination)
+            ->getQuery()->getResult();
+
+        $rates = array();
+        foreach($ratesResult as $rate)
+            $rates [$rate['classId']] = $rate;
+        unset($ratesResult);
+
+        /** @var Product[] $products */
+        $products = $em->createQueryBuilder()
+            ->select('product')
+            ->from('UniversalIDTBundle:Product', 'product')
+            ->where('product.countryISO = :from_iso')->setParameter('from_iso', $from)
+            ->andWhere('product.classId IN (:class_ids)')->setParameter('class_ids', array_keys($rates))
+            ->getQuery()->getResult();
+
+        return $this->render(
+            'UniversalIDTBundle:WebPage:ratesResult.html.twig',
+            array(
+                'products' => $products,
+                'rates' => $rates,
+                'countries' => $countries
             )
         );
     }

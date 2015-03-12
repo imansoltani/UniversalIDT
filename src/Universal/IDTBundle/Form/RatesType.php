@@ -9,10 +9,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class RatesType extends AbstractType
 {
     private $countries;
+    private $destinations;
 
-    public function __construct($countries)
+    public function __construct($countries, $destinations)
     {
         $this->countries = $countries;
+        $this->destinations = $destinations;
     }
 
     /**
@@ -24,9 +26,15 @@ class RatesType extends AbstractType
         $builder
             ->add('from', 'choice', array(
                     'choices' => $this->countries,
+                    'placeholder' => 'Select Country',
                 ))
             ->add('destination', 'choice', array(
-                    'choices' => $this->countries,
+                    'choices' => $this->destinations,
+                    'placeholder' => 'Select Destination',
+                ))
+            ->add('type', 'choice', array(
+                    'choices' => array('LAC'=>'Local Access', 'TF'=>'Toll Free', 'INT'=>'Internet'),
+                    'expanded' => true
                 ))
         ;
     }
@@ -37,7 +45,7 @@ class RatesType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-//            'data_class' => 'Universal\IDTBundle\Entity\Product'
+                'csrf_protection' => false
         ));
     }
 
@@ -46,6 +54,6 @@ class RatesType extends AbstractType
      */
     public function getName()
     {
-        return 'universal_idt_rates';
+        return '';
     }
 }
