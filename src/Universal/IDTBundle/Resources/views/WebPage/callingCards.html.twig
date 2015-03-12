@@ -73,6 +73,11 @@
                 $(".calling-cards").html(result);
                 $(".calling-cards").data('owlCarousel').reinit();
                 waitingDialog.hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                waitingDialog.hide();
+                alert('error');
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     });
@@ -90,6 +95,11 @@
                 $(".modal#calling-card-modal .modal-body").html(result);
                 waitingDialog.hide();
                 $('#calling-card-modal').modal('show');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                waitingDialog.hide();
+                alert('error');
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     }

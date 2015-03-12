@@ -74,6 +74,11 @@
                         title: "Message Not Send",
                         text: 'An Error occurred.'
                     });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                waitingDialog.hide();
+                alert('error');
+                console.log(jqXHR, textStatus, errorThrown);
             }
         });
     }
