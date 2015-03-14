@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Universal\IDTBundle\Entity\Destination;
 use Universal\IDTBundle\Entity\Product;
 use Universal\IDTBundle\Entity\Rate;
 use Universal\IDTBundle\Form\BasketType;
@@ -113,15 +112,15 @@ class WebPageController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var Destination[] $destinationsEntity */
+        /** @var Rate[] $destinations */
         $destinationsEntity = $em->createQueryBuilder()
-            ->select('DISTINCT destination.countryIso')
-            ->from('UniversalIDTBundle:Destination', 'destination')
+            ->select('DISTINCT rate.countryIso', 'rate.countryName')
+            ->from('UniversalIDTBundle:Rate', 'rate')
             ->getQuery()->getArrayResult();
 
         $destinations = array();
         foreach($destinationsEntity as $destination)
-            $destinations [$destination['countryIso']]= $countries[$destination['countryIso']];
+            $destinations [$destination['countryIso']]= $destination['countryName'];
 
         $form = $this->createForm(new RatesType($countries, $destinations))
             ->add('search', 'submit', array(
