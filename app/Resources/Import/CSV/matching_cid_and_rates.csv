@@ -13,7 +13,7 @@ CID;Nom;TF;LAC
 21813;CH Latino;output-CH Latino TF.csv;output-CH Latino LAC.csv
 21814;CH Topi;output-CH Topi TF.csv;output-CH Topi LAC.csv
 21815;CH Top Mobile;output-CH Topmobile TF.csv;output-CH Topmobile LAC.csv
-21772;CH Touch Africa;;
+21772;CH Touch Africa;output-CH Touch Africa TF.csv;output-CH Touch Africa LAC.csv
 21772;CH Touch;output-CH Touch TF.csv;output-CH Touch LAC.csv
 21773;CH Universal;output-CH Universal TF.csv;output-CH Universal LAC.csv
 21781;DE Adventure;output-DE Adventure TF.csv;output-DE Adventure LAC.csv

@@ -36,28 +36,37 @@ class ImportRatesCommand extends AbstractImportCommand
 
         $matching_list = $this->csv_to_array($this->getFileAddressName("CSV", "matching_cid_and_rates.csv"));
 
+        $class_ids_donned = array();
+
         $i = 0;
         foreach($matching_list as $matching) {
-            //TODO: remove
-            if(explode("-",$matching['TF'], 2)[0] !== "cards_rates")
+            if($matching['CID'] == "") {
+                $output->writeln("ERROR: '".$matching['Nom']."' doesn't have classID.");
                 continue;
+            }
 
-            if($matching['CID'] == "")
+            if(in_array($matching['CID'], $class_ids_donned)) {
+                $output->writeln("WARNING: '".$matching['Nom']."' has duplicate classID: ".$matching['CID']);
                 continue;
+            }
 
             if($matching['TF'] != "") {
                 $count = $this->import_rate($matching['CID'], $matching['TF'], RateEnumType::TOLL_FREE, $em);
                 $i ++;
 
-                $output->writeln("$i-" . $matching['TF'] . " done ($count rates)");
+                $output->writeln("$i- '" . $matching['TF'] . "' done ($count rates)");
             }
 
             if($matching['LAC'] != "") {
                 $count = $this->import_rate($matching['CID'], $matching['LAC'], RateEnumType::LOCAL_ACCESS, $em);
                 $i ++;
 
-                $output->writeln("$i-" . $matching['LAC'] . " done ($count rates)");
+                $output->writeln("$i- '" . $matching['LAC'] . "' done ($count rates)");
             }
+
+            $class_ids_donned []= $matching['CID'];
+
+            gc_collect_cycles();
         }
 
         $output->writeln("completed. ($i files)");
@@ -66,6 +75,9 @@ class ImportRatesCommand extends AbstractImportCommand
     private function import_rate($class_id, $fileName, $type, EntityManager $em)
     {
         $data = $this->csv_to_array($this->getFileAddressName("CSV/Rates", $fileName), ',');
+
+        if(!$data)
+            return 0;
 
         $i = 0;
         foreach($data as $row) {
@@ -77,7 +89,7 @@ class ImportRatesCommand extends AbstractImportCommand
             $rate->setConnectionFees($row['connection_fee']);
             $rate->setCost($row['rate']);
             $rate->setType($type);
-            $rate->setLocation($row['location'] == "0" || $row['location'] == "#VALUE!" ? null : $row['location']);
+            $rate->setLocation($row['location'] == "0" ? null : $row['location']);
             $rate->setCountryIso($row['iso']);
             $rate->setCountryName($row['country']);
 
@@ -86,6 +98,7 @@ class ImportRatesCommand extends AbstractImportCommand
         }
 
         $em->flush();
+        $em->clear();
         return $i;
     }
 }
