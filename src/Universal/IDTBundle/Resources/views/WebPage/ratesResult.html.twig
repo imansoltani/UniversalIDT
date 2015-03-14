@@ -1,21 +1,21 @@
-{% for product in products %}
+{% for row in result %}
     <tr>
         <td>
-            <a href="javascript:openDetails({{ product.id }})"><img src="{{ asset(product.webPath) }}" style="max-height: 40px;" alt="{{ product.name }}"></a>
+            <a href="javascript:openDetails({{ row.product.id }})"><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="{{ row.product.name }}"></a>
         </td>
-        <td><a href="javascript:openDetails({{ product.id }})">{{ product.name }}</a></td>
+        <td><a href="javascript:openDetails({{ row.product.id }})">{{ row.product.name }}</a></td>
         <td>
             <select id="denomination_list" name="denomination_list" class="form-control" style="width: 80px">
                 <option value="">Denomination</option>
-                {% for denom in product.denominations %}
-                    <option value="{{ denom }}">{{ denom }}{{ product.currency }}</option>
+                {% for denom in row.product.denominations %}
+                    <option value="{{ denom }}">{{ denom }}{{ row.product.currency }}</option>
                 {% endfor %}
             </select>
         </td>
-        <td class="rate">{{ rates[product.classId]['cost'] }}</td>
-        <td class="connection_fee">{{ rates[product.classId]['connectionFees'] }}</td>
+        <td class="rate">{{ row.cost }}</td>
+        <td class="connection_fee">{{ row.rate.connectionFees }}</td>
         <td class="minutes">0</td>
-        <td>{{ rates[product.classId]['type'] }}</td>
-        <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ product.id }}, '{{ product.name }}', '{{ asset(product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ product.currency }}', 'buy'); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">Add to cart</button></td>
+        <td>{{ row.rate.type }}</td>
+        <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ row.product.id }}, '{{ row.product.name }}', '{{ asset(row.product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ row.product.currency }}', 'buy'); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">Add to cart</button></td>
     </tr>
 {% endfor %}
