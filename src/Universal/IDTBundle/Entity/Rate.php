@@ -8,7 +8,7 @@ use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
 /**
  * Rate
  *
- * @ORM\Table(name="rate")
+ * @ORM\Table(name="rate", indexes={@ORM\Index(name="classIdIDX", columns={"classId"})})
  * @ORM\Entity
  */
 class Rate
