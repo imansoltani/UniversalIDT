@@ -8,12 +8,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RatesType extends AbstractType
 {
-    private $countries;
+    private $origins;
     private $destinations;
 
-    public function __construct($countries, $destinations)
+    public function __construct($origins, $destinations)
     {
-        $this->countries = $countries;
+        $this->origins = $origins;
         $this->destinations = $destinations;
     }
 
@@ -25,7 +25,7 @@ class RatesType extends AbstractType
     {
         $builder
             ->add('from', 'choice', array(
-                    'choices' => $this->countries,
+                    'choices' => $this->origins,
                     'placeholder' => 'Select Country',
                 ))
             ->add('destination', 'choice', array(

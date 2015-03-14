@@ -134,7 +134,7 @@ $(document).ready(function() {
 		var rate = $(this).find('.rate').text();
 		
 		$(denomination).change(function() {
-			var minute = $(this).val() / rate;
+			var minute = Math.floor($(this).val() / rate);
 			$(this).closest('tr').find('.minutes').text(minute);
 		});
 	});

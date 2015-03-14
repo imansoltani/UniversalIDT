@@ -12,7 +12,9 @@
                 {% endfor %}
             </select>
         </td>
-        <td class="rate">{{ row.cost }}</td>
+        <td>{{ row.rate.countryName ~ (row.rate.location is null ? "" : " " ~ row.rate.location) }}</td>
+        <td class="rate">{{ row.rate.cost }}</td>
+        <td class="Discount">{{ row.cost|round(2)|number_format(2) }}</td>
         <td class="connection_fee">{{ row.rate.connectionFees }}</td>
         <td class="minutes">0</td>
         <td>{{ row.rate.type }}</td>

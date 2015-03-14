@@ -112,6 +112,17 @@ class WebPageController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
+        /** @var array $from */
+        $fromEntity = $em->createQueryBuilder()
+            ->select('DISTINCT product.countryISO')
+            ->from('UniversalIDTBundle:Product', 'product')
+            ->getQuery()->getArrayResult();
+
+        $from_s = array();
+        foreach($fromEntity as $from)
+            $from_s [$from['countryISO']]= $countries[$from['countryISO']];
+
+
         /** @var Rate[] $destinations */
         $destinationsEntity = $em->createQueryBuilder()
             ->select('DISTINCT rate.countryIso', 'rate.countryName')
@@ -122,7 +133,7 @@ class WebPageController extends Controller
         foreach($destinationsEntity as $destination)
             $destinations [$destination['countryIso']]= $destination['countryName'];
 
-        $form = $this->createForm(new RatesType($countries, $destinations))
+        $form = $this->createForm(new RatesType($from_s, $destinations), array('type' => 'LAC'))
             ->add('search', 'submit', array(
                     'label' => 'Check the best rates'
                 ));
@@ -144,13 +155,15 @@ class WebPageController extends Controller
         $type = $request->query->get('type');
 
         if(!$from || !isset($countries[$from]))
-            throw $this->createNotFoundException('Invalid Country From.-'. print_r($request->request->all(), true).'-');
+            throw $this->createNotFoundException('Invalid Country From.');
 
         if(!$destination)
             throw $this->createNotFoundException('Invalid Country Destination.');
 
         if(!$type || !in_array($type, array('LAC', 'TF', 'INT')))
             throw $this->createNotFoundException('Invalid Rate Type.');
+
+        $type = ($type == 'INT') ? 'LAC' : $type;
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -160,7 +173,7 @@ class WebPageController extends Controller
             ->from('UniversalIDTBundle:Product', 'product')
             ->where('product.countryISO = :from')->setParameter('from', $from)
             ->getQuery()->getResult();
-
+//die(var_dump($products));
         $class_ids = array();
         foreach($products as $product) {
             $class_id = $product['productRow']->getClassId();
@@ -168,7 +181,7 @@ class WebPageController extends Controller
                 $class_ids[$class_id] = array();
             $class_ids[$class_id] []= $product;
         }
-
+//die(var_dump($class_ids));
         /** @var Rate[] $rates */
         $rates = $em->createQueryBuilder()
             ->select('rate')
@@ -177,7 +190,7 @@ class WebPageController extends Controller
             ->andWhere('rate.countryIso = :destination_iso')->setParameter('destination_iso', $destination)
             ->andWhere('rate.classId IN (:class_ids)')->setParameter('class_ids', array_keys($class_ids))
             ->getQuery()->getResult();
-
+//die(var_dump($rates));
         $result = array();
         foreach($rates as $rate) {
             $class_id = $rate->getClassId();
@@ -189,7 +202,7 @@ class WebPageController extends Controller
                 );
             }
         }
-
+//die(var_dump($result));
         usort($result, function ($a , $b) {
                 if ($a['cost'] == $b['cost']) return 0;
                 return ($a['cost'] > $b['cost']) ? -1 : 1;

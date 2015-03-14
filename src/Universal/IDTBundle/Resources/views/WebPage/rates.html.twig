@@ -60,7 +60,9 @@
                                             <th></th>
                                             <th>Calling Cards</th>
                                             <th>Denominations</th>
+                                            <th>Destination</th>
                                             <th>Rate</th>
+                                            <th>Discount</th>
                                             <th>Connection fee</th>
                                             <th>Min</th>
                                             <th>Method</th>
@@ -106,7 +108,7 @@
                     var rate = $(this).find('.rate').text();
 
                     $(denomination).change(function() {
-                        var minute = $(this).val() / rate;
+                        var minute = Math.floor($(this).val() / rate);
                         $(this).closest('tr').find('.minutes').text(minute);
                     });
                 });
