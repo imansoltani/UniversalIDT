@@ -61,7 +61,6 @@
             data: form.serialize(),
             cache: false,
             success: function(result) {
-                waitingDialog.hide();
                 if(result == "S")
                     $.msgGrowl ({
                         type: "success",
@@ -74,6 +73,8 @@
                         title: "Message Not Send",
                         text: 'An Error occurred.'
                     });
+                form[0].reset();
+                waitingDialog.hide();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 waitingDialog.hide();
