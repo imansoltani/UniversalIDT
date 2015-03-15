@@ -22,6 +22,11 @@ class ImportRatesCommand extends AbstractImportCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if( "dev" == $this->getContainer()->get('kernel')->getEnvironment()) {
+            $output->writeln("Run this command with --env=prod");
+            return;
+        }
+
         /** @var EntityManager $em */
         $em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
 
