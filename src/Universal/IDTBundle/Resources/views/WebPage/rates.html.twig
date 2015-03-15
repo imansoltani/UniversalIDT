@@ -69,7 +69,9 @@
                                             <th>Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                        {{ render(controller('UniversalIDTBundle:WebPage:ratesResult',{},{'from':'BE','destination':'AF','type':'LAC'})) }}
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -88,6 +90,10 @@
     $('form#rate_form').submit(function(e) {
         e.preventDefault();
 
+//        console.log($("#rates-table").dataTable("data"));
+//
+//        alert("done");
+//        return;
         var from_input = $("form#rate_form [name='from']").val();
         var destination_input = $("form#rate_form [name='destination']").val();
         var type_input = $("form#rate_form [name='type']:checked").val();
@@ -121,4 +127,18 @@
             }
         });
     });
+
+//    $(document).ready(function (){
+//        $("#my_rates-table").dataTable();
+//
+//        $('#my_rates-table > tbody > tr').each(function() {
+//            var denomination = $(this).find('select');
+//            var rate = $(this).find('.rate').text();
+//
+//            $(denomination).change(function() {
+//                var minute = Math.floor($(this).val() / rate);
+//                $(this).closest('tr').find('.minutes').text(minute);
+//            });
+//        });
+//    });
 </script>
