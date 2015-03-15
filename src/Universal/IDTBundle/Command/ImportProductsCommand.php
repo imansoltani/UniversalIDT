@@ -16,6 +16,7 @@ class ImportProductsCommand extends AbstractImportCommand
             ->setName('import:products')
             ->setDescription('import Product from CSV in app/Resources/Import/CSV/products.csv')
             ->addOption('clear', null, InputOption::VALUE_NONE, 'Clear product entity.')
+            ->addOption('test', null, InputOption::VALUE_NONE, 'import Test Products.')
         ;
     }
 
@@ -33,7 +34,7 @@ class ImportProductsCommand extends AbstractImportCommand
             $output->writeln("Product entity cleared.");
         }
 
-        $data = $this->csv_to_array($this->getFileAddressName("CSV", "products.csv"));
+        $data = $this->csv_to_array($this->getFileAddressName("CSV", $input->getOption('test') ? "products_test.csv" : "products.csv"));
 
         $i = 0;
         foreach($data as $row) {
