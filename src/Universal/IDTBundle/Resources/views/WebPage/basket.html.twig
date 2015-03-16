@@ -141,7 +141,7 @@
                 $("#basket_table_items").append('<tr>' +
                 '<td><a href="javascript:openDetails('+selected_products[product]['id']+')"><img style="max-height: 40px;" src="'+selected_products[product]['image']+'" alt="'+selected_products[product]['name']+'"></a></td>'+
                 '<td><a href="javascript:openDetails('+selected_products[product]['id']+')">'+selected_products[product]['name']+'</a></td>'+
-                '<td><div class="stepper "><input value="'+selected_products[product]['count']+'" class="form-control stepper-input" type="number"><span class="stepper-arrow up">Up</span><span class="stepper-arrow down">Down</span></div></td>'+
+                '<td><input class="form-control" type="number" min="1" onchange="changeCount($(this))" data-id="'+selected_products[product]['id']+'" value="'+selected_products[product]['count']+'"></td>'+
                 '<td>'+selected_products[product]['denomination']+'</td>' +
                 '<td>'+'0.00'+'</td>' +
                 '<td>'+(selected_products[product]['count'] * selected_products[product]['denomination'])+'</td>' +
@@ -171,10 +171,13 @@
         $("#basket_summary_tax").html(vat_total.toFixed(2));
 //        $("#basket_summary_email").html("Email");
         $("#basket_summary_total").html(total.toFixed(2));
+
+        $("input[type='number']").stepper();
     }
 
-    function changeCount(id, denom) {
-
+    function changeCount(_this) {
+        console.log(_this.val());
+        console.log(_this.data("id"));
     }
 
     function removeProduct(id) {
