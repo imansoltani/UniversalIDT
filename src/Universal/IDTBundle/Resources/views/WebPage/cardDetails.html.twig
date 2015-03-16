@@ -22,7 +22,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="calling-card-action-btn clearfix">
-                            <button class="btn btn-primary" onclick="addToCookie({{ product.id }}, '{{ product.name }}', '{{ asset(product.webPath) }}', $('#pr_denominations').val(), 1, '{{ product.currency }}', 'buy');">
+                            <button class="btn btn-primary" onclick="addToCookie({{ product.id }}, '{{ product.name }}', '{{ asset(product.webPath) }}', $('#pr_denominations').val(), 1, '{{ product.currency }}', 'buy', '{{ product.countryISO }}');">
                                 <i class="fa fa-shopping-cart"></i> Add To Cart
                             </button>
                         </div>

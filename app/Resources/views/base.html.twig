@@ -65,6 +65,7 @@
                     selected_products[product]['name'] == undefined ||
                     selected_products[product]['image'] == undefined ||
                     selected_products[product]['count'] == undefined ||
+                    selected_products[product]['country'] == undefined ||
                     selected_products[product]['denomination'] == undefined ||
                     types.indexOf(selected_products[product]['type']) == -1
             ){
@@ -98,7 +99,7 @@
         }
     }
 
-    function addToCookie(_id, _name, _image, _denomination, _count, _currency, _type) {
+    function addToCookie(_id, _name, _image, _denomination, _count, _currency, _type, _country) {
         if(selected_products_currency != "" && selected_products_currency != _currency) {
             $.msgGrowl ({
                 type: "warning",
@@ -126,7 +127,7 @@
         }
 
         if(!_exist)
-            selected_products.push({'id':+_id, 'name':_name, 'image':_image, 'denomination':+_denomination, 'count':+_count, 'type':_type});
+            selected_products.push({'id':+_id, 'name':_name, 'image':_image, 'denomination':+_denomination, 'count':+_count, 'type':_type, 'country':_country});
 
 //            console.log(selected_products);
 
