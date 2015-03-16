@@ -198,7 +198,7 @@ class WebPageController extends Controller
                 $result []= array(
                     'product' => $product_row['productRow'],
                     'rate' => $rate,
-                    'cost' => ($rate->getCost() - $rate->getCost() * ($product_row['productRow']->getFreeAmountDenomination1() / $product_row['base']))
+                    'cost' => ($rate->getCost() * ($product_row['productRow']->getFreeAmountDenomination1() / $product_row['base']))
                 );
             }
         }
