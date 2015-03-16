@@ -18,6 +18,6 @@
         <td class="connection_fee">{{ row.rate.connectionFees }}</td>
         <td class="minutes">0</td>
         <td>{{ row.rate.type }}</td>
-        <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ row.product.id }}, '{{ row.product.name }}', '{{ asset(row.product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ row.product.currency }}', 'buy', '{{ row.product.countryISO }}'); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">Add to cart</button></td>
+        <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ row.product.id }}, '{{ row.product.name }}', '{{ asset(row.product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ row.product.currency }}', 'buy', {{ row.product.denominations[0] }}, {{ row.product.freeAmountDenomination1 }}, {{ vats[row.product.countryISO] }}); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">Add to cart</button></td>
     </tr>
 {% endfor %}

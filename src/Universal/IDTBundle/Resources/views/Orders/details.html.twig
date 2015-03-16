@@ -71,15 +71,19 @@
                             <tr>
                                 <th>Card name</th>
                                 <th>Denomination</th>
+                                <th>Vat</th>
                                 <th>Serial number</th>
                             </tr>
                             </thead>
 
                             <tbody>
+                            {% set vat = 0 %}
                             {% for orderProduct in order.orderProducts %}
+                                {% set vat = vat + orderProduct.vat %}
                                 <tr>
                                     <td>{{ orderProduct.product.name }}</td>
                                     <td>{{ orderProduct.pinDenomination }}</td>
+                                    <td>{{ orderProduct.vat }}</td>
                                     <td>{{ orderProduct.ctrlNumber }}</td>
                                 </tr>
                             {% endfor %}
@@ -111,7 +115,7 @@
                         </tr>
                         <tr>
                             <td>Tax</td>
-                            <td id="basket_summary_tax">$0.00</td>
+                            <td id="basket_summary_tax">{{ vat }}</td>
                         </tr>
                         <tr>
                             <td>Delivery Method</td>

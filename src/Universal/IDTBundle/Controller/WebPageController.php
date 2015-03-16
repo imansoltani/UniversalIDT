@@ -97,10 +97,13 @@ class WebPageController extends Controller
         if(!$product)
             throw $this->createNotFoundException('Invalid Card ID.');
 
+        $vats = $this->container->getParameter('vats');
+
         return $this->render(
             'UniversalIDTBundle:WebPage:cardDetails.html.twig',
             array(
-                'product' => $product
+                'product' => $product,
+                'vats' => $vats
             )
         );
     }
@@ -149,6 +152,7 @@ class WebPageController extends Controller
     public function ratesResultAction(Request $request)
     {
         $countries = $this->container->getParameter('countries');
+        $vats = $this->container->getParameter('vats');
 
         $from = $request->query->get('from');
         $destination = $request->query->get('destination');
@@ -214,7 +218,8 @@ class WebPageController extends Controller
             'UniversalIDTBundle:WebPage:ratesResult.html.twig',
             array(
                 'result' => $result,
-                'countries' => $countries
+                'countries' => $countries,
+                'vats' => $vats
             )
         );
     }

@@ -79,6 +79,12 @@ class OrderProduct
      */
     protected $orderDetail;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="vat", type="smallint", options={"unsigned"=true})
+     */
+    private $vat = 0;
 
     /**
      * Get id
@@ -304,5 +310,28 @@ class OrderProduct
     public function isFailed()
     {
         return RequestStatusEnumType::FAILED === $this->getRequestStatus();
+    }
+
+    /**
+     * Set vat
+     *
+     * @param integer $vat
+     * @return OrderProduct
+     */
+    public function setVat($vat)
+    {
+        $this->vat = $vat;
+
+        return $this;
+    }
+
+    /**
+     * Get vat
+     *
+     * @return integer 
+     */
+    public function getVat()
+    {
+        return $this->vat;
     }
 }

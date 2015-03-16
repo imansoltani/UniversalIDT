@@ -1,5 +1,5 @@
 parameters:
-    vat:
+    vats:
         AT: 20
         BE: 21
         CH: 8

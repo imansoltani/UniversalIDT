@@ -36,7 +36,7 @@
                 {% endfor %}
             </select>
             <input type="number" id="{{ "pr_" ~ product.id ~ "_count" }}" value="1">
-            <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val(), '{{ product.currency }}', 'buy', '{{ product.countryISO }}');">Add To Cart</a>
+            <a href="javascript:" onclick="addToCookie({{ product.id }},$('{{ "#pr_" ~ product.id ~ "_denominations" }}').val(),$('{{ "#pr_" ~ product.id ~ "_count" }}').val(), '{{ product.currency }}', 'buy', {{ product.denominations[0] }}, {{ product.freeAmountDenomination1 }}, {{ vats[product.countryISO] }});">Add To Cart</a>
         </div>
     {% else %}
         No Card.
