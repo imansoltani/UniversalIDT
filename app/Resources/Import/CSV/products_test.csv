@@ -1,4 +1,4 @@
 country;name;cid;denom1;denom2;denom3;currency;free_amount_denom1
-FR;Test1;282;9;18;36;EUR;4
-FR;Test2;286;9;18;36;EUR;4
-FR;Test3;21761;9;18;36;EUR;4
+CH;Test1;282;5;10;20;CHF;2.5
+CH;Test2;286;5;10;20;CHF;2.5
+CH;Test3;21761;5;10;20;CHF;2.5
