@@ -20,6 +20,7 @@ Assigned to:	You
 */
 .breadcrumbs {
     margin-bottom: 2.5em;
+    margin-top: 2.5em;
     margin-left: -15px;
 }
 .breadcrumbs .breadcrumbs-inner {

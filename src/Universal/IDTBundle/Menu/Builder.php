@@ -41,11 +41,6 @@ class Builder extends ContainerAware
                 'route' => 'WebPage_main', 'extras' => array('icon' => 'info-sign', 'route_label' => 'contact')
             ));
 
-        if($granted)
-            $menu->addChild('Checkout', array('route' => 'user_checkout', 'extras' => array('icon' => 'check')));
-        else
-            $menu->addChild('Checkout', array('route' => 'WebPage_checkout', 'extras' => array('icon' => 'check')));
-
         return $menu;
     }
 }
