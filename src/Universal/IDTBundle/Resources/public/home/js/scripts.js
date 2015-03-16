@@ -115,34 +115,14 @@ $(document).ready(function() {
 	==STEPPER==
 	*/
 	$("input[type='number']").stepper();
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	==DATA TABLE==
-	*/
-	$('#rates-table').dataTable();
-	
-	$('#rates-table > tbody > tr').each(function() {
-		var denomination = $(this).find('select');
-		var rate = $(this).find('.rate').text();
-		
-		$(denomination).change(function() {
-			var minute = Math.floor($(this).val() / rate);
-			$(this).closest('tr').find('.minutes').text(minute);
-		});
-	});
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 	
 	
 	
