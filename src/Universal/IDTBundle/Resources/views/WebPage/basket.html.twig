@@ -99,7 +99,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Tax</td>
-                                                    <td id="basket_summary_tax">$0.00</td>
+                                                    <td id="basket_summary_tax">0</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Delivery Method</td>
@@ -128,9 +128,14 @@
 <script type="text/javascript">
     function updateBasketTable() {
         var total = 0;
+        var vat_total = 0;
         $("#basket_table_items").html("");
         for (var product in selected_products) {
             total += selected_products[product]['count'] * selected_products[product]['denomination'];
+
+            var price_with_vat = selected_products[product]['denomination'] * ((selected_products[product]['base']-selected_products[product]['free_amount'])/selected_products[product]['base']);
+            var price_without_vat = price_with_vat / (1+ selected_products[product]['vat']/100);
+            vat_total += selected_products[product]['count'] * ( price_with_vat - price_without_vat );
 
 //            if(selected_products[product]['type'] == "buy")
                 $("#basket_table_items").append('<tr>' +
@@ -162,10 +167,10 @@
 
         $("#basket_table_total").html(total);
 
-        $("#basket_summary_subtotal").html(total);
-//        $("#basket_summary_tax").html(0);
+        $("#basket_summary_subtotal").html(total.toFixed(2));
+        $("#basket_summary_tax").html(vat_total.toFixed(2));
 //        $("#basket_summary_email").html("Email");
-        $("#basket_summary_total").html(total);
+        $("#basket_summary_total").html(total.toFixed(2));
     }
 
     function changeCount(id, denom) {
