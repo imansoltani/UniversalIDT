@@ -86,6 +86,12 @@
         }
 
 //            console.log(selected_products);
+
+        if (typeof basketCreateTable == 'function') {
+            basketCreateTable();
+        }
+
+        updateCounts();
     }
 
     function updateCounts() {
@@ -95,10 +101,6 @@
 
 //            $("#cart_total_items").html(selected_products.length);//total_count == 0 ? 0 : selected_products.length);
         $("#cart_total_items").html(total_count);
-
-        if (typeof updateBasketTable == 'function') {
-            updateBasketTable();
-        }
     }
 
     function addToCookie(_id, _name, _image, _denomination, _count, _currency, _type, _base, _free_amount, _vat) {
@@ -116,6 +118,7 @@
         }
 
 //                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
+        var row_id = -1;
         var _exist = false;
         for(var product in selected_products) {
             if(     +selected_products[product]['id'] == +_id &&
@@ -124,19 +127,42 @@
             ){
                 selected_products[product]['count'] = +selected_products[product]['count'] + +_count;
                 _exist = true;
+                row_id = product;
                 break;
             }
         }
 
-        if(!_exist)
-            selected_products.push({'id':+_id, 'name':_name, 'image':_image, 'denomination':+_denomination, 'count':+_count, 'type':_type, 'base':_base, 'free_amount':_free_amount, 'vat':_vat});
+        if(!_exist) {
+            var count_products = selected_products.push({
+                'id':+_id,
+                'name':_name,
+                'image':_image,
+                'denomination':+_denomination,
+                'count':+_count,
+                'type':_type,
+                'base':_base,
+                'free_amount':_free_amount,
+                'vat':_vat
+            });
+            row_id = count_products-1;
+        }
 
-            console.log(selected_products);
+//            console.log(selected_products);
 
         var new_products_json = JSON.stringify(selected_products);
         $.cookie("products", new_products_json, { path: '/' });
 
         updateCounts();
+
+        if (typeof basketAddRow == 'function' && !_exist) {
+            basketAddRow(row_id);
+        }
+        if (typeof basketUpdateRow == 'function' && _exist) {
+            basketUpdateRow(row_id);
+        }
+        if (typeof basketUpdateSummary == 'function') {
+            basketUpdateSummary();
+        }
 
         $.msgGrowl ({
             type: "success",
@@ -146,7 +172,6 @@
     }
 
     loadSelectedProducts();
-    updateCounts();
 </script>
 </body>
 </html>

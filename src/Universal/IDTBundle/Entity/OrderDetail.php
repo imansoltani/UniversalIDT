@@ -66,7 +66,7 @@ class OrderDetail
      *
      * @ORM\Column(name="charge", type="decimal", precision=6, scale=2)
      */
-    private $charge = 0;
+    private $charge = 0.0;
 
     /**
      * @var string

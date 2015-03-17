@@ -62,7 +62,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="clearfix">
                                             <a href="#calling_cards" data-toggle="target" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Calling Cards</a>
-                                            <a href="#basket" onclick="cookieClear();updateCounts();updateBasketTable()" class="btn btn-danger">Clear Basket</a>
+                                            <a href="#basket" onclick="basketClearProducts()" class="btn btn-danger">Clear Basket</a>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
@@ -126,62 +126,47 @@
 </div><!-- END BASKET SECTION -->
 
 <script type="text/javascript">
-    function updateBasketTable() {
-        var total = 0;
-        var vat_total = 0;
+    function basketCreateTable() {
         $("#basket_table_items").html("");
-        for (var product in selected_products) {
-            total += selected_products[product]['count'] * selected_products[product]['denomination'];
 
-            var price_with_vat = selected_products[product]['denomination'] * ((selected_products[product]['base']-selected_products[product]['free_amount'])/selected_products[product]['base']);
-            var price_without_vat = price_with_vat / (1+ selected_products[product]['vat']/100);
-            vat_total += selected_products[product]['count'] * ( price_with_vat - price_without_vat );
+        for (var product in selected_products)
+            basketAddRow(product);
 
-//            if(selected_products[product]['type'] == "buy")
-                $("#basket_table_items").append('<tr>' +
-                '<td><a href="javascript:openDetails('+selected_products[product]['id']+')"><img style="max-height: 40px;" src="'+selected_products[product]['image']+'" alt="'+selected_products[product]['name']+'"></a></td>'+
-                '<td><a href="javascript:openDetails('+selected_products[product]['id']+')">'+selected_products[product]['name']+'</a></td>'+
-                '<td><input class="form-control" type="number" min="1" onchange="changeCount($(this))" data-id="'+selected_products[product]['id']+'" value="'+selected_products[product]['count']+'"></td>'+
-                '<td>'+selected_products[product]['denomination']+'</td>' +
-                '<td>'+'0.00'+'</td>' +
-                '<td>'+(selected_products[product]['count'] * selected_products[product]['denomination'])+'</td>' +
-                '<td><a href="javascript:removeProduct('+product+')"><i class="fa fa-trash-o"></i></a></td>' +
-                '</tr>');
-//            else
-//                $("#cookie_recharge").append("<tr>" +
-//                "<td>"+selected_products[product]['product']+"</td>" +
-//                "<td>"+"</td>" +
-//                "<td>"+selected_products[product]['count']+"</td>" +
-//                "<td>"+selected_products[product]['denomination']+"</td>" +
-//                "<td>"+"remove"+"</td>" +
-//                "</tr>");
-        }
+        basketCheckEmpty();
+        basketUpdateSummary();
+    }
 
-        if(selected_products.length == 0) {
-            $("#basket_table_items").append('<tr><td colspan="7">'+'No Item'+'</td></tr>');
-            $("#basket_form_submit").prop('disabled', true);
-        }
-        else {
-            $("#basket_form_submit").prop('disabled', false);
-        }
+    function basketUpdateSummary() {
+        var total = 0;
+        var vat = 0;
+
+        $('#basket_table_items  > tr').each(function() {
+            total += $(this).data('total');
+            vat += $(this).data('vat');
+        });
 
         $("#basket_table_total").html(total);
 
         $("#basket_summary_subtotal").html(total.toFixed(2));
-        $("#basket_summary_tax").html(vat_total.toFixed(2));
+        $("#basket_summary_tax").html(vat.toFixed(2));
 //        $("#basket_summary_email").html("Email");
         $("#basket_summary_total").html(total.toFixed(2));
-
-        $("input[type='number']").stepper();
     }
 
-    function changeCount(_this) {
-        console.log(_this.val());
-        console.log(_this.data("id"));
+    function basketCheckEmpty() {
+        if(selected_products.length == 0) {
+            $("#basket_table_items").html('<tr class="empty" data-total="0" data-vat="0"><td colspan="7">'+'No Item'+'</td></tr>');
+            $("#basket_form_submit").prop('disabled', true);
+        }
+        else {
+            $("#basket_table_items").find('tr.empty').remove();
+            $("#basket_form_submit").prop('disabled', false);
+        }
     }
 
-    function removeProduct(id) {
-        selected_products.splice(id, 1);
+    function basketRemoveProduct(_this) {
+        var tr = $(_this).closest('tr');
+        selected_products.splice(tr.data('cookie_id'), 1);
 
         var new_products_json = JSON.stringify(selected_products);
         $.cookie("products", new_products_json, { path: '/' });
@@ -193,10 +178,68 @@
 
         updateCounts();
 
+        tr.remove();
+        basketUpdateSummary();
+        basketCheckEmpty();
+
         $.msgGrowl ({
             type: "success",
             title: "Removed from Cart",
             text: 'Item successfully removed from your cart.'
         });
+    }
+
+    function basketAddRow(cookie_row_id) {
+        var row = selected_products[cookie_row_id];
+        var price_with_vat = row['denomination'] * ((row['base']-row['free_amount'])/row['base']);
+        var price_without_vat = price_with_vat / (1+ row['vat']/100);
+        var row_vat = row['count'] * ( price_with_vat - price_without_vat );
+
+        var discount = (row['free_amount']/row['base'])*row['denomination'];
+        var total =  row['count'] * (row['denomination'] - discount);
+
+//        if(row['type'] == "buy")
+            $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
+                '<td><a href="javascript:openDetails('+row['id']+')"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
+                '<td><a href="javascript:openDetails('+row['id']+')">'+row['name']+'</a></td>'+
+                '<td><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
+                '<td id="denomination">'+row['denomination']+'</td>' +
+                '<td id="discount">'+discount+'</td>' +
+                '<td id="total">'+total+'</td>' +
+                '<td><a href="javascript:;" onclick="basketRemoveProduct(this)"><i class="fa fa-trash-o"></i></a></td>' +
+            '</tr>');
+//        else
+//            $("#cookie_recharge").append("<tr>" +
+//            "<td>"+row['product']+"</td>" +
+//            "<td>"+"</td>" +
+//            "<td>"+row['count']+"</td>" +
+//            "<td>"+row['denomination']+"</td>" +
+//            "<td>"+"remove"+"</td>" +
+//            "</tr>");
+
+        $("input[type='number']").stepper();
+    }
+
+    function basketUpdateProduct(_this) {
+        var tr = $(_this).closest('tr');
+
+        var row = selected_products[tr.data('cookie_id')];
+        row['count'] = $(_this).val();
+
+        console.log();
+
+//        var price_with_vat = row['denomination'] * ((row['base']-row['free_amount'])/row['base']);
+//        var price_without_vat = price_with_vat / (1+ row['vat']/100);
+//        var row_vat = row['count'] * ( price_with_vat - price_without_vat );
+//
+//        var discount = (row['free_amount']/row['base'])*row['denomination'];
+//        var total =  row['count'] * (row['denomination'] - discount);
+    }
+
+    function basketClearProducts()
+    {
+        cookieClear();
+        updateCounts();
+        basketCreateTable();
     }
 </script>
