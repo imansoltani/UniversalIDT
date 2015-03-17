@@ -121,7 +121,7 @@
         var _exist = (_id+_type+_denomination) in selected_products;
 
         if(_exist) {
-            selected_products[_id+_type+_denomination]['count'] += +_count;
+            selected_products[_id+_type+_denomination]['count'] = +selected_products[_id+_type+_denomination]['count'] +_count;
         } else {
             selected_products [_id+_type+_denomination] = {
                 'id':+_id,
@@ -142,9 +142,12 @@
 
         if (typeof basketAddRow == 'function' && !_exist) {
             basketAddRow(_id+_type+_denomination);
+            basketCheckEmpty();
         }
-        if (typeof basketUpdateRow == 'function' && _exist) {
-            basketUpdateRow(_id+_type+_denomination);
+        if (typeof basketUpdateProduct == 'function' && _exist) {
+            var input_quantity = $("#basket_table_items tr[data-cookie_id='"+_id+_type+_denomination+"'] td#quantity input");
+            input_quantity.val(selected_products[_id+_type+_denomination]['count']);
+            basketUpdateProduct(input_quantity);
         }
         if (typeof basketUpdateSummary == 'function') {
             basketUpdateSummary();

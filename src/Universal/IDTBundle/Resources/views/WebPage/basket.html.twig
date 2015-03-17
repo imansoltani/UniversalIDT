@@ -150,11 +150,12 @@
         $("#basket_summary_subtotal").html(total.toFixed(2));
         $("#basket_summary_tax").html(vat.toFixed(2));
 //        $("#basket_summary_email").html("Email");
-        $("#basket_summary_total").html(total.toFixed(2));
+        $("#basket_summary_total").html(total.toFixed(2) + " " + selected_products_currency);
     }
 
     function basketCheckEmpty() {
-        if(selected_products.length == 0) {
+        console.log(Object.keys(selected_products).length);
+        if(Object.keys(selected_products).length == 0) {
             $("#basket_table_items").html('<tr class="empty" data-total="0" data-vat="0"><td colspan="7">'+'No Item'+'</td></tr>');
             $("#basket_form_submit").prop('disabled', true);
         }
@@ -171,7 +172,7 @@
         var new_products_json = JSON.stringify(selected_products);
         $.cookie("products", new_products_json, { path: '/' });
 
-        if(selected_products.length == 0) {
+        if(Object.keys(selected_products).length == 0) {
             selected_products_currency = "";
             $.cookie("products_currency", "", { path: '/' });
         }
@@ -202,7 +203,7 @@
             $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
                 '<td><a href="javascript:openDetails('+row['id']+')"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
                 '<td><a href="javascript:openDetails('+row['id']+')">'+row['name']+'</a></td>'+
-                '<td><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
+                '<td id="quantity"><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
                 '<td id="denomination">'+row['denomination']+'</td>' +
                 '<td id="discount">'+discount+'</td>' +
                 '<td id="total">'+total+'</td>' +
@@ -238,7 +239,7 @@
         tr.data('total',total);
         tr.data('vat',row_vat);
 
-        console.log(selected_products);
+//        console.log(selected_products);
 
         updateCounts();
 
