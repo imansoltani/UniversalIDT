@@ -82,9 +82,9 @@ class OrderProduct
     /**
      * @var integer
      *
-     * @ORM\Column(name="vat", type="smallint", options={"unsigned"=true})
+     * @ORM\Column(name="vat", type="decimal", precision=4, scale=2, options={"unsigned"=true})
      */
-    private $vat = 0;
+    private $vat = 0.0;
 
     /**
      * Get id
