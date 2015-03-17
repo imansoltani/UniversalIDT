@@ -166,7 +166,7 @@
 
     function basketRemoveProduct(_this) {
         var tr = $(_this).closest('tr');
-        selected_products.splice(tr.data('cookie_id'), 1);
+        delete selected_products[tr.data('cookie_id')];
 
         var new_products_json = JSON.stringify(selected_products);
         $.cookie("products", new_products_json, { path: '/' });
@@ -226,18 +226,28 @@
         var row = selected_products[tr.data('cookie_id')];
         row['count'] = $(_this).val();
 
-        console.log();
+        var price_with_vat = row['denomination'] * ((row['base']-row['free_amount'])/row['base']);
+        var price_without_vat = price_with_vat / (1+ row['vat']/100);
+        var row_vat = row['count'] * ( price_with_vat - price_without_vat );
 
-//        var price_with_vat = row['denomination'] * ((row['base']-row['free_amount'])/row['base']);
-//        var price_without_vat = price_with_vat / (1+ row['vat']/100);
-//        var row_vat = row['count'] * ( price_with_vat - price_without_vat );
-//
-//        var discount = (row['free_amount']/row['base'])*row['denomination'];
-//        var total =  row['count'] * (row['denomination'] - discount);
+        var discount = (row['free_amount']/row['base'])*row['denomination'];
+        var total =  row['count'] * (row['denomination'] - discount);
+
+        tr.find('#discount').html(discount);
+        tr.find('#total').html(total);
+        tr.data('total',total);
+        tr.data('vat',row_vat);
+
+        console.log(selected_products);
+
+        updateCounts();
+
+        basketUpdateSummary();
+
+
     }
 
-    function basketClearProducts()
-    {
+    function basketClearProducts() {
         cookieClear();
         updateCounts();
         basketCreateTable();

@@ -40,13 +40,13 @@
     });
 </script>
 <script type="text/javascript">
-    var selected_products = [];
+    var selected_products = {};
 
     var selected_products_currency = "";
 
     function cookieClear() {
-        selected_products = [];
-        $.cookie("products", "[]", { path: '/' });
+        selected_products = {};
+        $.cookie("products", "{}", { path: '/' });
 
         selected_products_currency = "";
         $.cookie("products_currency", "", { path: '/' });
@@ -54,7 +54,7 @@
 
     function loadSelectedProducts() {
         var products_json = $.cookie("products");
-        selected_products = products_json == undefined ? [] : JSON.parse(products_json);
+        selected_products = (products_json == undefined || products_json == "[]") ? {} : JSON.parse(products_json);
 
         selected_products_currency = $.cookie("products_currency") == undefined ? "" : $.cookie("products_currency");
 
@@ -118,22 +118,12 @@
         }
 
 //                alert('product:'+_product_id+' count:'+_count+' denomination:'+_denomination+' type:'+_type);
-        var row_id = -1;
-        var _exist = false;
-        for(var product in selected_products) {
-            if(     +selected_products[product]['id'] == +_id &&
-                    +selected_products[product]['denomination'] == +_denomination &&
-                    selected_products[product]['type'] == _type
-            ){
-                selected_products[product]['count'] = +selected_products[product]['count'] + +_count;
-                _exist = true;
-                row_id = product;
-                break;
-            }
-        }
+        var _exist = (_id+_type+_denomination) in selected_products;
 
-        if(!_exist) {
-            var count_products = selected_products.push({
+        if(_exist) {
+            selected_products[_id+_type+_denomination]['count'] += +_count;
+        } else {
+            selected_products [_id+_type+_denomination] = {
                 'id':+_id,
                 'name':_name,
                 'image':_image,
@@ -143,22 +133,18 @@
                 'base':_base,
                 'free_amount':_free_amount,
                 'vat':_vat
-            });
-            row_id = count_products-1;
+            };
         }
 
-//            console.log(selected_products);
-
-        var new_products_json = JSON.stringify(selected_products);
-        $.cookie("products", new_products_json, { path: '/' });
+        $.cookie("products", JSON.stringify(selected_products), { path: '/' });
 
         updateCounts();
 
         if (typeof basketAddRow == 'function' && !_exist) {
-            basketAddRow(row_id);
+            basketAddRow(_id+_type+_denomination);
         }
         if (typeof basketUpdateRow == 'function' && _exist) {
-            basketUpdateRow(row_id);
+            basketUpdateRow(_id+_type+_denomination);
         }
         if (typeof basketUpdateSummary == 'function') {
             basketUpdateSummary();
