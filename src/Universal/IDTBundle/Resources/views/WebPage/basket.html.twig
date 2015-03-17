@@ -154,7 +154,7 @@
     }
 
     function basketCheckEmpty() {
-        console.log(Object.keys(selected_products).length);
+//        console.log(Object.keys(selected_products).length);
         if(Object.keys(selected_products).length == 0) {
             $("#basket_table_items").html('<tr class="empty" data-total="0" data-vat="0"><td colspan="7">'+'No Item'+'</td></tr>');
             $("#basket_form_submit").prop('disabled', true);
