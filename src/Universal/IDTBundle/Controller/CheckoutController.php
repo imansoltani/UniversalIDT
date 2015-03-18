@@ -160,6 +160,9 @@ class CheckoutController extends Controller
                 !isset($added_item['image']) ||
                 !isset($added_item['count']) ||
                 !isset($added_item['denomination']) ||
+                !isset($added_item['base']) ||
+                !isset($added_item['free_amount']) ||
+                !isset($added_item['vat']) ||
                 !in_array($added_item['type'], array($this->BASKET_BUY, $this->BASKET_RECHARGE))
             )
                 return false;

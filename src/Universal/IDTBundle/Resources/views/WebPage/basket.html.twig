@@ -169,8 +169,7 @@
         var tr = $(_this).closest('tr');
         delete selected_products[tr.data('cookie_id')];
 
-        var new_products_json = JSON.stringify(selected_products);
-        $.cookie("products", new_products_json, { path: '/' });
+        $.cookie("products", JSON.stringify(selected_products), { path: '/' });
 
         if(Object.keys(selected_products).length == 0) {
             selected_products_currency = "";
@@ -227,6 +226,8 @@
         var row = selected_products[tr.data('cookie_id')];
         row['count'] = $(_this).val();
 
+        $.cookie("products", JSON.stringify(selected_products), { path: '/' });
+
         var price_with_vat = row['denomination'] * ((row['base']-row['free_amount'])/row['base']);
         var price_without_vat = price_with_vat / (1+ row['vat']/100);
         var row_vat = row['count'] * ( price_with_vat - price_without_vat );
@@ -244,8 +245,6 @@
         updateCounts();
 
         basketUpdateSummary();
-
-
     }
 
     function basketClearProducts() {
