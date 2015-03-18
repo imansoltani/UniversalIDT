@@ -148,6 +148,9 @@ class ClientIdt
 
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
+            if ($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
+                throw new \Exception("OrderProduct ID '" . $orderProduct->getId() . "' is '" . $orderProduct->getRequestStatus() . "'. The status must be registered.");
+
             $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
 
             if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION)

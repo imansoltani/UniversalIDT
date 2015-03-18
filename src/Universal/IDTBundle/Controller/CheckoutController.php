@@ -108,11 +108,6 @@ class CheckoutController extends Controller
         try {
             if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED) {
 
-                foreach($orderDetail->getOrderProducts() as $orderProduct) {
-                    if ($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
-                        throw new \Exception("OrderProduct status with ID '" . $orderProduct->getId() . "' is NOT registered.");
-                }
-
                 $orderDetail = $this->get('idt')->processOrder($orderDetail);
 
                 $result = "";
@@ -122,7 +117,7 @@ class CheckoutController extends Controller
                         " id: ". $orderProduct->getId()." - ".
                         " name: ". $orderProduct->getProduct()->getName()." - ".
                         " class_id: ". $orderProduct->getProduct()->getClassId()." - ".
-                        " denom: ". $orderProduct->getPinDenomination()." - ".
+                        " denomination: ". $orderProduct->getPinDenomination()." - ".
                         " ctrlNumber: ". ($orderProduct->getCtrlNumber()?:"--") ." - ".
                         " pin: ". ($orderProduct->getPin()?:"--") ." - ".
                         " request type: ". $orderProduct->getRequestType()." - ".
