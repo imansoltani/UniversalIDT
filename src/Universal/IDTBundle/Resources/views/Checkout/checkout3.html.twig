@@ -23,10 +23,10 @@
 
 									<form id="checkout-form" method="post">
 
-										<ul class="nav nav-tabs" role="tablist"><!-- TAB BUTTONS -->
-											<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
-											<li><a href="#payment_method_tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
-											<li><a href="#order_review_tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
+										<ul class="nav nav-tabs" role="tablist" id="myTab"><!-- TAB BUTTONS -->
+											<li class="active"><a href="#delivery_method_tab" data-toggle="tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
+											<li><a href="#payment_method_tab" data-toggle="tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
+											<li><a href="#order_review_tab" data-toggle="tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
 										</ul>
 
 										<div class="tab-content">
@@ -62,7 +62,7 @@
 													</div>
 													<div class="col-md-6 col-sm-6">
 														<div class="text-right clearfix">
-															<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="$('#delivery_method_summary').html($('input#{{ form.email.vars.id }}').val() == '' ? '--' : 'Email')" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
+															<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="changeDeliveryMethod()" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
 														</div>
 													</div>
 												</div>
@@ -142,8 +142,8 @@
 															</tbody>
 															<tfoot>
 																<tr class="total">
-																	<td>Total</td>
-																	<td colspan="4" class="text-right">{{ sum_total|round(2)|number_format(2) }}</td>
+																	<td colspan="5">Total</td>
+																	<td>{{ sum_total|round(2)|number_format(2) }}</td>
 																</tr>
 															</tfoot>
 														</table>
@@ -220,4 +220,22 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		function changeDeliveryMethod()
+		{ //{{ asset('bundles/universalidt/img/notifications/alert-32.png') }}
+			$('#delivery_method_summary').html(
+					$('input#{{ form.email.vars.id }}').val() == ''
+							? '-- <a href="#delivery_method_tab" onclick="goToTabDelivery(event)"><img style="height: 15px" src="{{ asset('bundles/universalidt/img/notifications/alert-32.png') }}"></a>'
+							: 'Email'
+			);
+		}
+
+		function goToTabDelivery(e)
+		{
+			e.preventDefault();
+
+			$('#myTab a[href="#delivery_method_tab"]').tab('show');
+		}
+	</script>
 {% endblock content %}
