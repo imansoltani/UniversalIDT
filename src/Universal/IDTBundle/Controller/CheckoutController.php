@@ -53,12 +53,18 @@ class CheckoutController extends Controller
         $added_items = json_decode(stripcslashes($request->cookies->get("products")), true);
         $added_items_currency = $request->cookies->get("products_currency");
 
+        /** @var float $sum_total */
+        $sum_total = 0.0;
+
+        /** @var float $sum_vat */
+        $sum_vat = 0.0;
+
         //check cookie validation
         if(is_null($added_items) || !is_array($added_items) || count($added_items) == 0) {
             $this->get('session')->getFlashBag()->add('warning','Basket is Empty.');
             $valid = false;
         }
-        elseif (!$valid = $this->checkCookie($added_items, $added_items_currency, $em)) {
+        elseif (!$valid = $this->checkCookie($added_items, $added_items_currency, $em, $sum_total, $sum_vat)) {
             $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies and Basket cleared.');
         }
 
@@ -78,7 +84,10 @@ class CheckoutController extends Controller
 
         return $this->render('UniversalIDTBundle:Checkout:checkout3.html.twig', array(
                 'data' => $added_items,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'sum_total' => $sum_total,
+                'sum_vat' => $sum_vat,
+                'currency' => $added_items_currency
             ));
     }
 
@@ -145,9 +154,11 @@ class CheckoutController extends Controller
      * @param array $added_items
      * @param string $added_items_currency
      * @param EntityManager $em
+     * @param float $sum_total
+     * @param float $sum_vat
      * @return bool
      */
-    private function checkCookie(&$added_items, $added_items_currency, EntityManager $em)
+    private function checkCookie(&$added_items, $added_items_currency, EntityManager $em, &$sum_total, &$sum_vat)
     {
         if(is_null($added_items_currency) || !is_string($added_items_currency) || strlen($added_items_currency) != 3)
             return false;
@@ -167,6 +178,15 @@ class CheckoutController extends Controller
             )
                 return false;
 //                die("field error");
+
+            $price_with_vat = $added_item['denomination'] * (($added_item['base']-$added_item['free_amount'])/$added_item['base']);
+            $price_without_vat = $price_with_vat / (1+ $added_item['vat']/100);
+            $added_item['row_vat'] = $added_item['count'] * ( $price_with_vat - $price_without_vat );
+            $sum_vat += $added_item['row_vat'];
+
+            $added_item['discount'] = ($added_item['free_amount']/$added_item['base'])*$added_item['denomination'];
+            $added_item['row_total'] =  $added_item['count'] * ($added_item['denomination'] - $added_item['discount']);
+            $sum_total += $added_item['row_total'];
 
             switch ($added_item['type']) {
                 case $this->BASKET_BUY:

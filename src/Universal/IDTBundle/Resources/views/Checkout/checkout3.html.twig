@@ -39,6 +39,20 @@
 															{{ form_errors(form.email) }}
 														</div>
 													</div>
+
+													<div class="form-group">
+													</div>
+													{% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+														<h4><strong>Notice:</strong> </h4>
+
+														<div class="form-group">
+															<div class="checkbox">
+																<label>
+																	<span style="color:#ff0000">*</span> As an anonymous user, if you do not give an email, you must save your PINs after delivery!
+																</label>
+															</div>
+														</div>
+													{% endif %}
 												</div>
 												<div class="row">
 													<div class="col-md-6 col-sm-6">
@@ -48,7 +62,7 @@
 													</div>
 													<div class="col-md-6 col-sm-6">
 														<div class="text-right clearfix">
-															<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
+															<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="$('#delivery_method_summary').html($('input#{{ form.email.vars.id }}').val() == '' ? '--' : 'Email')" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
 														</div>
 													</div>
 												</div>
@@ -105,24 +119,23 @@
 														<table class="table">
 															<thead>
 																<tr>
-																	<th></th>
-																	<th>Item</th>
-																	<th>Qty</th>
-																	<th>Denom.</th>
-																	<th>Subtotal</th>
+																	<th colspan="2">Product</th>
+																	<th>Quantity</th>
+																	<th>Unit price</th>
+																	<th>Discount</th>
+																	<th>Total</th>
 																</tr>
 															</thead>
 															<tbody>
-															{% set sum = 0 %}
 															{% for row in data %}
 																{% if row.type == "buy" %}
-																	{% set sum = sum + row.count * row.denomination %}
 																	<tr>
 																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
 																		<td>{{ row.product.name }}</td>
 																		<td>{{ row.count }}</td>
 																		<td>{{ row.denomination }}</td>
-																		<td>{{ row.count * row.denomination }}</td>
+																		<td>{{ row.discount }}</td>
+																		<td>{{ row.row_total }}</td>
 																	</tr>
 																{% endif %}
 															{% endfor %}
@@ -130,7 +143,7 @@
 															<tfoot>
 																<tr class="total">
 																	<td>Total</td>
-																	<td colspan="4" class="text-right">{{ sum }}</td>
+																	<td colspan="4" class="text-right">{{ sum_total|round(2)|number_format(2) }}</td>
 																</tr>
 															</tfoot>
 														</table>
@@ -178,21 +191,21 @@
 													<tbody>
 														<tr>
 															<td>Order subtotal</td>
-															<td>{{ sum }}</td>
+															<td>{{ sum_total|round(2)|number_format(2) }}</td>
 														</tr>
 														<tr>
 															<td>Tax</td>
-															<td>$0.00</td>
+															<td>{{ sum_vat|round(2)|number_format(2) }}</td>
 														</tr>
 														<tr>
 															<td>Delivery Method</td>
-															<td>Email</td>
+															<td id="delivery_method_summary">--</td>
 														</tr>
 													</tbody>
 													<tfoot>
 														<tr class="total">
 															<td>Total</td>
-															<td>{{ sum }}</td>
+															<td>{{ sum_total|round(2)|number_format(2) }} {{ currency|upper }}</td>
 														</tr>
 													</tfoot>
 												</table>
