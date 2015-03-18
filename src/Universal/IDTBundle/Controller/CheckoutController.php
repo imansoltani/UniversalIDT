@@ -108,6 +108,11 @@ class CheckoutController extends Controller
         try {
             if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED) {
 
+                foreach($orderDetail->getOrderProducts() as $orderProduct) {
+                    if ($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
+                        throw new \Exception("OrderProduct status with ID '" . $orderProduct->getId() . "' is NOT registered.");
+                }
+
                 $orderDetail = $this->get('idt')->processOrder($orderDetail);
 
                 $result = "";
@@ -262,6 +267,11 @@ class CheckoutController extends Controller
                 $order_product->setOrderDetail($order_detail);
                 $order_detail->addOrderProduct($order_product);
                 $order_product->setPinDenomination($row['denomination']);
+
+                $price_with_vat = $row['denomination'] * (($row['base']-$row['free_amount'])/$row['base']);
+                $price_without_vat = $price_with_vat / (1+ $row['vat']/100);
+
+                $order_product->setVat($price_with_vat - $price_without_vat);
                 $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
                 switch ($row['type']) {
                     case $this->BASKET_BUY:
