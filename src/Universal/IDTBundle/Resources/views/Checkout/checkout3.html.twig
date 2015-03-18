@@ -24,9 +24,9 @@
 									<form id="checkout-form" method="post">
 
 										<ul class="nav nav-tabs" role="tablist" id="myTab"><!-- TAB BUTTONS -->
-											<li class="active"><a href="#delivery_method_tab" data-toggle="tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
-											<li><a href="#payment_method_tab" data-toggle="tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
-											<li><a href="#order_review_tab" data-toggle="tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
+											<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
+											<li><a href="#payment_method_tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
+											<li><a href="#order_review_tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
 										</ul>
 
 										<div class="tab-content">
@@ -198,7 +198,7 @@
 															<td>{{ sum_vat|round(2)|number_format(2) }}</td>
 														</tr>
 														<tr>
-															<td>Delivery Method</td>
+															<td>Delivery Method <span id="delivery_method_label_summary"></span></td>
 															<td id="delivery_method_summary">--</td>
 														</tr>
 													</tbody>
@@ -223,12 +223,18 @@
 
 	<script type="text/javascript">
 		function changeDeliveryMethod()
-		{ //{{ asset('bundles/universalidt/img/notifications/alert-32.png') }}
-			$('#delivery_method_summary').html(
-					$('input#{{ form.email.vars.id }}').val() == ''
-							? '-- <a href="#delivery_method_tab" onclick="goToTabDelivery(event)"><img style="height: 15px" src="{{ asset('bundles/universalidt/img/notifications/alert-32.png') }}"></a>'
-							: 'Email'
-			);
+		{
+			var deliveryMethod_label = $('#delivery_method_label_summary');
+			var deliveryMethod = $('#delivery_method_summary');
+
+			if($('input#{{ form.email.vars.id }}').val() == '') {
+				deliveryMethod_label.html('<a href="#delivery_method_tab" onclick="goToTabDelivery(event)"><img style="height: 15px" src="{{ asset('bundles/universalidt/img/notifications/alert-32.png') }}"></a>');
+				deliveryMethod.html('--');
+			}
+			else {
+				deliveryMethod_label.html('');
+				deliveryMethod.html('Email');
+			}
 		}
 
 		function goToTabDelivery(e)
