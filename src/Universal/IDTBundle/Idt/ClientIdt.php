@@ -51,7 +51,7 @@ class ClientIdt
         $productsToCreate = array();
 
         /** @var OrderProduct $orderProduct */
-        foreach($orderDetail as $orderProduct) {
+        foreach($orderDetail->getOrderProducts() as $orderProduct) {
             if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
                 $productsToCreate [$i++] = $orderProduct;
             }
@@ -89,7 +89,7 @@ class ClientIdt
         $productsToRecharge = array();
 
         /** @var OrderProduct $orderProduct */
-        foreach($orderDetail as $orderProduct) {
+        foreach($orderDetail->getOrderProducts() as $orderProduct) {
             if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::RECHARGE) {
                 $productsToRecharge [$i++] = $orderProduct;
             }
