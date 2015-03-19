@@ -55,7 +55,7 @@ class User extends BaseUser
     /**
      * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderDetail", mappedBy="user")
      */
-    protected $orderDetails;
+    private $orderDetails;
 
     /**
      * @var string

@@ -107,13 +107,13 @@ class OrderDetail
     /**
      * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="orderDetail")
      */
-    protected $orderProducts;
+    private $orderProducts;
 
     /**
      * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\User", inversedBy="orderDetails")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
-    protected $user;
+    private $user;
 
     /**
      * Constructor

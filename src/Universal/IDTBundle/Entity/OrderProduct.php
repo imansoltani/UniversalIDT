@@ -71,13 +71,13 @@ class OrderProduct
      * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\Product", inversedBy="orderProducts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
      */
-    protected $product;
+    private $product;
 
     /**
      * @ORM\ManyToOne(targetEntity="Universal\IDTBundle\Entity\OrderDetail", inversedBy="orderProducts")
      * @ORM\JoinColumn(name="order_detail_id", referencedColumnName="id", nullable=false)
      */
-    protected $orderDetail;
+    private $orderDetail;
 
     /**
      * @var integer

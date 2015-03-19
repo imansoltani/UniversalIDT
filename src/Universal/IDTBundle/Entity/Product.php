@@ -57,7 +57,7 @@ class Product extends JsonParser
     /**
      * @ORM\OneToMany(targetEntity="Universal\IDTBundle\Entity\OrderProduct", mappedBy="product")
      */
-    protected $orderProducts;
+    private $orderProducts;
 
     /**
      * @var integer
