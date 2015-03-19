@@ -47,8 +47,6 @@ class ClientIdt
     {
         $debitRequests = "";
 
-        $responses = array();
-
         $i = 1;
 
         $productsToCreate = array();
@@ -64,12 +62,14 @@ class ClientIdt
 
         $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
 
+        $j = 0;
         /** @var OrderProduct $orderProduct */
         foreach($productsToCreate as $id => $orderProduct) {
             if(strtolower($responses[$id]['status']) == 'ok') {
                 $orderProduct->setCtrlNumber($responses[$id]['account']);
                 $orderProduct->setPin($responses[$id]['authcode']);
                 $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
+                $j++;
             } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
                 $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
@@ -77,6 +77,8 @@ class ClientIdt
         }
 
         $this->em->flush();
+
+        return $j;
     }
 
     private function processRechargeRequests(OrderDetail $orderDetail)
@@ -145,7 +147,7 @@ class ClientIdt
         }
 
         if($numberOfProductsToCreate > 0) {
-            $this->processCreationRequests($orderDetail);
+            $numberOfProductsToRecharge += $this->processCreationRequests($orderDetail);
         }
 
         if($numberOfProductsToRecharge > 0) {
