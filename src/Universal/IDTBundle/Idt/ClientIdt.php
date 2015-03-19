@@ -7,7 +7,6 @@ use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
-use Universal\IDTBundle\Entity\Product;
 
 /**
  * Class IDT
@@ -62,14 +61,14 @@ class ClientIdt
 
         $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
 
-        $j = 0;
+        $numberOfSucceedCreations = 0;
         /** @var OrderProduct $orderProduct */
         foreach($productsToCreate as $id => $orderProduct) {
             if(strtolower($responses[$id]['status']) == 'ok') {
                 $orderProduct->setCtrlNumber($responses[$id]['account']);
                 $orderProduct->setPin($responses[$id]['authcode']);
                 $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
-                $j++;
+                $numberOfSucceedCreations ++;
             } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
                 $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
@@ -78,36 +77,32 @@ class ClientIdt
 
         $this->em->flush();
 
-        return $j;
+        return $numberOfSucceedCreations;
     }
 
     private function processRechargeRequests(OrderDetail $orderDetail)
     {
         $debitRequests = "";
 
-        $responses = array();
-
         $i = 1;
 
-        $productsToCreate = array();
+        $productsToRecharge = array();
 
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail as $orderProduct) {
-            if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
-                $productsToCreate [$i++] = $orderProduct;
+            if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::RECHARGE) {
+                $productsToRecharge [$i++] = $orderProduct;
             }
         }
 
-        $debitRequests .= $this->setAccountCreationNodes($productsToCreate);
+        $debitRequests .= $this->setRechargeNodes($productsToRecharge);
 
         $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
 
         /** @var OrderProduct $orderProduct */
-        foreach($productsToCreate as $id => $orderProduct) {
+        foreach($productsToRecharge as $id => $orderProduct) {
             if(strtolower($responses[$id]['status']) == 'ok') {
-                $orderProduct->setCtrlNumber($responses[$id]['account']);
-                $orderProduct->setPin($responses[$id]['authcode']);
-                $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
+                $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
             } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
                 $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
@@ -161,17 +156,24 @@ class ClientIdt
 
     public function getCallDetails(OrderProduct $orderProduct)
     {
-        $this->debitRequests = "";
-        $this->debitRequestsIDs->reset();
+        //request id is same as response id
+        $id = 1;
 
-        $this->callDetailsRequest($orderProduct);
+        $debitRequests =
+            '<DebitRequest id="'.$id.'" type="calldetails">
+                <account>'.$orderProduct->getCtrlNumber().'</account>
+                <startdate>'.date("m/d/y",strtotime("-1 week")).'</startdate>
+                <enddate>'.date("m/d/y",strtotime("now")).'</enddate>
+            </DebitRequest>
+            ';
 
-        $responses = $this->generateAndPostRequestAndGetResponse();
 
-        if(isset($responses[0]['status']))
+        $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
+
+        if(isset($responses[$id]['status']))
             throw new \Exception("Error in IDT: ". $responses[0]['description']. " (".$responses[0]['code'].")");
 
-        return $responses[0];
+        return $responses[$id];
     }
 
     /**
@@ -224,77 +226,6 @@ class ClientIdt
 
     //--------------------------------
 
-    /**
-     * @param OrderProduct $orderProduct
-     */
-    private function accountCreationRequest(OrderProduct $orderProduct)
-    {
-        $class_id = $orderProduct->getProduct()->getClassId();
-
-        $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="creation">
-                <CustomerInformation><classid>'.$class_id.'</classid></CustomerInformation>
-            </DebitRequest>
-            ';
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     */
-    private function cardActivationRequest(OrderProduct $orderProduct)
-    {
-        $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="activation">
-                <account>'.$orderProduct->getCtrlNumber().'</account>
-            </DebitRequest>
-            ';
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     */
-    private function rechargeAccountRequest(OrderProduct $orderProduct)
-    {
-        $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="misctrans">
-                <account>'.$orderProduct->getCtrlNumber().'</account>
-                <amount>'.$orderProduct->getPinDenomination().'</amount>
-                <transtype>vendorcredit</transtype>
-                <note>recharge</note>
-                <balancetozero>n</balancetozero>
-            </DebitRequest>
-            ';
-    }
-
-    /**
-     * @param OrderProduct $orderProduct
-     */
-    private function callDetailsRequest(OrderProduct $orderProduct)
-    {
-        $this->debitRequests .=
-            '<DebitRequest id="'.$this->debitRequestsIDs->add($orderProduct->getId()).'" type="calldetails">
-                <account>'.$orderProduct->getCtrlNumber().'</account>
-                <startdate>'.date("m/d/y",strtotime("-1 week")).'</startdate>
-                <enddate>'.date("m/d/y",strtotime("now")).'</enddate>
-            </DebitRequest>
-            ';
-    }
-
-    //--------------------------------
-
-    /**
-     * @param OrderProduct $orderProduct
-     * @param array $debitResponse
-     */
-    private function accountCreationResponse(OrderProduct $orderProduct, array $debitResponse)
-    {
-        if(strtolower($debitResponse['status']) == 'ok') {
-            $orderProduct->setCtrlNumber($debitResponse['account']);
-            $orderProduct->setPin($debitResponse['authcode']);
-            $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
-        }
-    }
-
     private function setAccountCreationNodes(array $productsToCreate)
     {
         $debitRequests = "";
@@ -306,6 +237,29 @@ class ClientIdt
         foreach($productsToCreate as $id => $orderProduct) {
             $debitRequests .= '<DebitRequest id="'.$id.'" type="creation">
                 <CustomerInformation><classid>'.$orderProduct->getProduct()->getClassId().'</classid></CustomerInformation>
+            </DebitRequest>
+            ';
+        }
+
+        return $debitRequests;
+    }
+
+    private function setRechargeNodes(array $productsToRecharge)
+    {
+        $debitRequests = "";
+
+        /**
+         * @var int $id
+         * @var OrderProduct $orderProduct
+         */
+        foreach($productsToRecharge as $id => $orderProduct) {
+            $debitRequests .=
+                '<DebitRequest id="'.$id.'" type="misctrans">
+                <account>'.$orderProduct->getCtrlNumber().'</account>
+                <amount>'.$orderProduct->getPinDenomination().'</amount>
+                <transtype>vendorcredit</transtype>
+                <note>recharge</note>
+                <balancetozero>n</balancetozero>
             </DebitRequest>
             ';
         }
