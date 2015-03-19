@@ -80,7 +80,7 @@ class OrderProduct
     private $orderDetail;
 
     /**
-     * @var integer
+     * @var float
      *
      * @ORM\Column(name="vat", type="decimal", precision=4, scale=2, options={"unsigned"=true})
      */
@@ -135,7 +135,7 @@ class OrderProduct
     /**
      * Get pinDenomination
      *
-     * @return string 
+     * @return string
      */
     public function getPinDenomination()
     {
@@ -315,7 +315,7 @@ class OrderProduct
     /**
      * Set vat
      *
-     * @param integer $vat
+     * @param float $vat
      * @return OrderProduct
      */
     public function setVat($vat)
@@ -328,7 +328,7 @@ class OrderProduct
     /**
      * Get vat
      *
-     * @return integer 
+     * @return float
      */
     public function getVat()
     {

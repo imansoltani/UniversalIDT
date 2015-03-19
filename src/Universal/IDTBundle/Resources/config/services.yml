@@ -37,6 +37,10 @@ services:
             class: Universal\IDTBundle\EventListener\LogoutSuccessHandler
             arguments: [ @security.http_utils, "/" ]
 
+    OrderServices:
+        class: Universal\IDTBundle\Services\OrderServices
+        arguments: [@doctrine.orm.default_entity_manager]
+
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

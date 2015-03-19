@@ -3,7 +3,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: ../Resources/yml/countries.yml }
-    - { resource: ../Resources/yml/vats.yml }
 
 framework:
     #esi:             ~

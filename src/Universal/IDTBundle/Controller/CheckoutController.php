@@ -164,6 +164,8 @@ class CheckoutController extends Controller
             return false;
 //            die("currency length");
 
+        $vats = $this->container->getParameter('vats');
+
         foreach($added_items as &$added_item) {
             if(
                 !isset($added_item['id']) ||
@@ -179,20 +181,20 @@ class CheckoutController extends Controller
                 return false;
 //                die("field error");
 
-            $price_with_vat = $added_item['denomination'] * (($added_item['base']-$added_item['free_amount'])/$added_item['base']);
-            $price_without_vat = $price_with_vat / (1+ $added_item['vat']/100);
-            $added_item['row_vat'] = $added_item['count'] * ( $price_with_vat - $price_without_vat );
-            $sum_vat += $added_item['row_vat'];
-
-            $added_item['discount'] = ($added_item['free_amount']/$added_item['base'])*$added_item['denomination'];
-            $added_item['row_total'] =  $added_item['count'] * ($added_item['denomination'] - $added_item['discount']);
-            $sum_total += $added_item['row_total'];
+            if(!is_numeric($added_item['count']) )
+                return false;
 
             switch ($added_item['type']) {
                 case $this->BASKET_BUY:
                     /** @var Product $row */
                     $row = $em->getRepository('UniversalIDTBundle:Product')->find($added_item['id']);
-                    if(!$row || $row->getName() != $added_item['name'])
+                    if(!$row
+                        || $row->getName() != $added_item['name']
+                        || !in_array($added_item['denomination'], $row->getDenominations())
+                        || $row->getDenominations()[0] != $added_item['base']
+                        || $row->getFreeAmountDenomination1() != $added_item['free_amount']
+                        || $vats[$row->getCurrency()] != $added_item['vat']
+                    )
                         return false;
 //                        die("not exist or error name");
 
@@ -225,6 +227,12 @@ class CheckoutController extends Controller
 //                        die("error denom");
                     break;
             }
+
+            $sum_vat += $added_item['count'] * $this->get('OrderServices')->calcVat($added_item['product'], $added_item['denomination']);
+
+            $added_item['discount'] = $this->get('OrderServices')->calcDiscount($added_item['product'], $added_item['denomination']);
+            $added_item['row_total'] =  $added_item['count'] * ($added_item['denomination'] - $added_item['discount']);
+            $sum_total += $added_item['row_total'];
         }
 
         return true;
@@ -241,13 +249,10 @@ class CheckoutController extends Controller
 
         //calc sum amount
         $amount = 0;
-        foreach($basket as $row)
-            $amount += $row['count'] * $row['denomination'];
 
         //create order_detail
         $order_detail = new OrderDetail();
         $order_detail->setCurrency($basket_currency);
-        $order_detail->setAmount($amount);
         $order_detail->setDeliveryEmail($formData['email']);
         $order_detail->setDeliverySMS($formData['sms']);
         $order_detail->setPaymentMethod($formData['method']);
@@ -262,11 +267,7 @@ class CheckoutController extends Controller
                 $order_product->setOrderDetail($order_detail);
                 $order_detail->addOrderProduct($order_product);
                 $order_product->setPinDenomination($row['denomination']);
-
-                $price_with_vat = $row['denomination'] * (($row['base']-$row['free_amount'])/$row['base']);
-                $price_without_vat = $price_with_vat / (1+ $row['vat']/100);
-
-                $order_product->setVat($price_with_vat - $price_without_vat);
+                $order_product->setVat($row['vat']);
                 $order_product->setRequestStatus(RequestStatusEnumType::REGISTERED);
                 switch ($row['type']) {
                     case $this->BASKET_BUY:
@@ -287,8 +288,13 @@ class CheckoutController extends Controller
                         break;
                 }
                 $em->persist($order_product);
+
+                $amount += $row['denomination'] - $this->get('OrderServices')->calcDiscount($order_product->getProduct(), $row['denomination']);
             }
+
         }
+
+        $order_detail->setAmount($amount);
 
         $em->flush();
 
