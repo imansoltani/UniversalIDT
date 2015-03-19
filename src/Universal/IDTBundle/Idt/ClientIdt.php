@@ -7,6 +7,7 @@ use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\OrderProduct;
+use Universal\IDTBundle\Entity\Product;
 
 /**
  * Class IDT
@@ -30,16 +31,6 @@ class ClientIdt
     private $em;
 
     /**
-     * @var string
-     */
-    private $debitRequests = "";
-
-    /**
-     * @var ArrayKey array(ID of Request => ID of OrderProduct)
-     */
-    private $debitRequestsIDs;
-
-    /**
      * @param array $idt_parameters
      * @param ClientInterface $guzzle
      * @param EntityManager $em
@@ -52,88 +43,75 @@ class ClientIdt
         $this->debitRequestsIDs = new ArrayKey();
     }
 
-    private function processCreationRequests(array $productsToCreate)
+    private function processCreationRequests(OrderDetail $orderDetail)
     {
-        $this->debitRequests = "";
-        $this->debitRequestsIDs->reset();
+        $debitRequests = "";
+
+        $responses = array();
+
+        $i = 1;
+
+        $productsToCreate = array();
 
         /** @var OrderProduct $orderProduct */
-        foreach($productsToCreate as $orderProduct) {
-            $this->accountCreationRequest($orderProduct);
-        }
-        $this->em->flush();
-
-        $responses = $this->generateAndPostRequestAndGetResponse();
-
-        usort($responses, function($a, $b){
-                if ($a['@attributes']['id'] == $b['@attributes']['id'])
-                    return 0;
-                return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
-            });
-
-        $i = 0;
-        foreach($productsToCreate as $orderProduct) {
-            $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
-            if($responseID === false) continue;
-            $response = $responses[$i++];
-            if ($response['@attributes']['id'] != $responseID)
-                throw new \Exception('Error in count of responses.');
-
-            if(strtolower($response['status']) !== 'ok') {
-                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-                $orderProduct->setStatusDesc(substr($response['code'].":".$response['description'], 0, 100));
+        foreach($orderDetail as $orderProduct) {
+            if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
+                $productsToCreate [$i++] = $orderProduct;
             }
-
-            $this->accountCreationResponse($orderProduct, $response);
         }
+
+        $debitRequests .= $this->setAccountCreationNodes($productsToCreate);
+
+        $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
+
+        /** @var OrderProduct $orderProduct */
+        foreach($productsToCreate as $id => $orderProduct) {
+            if(strtolower($responses[$id]['status']) == 'ok') {
+                $orderProduct->setCtrlNumber($responses[$id]['account']);
+                $orderProduct->setPin($responses[$id]['authcode']);
+                $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
+            } else {
+                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
+                $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
+            }
+        }
+
         $this->em->flush();
     }
 
-    private function processSecondaryRequests(OrderDetail $orderDetail)
+    private function processRechargeRequests(OrderDetail $orderDetail)
     {
-        $this->debitRequests = "";
-        $this->debitRequestsIDs->reset();
+        $debitRequests = "";
+
+        $responses = array();
+
+        $i = 1;
+
+        $productsToCreate = array();
 
         /** @var OrderProduct $orderProduct */
-        foreach($orderDetail->getOrderProducts() as $orderProduct) {
-            if($orderProduct->isProcessed()) continue;
-
-            switch ($orderProduct->getRequestType()) {
-                case RequestTypeEnumType::ACTIVATION: $this->cardActivationRequest($orderProduct); break;
-                case RequestTypeEnumType::RECHARGE: $this->rechargeAccountRequest($orderProduct); break;
-                default: throw new \Exception('unknown Request Type in order product with id: '.$orderProduct->getId());
+        foreach($orderDetail as $orderProduct) {
+            if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
+                $productsToCreate [$i++] = $orderProduct;
             }
         }
-        $this->em->flush();
 
-        if($this->debitRequestsIDs->count() === 0) {
-            Log::save("No Data","idt_no_data");
-            return;
-        }
+        $debitRequests .= $this->setAccountCreationNodes($productsToCreate);
 
-        $responses = $this->generateAndPostRequestAndGetResponse();
+        $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
 
-        usort($responses, function($a, $b){
-                if ($a['@attributes']['id'] == $b['@attributes']['id'])
-                    return 0;
-                return ($a['@attributes']['id'] < $b['@attributes']['id']) ? -1 : 1;
-            });
-
-        $i = 0;
-        foreach($orderDetail->getOrderProducts() as $orderProduct) {
-            $responseID = $this->debitRequestsIDs->get($orderProduct->getId());
-            if($responseID === false) continue;
-            $response = $responses[$i++];
-            if($response['@attributes']['id'] != $responseID)
-                throw new \Exception('Error in count of responses.');
-
-            if(strtolower($response['status']) === 'ok') {
-                $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
+        /** @var OrderProduct $orderProduct */
+        foreach($productsToCreate as $id => $orderProduct) {
+            if(strtolower($responses[$id]['status']) == 'ok') {
+                $orderProduct->setCtrlNumber($responses[$id]['account']);
+                $orderProduct->setPin($responses[$id]['authcode']);
+                $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
             } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-                $orderProduct->setStatusDesc(substr($response['code'].":".$response['description'], 0, 100));
+                $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
             }
         }
+
         $this->em->flush();
     }
 
@@ -144,7 +122,8 @@ class ClientIdt
      */
     public function processOrder(OrderDetail $orderDetail)
     {
-        $productsToCreate = array();
+        $numberOfProductsToCreate = 0;
+        $numberOfProductsToRecharge = 0;
 
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
@@ -154,22 +133,26 @@ class ClientIdt
             $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
 
             if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION)
-                $productsToCreate []= $orderProduct;
+                $numberOfProductsToCreate ++;
+
+            if($orderProduct->getRequestType() == RequestTypeEnumType::RECHARGE)
+                $numberOfProductsToRecharge ++;
         }
 
-        try {
-            $this->processCreationRequests($productsToCreate);
-            $this->processSecondaryRequests($orderDetail);
-        } catch (\Exception $e) {
-            /** @var OrderProduct $orderProduct */
-            foreach($orderDetail->getOrderProducts() as $orderProduct) {
-                $this->em->refresh($orderProduct);
-                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-            }
+        if(count($orderDetail->getOrderProducts()) != $numberOfProductsToCreate + $numberOfProductsToRecharge) {
             $this->em->flush();
-
-            throw new \Exception($e->getMessage());
+            throw new \Exception("System found unknown request type.");
         }
+
+        if($numberOfProductsToCreate > 0) {
+            $this->processCreationRequests($orderDetail);
+        }
+
+        if($numberOfProductsToRecharge > 0) {
+            $this->processRechargeRequests($orderDetail);
+        }
+
+        $this->em->flush();
 
         return $orderDetail;
     }
@@ -190,11 +173,12 @@ class ClientIdt
     }
 
     /**
+     * @param string $debitRequests
      * @param bool $reportSuccesses
      * @return array
      * @throws \Exception
      */
-    private function generateAndPostRequestAndGetResponse($reportSuccesses = true)
+    private function generateAndPostRequestAndGetResponse($debitRequests, $reportSuccesses = true)
     {
         $request =
             '<?xml version="1.0"?>
@@ -204,23 +188,36 @@ class ClientIdt
                 <password>'.$this->idt_parameters['password'].'</password>
             </UserInfo>
             <DebitRequests ReportSuccesses="'.($reportSuccesses?"true":"false").'">
-                '.$this->debitRequests.'
+                '.$debitRequests.'
             </DebitRequests>
             </IDTDebitInterface>';
 
-        Log::save(print_r($request, true),"idt_request");
+        Log::save(print_r($request, true), "idt_request");
 
-        $response = $this->guzzle->post($this->idt_parameters['api_location'], null, $request)->send();
+        try {
+            $response = $this->guzzle->post($this->idt_parameters['api_location'], null, $request)->send();
+        }
+        catch (\Exception $e) {
+            throw new \Exception("Something wrong happened with IDT server.");
+        }
 
-        Log::save($response->getBody(),"idt_response");
+        Log::save($response->getBody(), "idt_response");
 
         $result = simplexml_load_string($response->getBody());
 
-        if(isset($result->DebitError))
+        if (isset($result->DebitError)) {
             throw new \Exception($result->DebitError->errordescription, 1234);
+        }
 
         $arrayResponses = json_decode(json_encode((array) $result->DebitResponses), true);
-        return $this->debitRequestsIDs->count() <= 1 ? array($arrayResponses['DebitResponse']) : $arrayResponses['DebitResponse'];
+
+        $arrayResponses = $this->debitRequestsIDs->count() <= 1 ? array($arrayResponses['DebitResponse']) : $arrayResponses['DebitResponse'];
+
+        $result = array();
+        foreach ($arrayResponses as $arrayResponse)
+            $result [$arrayResponse['@attributes']['id']] = $arrayResponse;
+
+        return $result;
     }
 
     //--------------------------------
@@ -294,5 +291,23 @@ class ClientIdt
             $orderProduct->setPin($debitResponse['authcode']);
             $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
         }
+    }
+
+    private function setAccountCreationNodes(array $productsToCreate)
+    {
+        $debitRequests = "";
+
+        /**
+         * @var int $id
+         * @var OrderProduct $orderProduct
+         */
+        foreach($productsToCreate as $id => $orderProduct) {
+            $debitRequests .= '<DebitRequest id="'.$id.'" type="creation">
+                <CustomerInformation><classid>'.$orderProduct->getProduct()->getClassId().'</classid></CustomerInformation>
+            </DebitRequest>
+            ';
+        }
+
+        return $debitRequests;
     }
 }
