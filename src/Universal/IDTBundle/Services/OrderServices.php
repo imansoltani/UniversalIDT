@@ -23,7 +23,7 @@ class OrderServices
         $this->em = $em;
     }
 
-    private function getVat($countryISO)
+    public function getVat($countryISO)
     {
         $vatEntity = $this->em->getRepository('UniversalIDTBundle:Vat')->findOneBy(array('countryISO'=>$countryISO));
         return $vatEntity ? $vatEntity->getValue() : null;

@@ -32,6 +32,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         languages: %languages%
+        OrderServices: @OrderServices
 
 # Assetic Configuration
 assetic:

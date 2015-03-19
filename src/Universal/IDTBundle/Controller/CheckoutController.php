@@ -164,8 +164,6 @@ class CheckoutController extends Controller
             return false;
 //            die("currency length");
 
-        $vats = $this->container->getParameter('vats');
-
         foreach($added_items as &$added_item) {
             if(
                 !isset($added_item['id']) ||
@@ -193,7 +191,7 @@ class CheckoutController extends Controller
                         || !in_array($added_item['denomination'], $row->getDenominations())
                         || $row->getDenominations()[0] != $added_item['base']
                         || $row->getFreeAmountDenomination1() != $added_item['free_amount']
-                        || $vats[$row->getCurrency()] != $added_item['vat']
+                        || $this->get('OrderServices')->getVat($row->getCountryISO()) != $added_item['vat']
                     )
                         return false;
 //                        die("not exist or error name");
