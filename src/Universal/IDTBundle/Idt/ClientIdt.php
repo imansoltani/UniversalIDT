@@ -39,7 +39,6 @@ class ClientIdt
         $this->idt_parameters = $idt_parameters;
         $this->guzzle = $guzzle;
         $this->em = $em;
-        $this->debitRequestsIDs = new ArrayKey();
     }
 
     private function processCreationRequests(OrderDetail $orderDetail)
@@ -207,19 +206,17 @@ class ClientIdt
 
         Log::save($response->getBody(), "idt_response");
 
-        $result = simplexml_load_string($response->getBody());
+        $arrayResponses = simplexml_load_string($response->getBody());
 
-        if (isset($result->DebitError)) {
-            throw new \Exception($result->DebitError->errordescription, 1234);
+        if (isset($arrayResponses->DebitError)) {
+            throw new \Exception($arrayResponses->DebitError->errordescription, 1234);
         }
 
-        $arrayResponses = json_decode(json_encode((array) $result->DebitResponses), true);
-
-        $arrayResponses = $this->debitRequestsIDs->count() <= 1 ? array($arrayResponses['DebitResponse']) : $arrayResponses['DebitResponse'];
-
         $result = array();
-        foreach ($arrayResponses as $arrayResponse)
-            $result [$arrayResponse['@attributes']['id']] = $arrayResponse;
+        /** @var \SimpleXMLElement $debitResponse */
+        foreach ($arrayResponses->DebitResponses->DebitResponse as $debitResponse) {
+            $result [(int) $debitResponse->attributes()->id]= $debitResponse;
+        }
 
         return $result;
     }
