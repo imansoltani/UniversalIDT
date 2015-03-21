@@ -63,14 +63,14 @@ class ClientIdt
         $numberOfSucceedCreations = 0;
         /** @var OrderProduct $orderProduct */
         foreach($productsToCreate as $id => $orderProduct) {
-            if(strtolower($responses[$id]['status']) == 'ok') {
-                $orderProduct->setCtrlNumber($responses[$id]['account']);
-                $orderProduct->setPin($responses[$id]['authcode']);
+            if(strtolower($responses[$id]->status) == 'ok') {
+                $orderProduct->setCtrlNumber($responses[$id]->account);
+                $orderProduct->setPin($responses[$id]->authcode);
                 $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
                 $numberOfSucceedCreations ++;
             } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-                $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
+                $orderProduct->setStatusDesc(substr($responses[$id]->code.":".$responses[$id]->description, 0, 100));
             }
         }
 
@@ -100,11 +100,11 @@ class ClientIdt
 
         /** @var OrderProduct $orderProduct */
         foreach($productsToRecharge as $id => $orderProduct) {
-            if(strtolower($responses[$id]['status']) == 'ok') {
+            if(strtolower($responses[$id]->status) == 'ok') {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
             } else {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
-                $orderProduct->setStatusDesc(substr($responses[$id]['code'].":".$responses[$id]['description'], 0, 100));
+                $orderProduct->setStatusDesc(substr($responses[$id]->code.":".$responses[$id]->description, 0, 100));
             }
         }
 
@@ -169,8 +169,8 @@ class ClientIdt
 
         $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
 
-        if(isset($responses[$id]['status']))
-            throw new \Exception("Error in IDT: ". $responses[0]['description']. " (".$responses[0]['code'].")");
+        if(isset($responses[$id]->status))
+            throw new \Exception("Error in IDT: ". $responses[0]->description. " (".$responses[0]->code.")");
 
         return $responses[$id];
     }
