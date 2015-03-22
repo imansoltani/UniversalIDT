@@ -34,11 +34,13 @@
                             </table>
                         </div>
 
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-success">Go to Details</a>
-                        {% else %}
-                            <a href="{{ path('WebPage_order_details') }}" class="btn btn-success">Go to Details</a>
-                            <span style="color: #ff0000">This link is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.</span>
+                        {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") %}
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-success">Go to Details</a>
+                            {% else %}
+                                <a href="{{ path('WebPage_order_details') }}" class="btn btn-success">Go to Details</a>
+                                <span style="color: #ff0000">This link is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.</span>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
