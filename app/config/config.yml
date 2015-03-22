@@ -66,6 +66,7 @@ doctrine:
             PaymentStatusEnumType: Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType
             GenderEnumType: Universal\IDTBundle\DBAL\Types\GenderEnumType
             RateEnumType: Universal\IDTBundle\DBAL\Types\RateEnumType
+            RequestsStatusEnumType: Universal\IDTBundle\DBAL\Types\RequestsStatusEnumType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"

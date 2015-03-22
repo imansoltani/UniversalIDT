@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Universal\IDTBundle\DBAL\Types\PaymentMethodEnumType;
 use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
+use Universal\IDTBundle\DBAL\Types\RequestsStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
@@ -20,6 +21,9 @@ use Universal\IDTBundle\Idt\Log;
 
 class CheckoutController extends Controller
 {
+    const LAST_ORDER_COUNT_SHOWN = 3;
+    const LAST_ORDER_TIME_LENGTH = 20;
+
     private $BASKET_BUY = "buy";
     private $BASKET_RECHARGE = "recharge";
 
@@ -99,50 +103,37 @@ class CheckoutController extends Controller
             Log::save($orderDetail->getId(),"order_id_after_ogone");
 
         } catch (\Exception $e) {
-            return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                    'status' => 'U',
-                    'result' => 'Error in process result of Ogone: '. $e->getMessage()
-                ));
+            Log::save($e->getMessage(),"error_in_ogone");
+            throw new \Exception('Error in process result of Ogone: '. $e->getMessage());
         }
 
         try {
-            if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED) {
-
+            if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED && $orderDetail->getRequestsStatus() == null) {
                 $orderDetail = $this->get('idt')->processOrder($orderDetail);
-
-                $result = "";
-                /** @var OrderProduct $orderProduct */
-                foreach($orderDetail->getOrderProducts() as $orderProduct) {
-                    $result .=
-                        " id: ". $orderProduct->getId()." - ".
-                        " name: ". $orderProduct->getProduct()->getName()." - ".
-                        " class_id: ". $orderProduct->getProduct()->getClassId()." - ".
-                        " denomination: ". $orderProduct->getPinDenomination()." - ".
-                        " ctrlNumber: ". ($orderProduct->getCtrlNumber()?:"--") ." - ".
-                        " pin: ". ($orderProduct->getPin()?:"--") ." - ".
-                        " request type: ". $orderProduct->getRequestType()." - ".
-                        " request status: ". $orderProduct->getRequestStatus()." - ".
-                        "<br>";
-                }
-
-                return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                        'status' => 'S',
-                        'result' => "Your transaction was successfully done! <br>" . $result
-                    ));
-            }
-            else
-            {
-                return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                        'status' => 'F',
-                        'result' => "Unfortunately transaction failed!"
-                    ));
             }
         } catch (\Exception $e) {
-            return $this->forward("UniversalIDTBundle:Checkout:checkoutResult", array(
-                    'status' => 'U',
-                    'result' => 'Error in IDT process: '. $e->getMessage()
-                ));
+            Log::save($e->getMessage(), "error_in_idt");
         }
+
+//        /** @var EntityManager $em */
+//        $em = $this->getDoctrine()->getManager();
+//        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(1);
+
+        $response = new Response();
+//        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+//        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+
+        if(!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $this->get('session')->set('last_order_id', $orderDetail->getId());
+            $this->get('session')->set('last_order_count_shown', 0);
+            $this->get('session')->set('last_order_start_time', new \DateTime());
+        }
+
+        return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
+                'orderDetail' => $orderDetail,
+                'maxCountShow' => CheckoutController::LAST_ORDER_COUNT_SHOWN,
+                'maxMinutesShow' => CheckoutController::LAST_ORDER_TIME_LENGTH
+            ), $response);
     }
 
     public function sofortResultAction()
@@ -314,15 +305,44 @@ class CheckoutController extends Controller
         return new Response("done");
     }
 
-    public function checkoutResultAction($status, $result)
+    public function orderDetailsAction()
     {
-        $response = new Response();
-//        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
-//        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+        $last_order_id = $this->get('session')->get('last_order_id');
+        $last_order_count_shown = $this->get('session')->get('last_order_count_shown');
+        $last_order_start_time = $this->get('session')->get('last_order_start_time');
 
-        return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
-                'status' => $status,
-                'result' => $result
-            ), $response);
+        if($last_order_id == null
+            || $last_order_count_shown >= CheckoutController::LAST_ORDER_COUNT_SHOWN
+            || date_diff($last_order_start_time, new \DateTime())->i > CheckoutController::LAST_ORDER_TIME_LENGTH
+        ) {
+            $this->get('session')->remove('last_order_id');
+            $this->get('session')->remove('last_order_count_show');
+
+            throw $this->createNotFoundException('Last Order Not found.');
+        }
+
+        $this->get('session')->set('last_order_count_show', ++$last_order_count_shown);
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var OrderDetail $order */
+        $order = $em->createQueryBuilder()
+            ->select('orderDetail', 'order_products', 'product')
+            ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
+            ->where('orderDetail.id = :id')->setParameter('id', $last_order_id)
+            ->innerJoin('orderDetail.orderProducts', 'order_products')
+            ->innerJoin('order_products.product', 'product')
+            ->getQuery()->getOneOrNullResult();
+
+        if(!$order)
+            throw $this->createNotFoundException('Order not found.');
+
+        if($order->getRequestsStatus() != RequestsStatusEnumType::DONE)
+            throw new \Exception('Error in IDT');
+
+        return $this->render('UniversalIDTBundle:Orders:details.html.twig', array(
+                'order' => $order
+            ));
     }
 }

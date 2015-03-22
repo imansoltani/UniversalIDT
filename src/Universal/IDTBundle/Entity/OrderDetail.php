@@ -98,6 +98,14 @@ class OrderDetail
     private $paymentStatus;
 
     /**
+     * @var string
+     *
+     * @EnumAssert\Enum(entity="Universal\IDTBundle\DBAL\Types\RequestsStatusEnumType")
+     * @ORM\Column(name="requests_status", type="RequestsStatusEnumType", nullable=true)
+     */
+    private $requestsStatus;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="paymentId", type="integer", options={"unsigned"=true}, nullable=true)
@@ -455,5 +463,28 @@ class OrderDetail
     public function getPaymentId()
     {
         return $this->paymentId;
+    }
+
+    /**
+     * Set requestsStatus
+     *
+     * @param string $requestsStatus
+     * @return OrderDetail
+     */
+    public function setRequestsStatus($requestsStatus)
+    {
+        $this->requestsStatus = $requestsStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get requestsStatus
+     *
+     * @return string
+     */
+    public function getRequestsStatus()
+    {
+        return $this->requestsStatus;
     }
 }

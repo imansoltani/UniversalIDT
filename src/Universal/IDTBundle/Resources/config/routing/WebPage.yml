@@ -38,6 +38,6 @@ WebPage_sofort_result:
     path:     /checkout/sofort-result
     defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }
 
-#WebPage_checkout_resut:
-#    path:     /checkout/result/{status}/{result}
-#    defaults: { _controller: UniversalIDTBundle:Checkout:checkoutResult }
+WebPage_order_details:
+    path:     /checkout/order-details
+    defaults: { _controller: UniversalIDTBundle:Checkout:orderDetails }

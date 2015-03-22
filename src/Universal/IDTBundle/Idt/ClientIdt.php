@@ -3,6 +3,7 @@ namespace Universal\IDTBundle\Idt;
 
 use Doctrine\ORM\EntityManager;
 use Guzzle\Service\ClientInterface;
+use Universal\IDTBundle\DBAL\Types\RequestsStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestStatusEnumType;
 use Universal\IDTBundle\DBAL\Types\RequestTypeEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
@@ -121,6 +122,8 @@ class ClientIdt
         $numberOfProductsToCreate = 0;
         $numberOfProductsToRecharge = 0;
 
+        $orderDetail->setRequestsStatus(RequestsStatusEnumType::PENDING);
+
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
             if ($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
@@ -135,8 +138,9 @@ class ClientIdt
                 $numberOfProductsToRecharge ++;
         }
 
+        $this->em->flush();
+
         if(count($orderDetail->getOrderProducts()) != $numberOfProductsToCreate + $numberOfProductsToRecharge) {
-            $this->em->flush();
             throw new \Exception("System found unknown request type.");
         }
 
@@ -148,6 +152,7 @@ class ClientIdt
             $this->processRechargeRequests($orderDetail);
         }
 
+        $orderDetail->setRequestsStatus(RequestsStatusEnumType::DONE);
         $this->em->flush();
 
         return $orderDetail;

@@ -7,18 +7,39 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="page-header">
+                        <h3>Payment Result</h3>
+                    </div>
                     <div class="section-content clearfix">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="payment-status clearfix"><!-- PAYMENT STATUS -->
-                                    <h4>Payment Status: <span class="{{ status == 'S' ? 'success' : 'failed' }}">{{ status == 'S' ? 'Success' : 'Failed' }}</span></h4>
-                                    <div class="text-center clearfix">
-                                        <p>{{ result|raw }}</p>
-                                        <a href="{{ path('WebPage_main') }}" class="btn btn-primary btn-lg"><i class="fa fa-home"></i> Back to Home</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td>{{ orderDetail.paymentId }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <td>{{ orderDetail.date|date('Y-m-d H:i:s') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Method</th>
+                                    <td>{{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
+
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-success">Go to Details</a>
+                        {% else %}
+                            <a href="{{ path('WebPage_order_details') }}" class="btn btn-success">Go to Details</a>
+                            <span style="color: #ff0000">This link is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
