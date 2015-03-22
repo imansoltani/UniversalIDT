@@ -4,6 +4,7 @@ namespace Universal\IDTBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Universal\IDTBundle\DBAL\Types\RequestsStatusEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Entity\User;
 
@@ -53,6 +54,9 @@ class OrdersController extends Controller
 
         if(!$order)
             throw $this->createNotFoundException('Order not found.');
+
+        if($order->getRequestsStatus() != RequestsStatusEnumType::DONE)
+            throw new \Exception('Error in IDT');
 
         return $this->render('UniversalIDTBundle:Orders:details.html.twig', array(
                 'order' => $order

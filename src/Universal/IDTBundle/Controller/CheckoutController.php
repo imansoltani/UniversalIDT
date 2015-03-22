@@ -117,7 +117,7 @@ class CheckoutController extends Controller
 
 //        /** @var EntityManager $em */
 //        $em = $this->getDoctrine()->getManager();
-//        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(1);
+//        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(5);
 
         $response = new Response();
 //        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
@@ -321,7 +321,7 @@ class CheckoutController extends Controller
             throw $this->createNotFoundException('Last Order Not found.');
         }
 
-        $this->get('session')->set('last_order_count_show', ++$last_order_count_shown);
+        $this->get('session')->set('last_order_count_shown', ++$last_order_count_shown);
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -331,6 +331,7 @@ class CheckoutController extends Controller
             ->select('orderDetail', 'order_products', 'product')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
             ->where('orderDetail.id = :id')->setParameter('id', $last_order_id)
+            ->andWhere('orderDetail.user is null')
             ->innerJoin('orderDetail.orderProducts', 'order_products')
             ->innerJoin('order_products.product', 'product')
             ->getQuery()->getOneOrNullResult();
