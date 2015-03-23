@@ -82,8 +82,21 @@
         });
     });
 
-    function openDetails(product_id)
-    {
+    function findPrevAndNextOfCard(product_id) {
+        var this_product = $('.calling-cards a[data-id="'+(product_id)+'"]');
+
+        if(this_product.length == 0)
+            return { prev: null, next: null };
+        var prev_product = this_product.closest('.owl-item').prev();
+        var next_product = this_product.closest('.owl-item').next();
+
+        return {
+            prev: prev_product.length == 0 ? null : prev_product.find('a').data('id'),
+            next: next_product.length == 0 ? null : next_product.find('a').data('id')
+        };
+    }
+
+    function openDetails(product_id, isCallingCardList) {
         waitingDialog.show(undefined, {dialogSize: 'sm'});
         $.ajax({
             type: "get",
@@ -92,7 +105,14 @@
             cache: false,
             success: function(result)
             {
-                $(".modal#calling-card-modal .modal-body").html(result);
+                $(".modal#calling-card-modal .modal-content").html(result);
+
+                if(isCallingCardList == true) {
+                    var finds = findPrevAndNextOfCard(product_id);
+                    if(finds.prev != null) $(".modal-body #prev_product_link").prop('disabled', false).attr('onclick', 'openDetails('+finds.prev+', true)');
+                    if(finds.next != null) $(".modal-body #next_product_link").prop('disabled', false).attr('onclick', 'openDetails('+finds.next+', true)');
+                }
+
                 waitingDialog.hide();
                 $('#calling-card-modal').modal('show');
             },

@@ -1,9 +1,9 @@
 {% for row in result %}
     <tr>
         <td>
-            <a href="javascript:openDetails({{ row.product.id }})"><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="{{ row.product.name }}"></a>
+            <a href="javascript:openDetails('{{ row.product.id }}', false)"><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="{{ row.product.name }}"></a>
         </td>
-        <td><a href="javascript:openDetails({{ row.product.id }})">{{ row.product.name }}</a></td>
+        <td><a href="javascript:openDetails('{{ row.product.id }}', false)">{{ row.product.name }}</a></td>
         <td>
             <select id="denomination_list" name="denomination_list" class="form-control" style="width: 80px">
                 <option value="">Denomination</option>

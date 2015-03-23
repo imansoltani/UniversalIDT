@@ -200,8 +200,8 @@
 
 //        if(row['type'] == "buy")
             $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
-                '<td><a href="javascript:openDetails('+row['id']+')"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
-                '<td><a href="javascript:openDetails('+row['id']+')">'+row['name']+'</a></td>'+
+                '<td><a href="javascript:openDetails('+row['id']+', false)"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
+                '<td><a href="javascript:openDetails('+row['id']+', false)">'+row['name']+'</a></td>'+
                 '<td id="quantity"><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
                 '<td id="denomination">'+row['denomination']+'</td>' +
                 '<td id="discount">'+discount+'</td>' +
