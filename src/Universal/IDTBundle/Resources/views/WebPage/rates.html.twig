@@ -86,8 +86,14 @@
 <script type="text/javascript">
     var dataTableRates = null;
 
-    $(document).ready(function (){
-        dataTableRates = $("#rates-table").DataTable();
+    function initDataTableRates() {
+        dataTableRates = $("#rates-table").DataTable({
+            "columnDefs": [ {
+                "targets": [0, 2, 7, 8, 9],
+                "searchable": false,
+                "orderable": false
+            } ]
+        });
 
         $('#rates-table > tbody > tr').each(function() {
             var denomination = $(this).find('select');
@@ -98,6 +104,10 @@
                 $(this).closest('tr').find('.minutes').text(minute);
             });
         });
+    }
+
+    $(document).ready(function (){
+        initDataTableRates();
     });
 
     $('form#rate_form').submit(function(e) {
@@ -119,17 +129,8 @@
 
                 $("#rates-table tbody").html(result);
 
-                dataTableRates = $("#rates-table").DataTable();
+                initDataTableRates();
 
-                $('#rates-table > tbody > tr').each(function() {
-                    var denomination = $(this).find('select');
-                    var rate = $(this).find('.rate').text();
-
-                    $(denomination).change(function() {
-                        var minute = Math.floor($(this).val() / rate);
-                        $(this).closest('tr').find('.minutes').text(minute);
-                    });
-                });
                 waitingDialog.hide();
             },
             error: function(jqXHR, textStatus, errorThrown) {
