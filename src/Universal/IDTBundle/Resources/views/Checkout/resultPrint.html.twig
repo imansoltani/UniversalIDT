@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body style="text-align: center">
+<h3>Payment Result</h3>
+<table border="1" width="100%">
+    <tbody>
+    <tr>
+        <th>ID</th>
+        <td>{{ orderDetail.paymentId }}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+    </tr>
+    <tr>
+        <th>Date</th>
+        <td>{{ orderDetail.date|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>Method</th>
+        <td>{{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

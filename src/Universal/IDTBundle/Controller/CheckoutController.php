@@ -305,6 +305,61 @@ class CheckoutController extends Controller
         return new Response("done");
     }
 
+    public function GuestResultPrintAction()
+    {
+        $last_order_id = $this->get('session')->get('last_order_id');
+
+        if($last_order_id == null) {
+            $this->get('session')->remove('last_order_id');
+            $this->get('session')->remove('last_order_count_show');
+
+            throw $this->createNotFoundException('Last Order Not found.');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var OrderDetail $order */
+        $orderDetail = $em->createQueryBuilder()
+            ->select('orderDetail', 'order_products', 'product')
+            ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
+            ->where('orderDetail.id = :id')->setParameter('id', $last_order_id)
+            ->andWhere('orderDetail.user is null')
+            ->innerJoin('orderDetail.orderProducts', 'order_products')
+            ->innerJoin('order_products.product', 'product')
+            ->getQuery()->getOneOrNullResult();
+
+        if(!$orderDetail)
+            throw $this->createNotFoundException('Order not found.');
+
+        return $this->render("UniversalIDTBundle:Checkout:resultPrint.html.twig", array(
+                'orderDetail' => $orderDetail
+            ));
+    }
+
+    public function UserResultPrintAction($id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var OrderDetail $order */
+        $orderDetail = $em->createQueryBuilder()
+            ->select('orderDetail', 'order_products', 'product')
+            ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
+            ->where('orderDetail.id = :id')->setParameter('id', $id)
+            ->andWhere('orderDetail.user = :user')->setParameter('user', $this->getUser())
+            ->innerJoin('orderDetail.orderProducts', 'order_products')
+            ->innerJoin('order_products.product', 'product')
+            ->getQuery()->getOneOrNullResult();
+
+        if(!$orderDetail)
+            throw $this->createNotFoundException('Order not found.');
+
+        return $this->render("UniversalIDTBundle:Checkout:resultPrint.html.twig", array(
+                'orderDetail' => $orderDetail
+            ));
+    }
+
     public function orderDetailsAction()
     {
         $last_order_id = $this->get('session')->get('last_order_id');

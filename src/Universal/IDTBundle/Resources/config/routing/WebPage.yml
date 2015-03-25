@@ -41,3 +41,7 @@ WebPage_sofort_result:
 WebPage_order_details:
     path:     /checkout/order-details
     defaults: { _controller: UniversalIDTBundle:Checkout:orderDetails }
+
+WebPage_result_print:
+    path:     /checkout/result/print
+    defaults: { _controller: UniversalIDTBundle:Checkout:GuestResultPrint }
