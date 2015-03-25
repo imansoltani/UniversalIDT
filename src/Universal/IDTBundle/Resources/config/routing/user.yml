@@ -18,6 +18,10 @@ user_order_details:
     path:     /transactions/{id}
     defaults: { _controller: UniversalIDTBundle:Orders:details }
 
+user_order_details_print:
+    path:     /transactions/{id}/print
+    defaults: { _controller: UniversalIDTBundle:Orders:detailsPrint }
+
 user_pins:
     path:     /pins
     defaults: { _controller: UniversalIDTBundle:Pins:index }

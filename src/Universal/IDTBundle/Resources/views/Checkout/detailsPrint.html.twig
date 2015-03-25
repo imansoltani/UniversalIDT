@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/universalidt/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+</head>
+
+<body>
+<div class="row" style="margin: 10px">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget stacked">
+
+                    <div class="widget-header">
+                        <h3>General information</h3>
+                    </div>
+                    <!-- /widget-header -->
+
+                    <div class="widget-content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td>{{ order.paymentId }}</td>
+                                    <th>Date</th>
+                                    <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                                <tr>
+                                </tr>
+                                    <th>Payment Status</th>
+                                    <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                                    <th>Payment method</th>
+                                    <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+                                <tr>
+                                </tr>
+                                    <th>Delivery method</th>
+                                    <td colspan="3">
+                                        {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                                        {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                                        {{ delivery != "" ? delivery|raw : "--" }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /widget-content -->
+
+                </div>
+                <!-- /widget -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget stacked">
+
+                    <div class="widget-header">
+                        <h3>Order Details</h3>
+                    </div>
+                    <!-- /widget-header -->
+
+                    <div class="widget-content">
+                        <div class="table-responsive">
+                            <table id="table2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Card name</th>
+                                    <th>Denomination</th>
+                                    <th>Vat</th>
+                                    <th>Serial number</th>
+                                    <th>Pin</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% set vat = 0 %}
+                                {% for orderProduct in order.orderProducts %}
+                                    {% set vat = vat + orderProduct.vat %}
+                                    <tr>
+                                        <td>{{ orderProduct.product.name }}</td>
+                                        <td>{{ orderProduct.pinDenomination }}</td>
+                                        <td>{{ orderProduct.vat }}</td>
+                                        <td>{{ orderProduct.ctrlNumber }}</td>
+                                        <td>{{ orderProduct.pin }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /widget-content -->
+
+                </div>
+                <!-- /widget -->
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <h3>Order Summary</h3>
+            </div>
+            <div class="widget-content">
+                <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th>Order subtotal</th>
+                            <td id="basket_summary_subtotal">{{ order.amount }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tax</th>
+                            <td id="basket_summary_tax">{{ vat }}</td>
+                        </tr>
+                        <tr>
+                            <th>Delivery Method</th>
+                            <td id="basket_summary_email">
+                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                                {{ delivery != "" ? delivery|raw : "--" }}
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr class="total">
+                            <th>Total</th>
+                            <td id="basket_summary_total">{{ order.amount }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /widget-content -->
+
+    </div>
+    <!-- /widget -->
+</div>
+</body>
+</html>

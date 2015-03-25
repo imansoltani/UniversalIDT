@@ -38,10 +38,14 @@ WebPage_sofort_result:
     path:     /checkout/sofort-result
     defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }
 
+WebPage_result_print:
+    path:     /checkout/result/print
+    defaults: { _controller: UniversalIDTBundle:Checkout:GuestResultPrint }
+
 WebPage_order_details:
     path:     /checkout/order-details
     defaults: { _controller: UniversalIDTBundle:Checkout:orderDetails }
 
-WebPage_result_print:
-    path:     /checkout/result/print
-    defaults: { _controller: UniversalIDTBundle:Checkout:GuestResultPrint }
+WebPage_order_details_print:
+    path:     /checkout/order-details/print
+    defaults: { _controller: UniversalIDTBundle:Checkout:orderDetailsPrint }

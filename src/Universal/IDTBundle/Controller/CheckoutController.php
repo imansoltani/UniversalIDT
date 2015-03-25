@@ -321,12 +321,10 @@ class CheckoutController extends Controller
 
         /** @var OrderDetail $order */
         $orderDetail = $em->createQueryBuilder()
-            ->select('orderDetail', 'order_products', 'product')
+            ->select('orderDetail')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
             ->where('orderDetail.id = :id')->setParameter('id', $last_order_id)
             ->andWhere('orderDetail.user is null')
-            ->innerJoin('orderDetail.orderProducts', 'order_products')
-            ->innerJoin('order_products.product', 'product')
             ->getQuery()->getOneOrNullResult();
 
         if(!$orderDetail)
@@ -344,12 +342,10 @@ class CheckoutController extends Controller
 
         /** @var OrderDetail $order */
         $orderDetail = $em->createQueryBuilder()
-            ->select('orderDetail', 'order_products', 'product')
+            ->select('orderDetail')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
             ->where('orderDetail.id = :id')->setParameter('id', $id)
             ->andWhere('orderDetail.user = :user')->setParameter('user', $this->getUser())
-            ->innerJoin('orderDetail.orderProducts', 'order_products')
-            ->innerJoin('order_products.product', 'product')
             ->getQuery()->getOneOrNullResult();
 
         if(!$orderDetail)
@@ -401,4 +397,38 @@ class CheckoutController extends Controller
                 'order' => $order
             ));
     }
+
+    public function orderDetailsPrintAction()
+    {
+        $last_order_id = $this->get('session')->get('last_order_id');
+
+        if($last_order_id == null) {
+            $this->get('session')->remove('last_order_id');
+            $this->get('session')->remove('last_order_count_show');
+
+            throw $this->createNotFoundException('Last Order Not found.');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var OrderDetail $order */
+        $order = $em->createQueryBuilder()
+            ->select('orderDetail', 'order_products', 'product')
+            ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
+            ->where('orderDetail.id = :id')->setParameter('id', $last_order_id)
+            ->andWhere('orderDetail.user is null')
+            ->innerJoin('orderDetail.orderProducts', 'order_products')
+            ->innerJoin('order_products.product', 'product')
+            ->getQuery()->getOneOrNullResult();
+
+        if(!$order)
+            throw $this->createNotFoundException('Order not found.');
+
+        if($order->getRequestsStatus() != RequestsStatusEnumType::DONE)
+            throw new \Exception('Error in IDT');
+
+        return $this->render('UniversalIDTBundle:Checkout:detailsPrint.html.twig', array(
+                'order' => $order
+            ));    }
 }

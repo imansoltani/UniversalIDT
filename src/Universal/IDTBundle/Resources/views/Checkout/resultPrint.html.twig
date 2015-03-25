@@ -3,29 +3,46 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/universalidt/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
 </head>
 
-<body style="text-align: center">
-<h3>Payment Result</h3>
-<table border="1" width="100%">
-    <tbody>
-    <tr>
-        <th>ID</th>
-        <td>{{ orderDetail.paymentId }}</td>
-    </tr>
-    <tr>
-        <th>Status</th>
-        <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-    </tr>
-    <tr>
-        <th>Date</th>
-        <td>{{ orderDetail.date|date('Y-m-d H:i:s') }}</td>
-    </tr>
-    <tr>
-        <th>Method</th>
-        <td>{{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</td>
-    </tr>
-    </tbody>
-</table>
+<body>
+<div class="row" style="margin: 10px">
+    <div class="col-md-12">
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <h3>Payment Result</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ orderDetail.paymentId }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <td>{{ orderDetail.date|date('Y-m-d H:i:s') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Method</th>
+                            <td>{{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
