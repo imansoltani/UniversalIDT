@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Universal\IDTBundle\Entity\Product;
+use Universal\IDTBundle\Json\JsonParser;
 
 class ImportProductsCommand extends AbstractImportCommand
 {
@@ -35,6 +36,8 @@ class ImportProductsCommand extends AbstractImportCommand
             $output->writeln("Product entity cleared.");
         }
 
+        $accessNumbers = $this->groupAccessNumbersByClassId($this->csv_to_array($this->getFileAddressName("CSV", "access_numbers.csv")));
+
         $data = $this->csv_to_array($this->getFileAddressName("CSV", $input->getOption('test') ? "products_test.csv" : "products.csv"));
 
         $i = 0;
@@ -46,8 +49,22 @@ class ImportProductsCommand extends AbstractImportCommand
             $product->setClassId($row['cid']);
             $product->setDenominations(array($row['denom1'],$row['denom2'],$row['denom3']));
             $product->setFreeAmountDenomination1($row['free_amount_denom1']);
-//            $product->addAccessNumber()
-//            $product->setFile(new UploadedFile("C:\\xampp\\htdocs\\UniversalIdt\\web\\uploads\\test\\(".$i.").png", "(".$i.").png", 'image/png', 70, null, true));
+
+            if (isset($accessNumbers[$row['cid']])) {
+                $product->setAllAccessNumbers($accessNumbers[$row['cid']]);
+            }
+            else {
+                $output->writeln("warning: '" . $row['name'] . "' don't has access number.");
+            }
+
+            $imageFileName = strtoupper($row['country']." ".$row['name']).".png";
+            if (file_exists($this->getFileAddressName("Image", $imageFileName))) {
+                $product->setFile(new UploadedFile($this->getFileAddressName("Image", $imageFileName), $imageFileName, 'image/png', 1, null, true));
+            }
+            else {
+                $output->writeln("warning: '" . $row['name'] . "' don't has image.");
+            }
+
 //            $product->setDialingInstructions();
 //            $product->setGeneralInformation();
             $em->persist($product);
@@ -57,5 +74,33 @@ class ImportProductsCommand extends AbstractImportCommand
 
         $output->writeln("done ($i products)");
 
+    }
+
+    private function groupAccessNumbersByClassId($array)
+    {
+        $result = array();
+        foreach ($array as $row) {
+            if(!isset($result[$row['classID']]))
+                $result[$row['classID']] = array();
+
+            //number,location,type,Languages
+            $result[$row['classID']] []= array(
+                JsonParser::ACCESS_NUMBERS_TYPE => $row['type'],
+                JsonParser::ACCESS_NUMBERS_NUMBER => $row['number'],
+                JsonParser::ACCESS_NUMBERS_LOCATION => $row['location'],
+                JsonParser::ACCESS_NUMBERS_LANGUAGES => $this->fixLanguages($row['Languages'])
+            );
+        }
+
+        return $result;
+    }
+
+    private function fixLanguages($string)
+    {
+        $string = trim($string, " \t\n\r\0\x0B/");
+        $string = str_replace("/", ",", $string);
+        $string = strtoupper($string);
+
+        return $string;
     }
 }

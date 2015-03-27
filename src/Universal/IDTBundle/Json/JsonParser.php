@@ -5,7 +5,12 @@ namespace Universal\IDTBundle\Json;
  * Class JsonDetails
  * @package Universal\IDTBundle\Service
  */
-abstract class JsonParser {
+abstract class JsonParser
+{
+    const ACCESS_NUMBERS_TYPE = "typ";
+    const ACCESS_NUMBERS_NUMBER = "num";
+    const ACCESS_NUMBERS_LOCATION = "loc";
+    const ACCESS_NUMBERS_LANGUAGES = "lang";
 
     /**
      * @var array
@@ -273,7 +278,12 @@ abstract class JsonParser {
      */
     public function addAccessNumber($type, $number, $location, $languages)
     {
-        $this->arrayAdd('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location, "lang" => strtoupper($languages)));
+        $this->arrayAdd('access_numbers', array(
+                JsonParser::ACCESS_NUMBERS_TYPE => $type,
+                JsonParser::ACCESS_NUMBERS_NUMBER => $number,
+                JsonParser::ACCESS_NUMBERS_LOCATION => $location,
+                JsonParser::ACCESS_NUMBERS_LANGUAGES => strtoupper($languages))
+        );
 
         return $this;
     }
@@ -287,7 +297,12 @@ abstract class JsonParser {
      */
     public function removeAccessNumber($type, $number, $location, $languages)
     {
-        $this->arrayRemoveByValue('access_numbers', array("typ" => $type, "num" => $number, "loc" => $location, "lang" => strtoupper($languages)));
+        $this->arrayRemoveByValue('access_numbers', array(
+                JsonParser::ACCESS_NUMBERS_TYPE => $type,
+                JsonParser::ACCESS_NUMBERS_NUMBER => $number,
+                JsonParser::ACCESS_NUMBERS_LOCATION => $location,
+                JsonParser::ACCESS_NUMBERS_LANGUAGES => strtoupper($languages))
+        );
 
         return $this;
     }
@@ -299,6 +314,17 @@ abstract class JsonParser {
     public function findAccessNumbers(array $criteria)
     {
         return $this->arrayFind('access_numbers', $criteria);
+    }
+
+    /**
+     * @param array array with fields: {"typ" => type, "num" => number, "loc" => location, "lang" => languages}
+     * @return $this|JsonParser
+     */
+    public function setAllAccessNumbers($array)
+    {
+        $this->set('access_numbers', $array);
+
+        return $this;
     }
 
     /**
