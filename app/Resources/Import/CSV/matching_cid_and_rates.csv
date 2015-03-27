@@ -1,72 +1,72 @@
-CID;Nom;TF;LAC
-21769;AT Elephant;output-AT Messenger TF.csv;output-AT Messanger LAC.csv
-21769;AT Messenger;output-AT Messenger TF.csv;output-AT Messanger LAC.csv
-21770;AT Tiger;output-AT Tiger TF.csv;output-AT Tiger LAC.csv
-21770;AT One World;output-AT Tiger TF.csv;output-AT Tiger LAC.csv
-21771;AT Topi;output-AT Topi TF.csv;output-AT Topi LAC.csv
-21828;AT Universal;cards_rates-AT TF.csv;cards_rates-AT LAC.csv
-21761;BE Universal;cards_rates-BE LAC.csv;cards_rates-BE TF.csv
-21819;BE Just Crazy;output-BE Just Crazy TF.csv;output-BE Just Crazy LAC.csv
-21820;BE Unity;;
-21779;BE Unity Extra;output-BE Unity Extra TF.csv;output-BE Unity Extra LAC.csv
-21818;BE XL Call;output-BE XL Call TF.csv;output-BE Xl Call LAC.csv
-21813;CH Latino;output-CH Latino TF.csv;output-CH Latino LAC.csv
-21814;CH Topi;output-CH Topi TF.csv;output-CH Topi LAC.csv
-21815;CH Top Mobile;output-CH Topmobile TF.csv;output-CH Topmobile LAC.csv
-21772;CH Touch Africa;output-CH Touch Africa TF.csv;output-CH Touch Africa LAC.csv
-21772;CH Touch;output-CH Touch TF.csv;output-CH Touch LAC.csv
-21773;CH Universal;output-CH Universal TF.csv;output-CH Universal LAC.csv
-21781;DE Adventure;output-DE Adventure TF.csv;output-DE Adventure LAC.csv
-21787;DE Blue Ocean;output-DE Blue Ocean TF.csv;output-DE Blue Ocean LAC.csv
-21783;DE Calypso;output-DE Calypso TF.csv;output-DE Calypso LAC.csv
-21780;DE Compass;output-DE Compass TF.csv;output-DE Compass LAC.csv
-21782;DE Topi;output-DE Topi TF.csv;output-DE Topi LAC.csv
-21788;DE Unity Extra;output-DE unity Extra TF.csv;output-DE Unity Extra LAC.csv
-;DE Universal;cards_rates-DE TF.csv;cards_rates-DE LAC.csv
-21822;DK Afrika+;output-DK AFrika TF.csv;output-DK Afrika LAC.csv
-21784;DK Asia Call;output-DK Asia Call TF.csv;output-DK Asia Call LAC.csv
-21821;DK Global One;output-DK Global One TF.csv;output-DK Global One LAC.csv
-21823;DK Middle East Call 2;output-NO Middle East Call TF.csv;output-NO Middle East Call LAC.csv
-21826;DK Universal;cards_rates-DK TF.csv;cards_rates-DK LAC.csv
-21774;ES Global One;output-ES Global One TF.csv;output-ES Global One LAC.csv
-21776;ES New Action;output-ES New Action TF.csv;output-ES New Action LAC.csv
-21775;ES Top It Up;output-ES Top It UP TF.csv;output-ES Top It Up LAC.csv
-21812;ES Universal;output-ES Universal TF.csv;output-ES Universal LAC.csv
-21786;FR Number One;output-FR number One TF.csv;output-FR Number One LAC.csv
-21785;FR Unity Extra;output-FR Unity Extra TF.csv;output-FR Unity Extra LAC.csv
-21767;FR Universal;cards_rates-FR TF.csv;cards_rates-FR LAC.csv
-21768;IE Universal;cards_rates-IE TF.csv;cards_rates-IE LAC.csv
-21816;IT Casino;output-IT Casino TF.csv;output-IT Casino LAC.csv
-21777;IT Purple 2;output-IT Purple 2 TF.csv;output-IT Purple 2 LAC.csv
-21817;IT Sailpost Africa;output-IT Salepost Africa TF.csv;output-IT Salepost Africa LAC.csv
-21778;IT Universal;cards_rates-IT TF.csv;cards_rates-IT LAC.csv
-21817;IT World;output-IT Salepost Africa TF.csv;output-IT Salepost Africa LAC.csv
-21789;LX Global One;output-LX Global One TF.csv;output-LX Global One LAC.csv
-21824;LX XL Call;output-LX XL Call TF.csv;output-LX XL Call LAC.csv
-21766;LX Universal;cards_rates-LX TF.csv;cards_rates-LX LAC.csv
-21790;NL De Koningen;output-NL De Koningen TF.csv;output-NL De Koningen LAC.csv
-21791;NL Premium;output-NL Premium TF.csv;output-NL Premium LAC.csv
-21792;NL Unity Extra;output-NL Unity Extra TF.csv;output-NL Unity Extra LAC.csv
-21765;NL Universal;cards_rates-NL TF.csv;cards_rates-NL LAC.csv
-21794;NO African King;output-NO African King TF.csv;output-NO African King LAC.csv
-21793;NO No one;output-NO No-one TF.csv;output-NO No-one LAC.csv
-21795;NO Premium;output-NO Premium TF.csv;output-NO Premuim LAC.csv
-21763;NO Univeral;cards_rates-NO TF.csv;cards_rates-NO LAC.csv
-21825;SE Star;output-SE Star TF.csv;output-SE Star LAC.csv
-21797;SE Unity Extra;output-SE unity Extra TF.csv;output-SE Unity Extra LAC.csv
-21764;SE Universal;cards_rates-SE TF.csv;cards_rates-SE LAC.csv
-21796;SE Zoom;output-SE Zoom TF.csv;output-SE Zoom LAC.csv
-21796;SE Black;output-SE Zoom TF.csv;output-SE Zoom LAC.csv
-21796;SE Super Gold;output-SE Zoom TF.csv;output-SE Zoom LAC.csv
-21806;UK Friends;output-UK Friends TF.csv;output-UK Friends LAC.csv
-21807;UK Future;output-UK Future TF.csv;output-UK Future LAC.csv
-21808;UK Panda;output-UK Panda TF.csv;output-UK Panda LAC.csv
-21804;UK Payzone Africazone;output-UK Payzone Africazone TF.csv;output-UK Payzone Africazone LAC.csv
-21802;UK Payzone Callzone;output-UK Payzone Callzone TF.csv;output-UK Payzone Callzone LAC.csv
-21803;UK Payzone Europezone;output-UK Payzone Europezone TF.csv;output-UK Payzone Europezone LAC.csv
-21811;UK SuperGold EUR;output-UK SuperGold EUR TF.csv;output-UK SuperGold EUR LAC.csv
-21809;UK SuperGold GBP;output-UK SuperGold GBP TF.csv;output-UK SuperGold GBP LAC.csv
-21810;UK SuperGold USD;output-UK SuperGold USD TF.csv;output-UK SuperGold USD LAC.csv
-21826;UK Talk 2 Talk;output-UK Talk 2 Talk TF.csv;output-UK Talk 2 Talk LAC.csv
-21805;UK WH Smith;output-UK WH Smith TF.csv;output-UK WH Smith LAC.csv
-28515;UK Universal;cards_rates-UK TF.csv;cards_rates-UK LAC.csv
+CID,Nom,TF,LAC
+21769,AT Elephant,output-AT Messenger TF.csv,output-AT Messanger LAC.csv
+21769,AT Messenger,output-AT Messenger TF.csv,output-AT Messanger LAC.csv
+21770,AT Tiger,output-AT Tiger TF.csv,output-AT Tiger LAC.csv
+21770,AT One World,output-AT Tiger TF.csv,output-AT Tiger LAC.csv
+21771,AT Topi,output-AT Topi TF.csv,output-AT Topi LAC.csv
+21828,AT Universal,cards_rates-AT TF.csv,cards_rates-AT LAC.csv
+21761,BE Universal,cards_rates-BE LAC.csv,cards_rates-BE TF.csv
+21819,BE Just Crazy,output-BE Just Crazy TF.csv,output-BE Just Crazy LAC.csv
+21820,BE Unity,,
+21779,BE Unity Extra,output-BE Unity Extra TF.csv,output-BE Unity Extra LAC.csv
+21818,BE XL Call,output-BE XL Call TF.csv,output-BE Xl Call LAC.csv
+21813,CH Latino,output-CH Latino TF.csv,output-CH Latino LAC.csv
+21814,CH Topi,output-CH Topi TF.csv,output-CH Topi LAC.csv
+21815,CH Top Mobile,output-CH Topmobile TF.csv,output-CH Topmobile LAC.csv
+21772,CH Touch Africa,output-CH Touch Africa TF.csv,output-CH Touch Africa LAC.csv
+21772,CH Touch,output-CH Touch TF.csv,output-CH Touch LAC.csv
+21773,CH Universal,output-CH Universal TF.csv,output-CH Universal LAC.csv
+21781,DE Adventure,output-DE Adventure TF.csv,output-DE Adventure LAC.csv
+21787,DE Blue Ocean,output-DE Blue Ocean TF.csv,output-DE Blue Ocean LAC.csv
+21783,DE Calypso,output-DE Calypso TF.csv,output-DE Calypso LAC.csv
+21780,DE Compass,output-DE Compass TF.csv,output-DE Compass LAC.csv
+21782,DE Topi,output-DE Topi TF.csv,output-DE Topi LAC.csv
+21788,DE Unity Extra,output-DE unity Extra TF.csv,output-DE Unity Extra LAC.csv
+,DE Universal,cards_rates-DE TF.csv,cards_rates-DE LAC.csv
+21822,DK Afrika+,output-DK AFrika TF.csv,output-DK Afrika LAC.csv
+21784,DK Asia Call,output-DK Asia Call TF.csv,output-DK Asia Call LAC.csv
+21821,DK Global One,output-DK Global One TF.csv,output-DK Global One LAC.csv
+21823,DK Middle East Call 2,output-NO Middle East Call TF.csv,output-NO Middle East Call LAC.csv
+21826,DK Universal,cards_rates-DK TF.csv,cards_rates-DK LAC.csv
+21774,ES Global One,output-ES Global One TF.csv,output-ES Global One LAC.csv
+21776,ES New Action,output-ES New Action TF.csv,output-ES New Action LAC.csv
+21775,ES Top It Up,output-ES Top It UP TF.csv,output-ES Top It Up LAC.csv
+21812,ES Universal,output-ES Universal TF.csv,output-ES Universal LAC.csv
+21786,FR Number One,output-FR number One TF.csv,output-FR Number One LAC.csv
+21785,FR Unity Extra,output-FR Unity Extra TF.csv,output-FR Unity Extra LAC.csv
+21767,FR Universal,cards_rates-FR TF.csv,cards_rates-FR LAC.csv
+21768,IE Universal,cards_rates-IE TF.csv,cards_rates-IE LAC.csv
+21816,IT Casino,output-IT Casino TF.csv,output-IT Casino LAC.csv
+21777,IT Purple 2,output-IT Purple 2 TF.csv,output-IT Purple 2 LAC.csv
+21817,IT Sailpost Africa,output-IT Salepost Africa TF.csv,output-IT Salepost Africa LAC.csv
+21778,IT Universal,cards_rates-IT TF.csv,cards_rates-IT LAC.csv
+21817,IT World,output-IT Salepost Africa TF.csv,output-IT Salepost Africa LAC.csv
+21789,LX Global One,output-LX Global One TF.csv,output-LX Global One LAC.csv
+21824,LX XL Call,output-LX XL Call TF.csv,output-LX XL Call LAC.csv
+21766,LX Universal,cards_rates-LX TF.csv,cards_rates-LX LAC.csv
+21790,NL De Koningen,output-NL De Koningen TF.csv,output-NL De Koningen LAC.csv
+21791,NL Premium,output-NL Premium TF.csv,output-NL Premium LAC.csv
+21792,NL Unity Extra,output-NL Unity Extra TF.csv,output-NL Unity Extra LAC.csv
+21765,NL Universal,cards_rates-NL TF.csv,cards_rates-NL LAC.csv
+21794,NO African King,output-NO African King TF.csv,output-NO African King LAC.csv
+21793,NO No one,output-NO No-one TF.csv,output-NO No-one LAC.csv
+21795,NO Premium,output-NO Premium TF.csv,output-NO Premuim LAC.csv
+21763,NO Univeral,cards_rates-NO TF.csv,cards_rates-NO LAC.csv
+21825,SE Star,output-SE Star TF.csv,output-SE Star LAC.csv
+21797,SE Unity Extra,output-SE unity Extra TF.csv,output-SE Unity Extra LAC.csv
+21764,SE Universal,cards_rates-SE TF.csv,cards_rates-SE LAC.csv
+21796,SE Zoom,output-SE Zoom TF.csv,output-SE Zoom LAC.csv
+21796,SE Black,output-SE Zoom TF.csv,output-SE Zoom LAC.csv
+21796,SE Super Gold,output-SE Zoom TF.csv,output-SE Zoom LAC.csv
+21806,UK Friends,output-UK Friends TF.csv,output-UK Friends LAC.csv
+21807,UK Future,output-UK Future TF.csv,output-UK Future LAC.csv
+21808,UK Panda,output-UK Panda TF.csv,output-UK Panda LAC.csv
+21804,UK Payzone Africazone,output-UK Payzone Africazone TF.csv,output-UK Payzone Africazone LAC.csv
+21802,UK Payzone Callzone,output-UK Payzone Callzone TF.csv,output-UK Payzone Callzone LAC.csv
+21803,UK Payzone Europezone,output-UK Payzone Europezone TF.csv,output-UK Payzone Europezone LAC.csv
+21811,UK SuperGold EUR,output-UK SuperGold EUR TF.csv,output-UK SuperGold EUR LAC.csv
+21809,UK SuperGold GBP,output-UK SuperGold GBP TF.csv,output-UK SuperGold GBP LAC.csv
+21810,UK SuperGold USD,output-UK SuperGold USD TF.csv,output-UK SuperGold USD LAC.csv
+21826,UK Talk 2 Talk,output-UK Talk 2 Talk TF.csv,output-UK Talk 2 Talk LAC.csv
+21805,UK WH Smith,output-UK WH Smith TF.csv,output-UK WH Smith LAC.csv
+28515,UK Universal,cards_rates-UK TF.csv,cards_rates-UK LAC.csv

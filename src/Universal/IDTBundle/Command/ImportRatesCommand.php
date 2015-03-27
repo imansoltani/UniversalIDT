@@ -79,7 +79,7 @@ class ImportRatesCommand extends AbstractImportCommand
 
     private function import_rate($class_id, $fileName, $type, EntityManager $em)
     {
-        $data = $this->csv_to_array($this->getFileAddressName("CSV/Rates", $fileName), ',');
+        $data = $this->csv_to_array($this->getFileAddressName("CSV/Rates", $fileName));
 
         if(!$data)
             return 0;

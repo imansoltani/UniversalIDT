@@ -22,7 +22,7 @@ class ImportVatsCommand extends AbstractImportCommand
         /** @var EntityManager $em */
         $em = $this->getContainer()->get("doctrine.orm.default_entity_manager");
 
-        $data = $this->csv_to_array($this->getFileAddressName("CSV", "vats.csv"), ',');
+        $data = $this->csv_to_array($this->getFileAddressName("CSV", "vats.csv"));
 
         $i = 0;
         foreach($data as $row) {

@@ -5,7 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class AbstractImportCommand extends ContainerAwareCommand
 {
-    protected function csv_to_array($filename='', $delimiter=';')
+    protected function csv_to_array($filename='', $delimiter=',')
     {
         if(!file_exists($filename) || !is_readable($filename))
             return FALSE;
