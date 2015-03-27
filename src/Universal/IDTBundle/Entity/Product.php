@@ -357,7 +357,7 @@ class Product extends JsonParser
      */
     public function getAbsolutePath()
     {
-        return $this->getLogoExtension() == "" ? null : ($this->getUploadRootDir().'/'.$this->getClassId().".".$this->getLogoExtension());
+        return $this->getLogoExtension() == "" ? null : ($this->getUploadRootDir().'/'.$this->getId().".".$this->getLogoExtension());
     }
 
     /**
@@ -365,7 +365,7 @@ class Product extends JsonParser
      */
     public function getWebPath()
     {
-        return $this->getLogoExtension() == ""  ? 'bundles/universalidt/home/img/no_image.png' : ($this->getUploadDir().'/'.$this->getClassId().".".$this->getLogoExtension());
+        return $this->getLogoExtension() == ""  ? 'bundles/universalidt/home/img/no_image.png' : ($this->getUploadDir().'/'.$this->getId().".".$this->getLogoExtension());
     }
 
     /**
@@ -395,7 +395,7 @@ class Product extends JsonParser
 
         $this->getFile()->move(
             $this->getUploadRootDir(),
-            $this->getClassId() . '.' . $this->file->getExtension()
+            $this->getId() . '.' . $this->file->getExtension()
         );
 
         $this->file = null;

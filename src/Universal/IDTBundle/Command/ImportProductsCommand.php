@@ -40,6 +40,8 @@ class ImportProductsCommand extends AbstractImportCommand
 
         $data = $this->csv_to_array($this->getFileAddressName("CSV", $input->getOption('test') ? "products_test.csv" : "products.csv"));
 
+        $images_path = $this->copyImages();
+
         $i = 0;
         foreach($data as $row) {
             $product = new Product();
@@ -58,8 +60,8 @@ class ImportProductsCommand extends AbstractImportCommand
             }
 
             $imageFileName = strtoupper($row['country']." ".$row['name']).".png";
-            if (file_exists($this->getFileAddressName("Image", $imageFileName))) {
-                $product->setFile(new UploadedFile($this->getFileAddressName("Image", $imageFileName), $imageFileName, 'image/png', 1, null, true));
+            if (file_exists($images_path."/".$imageFileName)) {
+                $product->setFile(new UploadedFile($images_path."/".$imageFileName, $imageFileName, 'image/png', 1, null, true));
             }
             else {
                 $output->writeln("warning: '" . $row['name'] . "' don't has image.");
@@ -102,5 +104,22 @@ class ImportProductsCommand extends AbstractImportCommand
         $string = strtoupper($string);
 
         return $string;
+    }
+
+    private function copyImages()
+    {
+        $src = $this->getFileAddressName("Image");
+        $dst = getcwd()."/web/uploads/test/image_temp";
+
+        $dir = opendir($src);
+        @mkdir($dst);
+
+        while(false !== ( $file = readdir($dir)) )
+            if (( $file != '.' ) && ( $file != '..' ))
+                copy($src . '/' . $file,$dst . '/' . $file);
+
+        closedir($dir);
+
+        return $dst;
     }
 }
