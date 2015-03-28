@@ -124,8 +124,22 @@
 
         <div class="col-md-3">
             <div class="widget stacked">
+                <div class="widget-header">
+                    <i class="icon-refresh"></i>
+                    <h3>Recharge</h3>
+                </div>
                 <div class="widget-content">
-                    <a href="" class="btn btn-warning" style="width: 100%" target="_blank">Recharge</a>
+                    <form id="form-recharge" method="post">
+                        <label style="width: 100%">
+                            <select name="denomination_list" class="form-control" required>
+                                <option value="">Choose</option>
+                                {% for denom in pin.product.denominations %}
+                                    <option value="{{ denom }}">{{ denom }}{{ pin.product.currency }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <button class="btn btn-warning" style="width: 100%" type="submit">Recharge</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -140,6 +154,13 @@
         $(document).ready(function () {
             $('#table1').DataTable();
             $('#table2').DataTable();
+        });
+
+        $('form#form-recharge').submit(function(e) {
+            e.preventDefault();
+            alert('hi');
+            //new-> addToCookie({{ product.id }}, '{{ product.name }}', '{{ asset(product.webPath) }}', $('#pr_denominations').val(), 1, '{{ product.currency }}', 'buy', {{ product.denominations[0] }}, {{ product.freeAmountDenomination1 }}, {{ OrderServices.getVat(product.countryISO) }});
+            //old-> addToCookie({{ pin.id }},$('#recharge_denominations').val(),$('#recharge_count').val(), '{{ pin.product.currency }}', 'recharge');
         });
     </script>
 {% endblock javascripts %}
