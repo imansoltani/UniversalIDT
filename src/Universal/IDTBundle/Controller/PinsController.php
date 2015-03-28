@@ -85,6 +85,7 @@ class PinsController extends Controller
         return $this->render('UniversalIDTBundle:Pins:details.html.twig', array(
                 'pin' => $pin,
                 'call_details' => $call_details,
+                'calls' => (array) $call_details->calls,
                 'recharges' => $recharges
             ));    }
 }

@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="rates-table-result">
                         <div class="col-md-12">
                             <div class="page-header">
                                 <h3>Result</h3>
@@ -95,6 +95,12 @@
             } ]
         });
 
+        $("#rates-table").on( 'page.dt', function () {
+            $('html,body').animate({
+                scrollTop: $("#rates-table-result").offset().top
+            }, 500);
+        } );
+
         $('#rates-table > tbody > tr').each(function() {
             var denomination = $(this).find('select');
             var rate = $(this).find('.rate').text();
@@ -130,6 +136,10 @@
                 $("#rates-table tbody").html(result);
 
                 initDataTableRates();
+
+                $('html,body').animate({
+                    scrollTop: $("#rates-table-result").offset().top
+                }, 500);
 
                 waitingDialog.hide();
             },

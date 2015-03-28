@@ -76,7 +76,7 @@
                                     </thead>
 
                                     <tbody>
-                                    {% for call in call_details.calls %}
+                                    {% for call in calls %}
                                         <tr>
                                             <td>{{ call.callfulldate }}</td>
                                             <td>{{ call.minutes }}</td>
@@ -124,20 +124,10 @@
 
         <div class="col-md-3">
             <div class="widget stacked">
-
-                <div class="widget-header">
-                    <i class="icon-book"></i>
-
-                    <h3>Recharge</h3>
-                </div>
-                <!-- /widget-header -->
-
                 <div class="widget-content">
-                    Recharge
+                    <a href="" class="btn btn-warning" style="width: 100%" target="_blank">Recharge</a>
                 </div>
             </div>
-            <!-- /widget-content -->
-
         </div>
         <!-- /widget -->
     </div>
