@@ -198,7 +198,7 @@
         var discount = (row['free_amount']/row['base'])*row['denomination'];
         var total =  row['count'] * (row['denomination'] - discount);
 
-//        if(row['type'] == "buy")
+        if(row['type'] == "buy")
             $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
                 '<td><a href="javascript:openDetails('+row['id']+', false)"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
                 '<td><a href="javascript:openDetails('+row['id']+', false)">'+row['name']+'</a></td>'+
@@ -208,14 +208,16 @@
                 '<td id="total">'+total+'</td>' +
                 '<td><a href="javascript:;" onclick="basketRemoveProduct(this)"><i class="fa fa-trash-o"></i></a></td>' +
             '</tr>');
-//        else
-//            $("#cookie_recharge").append("<tr>" +
-//            "<td>"+row['product']+"</td>" +
-//            "<td>"+"</td>" +
-//            "<td>"+row['count']+"</td>" +
-//            "<td>"+row['denomination']+"</td>" +
-//            "<td>"+"remove"+"</td>" +
-//            "</tr>");
+        else
+            $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
+                '<td><a href="javascript:openPin('+row['id']+', false)"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
+                '<td><a href="javascript:openPin('+row['id']+', false)">'+row['name']+' (Recharge)</a></td>'+
+                '<td id="quantity"><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
+                '<td id="denomination">'+row['denomination']+'</td>' +
+                '<td id="discount">'+discount+'</td>' +
+                '<td id="total">'+total+'</td>' +
+                '<td><a href="javascript:;" onclick="basketRemoveProduct(this)"><i class="fa fa-trash-o"></i></a></td>' +
+            '</tr>');
 
         $("input[type='number']").stepper();
     }
@@ -251,5 +253,10 @@
         cookieClear();
         updateCounts();
         basketCreateTable();
+    }
+
+    function openPin(id) {
+        var pin_link = '{{ path('user_pin_details', {'id':'~'}) }}';
+        window.open(pin_link.replace('~', id), "_blank");
     }
 </script>

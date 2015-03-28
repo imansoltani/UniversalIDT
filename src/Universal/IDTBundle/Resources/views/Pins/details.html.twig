@@ -158,9 +158,10 @@
 
         $('form#form-recharge').submit(function(e) {
             e.preventDefault();
-            alert('hi');
-            //new-> addToCookie({{ product.id }}, '{{ product.name }}', '{{ asset(product.webPath) }}', $('#pr_denominations').val(), 1, '{{ product.currency }}', 'buy', {{ product.denominations[0] }}, {{ product.freeAmountDenomination1 }}, {{ OrderServices.getVat(product.countryISO) }});
-            //old-> addToCookie({{ pin.id }},$('#recharge_denominations').val(),$('#recharge_count').val(), '{{ pin.product.currency }}', 'recharge');
+
+            var denomination = $("#form-recharge select[name='denomination_list']").val();
+            addToCookie({{ pin.id }}, '{{ pin.product.name }}', '{{ asset(pin.product.webPath) }}', denomination, 1, '{{ pin.product.currency }}', 'recharge', {{ pin.product.denominations[0] }}, {{ pin.product.freeAmountDenomination1 }}, {{ OrderServices.getVat(pin.product.countryISO) }});
+            window.open('{{ path('WebPage_main') }}#basket', "_self");
         });
     </script>
 {% endblock javascripts %}
