@@ -45,18 +45,6 @@
         <div class="col-md-6">
             <div class="calling-card-details clearfix"><!-- CALLING CARD DETAILS -->
                 <div class="panel-group accordion">
-                    <div class="panel panel-default open">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-1">General Information</a>
-                            </h4>
-                        </div>
-                        <div id="collapse-1" class="panel-collapse collapse in">
-                            <div class="panel-body">
-                                {{ product.generalInformation(app.request.locale) }}
-                            </div>
-                        </div>
-                    </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
@@ -65,56 +53,7 @@
                         </div>
                         <div id="collapse-2" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <div class="rate-finder clearfix">
-                                    <form class="form-horizontal">
-                                        <div class="form-group">
-                                            <label for="call_from_detail" class="col-sm-4 control-label">Call From</label>
-                                            <div class="col-sm-8">
-                                                <select name="call_from_detail" id="call_from_detail" class="form-control">
-                                                    <option value="">Select Country</option>
-                                                    <option>Bangladesh</option>
-                                                    <option>Denmark</option>
-                                                    <option>United State</option>
-                                                    <option>United Kingdom</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="call_to_detail" class="col-sm-4 control-label">Destination</label>
-                                            <div class="col-sm-8">
-                                                <select name="call_to_detail" id="call_to_detail" class="form-control">
-                                                    <option value="">Select Destination</option>
-                                                    <option>Bangladesh</option>
-                                                    <option>United State</option>
-                                                    <option>United Kingdom</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="text-right col-sm-12">
-                                                <button type="submit" class="btn btn-primary">Check the best rates</button>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">Free Toll</label>
-                                            <div class="col-sm-8">
-                                                ---
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">Local</label>
-                                            <div class="col-sm-8">
-                                                ---
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">Internet</label>
-                                            <div class="col-sm-8">
-                                                ---
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                <button type="button" onclick="goToRates('{{ product.countryISO }}')" class="btn btn-primary">Check the best rates</button>
                             </div>
                         </div>
                     </div>
@@ -126,7 +65,7 @@
                         </div>
                         <div id="collapse-3" class="panel-collapse collapse">
                             <div class="panel-body">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>type</th>
@@ -159,9 +98,25 @@
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-4">Dialling Instructions</a>
                             </h4>
                         </div>
-                        <div id="collapse-4" class="panel-collapse collapse">
+                        <div id="collapse-4" class="panel-collapse collapse in">
                             <div class="panel-body">
-                                {{ product.dialingInstructions(app.request.locale) }}
+                                1. Dial the access number and enter your calling card PIN number. <br>
+
+                                2. Dial the number you wish to reach (including the full national and international codes).<br>
+
+                                - For international calls dial: 00 + Country Code + Area Code + Number<br>
+
+                                - For Follow On Call Press ###<br>
+
+                                - To Save PIN enter *5<br>
+
+                                - To Cancel PIN enter *9<br>
+
+                                - Last Number Redial *1<br>
+
+                                {% if product.classId == 21814 or product.classId == 21815 %}
+                                - Top Up Pin *2<br>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

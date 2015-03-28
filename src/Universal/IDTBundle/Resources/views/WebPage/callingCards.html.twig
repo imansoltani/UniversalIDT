@@ -123,4 +123,12 @@
             }
         });
     }
+
+    function goToRates(from) {
+        $("form#rate_form [name='from']").val(from);
+        $('html,body').animate({
+            scrollTop: $(".rates-section#rates").offset().top
+        }, 1000);
+        $('#calling-card-modal').modal('hide');
+    }
 </script>
