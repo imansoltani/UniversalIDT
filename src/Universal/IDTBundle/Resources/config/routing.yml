@@ -10,10 +10,6 @@ fos_user:
     resource: "@UniversalIDTBundle/Resources/config/routing/fos_user.yml"
     prefix:   /
 
-test:
-    path:     /test
-    defaults: { _controller: UniversalIDTBundle:Default:index }
-
 ogone_template:
     path:   /ogone_template
     defaults:
