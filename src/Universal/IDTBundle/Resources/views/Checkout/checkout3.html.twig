@@ -137,6 +137,15 @@
 																		<td>{{ row.discount }}</td>
 																		<td>{{ row.row_total }}</td>
 																	</tr>
+																{% else %}
+																	<tr>
+																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
+																		<td>{{ row.product.name }} (Recharge)</td>
+																		<td>{{ row.count }}</td>
+																		<td>{{ row.denomination }}</td>
+																		<td>{{ row.discount }}</td>
+																		<td>{{ row.row_total }}</td>
+																	</tr>
 																{% endif %}
 															{% endfor %}
 															</tbody>

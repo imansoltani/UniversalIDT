@@ -183,37 +183,29 @@ class CheckoutController extends Controller
                         || $row->getDenominations()[0] != $added_item['base']
                         || $row->getFreeAmountDenomination1() != $added_item['free_amount']
                         || $this->get('OrderServices')->getVat($row->getCountryISO()) != $added_item['vat']
+                        || $row->getCurrency() !== $added_items_currency
                     )
                         return false;
 //                        die("not exist or error name");
 
                     $added_item['product'] = $row;
-
-                    if($row->getCurrency() !== $added_items_currency)
-                        return false;
-//                        die("error currency");
-
-                    if(!in_array($added_item['denomination'], $row->getDenominations()))
-                        return false;
-//                        die("error denom");
                     break;
 
                 case $this->BASKET_RECHARGE:
                     /** @var OrderProduct $row */
                     $row = $em->getRepository('UniversalIDTBundle:OrderProduct')->find($added_item['id']);
-                    if(!$row)
+                    if(!$row
+                        || $row->getProduct()->getName() != $added_item['name']
+                        || !in_array($added_item['denomination'], $row->getProduct()->getDenominations())
+                        || $row->getProduct()->getDenominations()[0] != $added_item['base']
+                        || $row->getProduct()->getFreeAmountDenomination1() != $added_item['free_amount']
+                        || $this->get('OrderServices')->getVat($row->getProduct()->getCountryISO()) != $added_item['vat']
+                        || $row->getProduct()->getCurrency() !== $added_items_currency
+                    )
                         return false;
-//                        die("not exist2");
+//                        die("not exist2 or error");
 
-                    $added_item['product'] = $row;
-
-                    if($row->getProduct()->getCurrency() !== $added_items_currency)
-                        return false;
-//                        die("error currency2");
-
-                    if(!in_array($added_item['denomination'], $row->getProduct()->getDenominations()))
-                        return false;
-//                        die("error denom");
+                    $added_item['product'] = $row->getProduct();
                     break;
             }
 
