@@ -1,6 +1,6 @@
 {% for row in result %}
     <tr>
-        <td>
+        <td style="text-align: center">
             <a href="javascript:openDetails('{{ row.product.id }}', false)"><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="{{ row.product.name }}"></a>
         </td>
         <td><a href="javascript:openDetails('{{ row.product.id }}', false)">{{ row.product.name }}</a></td>
