@@ -22,31 +22,33 @@
                 <!-- /widget-header -->
 
                 <div class="widget-content">
-                    <table id="table" class="display" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Date purchased</th>
-                            <th>Card name</th>
-                            <th>PIN</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        {% for pin in pins %}
+                    <div class="table-responsive">
+                        <table id="table" class="display" width="100%" cellspacing="0">
+                            <thead>
                             <tr>
-                                <td>{{ pin.orderDetail.date|date('Y-m-d H:i:s') }}</td>
-                                <td>{{ pin.product.name }}</td>
-                                <td>{{ pin.pin }}</td>
-                                <td>
-                                    <a href="{{ path('user_order_details', {'id':pin.orderDetail.id}) }}">Order Details</a>
-                                    <br>
-                                    <a href="{{ path('user_pin_details', {'id':pin.id}) }}">Pin Details</a>
-                                </td>
+                                <th>Date purchased</th>
+                                <th>Card name</th>
+                                <th>PIN</th>
+                                <th>Action</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody>
+                            {% for pin in pins %}
+                                <tr>
+                                    <td>{{ pin.orderDetail.date|date('Y-m-d H:i:s') }}</td>
+                                    <td>{{ pin.product.name }}</td>
+                                    <td>{{ pin.pin }}</td>
+                                    <td>
+                                        <a href="{{ path('user_order_details', {'id':pin.orderDetail.id}) }}">Order Details</a>
+                                        <br>
+                                        <a href="{{ path('user_pin_details', {'id':pin.id}) }}">Pin Details</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /widget-content -->
 

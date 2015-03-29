@@ -64,53 +64,57 @@
                             </div>
 
                             <div class="tab-pane" id="historyTab">
-                                <table id="table1" class="display" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>Date, Time</th>
-                                        <th>Duration</th>
-                                        <th>Cost</th>
-                                        <th>Caller Number</th>
-                                        <th>Called number</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    {% for call in calls %}
+                                <div class="table-responsive">
+                                    <table id="table1" class="display" width="100%" cellspacing="0">
+                                        <thead>
                                         <tr>
-                                            <td>{{ call.callfulldate }}</td>
-                                            <td>{{ call.minutes }}</td>
-                                            <td>{{ call.amount }}</td>
-                                            <td>{{ call.dialedfrom }}</td>
-                                            <td>{{ call.dialedto }}</td>
+                                            <th>Date, Time</th>
+                                            <th>Duration</th>
+                                            <th>Cost</th>
+                                            <th>Caller Number</th>
+                                            <th>Called number</th>
                                         </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for call in calls %}
+                                            <tr>
+                                                <td>{{ call.callfulldate }}</td>
+                                                <td>{{ call.minutes }}</td>
+                                                <td>{{ call.amount }}</td>
+                                                <td>{{ call.dialedfrom }}</td>
+                                                <td>{{ call.dialedto }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                             <div class="tab-pane" id="rechargeTab">
-                                <table id="table2" class="display" width="100%" cellspacing="0">
-                                    <thead>
-                                    <tr>
-                                        <th>Card name</th>
-                                        <th>Date</th>
-                                        <th>Denomination</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    {% for recharge in recharges %}
+                                <div class="table-responsive">
+                                    <table id="table2" class="display" width="100%" cellspacing="0">
+                                        <thead>
                                         <tr>
-                                            <td>{{ recharge.product.name }}</td>
-                                            <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
-                                            <td>{{ recharge.pinDenomination }}</td>
-                                            <td>{{ recharge.requestStatus|readable('RequestStatusEnumType') }}</td>
+                                            <th>Card name</th>
+                                            <th>Date</th>
+                                            <th>Denomination</th>
+                                            <th>Status</th>
                                         </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                        </thead>
+
+                                        <tbody>
+                                        {% for recharge in recharges %}
+                                            <tr>
+                                                <td>{{ recharge.product.name }}</td>
+                                                <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
+                                                <td>{{ recharge.pinDenomination }}</td>
+                                                <td>{{ recharge.requestStatus|readable('RequestStatusEnumType') }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>

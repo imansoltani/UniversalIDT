@@ -22,29 +22,31 @@
             <!-- /widget-header -->
 
             <div class="widget-content">
-                <table id="table" class="display" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Date, Time</th>
-                        <th>Payment Status</th>
-                        <th>Amount</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    {% for order in orders %}
+                <div class="table-responsive">
+                    <table id="table" class="display" width="100%" cellspacing="0">
+                        <thead>
                         <tr>
-                            <td>{{ order.id }}</td>
-                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-                            <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-                            <td>{{ order.amount }} ({{ order.currency|upper }})</td>
-                            <td><a href="{{ path('user_order_details', {'id':order.id}) }}">details</a></td>
+                            <th>Id</th>
+                            <th>Date, Time</th>
+                            <th>Payment Status</th>
+                            <th>Amount</th>
+                            <th>Action</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+
+                        <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                                <td>{{ order.amount }} ({{ order.currency|upper }})</td>
+                                <td><a href="{{ path('user_order_details', {'id':order.id}) }}">details</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /widget-content -->
 
