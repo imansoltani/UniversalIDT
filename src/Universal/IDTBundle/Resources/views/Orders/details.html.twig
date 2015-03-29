@@ -13,158 +13,144 @@
 {% block content %}
 <div class="row">
     <div class="col-md-8">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget stacked">
+        <div class="widget stacked">
 
-                    <div class="widget-header">
-                        <i class="icon-book"></i>
-                        <h3>General information|trans</h3>
-                    </div>
-                    <!-- /widget-header -->
-
-                    <div class="widget-content">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <tbody>
-                                <tr>
-                                    <th>ID</th>
-                                    <td>{{ order.paymentId }}</td>
-                                    <th>Date</th>
-                                    <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-                                <tr>
-                                </tr>
-                                    <th>Payment Status</th>
-                                    <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-                                    <th>Payment method</th>
-                                    <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
-                                <tr>
-                                </tr>
-                                    <th>Delivery method</th>
-                                    <td colspan="3">
-                                        {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                                        {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
-                                        {{ delivery != "" ? delivery|raw : "--" }}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /widget-content -->
-
-                </div>
-                <!-- /widget -->
+            <div class="widget-header">
+                <i class="icon-book"></i>
+                <h3>General information|trans</h3>
             </div>
-        </div>
+            <!-- /widget-header -->
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget stacked">
-
-                    <div class="widget-header">
-                        <i class="icon-book"></i>
-                        <h3>Order Details|trans</h3>
-                    </div>
-                    <!-- /widget-header -->
-
-                    <div class="widget-content">
-                        <div class="table-responsive">
-                            <table id="table2" class="display">
-                                <thead>
-                                <tr>
-                                    <th>Card name</th>
-                                    <th>Denomination</th>
-                                    <th>Vat</th>
-                                    <th>Serial number</th>
-                                    <th>Pin</th>
-                                </tr>
-                                </thead>
-
-                                <tbody>
-                                {% set vat = 0 %}
-                                {% for orderProduct in order.orderProducts %}
-                                    {% set vat = vat + orderProduct.vat %}
-                                    <tr>
-                                        <td>{{ orderProduct.product.name }}</td>
-                                        <td>{{ orderProduct.pinDenomination }}</td>
-                                        <td>{{ orderProduct.vat }}</td>
-                                        <td>{{ orderProduct.ctrlNumber }}</td>
-                                        <td>{{ orderProduct.pin }}</td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- /widget-content -->
-
+            <div class="widget-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ order.paymentId }}</td>
+                            <th>Date</th>
+                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                        <tr>
+                        </tr>
+                            <th>Payment Status</th>
+                            <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                            <th>Payment method</th>
+                            <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+                        <tr>
+                        </tr>
+                            <th>Delivery method</th>
+                            <td colspan="3">
+                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                                {{ delivery != "" ? delivery|raw : "--" }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <!-- /widget -->
             </div>
+            <!-- /widget-content -->
+
         </div>
+        <!-- /widget -->
+
+        <div class="widget stacked">
+
+            <div class="widget-header">
+                <i class="icon-book"></i>
+                <h3>Order Details|trans</h3>
+            </div>
+            <!-- /widget-header -->
+
+            <div class="widget-content">
+                <div class="table-responsive">
+                    <table id="table2" class="display">
+                        <thead>
+                        <tr>
+                            <th>Card name</th>
+                            <th>Denomination</th>
+                            <th>Vat</th>
+                            <th>Serial number</th>
+                            <th>Pin</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {% set vat = 0 %}
+                        {% for orderProduct in order.orderProducts %}
+                            {% set vat = vat + orderProduct.vat %}
+                            <tr>
+                                <td>{{ orderProduct.product.name }}</td>
+                                <td>{{ orderProduct.pinDenomination }}</td>
+                                <td>{{ orderProduct.vat }}</td>
+                                <td>{{ orderProduct.ctrlNumber }}</td>
+                                <td>{{ orderProduct.pin }}</td>
+                                <td><a href="{{ path('user_pin_details', {'id':orderProduct.id}) }}">Pin Details</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /widget-content -->
+
+        </div>
+        <!-- /widget -->
     </div>
 
     <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget stacked">
-                    <div class="widget-content">
-                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <a href="{{ path('user_order_details_print', {'id': order.id}) }}" class="btn btn-success" style="width: 100%" target="_blank">Print</a>
-                        {% else %}
-                            <a href="{{ path('WebPage_order_details_print') }}" class="btn btn-success" style="width: 100%" target="_blank">Print</a>
-                        {% endif %}
-                    </div>
-                </div>
-                <!-- /widget-content -->
+        <div class="widget stacked">
+            <div class="widget-content">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <a href="{{ path('user_order_details_print', {'id': order.id}) }}" class="btn btn-success" style="width: 100%" target="_blank">Print</a>
+                {% else %}
+                    <a href="{{ path('WebPage_order_details_print') }}" class="btn btn-success" style="width: 100%" target="_blank">Print</a>
+                {% endif %}
             </div>
+            <!-- /widget-content -->
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget stacked">
+        <div class="widget stacked">
 
-                    <div class="widget-header">
-                        <h3><i class="fa fa-gift"></i> Order Summary</h3>
-                    </div>
-                    <div class="widget-content">
-                        <p>Shipping and additional costs are calculated based on the values you have entered.</p>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <tbody>
-                                <tr>
-                                    <th>Order subtotal</th>
-                                    <td id="basket_summary_subtotal">{{ order.amount }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Tax</th>
-                                    <td id="basket_summary_tax">{{ vat }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Delivery Method</th>
-                                    <td id="basket_summary_email">
-                                        {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                                        {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
-                                        {{ delivery != "" ? delivery|raw : "--" }}
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr class="total">
-                                    <th>Total</th>
-                                    <td id="basket_summary_total">{{ order.amount }}</td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- /widget-content -->
-
+            <div class="widget-header">
+                <h3><i class="fa fa-gift"></i> Order Summary</h3>
             </div>
-            <!-- /widget -->
+            <div class="widget-content">
+                <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                        <tr>
+                            <th>Order subtotal</th>
+                            <td id="basket_summary_subtotal">{{ order.amount }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tax</th>
+                            <td id="basket_summary_tax">{{ vat }}</td>
+                        </tr>
+                        <tr>
+                            <th>Delivery Method</th>
+                            <td id="basket_summary_email">
+                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                                {{ delivery != "" ? delivery|raw : "--" }}
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr class="total">
+                            <th>Total</th>
+                            <td id="basket_summary_total">{{ order.amount }}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- /widget-content -->
         </div>
+        <!-- /widget -->
+
     </div>
 </div>
 
