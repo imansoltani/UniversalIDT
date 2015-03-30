@@ -120,6 +120,7 @@
 															<thead>
 																<tr>
 																	<th colspan="2">Product</th>
+																	<th>Type</th>
 																	<th>Quantity</th>
 																	<th>Unit price</th>
 																	<th>Discount</th>
@@ -132,6 +133,7 @@
 																	<tr>
 																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
 																		<td>{{ row.product.name }}</td>
+																		<td>New Card</td>
 																		<td>{{ row.count }}</td>
 																		<td>{{ row.denomination }}</td>
 																		<td>{{ row.discount }}</td>
@@ -140,7 +142,8 @@
 																{% else %}
 																	<tr>
 																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
-																		<td>{{ row.product.name }} (Recharge)</td>
+																		<td>{{ row.product.name }}</td>
+																		<td>Recharge</td>
 																		<td>{{ row.count }}</td>
 																		<td>{{ row.denomination }}</td>
 																		<td>{{ row.discount }}</td>
@@ -151,7 +154,7 @@
 															</tbody>
 															<tfoot>
 																<tr class="total">
-																	<td colspan="5">Total</td>
+																	<td colspan="6">Total</td>
 																	<td>{{ sum_total|round(2)|number_format(2) }}</td>
 																</tr>
 															</tfoot>
