@@ -82,7 +82,7 @@ class OrderProduct
     /**
      * @var float
      *
-     * @ORM\Column(name="vat", type="decimal", precision=4, scale=2, options={"unsigned"=true})
+     * @ORM\Column(name="vat", type="decimal", precision=4, scale=2)
      */
     private $vat = 0.0;
 

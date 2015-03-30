@@ -31,7 +31,7 @@ class Vat
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="decimal", precision=4, scale=2, options={"unsigned"=true})
+     * @ORM\Column(name="value", type="decimal", precision=4, scale=2)
      */
     private $value;
 

@@ -56,7 +56,7 @@ class ImportProductsCommand extends AbstractImportCommand
                 $product->setAllAccessNumbers($accessNumbers[$row['cid']]);
             }
             else {
-                $output->writeln("warning: '" . $row['name'] . "' don't has access number.");
+                $output->writeln("warning: '" . $row['country'] . " " . $row['name'] . "' don't has access number.");
             }
 
             $imageFileName = strtoupper($row['country']." ".$row['name']).".png";
@@ -64,7 +64,7 @@ class ImportProductsCommand extends AbstractImportCommand
                 $product->setFile(new UploadedFile($images_path."/".$imageFileName, $imageFileName, 'image/png', 1, null, true));
             }
             else {
-                $output->writeln("warning: '" . $row['name'] . "' don't has image.");
+                $output->writeln("warning: '" . $row['country'] . " " . $row['name'] . "' don't has image.");
             }
 
 //            $product->setDialingInstructions();
@@ -82,15 +82,18 @@ class ImportProductsCommand extends AbstractImportCommand
     {
         $result = array();
         foreach ($array as $row) {
-            if(!isset($result[$row['classID']]))
-                $result[$row['classID']] = array();
+            if($row['ClassID'] == "" || $row['ClassID'] == "x")
+                continue;
+
+            if(!isset($result[$row['ClassID']]))
+                $result[$row['ClassID']] = array();
 
             //number,location,type,Languages
-            $result[$row['classID']] []= array(
-                JsonParser::ACCESS_NUMBERS_TYPE => $row['type'],
-                JsonParser::ACCESS_NUMBERS_NUMBER => $row['number'],
-                JsonParser::ACCESS_NUMBERS_LOCATION => $row['location'],
-                JsonParser::ACCESS_NUMBERS_LANGUAGES => $this->fixLanguages($row['Languages'])
+            $result[$row['ClassID']] []= array(
+                JsonParser::ACCESS_NUMBERS_TYPE => trim($row['Type']),
+                JsonParser::ACCESS_NUMBERS_NUMBER => trim($row['Number']),
+                JsonParser::ACCESS_NUMBERS_LOCATION => trim($row['Location']),
+                JsonParser::ACCESS_NUMBERS_LANGUAGES => trim($this->fixLanguages($row['Language']))
             );
         }
 
@@ -99,8 +102,8 @@ class ImportProductsCommand extends AbstractImportCommand
 
     private function fixLanguages($string)
     {
-        $string = trim($string, " \t\n\r\0\x0B/");
-        $string = str_replace("/", ",", $string);
+        $string = trim($string, " \t\n\r\0\x0B;");
+        $string = str_replace(";", ",", $string);
         $string = strtoupper($string);
 
         return $string;
