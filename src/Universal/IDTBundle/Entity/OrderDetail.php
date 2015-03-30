@@ -124,6 +124,13 @@ class OrderDetail
     private $user;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="delivered", type="boolean")
+     */
+    private $delivered = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -486,5 +493,28 @@ class OrderDetail
     public function getRequestsStatus()
     {
         return $this->requestsStatus;
+    }
+
+    /**
+     * Set delivered
+     *
+     * @param boolean $delivered
+     * @return OrderDetail
+     */
+    public function setDelivered($delivered)
+    {
+        $this->delivered = $delivered;
+
+        return $this;
+    }
+
+    /**
+     * Get delivered
+     *
+     * @return boolean 
+     */
+    public function getDelivered()
+    {
+        return $this->delivered;
     }
 }
