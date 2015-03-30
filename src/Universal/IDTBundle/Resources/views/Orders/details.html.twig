@@ -79,11 +79,11 @@
                         <tbody>
                         {% set vat = 0 %}
                         {% for orderProduct in order.orderProducts %}
-                            {% set vat = vat + orderProduct.vat %}
+                            {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
                             <tr>
                                 <td>{{ orderProduct.product.name }}</td>
-                                <td>{{ orderProduct.pinDenomination }}</td>
-                                <td>{{ orderProduct.vat }}</td>
+                                <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }}</td>
+                                <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
                                 <td>{{ orderProduct.pin }}</td>
                                 <td><a href="{{ path('user_pin_details', {'id':orderProduct.id}) }}">Pin Details</a></td>
@@ -123,11 +123,11 @@
                         <tbody>
                         <tr>
                             <th>Order subtotal</th>
-                            <td id="basket_summary_subtotal">{{ order.amount }}</td>
+                            <td id="basket_summary_subtotal">{{ order.amount|round(2)|number_format(2) }}</td>
                         </tr>
                         <tr>
                             <th>Tax</th>
-                            <td id="basket_summary_tax">{{ vat }}</td>
+                            <td id="basket_summary_tax">{{ vat|round(2)|number_format(2) }}</td>
                         </tr>
                         <tr>
                             <th>Delivery Method</th>
@@ -141,7 +141,7 @@
                         <tfoot>
                         <tr class="total">
                             <th>Total</th>
-                            <td id="basket_summary_total">{{ order.amount }}</td>
+                            <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }}</td>
                         </tr>
                         </tfoot>
                     </table>
