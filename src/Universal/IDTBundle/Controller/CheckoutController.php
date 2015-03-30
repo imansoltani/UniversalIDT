@@ -115,6 +115,16 @@ class CheckoutController extends Controller
             Log::save($e->getMessage(), "error_in_idt");
         }
 
+        if($orderDetail->getDeliveryEmail()) {
+            $this->get('EmailService')->sendEmailMessage(
+                $this->render("UniversalIDTBundle:Mails:checkout.email.html.twig", array(
+                        'order' =>  $orderDetail
+                    ))->getContent(),
+                $this->container->getParameter('mailer_sender_address'),
+                $orderDetail->getDeliveryEmail()
+            );
+        }
+
 //        /** @var EntityManager $em */
 //        $em = $this->getDoctrine()->getManager();
 //        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(5);

@@ -1,0 +1,101 @@
+{% block subject %}Checkout Result{% endblock %}
+
+{% block body %}
+    {% autoescape false %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <h4 style="margin-bottom: 20px">Hello {{ app.user.firstName }} !</h4>
+    {% endif %}
+    <div style="margin-bottom: 20px">
+        <h3>General information</h3>
+        <table border="1">
+            <tbody>
+            <tr>
+                <th>ID</th>
+                <td>{{ order.paymentId }}</td>
+                <th>Date</th>
+                <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Payment Status</th>
+                <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                <th>Payment method</th>
+                <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
+            </tr>
+            <tr>
+                <th>Delivery method</th>
+                <td colspan="3">
+                    {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                    {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                    {{ delivery != "" ? delivery|raw : "--" }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-bottom: 20px">
+        <h3>Order Details</h3>
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Card name</th>
+                <th>Denomination</th>
+                <th>Vat</th>
+                <th>Serial number</th>
+                <th>Pin</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% set vat = 0 %}
+            {% for orderProduct in order.orderProducts %}
+                {% set vat = vat + orderProduct.vat %}
+                <tr>
+                    <td>{{ orderProduct.product.name }}</td>
+                    <td>{{ orderProduct.pinDenomination }}</td>
+                    <td>{{ orderProduct.vat }}</td>
+                    <td>{{ orderProduct.ctrlNumber }}</td>
+                    <td>{{ orderProduct.pin }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-bottom: 20px">
+        <h3>Order Summary</h3>
+        <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+        <table border="1">
+            <tbody>
+            <tr>
+                <th>Order subtotal</th>
+                <td id="basket_summary_subtotal">{{ order.amount }}</td>
+            </tr>
+            <tr>
+                <th>Tax</th>
+                <td id="basket_summary_tax">{{ vat }}</td>
+            </tr>
+            <tr>
+                <th>Delivery Method</th>
+                <td id="basket_summary_email">
+                    {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
+                    {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                    {{ delivery != "" ? delivery|raw : "--" }}
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr class="total">
+                <th>Total</th>
+                <td id="basket_summary_total">{{ order.amount }}</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <h4>
+    Greetings,<br>
+    the IDT Universal Team
+    </h4>
+    {% endautoescape %}
+{% endblock %}

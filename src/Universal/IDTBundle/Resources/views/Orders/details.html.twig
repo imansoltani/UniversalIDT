@@ -30,14 +30,14 @@
                             <td>{{ order.paymentId }}</td>
                             <th>Date</th>
                             <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-                        <tr>
                         </tr>
+                        <tr>
                             <th>Payment Status</th>
                             <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                             <th>Payment method</th>
                             <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
-                        <tr>
                         </tr>
+                        <tr>
                             <th>Delivery method</th>
                             <td colspan="3">
                                 {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
