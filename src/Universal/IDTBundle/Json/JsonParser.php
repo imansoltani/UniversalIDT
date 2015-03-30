@@ -18,16 +18,19 @@ abstract class JsonParser
     private $json = null;
 
     /**
-     * @var string
-     */
-    private $folderPath = "..//app//Resources//ProductJson//";
-
-    /**
      * Get id
      *
      * @return integer
      */
     abstract public function getClassId();
+
+    /**
+     * @return string
+     */
+    private function getFolderPath()
+    {
+        return dirname(__FILE__)."//..//..//..//..//app//Resources//ProductJson//";
+    }
 
     /**
      * Load json file
@@ -37,7 +40,7 @@ abstract class JsonParser
         if(!is_null($this->json))
             return;
 
-        if(!is_null($this->getClassId()) && file_exists($this->folderPath.$this->getClassId().".json") && $jsonString = file_get_contents($this->folderPath.$this->getClassId().".json"))
+        if(!is_null($this->getClassId()) && file_exists($this->getFolderPath().$this->getClassId().".json") && $jsonString = file_get_contents($this->getFolderPath().$this->getClassId().".json"))
             $this->json = json_decode($jsonString, true);
         else
             $this->json = array();
@@ -49,7 +52,7 @@ abstract class JsonParser
     public function saveJson()
     {
         if(!is_null($this->getClassId()) && !is_null($this->json))
-            file_put_contents($this->folderPath.$this->getClassId().".json", json_encode($this->json, JSON_UNESCAPED_UNICODE));
+            file_put_contents($this->getFolderPath().$this->getClassId().".json", json_encode($this->json, JSON_UNESCAPED_UNICODE));
     }
 
     /**
@@ -57,8 +60,8 @@ abstract class JsonParser
      */
     public function removeJson()
     {
-        if(file_exists($this->folderPath.$this->getClassId().".json"))
-            unlink($this->folderPath.$this->getClassId().".json");
+        if(file_exists($this->getFolderPath().$this->getClassId().".json"))
+            unlink($this->getFolderPath().$this->getClassId().".json");
 
         $this->json = null;
     }

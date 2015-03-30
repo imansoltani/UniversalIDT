@@ -113,6 +113,12 @@
                     if(finds.next != null) $(".modal-body #next_product_link").prop('disabled', false).attr('onclick', 'openDetails('+finds.next+', true)');
                 }
 
+                $("#access-numbers-table").dataTable({
+                    "pageLength": 5,
+                    "pagingType": "simple",
+                    "lengthChange": false
+                });
+
                 waitingDialog.hide();
                 $('#calling-card-modal').modal('show');
             },
