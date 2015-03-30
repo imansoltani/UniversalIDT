@@ -6,7 +6,7 @@ use Universal\IDTBundle\Entity\Product;
 
 /**
  * Class OrderServices
- * @package Universal\IDTBundle\Service
+ * @package Universal\IDTBundle\Services
  */
 class OrderServices
 {

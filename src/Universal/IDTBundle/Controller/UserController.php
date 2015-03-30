@@ -74,7 +74,7 @@ class UserController extends Controller
                 $user->setConfirmationToken($this->get('fos_user.util.token_generator')->generateToken());
                 $user->setNewEmailExpireAt(new \DateTime("+24 hours"));
 
-                $this->sendEmailMessage(
+                $this->get('EmailService')->sendEmailMessage(
                     $this->render("UniversalIDTBundle:Mails:changing_email.email.html.twig", array(
                             'user' => $user,
                             'confirmationUrl' =>  $this->generateUrl('user_profile_email_confirm', array('token'=> $user->getConfirmationToken()), true)
@@ -134,21 +134,5 @@ class UserController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('fos_user_security_login'));
-    }
-
-    private function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)
-    {
-        // Render the email, use the first line as the subject, and the rest as the body
-        $renderedLines = explode("\n", trim($renderedTemplate));
-        $subject = $renderedLines[0];
-        $body = implode("\n", array_slice($renderedLines, 1));
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom($fromEmail)
-            ->setTo($toEmail)
-            ->setBody($body);
-
-        $this->get('mailer')->send($message);
     }
 }

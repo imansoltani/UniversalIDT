@@ -254,7 +254,7 @@ class WebPageController extends Controller
 
             if($form->isValid()) {
                 try {
-                    $this->sendEmailMessage(
+                    $this->get('EmailService')->sendEmailMessage(
                         $this->render(
                             'UniversalIDTBundle:Mails:contact.email.html.twig',
                             array(
@@ -267,7 +267,7 @@ class WebPageController extends Controller
                         $this->container->getParameter('mailer_support')
                     );
 
-                    $this->sendEmailMessage(
+                    $this->get('EmailService')->sendEmailMessage(
                         $this->render(
                             'UniversalIDTBundle:Mails:contact_confirm.email.html.twig',
                             array(
@@ -290,23 +290,5 @@ class WebPageController extends Controller
         return $this->render('UniversalIDTBundle:WebPage:contact.html.twig', array(
                 'form' => $form->createView()
             ));
-    }
-
-    //-----------------------------------
-
-    private function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)
-    {
-        // Render the email, use the first line as the subject, and the rest as the body
-        $renderedLines = explode("\n", trim($renderedTemplate));
-        $subject = $renderedLines[0];
-        $body = implode("\n", array_slice($renderedLines, 1));
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject($subject)
-            ->setFrom($fromEmail)
-            ->setTo($toEmail)
-            ->setBody($body);
-
-        $this->get('mailer')->send($message);
     }
 }

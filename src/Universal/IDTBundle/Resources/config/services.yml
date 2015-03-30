@@ -41,6 +41,9 @@ services:
         class: Universal\IDTBundle\Services\OrderServices
         arguments: [@doctrine.orm.default_entity_manager]
 
+    EmailService:
+            class: Universal\IDTBundle\Services\EmailService
+            arguments: [@mailer]
 #    universal_idt.example:
 #        class: Universal\IDTBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
