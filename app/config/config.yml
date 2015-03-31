@@ -117,3 +117,4 @@ jms_i18n_routing:
 white_october_breadcrumbs:
     listClass: breadcrumb
     viewTemplate: "UniversalIDTBundle:Menu:breadcrumbs.html.twig"
+    translation_domain: "application"

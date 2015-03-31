@@ -1,0 +1,44 @@
+#Bad credentials: Bad credentials
+#Registration not confirmed: Registration not confirmed
+
+layout:
+    header:
+        subnav:
+#            notifications: Notifications
+            settings: Account Settings
+#            logout: Logout
+
+menu:
+    navbar:
+        home:               Home
+        my_pins:            My PINs
+        billing_history:    Billing History
+        calling_cards:      Calling Cards
+        rates:              Rates
+        help:               Help
+
+    breadcrumbs:
+        home:                       Home
+        account_index:              My Account
+
+        billing:                    Billing
+        billing_history:            Billing History
+        order:                      Order "%id%"
+
+        pins:                       My PINs
+        pin_details:                General Details
+        pin_history:                Calls History
+        pin_recharges:              Recharges
+
+        panel_contact:              Contact us
+
+        notifications_index:        Notifications
+
+        checkout:                   Checkout
+
+        user:                       My Account
+        user_settings:              Profile Settings
+        user_emailChange:           Email Settings
+        user_passwordChange:        Password Settings
+        user_notificationsChange:   Notifications Settings
+

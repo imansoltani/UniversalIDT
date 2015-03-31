@@ -37,7 +37,7 @@
                             <i class="icon-user"></i> {{ app.user.firstName }}<b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{ path('fos_user_profile_show') }}">{{ 'Settings'|trans({},'FOSUserBundle') }}</a></li>
+                            <li><a href="{{ path('fos_user_profile_show') }}">{{ 'layout.header.subnav.settings'|trans({},'application') }}</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({},'FOSUserBundle') }}</a></li>
                         </ul>
                     </li>
