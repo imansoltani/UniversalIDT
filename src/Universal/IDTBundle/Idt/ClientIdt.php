@@ -52,7 +52,7 @@ class ClientIdt
 
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
-            if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
+            if(!$orderProduct->isProcessed() && $orderProduct->getRequestStatus() == RequestStatusEnumType::PENDING_FOR_CREATION) {
                 $productsToCreate [$i++] = $orderProduct;
             }
         }
@@ -67,10 +67,10 @@ class ClientIdt
             if(strtolower($responses[$id]->status) == 'ok') {
                 $orderProduct->setCtrlNumber($responses[$id]->account);
                 $orderProduct->setPin($responses[$id]->authcode);
-                $orderProduct->setRequestType(RequestTypeEnumType::RECHARGE);
+                $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING_FOR_RECHARGE);
                 $numberOfSucceedCreations ++;
             } else {
-                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
+                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED_AT_CREATION);
                 $orderProduct->setStatusDesc(substr($responses[$id]->code.":".$responses[$id]->description, 0, 100));
             }
         }
@@ -90,7 +90,7 @@ class ClientIdt
 
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
-            if(!$orderProduct->isProcessed() && $orderProduct->getRequestType() == RequestTypeEnumType::RECHARGE) {
+            if(!$orderProduct->isProcessed() && $orderProduct->getRequestStatus() == RequestStatusEnumType::PENDING_FOR_RECHARGE) {
                 $productsToRecharge [$i++] = $orderProduct;
             }
         }
@@ -104,7 +104,7 @@ class ClientIdt
             if(strtolower($responses[$id]->status) == 'ok') {
                 $orderProduct->setRequestStatus(RequestStatusEnumType::SUCCEED);
             } else {
-                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED);
+                $orderProduct->setRequestStatus(RequestStatusEnumType::FAILED_AT_RECHARGE);
                 $orderProduct->setStatusDesc(substr($responses[$id]->code.":".$responses[$id]->description, 0, 100));
             }
         }
@@ -127,15 +127,17 @@ class ClientIdt
         /** @var OrderProduct $orderProduct */
         foreach($orderDetail->getOrderProducts() as $orderProduct) {
             if ($orderProduct->getRequestStatus() !== RequestStatusEnumType::REGISTERED)
-                throw new \Exception("OrderProduct ID '" . $orderProduct->getId() . "' is '" . $orderProduct->getRequestStatus() . "'. The status must be registered.");
+                throw new \Exception("OrderProduct ID '" . $orderProduct->getId() . "' is '" . RequestStatusEnumType::getReadableValue($orderProduct->getRequestStatus()) . "'. The status must be registered.");
 
-            $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING);
-
-            if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION)
+            if($orderProduct->getRequestType() == RequestTypeEnumType::CREATION) {
+                $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING_FOR_CREATION);
                 $numberOfProductsToCreate ++;
+            }
 
-            if($orderProduct->getRequestType() == RequestTypeEnumType::RECHARGE)
+            if($orderProduct->getRequestType() == RequestTypeEnumType::RECHARGE) {
+                $orderProduct->setRequestStatus(RequestStatusEnumType::PENDING_FOR_RECHARGE);
                 $numberOfProductsToRecharge ++;
+            }
         }
 
         $this->em->flush();

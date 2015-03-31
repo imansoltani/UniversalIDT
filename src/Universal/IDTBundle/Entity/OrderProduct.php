@@ -285,7 +285,8 @@ class OrderProduct
      */
     public function isProcessed()
     {
-        return RequestStatusEnumType::PENDING !== $this->getRequestStatus();
+        return RequestStatusEnumType::PENDING_FOR_CREATION !== $this->getRequestStatus()
+        && RequestStatusEnumType::PENDING_FOR_RECHARGE !== $this->getRequestStatus();
     }
 
     /**
@@ -309,7 +310,8 @@ class OrderProduct
      */
     public function isFailed()
     {
-        return RequestStatusEnumType::FAILED === $this->getRequestStatus();
+        return RequestStatusEnumType::FAILED_AT_CREATION === $this->getRequestStatus()
+            || RequestStatusEnumType::FAILED_AT_RECHARGE === $this->getRequestStatus();
     }
 
     /**
