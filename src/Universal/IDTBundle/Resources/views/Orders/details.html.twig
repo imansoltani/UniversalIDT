@@ -68,6 +68,7 @@
                         <thead>
                         <tr>
                             <th>Card name</th>
+                            <th>Type</th>
                             <th>Denomination</th>
                             <th>Vat</th>
                             <th>Serial number</th>
@@ -82,6 +83,7 @@
                             {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
                             <tr>
                                 <td>{{ orderProduct.product.name }}</td>
+                                <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
                                 <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }}</td>
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
