@@ -56,7 +56,7 @@ class ImportProductsCommand extends AbstractImportCommand
                 $product->setAllAccessNumbers($accessNumbers[$row['cid']]);
             }
             else {
-                $output->writeln("warning: '" . $row['country'] . " " . $row['name'] . "' don't has access number.");
+                $output->writeln("warning: '" . $row['cid'] . " " . $row['country'] . " " . $row['name'] . "' don't has access number.");
             }
 
             $imageFileName = strtoupper($row['country']." ".$row['name']).".png";
@@ -64,7 +64,7 @@ class ImportProductsCommand extends AbstractImportCommand
                 $product->setFile(new UploadedFile($images_path."/".$imageFileName, $imageFileName, 'image/png', 1, null, true));
             }
             else {
-                $output->writeln("warning: '" . $row['country'] . " " . $row['name'] . "' don't has image.");
+                $output->writeln("warning: '" . $row['cid'] . " " . $row['country'] . " " . $row['name'] . "' don't has image.");
             }
 
 //            $product->setDialingInstructions();
@@ -93,7 +93,7 @@ class ImportProductsCommand extends AbstractImportCommand
                 JsonParser::ACCESS_NUMBERS_TYPE => trim($row['Type']),
                 JsonParser::ACCESS_NUMBERS_NUMBER => trim($row['Number']),
                 JsonParser::ACCESS_NUMBERS_LOCATION => trim($row['Location']),
-                JsonParser::ACCESS_NUMBERS_LANGUAGES => trim($this->fixLanguages($row['Language']))
+                JsonParser::ACCESS_NUMBERS_LANGUAGES => trim($this->fixLanguages($row['Languages']))
             );
         }
 
