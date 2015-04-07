@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b7abbce0ce656d1325f15a272bd40c63",
+    "hash": "d9cbb50e84f35ab227ecc0fa42211b9c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1550,6 +1550,46 @@
             "time": "2012-04-23 22:52:11"
         },
         {
+            "name": "pouyasoft_ir/sofort",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/msajadi824/Sofort.git",
+                "reference": "6c6ffffe160a244b07b08261a4e4a3101e10621b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/msajadi824/Sofort/zipball/6c6ffffe160a244b07b08261a4e4a3101e10621b",
+                "reference": "6c6ffffe160a244b07b08261a4e4a3101e10621b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PouyaSoft_ir\\Sofort\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mostafa Sajadi",
+                    "email": "msajadi824@hotmail.com"
+                }
+            ],
+            "description": "sofort payment PHP library",
+            "homepage": "https://github.com/msajadi824/Sofort",
+            "keywords": [
+                "sofort"
+            ],
+            "time": "2015-04-07 16:07:14"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -2304,7 +2344,8 @@
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "jms/i18n-routing-bundle": 20,
-        "whiteoctober/breadcrumbs-bundle": 20
+        "whiteoctober/breadcrumbs-bundle": 20,
+        "pouyasoft_ir/sofort": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

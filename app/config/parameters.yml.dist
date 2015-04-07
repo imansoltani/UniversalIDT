@@ -36,3 +36,8 @@ parameters:
         username: "HellobellTEST1"
         password: "Humbug15ay"
         api_location: "https://app1.idt.net/debit/partner/partnerAPI.asp"
+
+    Sofort:
+        project_id: 222894
+        submit_url: "https://api.sofort.com/xml"
+        conf_key:   "102878:222894:bb2a772b476944424773467dbfb9d9e7"
