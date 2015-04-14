@@ -58,7 +58,7 @@ upgrading in the future easier. ***
 }
 /* Extra small devices (phones, up to 480px) */
 /* No media query since this is the default in Bootstrap */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .navbar {
     padding-left: 10px;
     padding-right: 10px;

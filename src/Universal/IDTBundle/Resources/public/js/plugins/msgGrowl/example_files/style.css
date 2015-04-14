@@ -2,7 +2,7 @@ body { color: #555; }
 
 a { color: #06C; }
 
-h1 { background: url(logo.png) no-repeat 0 0; width: 120px; height: 120px; line-height: 600px; overflow: hidden; padding-bottom: 1.5em; margin: 0 auto 1.25em; }
+h1 { background: url(../example_files/logo.png) no-repeat 0 0; width: 120px; height: 120px; line-height: 600px; overflow: hidden; padding-bottom: 1.5em; margin: 0 auto 1.25em; }
 
 h3 { font-size: 18px; font-weight: normal; color: #F90; margin-top: 1.5em; margin-bottom: 1em; }
 

@@ -45,12 +45,10 @@
 }
 
 #header-top-menu > ul > li{
-	border-top: 1px solid #333333;
-	border-bottom: 1px solid #111111;
+	
 }
 
 #header-top-menu > ul > li:last-child{
-	border-bottom: none;
 	margin-bottom: 5px;
 }
 
@@ -245,12 +243,11 @@
 }
 
 #header-top-menu > ul > li + li{
-	border-right: 1px solid #333333;
-	border-left: 1px solid #111111;
+	
 }
 
 #header-top-menu > ul > li:first-child{
-	border-right: 1px solid #333333;
+	
 }
 
 #header-top-menu{
@@ -425,12 +422,11 @@
 }
 
 #header-top-menu > ul > li + li{
-	border-right: 1px solid #333333;
-	border-left: 1px solid #111111;
+	
 }
 
 #header-top-menu > ul > li:first-child{
-	border-right: 1px solid #333333;
+	
 }
 
 #header-top-menu{
@@ -620,12 +616,11 @@
 }
 
 #header-top-menu > ul > li + li{
-	border-right: 1px solid #333333;
-	border-left: 1px solid #111111;
+	
 }
 
 #header-top-menu > ul > li:first-child{
-	border-right: 1px solid #333333;
+	
 }
 
 #header-top-menu{

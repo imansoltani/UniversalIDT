@@ -89,8 +89,8 @@ img{
 }
 
 .header-top{
-	background-color: #292929;
-	border-bottom: 1px solid #1e1e1e;
+	background-color: #eeeeee;
+	border-bottom: 1px solid #eeeeee;
 }
 
 #header-top-menu{
@@ -104,7 +104,7 @@ img{
 }
 
 #header-top-menu > ul > li > a{
-	color: #999999;
+	color: #666666;
 	display: block;
 	padding: 7.5px 15px;
 	font-size: 12px;
@@ -206,11 +206,13 @@ img{
 	
 }
 
-.order-summary .widget-content{
-	padding-top: 15px;
+.order-summary h4{
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #ddd;
 }
 
-.order-summary .widget-content .table:last-child{
+.order-summary .table:last-child{
 	margin-bottom: 0px;
 }
 
@@ -652,12 +654,10 @@ img{
 
 .calling-card-thumb{
 	margin-bottom: 15px;
-	text-align: center;
 }
 
 .calling-card-thumb img{
-	max-height: 320px;
-	max-width: 320px;
+	width: 100%;
 }
 
 .calling-card-action .form-group{
@@ -798,10 +798,6 @@ img{
 
 .payment-status .success{
 	color: #5cb85c;
-}
-
-.payment-status .failed{
-	color: #e5201d;
 }
 
 .payment-status p{
