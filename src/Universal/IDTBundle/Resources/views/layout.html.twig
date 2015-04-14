@@ -4,96 +4,150 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,300,400,600" rel="stylesheet">
+    <link href="{{ asset("bundles/universalidt/home/css/font-awesome.min.css") }}" rel="stylesheet">
+
+    <!-- STYLESHEET -->
     <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('bundles/universalidt/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-    <link href="{{ asset('bundles/universalidt/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/ui-lightness/jquery-ui-1.10.0.custom.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/universalidt/css/base-admin-3.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/universalidt/css/base-admin-3-responsive.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/universalidt/css/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/universalidt/css/pages/dashboard.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/custom-responsive.css') }}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 {% endblock stylesheets %}
 
 {% block body %}
-<nav class="navbar navbar-inverse" role="navigation">
+<div class="header clearfix"><!-- START HEADER SECTION-->
 
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <i class="icon-cog"></i>
-            </button>
-            <a href="{{ path('WebPage_main') }}"><img style="height: 50px;" class="navbar-brand" src="{{ asset('bundles/universalidt/home/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('en_US__RG__WebPage_main')~'#basket' }}" data-toggle="target"><i class="icon-shopping-cart"></i> Cart(<span id="cart_total_items">-</span>)</a></li>
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <li class="dropdown">
-                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i> {{ app.user.firstName }}<b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('fos_user_profile_show') }}">{{ 'layout.header.subnav.settings'|trans({},'application') }}</a></li>
-                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({},'FOSUserBundle') }}</a></li>
-                        </ul>
-                    </li>
-                {% else %}
-                    <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
-                    <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
-                    <li class="dropdown">
-                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">Language<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            {% for name, iso in languages %}
-                                <li><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale':iso})) }}">{{ name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endif %}
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div> <!-- /.container -->
-</nav>
-
-<div class="subnavbar">
-    <div class="subnavbar-inner">
+    <div class="header-top clearfix"><!-- HEADER TOP -->
         <div class="container">
-            <a href="javascript:" class="subnav-toggle" data-toggle="collapse" data-target=".subnav-collapse">
-                <span class="sr-only">Toggle navigation</span><i class="icon-reorder"></i>
-            </a>
-            <div class="collapse subnav-collapse">
-                {{ knp_menu_render('UniversalIDTBundle:Builder:mainMenu', {'currentClass': 'active', 'template': 'UniversalIDTBundle:Menu:my_knp_menu.html.twig'}) }}
-            </div> <!-- /.subnav-collapse -->
-        </div> <!-- /container -->
-    </div> <!-- /subnavbar-inner -->
-</div> <!-- /subnavbar -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="header-top-menu clearfix">
+                        <a href="#header-top-menu" data-toggle="collapse" class="header-top-menu-collapse"><i class="fa fa-gear"></i></a>
+                        <div class="collapse" id="header-top-menu"><!-- HEADER TOP MENU -->
+                            <ul>
+                                <li><a href="{{ path('WebPage_main')~'#basket' }}"><i class="fa fa-shopping-cart"></i>Cart(<span id="cart_total_items">-</span>)</a></li>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                    <li class="dropdown">
+                                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-user"></i> {{ app.user.firstName }}<span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="{{ path('fos_user_profile_show') }}">{{ 'layout.header.subnav.settings'|trans({},'application') }}</a></li>
+                                            <li><a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({},'FOSUserBundle') }}</a></li>
+                                        </ul>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                                    <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+                                    <li class="dropdown">
+                                        <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">Language<span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            {% for name, iso in languages %}
+                                                <li><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale':iso})) }}">{{ name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navbar navbar-inverse"><!-- HEADER BOTTOM -->
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="{{ asset('bundles/universalidt/home/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
+            </div>
+
+            <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
+                {{ knp_menu_render('UniversalIDTBundle:Builder:mainMenu', {'currentClass': '', 'template': 'UniversalIDTBundle:Menu:main_menu.html.twig'}) }}
+            </div>
+        </div>
+    </div>
+</div><!-- END HEADER SECTION -->
 
 <div class="main">
     <div class="container">
-        <div class="breadcrumbs">
-            {{ wo_render_breadcrumbs() }}
-        </div> <!-- /subnavbar -->
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                {{ wo_render_breadcrumbs() }}
+            </div>
+        </div>
 
-        {#{% block flashes %}#}
-        {#<div class="alert alert-{{type}}">{{ message }}</div>#}
-        {#{% endblock %}#}
+        {#<div class="row">#}
+            {#<div class="col-md-12 col-sm-12">#}
+            {#{% block flashes %}#}
+                {#<div class="alert alert-{{type}}">{{ message }}</div>#}
+            {#{% endblock %}#}
+            {#</div>#}
+        {#</div>#}
 
-        {% block content '' %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="col-md-3 col-sm-3">
+            <div class="sidebar-nav clearfix"><!-- SIDEBAR NAV -->
+                <div class="sidebar-trigger clearfix">
+                    <a href="#sidebar-nav" data-toggle="collapse"><i class="fa fa-bars"></i></a>
+                    <span><i class="fa fa-bars"></i></span>
+                </div>
+                <div id="sidebar-nav" class="collapse clearfix">
+                    {{ knp_menu_render('UniversalIDTBundle:Builder:userMenu', {'currentClass': 'active', 'template': 'UniversalIDTBundle:Menu:user_menu.html.twig'}) }}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="{{ is_granted("IS_AUTHENTICATED_REMEMBERED") ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12' }}">
+            {% block content '' %}
+        </div>
     </div> <!-- /container -->
 </div> <!-- /main -->
+
+<div class="extra clearfix"><!-- START FOOTER TOP SECTION -->
+    <div class="container">
+        {% include 'UniversalIDTBundle::extra.html.twig' %}
+    </div>
+</div><!-- END FOOTER TOP SECTION -->
+
+<div class="footer clearfix"><!-- START FOOTER BOTTOM SECTION -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="copyright clearfix">
+                    <p>&copy; 2015 Universal. All Right Reserved</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- END FOOTER BOTTOM SECTION -->
 
 {% endblock body %}
 
 {% block javascripts %}
     {{ parent() }}
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{{ asset("bundles/universalidt/js/jquery-1.9.1.min.js") }}"></script>
-    <script src="{{ asset("bundles/universalidt/js/jquery-ui-1.10.0.custom.min.js") }}"></script>
-    <script src="{{ asset("bundles/universalidt/js/bootstrap.min.js") }}"></script>
-    <script src="{{ asset("bundles/universalidt/js/Application.js") }}"></script>
+
+    <!-- SET ALL SCRIPT AT BODY BOTTOM TO LOAD PAGE FAST -->
+    <script src="{{ asset('bundles/universalidt/js/jquery-1.11.2.min.js') }}"></script>
+    <script src="{{ asset('bundles/universalidt/js/libs/jquery-ui-1.10.0.custom.min.js') }}"></script>
+    <script src="{{ asset('bundles/universalidt/js/libs/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/universalidt/js/libs/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bundles/universalidt/js/libs/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('bundles/universalidt/js/Application.js') }}"></script>
+    <script src="{{ asset('bundles/universalidt/js/custom.js') }}"></script>
 {% endblock javascripts %}

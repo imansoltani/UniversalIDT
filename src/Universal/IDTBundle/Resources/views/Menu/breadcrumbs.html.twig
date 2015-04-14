@@ -1,21 +1,16 @@
 {% if wo_breadcrumbs()|length %}
     {% spaceless %}
-        <div class="breadcrumbs-inner">
-            <div class="container">
-                <div class="collapse breadcrumbs_collapse">
-                    <ul class="{{ listClass }}">
-                        {% for b in breadcrumbs %}
-                            {% if loop.last or not b.url %}{% set itemClass = itemClass ~ ' active' %}{% endif %}
-                            <li{% if itemClass is defined and itemClass|length %} class="{{ itemClass }}"{% endif %}>
-                                {% if b.url and not loop.last %}<a href="{{ b.url }}"{% if linkRel is defined and linkRel|length %} rel="{{ linkRel }}"{% endif %}>{% endif %}
-                                    {{- b.text | trans(b.translationParameters, translation_domain, locale) -}}
-                                    {% if b.url and not loop.last %}</a>{% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            <!-- /container -->
+        <div class="breadcrumb-container clearfix"><!-- BREADCRUMB -->
+            <ul class="{{ listClass }}">
+                {% for b in breadcrumbs %}
+                    {% if loop.last or not b.url %}{% set itemClass = itemClass ~ ' active' %}{% endif %}
+                    <li{% if itemClass is defined and itemClass|length %} class="{{ itemClass }}"{% endif %}>
+                        {% if b.url and not loop.last %}<a href="{{ b.url }}"{% if linkRel is defined and linkRel|length %} rel="{{ linkRel }}"{% endif %}>{% endif %}
+                            {{- b.text | trans(b.translationParameters, translation_domain, locale) -}}
+                            {% if b.url and not loop.last %}</a>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
         <!-- /subnavbar-inner -->
     {% endspaceless %}
