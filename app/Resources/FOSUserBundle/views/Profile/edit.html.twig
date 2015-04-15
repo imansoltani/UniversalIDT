@@ -1,110 +1,88 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    Profile|trans
+    Profile Settings
 {% endblock subtitle %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="widget stacked">
-
-                <div class="widget-header">
-                    <i class="icon-user"></i>
-
-                    <h3>Profile</h3>
-                </div>
-                <!-- /widget-header -->
-
-                <div class="widget-content">
-                    <div class="tabbable">
-
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="{{ path('fos_user_profile_edit') }}">Profile settings</a></li>
-                            <li><a href="{{ path('user_profile_email') }}">Email Settings</a></li>
-                            <li><a href="{{ path('fos_user_change_password') }}">Password Settings</a></li>
-                            <li><a href="{{ path('user_profile_notification') }}">Notifications</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div class="tab-pane active">
-                                <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit form-horizontal col-md-7">
-                                    <fieldset>
-
-                                        <div class="form-group">
-                                            {{ form_label(form.firstName, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.firstName) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            {{ form_label(form.lastName, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.lastName) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            {{ form_label(form.country, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.country) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            {{ form_label(form.language, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.language, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.language) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            {{ form_label(form.gender, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.gender) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            {{ form_label(form.phone, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.phone) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            {{ form_label(form.current_password, "", {'label_attr': {'class': 'col-lg-4'} }) }}
-                                            <div class="col-lg-8">
-                                                {{ form_widget(form.current_password, {'attr': {'class': 'form-control'}}) }}
-                                                {{ form_errors(form.current_password) }}
-                                            </div> <!-- /col-lg-8 -->
-                                        </div> <!-- /form-group -->
-
-                                        <div class="form-group">
-                                            <div class="col-lg-4"></div>
-
-                                            <div class="col-lg-8">
-                                                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary" />
-                                            </div>
-                                        </div> <!-- /form-actions -->
-                                    </fieldset>
-                                    {{ form_rest(form) }}
-                                </form>
+    <div class="content-container clearfix">
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <h2 class="section-title">Profile Settings</h2>
+            <div class="user-panel clearfix"><!-- USER PANEL -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="{{ path('fos_user_profile_edit') }}"><i class="fa fa-user"></i> Profile settings</a></li>
+                    <li><a href="{{ path('user_profile_email') }}"><i class="fa fa-envelope"></i> Email Settings</a></li>
+                    <li><a href="{{ path('fos_user_change_password') }}"><i class="fa fa-key"></i> Password Settings</a></li>
+                    <li><a href="{{ path('user_profile_notification') }}"><i class="fa fa-exclamation-circle"></i> Notifications</a></li>
+                </ul>
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active">
+                        <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="profile-setting-form fos_user_profile_edit form-horizontal">
+                            <div class="form-group">
+                                {{ form_label(form.firstName, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.firstName) }}
+                                </div>
                             </div>
-                        </div>
-
+                            <div class="form-group">
+                                {{ form_label(form.lastName, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.lastName) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.country, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.country, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.country) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.language, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.language, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.language) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.gender, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    {{ form_widget(form.gender, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(form.gender) }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.phone, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-mobile"></i></span>
+                                        {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.phone) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.current_password, "", {'label_attr': {'class': 'col-md-3'} }) }}
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                        {{ form_widget(form.current_password, {'attr': {'class': 'form-control'}}) }}
+                                        {{ form_errors(form.current_password) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary" />
+                                </div>
+                            </div>
+                            {{ form_rest(form) }}
+                        </form>
                     </div>
                 </div>
-                <!-- /widget-content -->
             </div>
-            <!-- /widget -->
         </div>
     </div>
 {% endblock %}

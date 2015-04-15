@@ -7,60 +7,49 @@
 {% endblock subtitle %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-book"></i>
-                <h3>Login</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-
-                <form class="form-horizontal col-md-7" action="{{ path("fos_user_security_check") }}" method="post">
-                    <fieldset>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-
-                        <div class="form-group">
-                            <label for="username" class="col-lg-4">{{ 'security.login.username'|trans }}</label>
-                            <div class="col-lg-8">
-                                <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-                            </div> <!-- /col-lg-8 -->
-                        </div> <!-- /form-group -->
-
-                        <div class="form-group">
-                            <label for="password" class="col-lg-4">{{ 'security.login.password'|trans }}</label>
-                            <div class="col-lg-8">
-                                <input class="form-control" type="password" id="password" name="_password" required="required" />
-                            </div> <!-- /col-lg-8 -->
-                        </div> <!-- /form-group -->
-
-                        <div class="form-group">
-                            <span class="col-lg-4"></span>
-                            <div class="col-lg-8">
-                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
-                            </div> <!-- /col-lg-8 -->
-                        </div> <!-- /form-group -->
-
-                        <div class="form-group">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-8">
-                                <input class="btn btn-primary" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
-                                <a class="btn btn-default pull-right" href="{{ path('fos_user_resetting_request') }}">{{ 'resetting.request.submit'|trans }}</a>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <!-- /widget-content -->
-
+    <div class="content-container clearfix">
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <form class="login-form clearfix" action="{{ path("fos_user_security_check") }}" method="post">
+                <div class="form-heading clearfix">
+                    <h2>Authentication</h2>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                <div class="form-group">
+                    <label for="username">{{ 'security.login.username'|trans }}</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Email or Username" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">{{ 'security.login.password'|trans }}</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        <input class="form-control" type="password" id="password" name="_password" required="required" placeholder="Password" />
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <span>{{ 'security.login.remember_me'|trans }}</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <div class="text-center clearfix">
+                        <input class="btn btn-primary" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <a href="{{ path('fos_user_registration_register') }}">{{ 'registration.submit'|trans }} <i class="fa fa-caret-right"></i></a>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <a href="{{ path('fos_user_resetting_request') }}">{{ 'resetting.request.submit'|trans }} <i class="fa fa-caret-right"></i></a>
+                    </div>
+                </div>
+            </form>
         </div>
-        <!-- /widget -->
     </div>
-</div>
 {% endblock %}
 
 {% block javascripts %}

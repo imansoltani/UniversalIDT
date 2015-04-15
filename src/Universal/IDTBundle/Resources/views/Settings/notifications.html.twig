@@ -1,75 +1,50 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    Notifications|trans
+    Notifications Settings
 {% endblock subtitle %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="widget stacked">
-
-                <div class="widget-header">
-                    <i class="icon-user"></i>
-
-                    <h3>Notifications</h3>
-                </div>
-                <!-- /widget-header -->
-
-                <div class="widget-content">
-                    <div class="tabbable">
-
-                        <ul class="nav nav-tabs">
-                            <li><a href="{{ path('fos_user_profile_edit') }}">Profile settings</a></li>
-                            <li><a href="{{ path('user_profile_email') }}">Email Settings</a></li>
-                            <li><a href="{{ path('fos_user_change_password') }}">Password Settings</a></li>
-                            <li class="active"><a href="{{ path('user_profile_notification') }}">Notifications</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                            <div class="tab-pane active">
-                                {{ form_start(form, {'attr': {'class': 'form-horizontal col-md-7'}}) }}
-                                <fieldset>
-                                    <div class="form-group">
-                                        <div class="col-lg-4">
-                                            <p class="help-block">{{ form_label(form.notifications) }}</p>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <div class="row">
-                                                {% for notify in form.notifications %}
-                                                    <div class="col-sm-6">
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                {{ form_widget(notify) }}
-                                                                {{ form_label(notify) }}
-                                                                {{ form_errors(notify) }}
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                {% endfor %}
-                                                {{ form_errors(form.notifications) }}
-                                            </div>
-                                        </div>
+    <div class="content-container clearfix">
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <h2 class="section-title">Notification Settings</h2>
+            <div class="user-panel clearfix"><!-- USER PANEL -->
+                <ul class="nav nav-tabs"><!-- TAB LIST -->
+                    <li><a href="{{ path('fos_user_profile_edit') }}"><i class="fa fa-user"></i> Profile settings</a></li>
+                    <li><a href="{{ path('user_profile_email') }}"><i class="fa fa-envelope"></i> Email Settings</a></li>
+                    <li><a href="{{ path('fos_user_change_password') }}"><i class="fa fa-key"></i> Password Settings</a></li>
+                    <li class="active"><a href="{{ path('user_profile_notification') }}"><i class="fa fa-exclamation-circle"></i> Notifications</a></li>
+                </ul>
+                <div class="tab-content clearfix">
+                    <div class="tab-pane active">
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal notification-setting-form'}}) }}
+                            <div class="form-group">
+                                <div class="col-md-3">
+                                    <label>{{ form_label(form.notifications) }}</label>
+                                </div>
+                                <div class="col-md-9">
+                                    {% for notify in form.notifications %}
+                                    <div class="checkbox">
+                                        <label>
+                                            {{ form_widget(notify) }}
+                                            <span>{{ form_label(notify) }}</span>
+                                            {{ form_errors(notify) }}
+                                        </label>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="col-lg-4"></div>
-
-                                        <div class="col-lg-8">
-                                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-                                        </div>
-                                    </div>
-                                    <!-- /form-actions -->
-                                </fieldset>
-                                {{ form_errors(form) }}
-                                {{ form_end(form) }}
+                                    {% endfor %}
+                                    {{ form_errors(form.notifications) }}
+                                </div>
                             </div>
-                        </div>
-
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                                </div>
+                            </div>
+                        {{ form_errors(form) }}
+                        {{ form_end(form) }}
                     </div>
                 </div>
-                <!-- /widget-content -->
             </div>
-            <!-- /widget -->
         </div>
     </div>
 {% endblock %}

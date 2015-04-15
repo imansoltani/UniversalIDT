@@ -4,57 +4,86 @@
     Home
 {% endblock subtitle %}
 
-{% block stylesheets %}
-    {{ parent() }}
-
-    <style type="text/css">
-        .subnavbar.home-menu {
-            border: none;
-        }
-
-        .subnavbar.home-menu .subnavbar-inner {
-            background-image: none;
-            border: none;
-        }
-
-        .subnavbar.home-menu ul {
-            border: none;
-        }
-
-        .subnavbar.home-menu li {
-            border: 1px solid #636363;
-            margin-right: 10px;
-        }
-    </style>
-{% endblock stylesheets %}
-
 {% block content %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="widget stacked">
-
-                <div class="widget-header">
-                    <i class="icon-home"></i>
-
-                    <h3>Home</h3>
+    <div class="content-container clearfix">
+        <h2 class="section-title">Home</h2>
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <div class="homepage-widget clearfix"><!-- HOME PAGE WIDGETS -->
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-widget clearfix"><!-- SINGLE WIDGET -->
+                            <a href="{{ path('user_home') }}">
+                                <div class="widget-icon clearfix">
+                                    <i class="fa fa-home"></i>
+                                </div>
+                                <div class="widget-content clearfix">
+                                    <h4>Home</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-widget clearfix"><!-- SINGLE WIDGET -->
+                            <a href="{{ path('user_pins') }}">
+                                <div class="widget-icon clearfix">
+                                    <i class="fa fa-th"></i>
+                                </div>
+                                <div class="widget-content clearfix">
+                                    <h4>My PINs</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-widget clearfix"><!-- SINGLE WIDGET -->
+                            <a href="{{ path('user_orders') }}">
+                                <div class="widget-icon clearfix">
+                                    <i class="fa fa-copy"></i>
+                                </div>
+                                <div class="widget-content clearfix">
+                                    <h4>Billing History</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-widget clearfix"><!-- SINGLE WIDGET -->
+                            <a href="{{ path('WebPage_main') }}#calling_cards">
+                                <div class="widget-icon clearfix">
+                                    <i class="fa fa-credit-card"></i>
+                                </div>
+                                <div class="widget-content clearfix">
+                                    <h4>Calling cards</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-widget clearfix"><!-- SINGLE WIDGET -->
+                            <a href="{{ path('WebPage_main') }}#rates">
+                                <div class="widget-icon clearfix">
+                                    <i class="fa fa-external-link"></i>
+                                </div>
+                                <div class="widget-content clearfix">
+                                    <h4>Rates</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-widget clearfix"><!-- SINGLE WIDGET -->
+                            <a href="{{ path('WebPage_main') }}#contact">
+                                <div class="widget-icon clearfix">
+                                    <i class="fa fa-info-circle"></i>
+                                </div>
+                                <div class="widget-content clearfix">
+                                    <h4>Help</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <!-- /widget-header -->
-
-                <div class="widget-content">
-
-                    <div class="subnavbar home-menu">
-                        <div class="subnavbar-inner">
-                            <div class="container">
-                                {#{{ knp_menu_render('UniversalIDTBundle:Builder:mainMenu', {'currentClass': '', 'template': 'UniversalIDTBundle:Menu:my_knp_menu.html.twig'}) }}#}
-                            </div> <!-- /container -->
-                        </div> <!-- /subnavbar-inner -->
-                    </div> <!-- /subnavbar -->
-
-
-                </div>
-                <!-- /widget-content -->
             </div>
-            <!-- /widget -->
         </div>
     </div>
 {% endblock %}

@@ -4,36 +4,22 @@
     Orders|trans
 {% endblock subtitle %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link href="{{ asset('bundles/universalidt/dataTable/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('bundles/universalidt/js/plugins/msgbox/jquery.msgbox.css') }}" rel="stylesheet">
-{% endblock %}
-
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <i class="icon-book"></i>
-                <h3>Orders</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
+    <div class="content-container clearfix">
+        <h2 class="section-title">Orders</h2>
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <div class="billing-table clearfix"><!-- BILLING TABLE -->
                 <div class="table-responsive">
-                    <table id="table" class="display" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-hover table-striped" id="table">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>ID</th>
                             <th>Date, Time</th>
                             <th>Payment Status</th>
                             <th>Amount</th>
                             <th>Action</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         {% for order in orders %}
                             <tr>
@@ -41,37 +27,31 @@
                                 <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                                 <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                                 <td>{{ order.amount }} ({{ order.currency|upper }})</td>
-                                <td><a href="{{ path('user_order_details', {'id':order.id}) }}">details</a></td>
+                                <td><a href="{{ path('user_order_details', {'id':order.id}) }}" class="link">details</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!-- /widget-content -->
-
         </div>
-        <!-- /widget -->
     </div>
-</div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset("bundles/universalidt/js/plugins/msgbox/jquery.msgbox.min.js") }}"></script>
-    <script src="{{ asset("bundles/universalidt/dataTable/js/jquery.dataTables.min.js") }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#table').DataTable({
-                "aoColumnDefs": [
-                    { "aTargets": [ 3 ], "sType": "numeric", "mRender": function ( data, type ) {
-                        if(type === 'display' && data.split(" ")[0] < 0)
-                            return '<span style="color: red">' + data + '</span>';
-                        return data;
-                    } }
-                ]
-            });
-        });
-    </script>
+    {#<script type="text/javascript">#}
+        {#$(document).ready(function () {#}
+            {#$('#table').DataTable({#}
+                {#"aoColumnDefs": [#}
+                    {#{ "aTargets": [ 3 ], "sType": "numeric", "mRender": function ( data, type ) {#}
+                        {#if(type === 'display' && data.split(" ")[0] < 0)#}
+                            {#return '<span style="color: red">' + data + '</span>';#}
+                        {#return data;#}
+                    {#} }#}
+                {#]#}
+            {#});#}
+        {#});#}
+    {#</script>#}
 {% endblock javascripts %}
 
