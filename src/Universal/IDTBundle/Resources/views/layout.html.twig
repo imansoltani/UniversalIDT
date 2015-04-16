@@ -33,7 +33,7 @@
                         <a href="#header-top-menu" data-toggle="collapse" class="header-top-menu-collapse"><i class="fa fa-gear"></i></a>
                         <div class="collapse" id="header-top-menu"><!-- HEADER TOP MENU -->
                             <ul>
-                                <li><a href="{{ path('WebPage_main')~'#basket' }}"><i class="fa fa-shopping-cart"></i>Cart(<span id="cart_total_items">-</span>)</a></li>
+                                <li><a href="{{ path('WebPage_main')~'#basket' }}"><i class="fa fa-shopping-cart"></i> Cart(<span id="cart_total_items">-</span>)</a></li>
                                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                     <li class="dropdown">
                                         <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">

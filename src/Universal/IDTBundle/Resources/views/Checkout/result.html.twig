@@ -1,51 +1,35 @@
-{% extends '@UniversalIDT/WebPage/layout.html.twig' %}
+{% extends "@UniversalIDT/layout.html.twig" %}
 
-{% block title %}Universal IDT | Checkout Result{% endblock %}
+{% block subtitle %}
+    Checkout Result
+{% endblock %}
 
 {% block content %}
-    <div class="checkout-section clearfix" id="checkout">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <h3>Payment Result</h3>
-                    </div>
-                    <div class="section-content clearfix">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <tbody>
-                                <tr>
-                                    <th>ID</th>
-                                    <td>{{ orderDetail.paymentId }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Status</th>
-                                    <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Date</th>
-                                    <td>{{ orderDetail.date|date('Y-m-d H:i:s') }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Method</th>
-                                    <td>{{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+    <div class="content-container clearfix">
+        <h2 class="section-title">Payment Result</h2>
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <div class="order-general-info-panel clearfix">
+                <ul>
+                    <li><i class="fa fa-circle-o"></i> <span>ID:</span> {{ orderDetail.paymentId }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>Status:</span> {{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>Date:</span> {{ orderDetail.date|date('Y-m-d H:i:s') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>method:</span> {{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</li>
+                </ul>
+            </div>
 
-                        {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") %}
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <a href="{{ path('user_result_print', {'id': orderDetail.id}) }}" class="btn btn-default" target="_blank">Print</a>
-                                <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-success">Go to Details</a>
-                            {% else %}
-                                <a href="{{ path('WebPage_result_print') }}" class="btn btn-default" target="_blank">Print</a>
-                                <a href="{{ path('WebPage_order_details') }}" class="btn btn-success">Go to Details</a>
-                                <span style="color: #ff0000">This link is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.</span>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
+            <div class="clearfix">
+                {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") %}
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <a href="{{ path('user_result_print', {'id': orderDetail.id}) }}" class="btn btn-default" target="_blank">Print</a>
+                        <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-primary">Go to Details</a>
+                    {% else %}
+                        <div class="alert alert-warning"><!-- ALERT -->
+                            This links is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.
+                        </div>
+                        <a href="{{ path('WebPage_result_print') }}" class="btn btn-default" target="_blank">Print</a>
+                        <a href="{{ path('WebPage_order_details') }}" class="btn btn-primary">Go to Details</a>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
