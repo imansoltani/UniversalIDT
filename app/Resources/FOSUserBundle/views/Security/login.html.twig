@@ -15,10 +15,10 @@
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                 <div class="form-group">
-                    <label for="username">{{ 'security.login.username'|trans }}</label>
+                    <label for="username">{{ 'security.login.email'|trans }}</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Email or Username" />
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Email" />
                     </div>
                 </div>
                 <div class="form-group">
