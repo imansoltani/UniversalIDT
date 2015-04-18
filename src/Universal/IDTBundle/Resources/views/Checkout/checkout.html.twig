@@ -1,234 +1,205 @@
-{% extends '@UniversalIDT/WebPage/layout.html.twig' %}
+{% extends '@UniversalIDT/layout.html.twig' %}
 
-{% block title %}Universal IDT | Checkout{% endblock %}
+{% block subtitle %}
+	Universal IDT | Checkout
+{% endblock subtitle %}
 
 {% block content %}
-	<div class="checkout-section clearfix" id="checkout">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="section-head clearfix"><!-- SECTION HEAD -->
-						<h1>Checkout</h1>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-						<span class="underline"></span>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="section-content clearfix"><!-- SECTION CONTENT -->
-						<div class="row">
-							<div class="col-md-8">
-								<div class="checkout-tabs clearfix"><!-- START CHECKOUT TAB -->
+	<div class="content-container clearfix">
+		<h2 class="section-title">Checkout</h2>
+		<div class="main-content clearfix"><!-- MAIN CONTENT -->
+			<div class="checkout-tabs clearfix"><!-- START CHECKOUT TAB -->
+				<form id="checkout-form" method="post">
+					<ul class="nav nav-tabs" role="tablist" id="myTab"><!-- TAB BUTTONS -->
+						<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
+						<li><a href="#payment_method_tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
+						<li><a href="#order_review_tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
+					</ul>
 
-									<form id="checkout-form" method="post">
-
-										<ul class="nav nav-tabs" role="tablist" id="myTab"><!-- TAB BUTTONS -->
-											<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
-											<li><a href="#payment_method_tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
-											<li><a href="#order_review_tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
-										</ul>
-
-										<div class="tab-content">
-											<div class="tab-pane active" id="delivery_method_tab"><!-- DELIVERY TAB -->
-												<div class="form-horizontal clearfix">
-													<div class="form-group">
-														{{ form_label(form.email, "", {'label_attr': {'class': 'col-sm-2 control-label'} }) }}
-														<div class="col-sm-6">
-															{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
-															{{ form_errors(form.email) }}
-														</div>
-													</div>
-
-													<div class="form-group">
-													</div>
-													{% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-														<h4><strong>Notice:</strong> </h4>
-
-														<div class="form-group">
-															<div class="checkbox">
-																<label>
-																	<span style="color:#ff0000">*</span> As an anonymous user, if you do not give an email, you must save your PINs after delivery!
-																</label>
-															</div>
-														</div>
-													{% endif %}
-												</div>
-												<div class="row">
-													<div class="col-md-6 col-sm-6">
-														<div class="clearfix">
-															<a href="{{ path('WebPage_main') ~ '#basket' }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Basket</a>
-														</div>
-													</div>
-													<div class="col-md-6 col-sm-6">
-														<div class="text-right clearfix">
-															<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="changeDeliveryMethod()" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="tab-pane" id="payment_method_tab"><!-- PAYMENT TAB -->
-												<div class="payment-methods clearfix">
-													<div class="btn-group clearfix" data-toggle="buttons">
-														{{ form_errors(form.method) }}
-
-														{% for method in form.method %}
-														<div class="btn" onclick="$('#go_to_order').prop('disabled', false)">
-															<div class="row">
-																<div class="col-sm-4">
-																	<div class="button-title clearfix">
-																		<h4>{{ method.vars.label }} Pay</h4>
-																		<p>Payment made by {{ method.vars.label }} Pay</p>
-																	</div>
-																</div>
-																<div class="col-sm-5">
-																	<div class="button-thumb clearfix">
-																		<img src="{{ asset('bundles/universalidt/home/img/' ~ method.vars.label|lower ~ '.png') }}" alt="{{ method.vars.label }}">
-																		{{ form_widget(method) }}
-																	</div>
-																</div>
-																<div class="col-md-3">
-																	<div class="button-select clearfix">
-																		<span class="select-btn btn-primary">Select</span>
-																		<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
-																	</div>
-																</div>
-															</div>
-														</div>
-														{% endfor %}
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6 col-sm-6">
-														<div class="clearfix">
-															<button type="button" data-target="#delivery_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Delivery Method</button>
-														</div>
-													</div>
-													<div class="col-md-6 col-sm-6">
-														<div class="text-right clearfix">
-															<button id="go_to_order" type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary" disabled>Continue to Order Review <i class="fa fa-chevron-right"></i></button>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="tab-pane" id="order_review_tab"><!-- ORDER TAB -->
-												<div class="basket clearfix">
-													<div class="table-responsive">
-														<table class="table">
-															<thead>
-																<tr>
-																	<th colspan="2">Product</th>
-																	<th>Type</th>
-																	<th>Quantity</th>
-																	<th>Unit price</th>
-																	<th>Discount</th>
-																	<th>Total</th>
-																</tr>
-															</thead>
-															<tbody>
-															{% for row in data %}
-																{% if row.type == "buy" %}
-																	<tr>
-																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
-																		<td>{{ row.product.name }}</td>
-																		<td>New Card</td>
-																		<td>{{ row.count }}</td>
-																		<td>{{ row.denomination }}</td>
-																		<td>{{ row.discount }}</td>
-																		<td>{{ row.row_total }}</td>
-																	</tr>
-																{% else %}
-																	<tr>
-																		<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
-																		<td>{{ row.product.name }}</td>
-																		<td>Recharge</td>
-																		<td>{{ row.count }}</td>
-																		<td>{{ row.denomination }}</td>
-																		<td>{{ row.discount }}</td>
-																		<td>{{ row.row_total }}</td>
-																	</tr>
-																{% endif %}
-															{% endfor %}
-															</tbody>
-															<tfoot>
-																<tr class="total">
-																	<td colspan="6">Total</td>
-																	<td>{{ sum_total|round(2)|number_format(2) }}</td>
-																</tr>
-															</tfoot>
-														</table>
-													</div>
-
-													<h4><strong>Agree:</strong> </h4>
-													<p><span style="color:#ff0000">*</span> Required Field</p>
-
-													<div class="form-group">
-														<div class="checkbox">
-															<label>
-																{{ form_widget(form.agree) }} I hereby accept <a href="#">General items and conditions</a> of <a href="#">universal.com</a>
-															</label>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-6 col-sm-6">
-															<div class="clearfix">
-																<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Payment Method</button>
-															</div>
-														</div>
-														<div class="col-md-6 col-sm-6">
-															<div class="text-right clearfix">
-																{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
+					<div class="tab-content">
+						<div class="tab-pane active" id="delivery_method_tab"><!-- DELIVERY TAB -->
+							<div class="form-horizontal clearfix">
+								<div class="form-group">
+									{{ form_label(form.email, "", {'label_attr': {'class': 'col-sm-2 control-label'} }) }}
+									<div class="col-sm-6">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+											{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+											{{ form_errors(form.email) }}
 										</div>
-										{{ form_rest(form) }}
-									</form>
+									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="order-summary clearfix"><!-- ORDER SUMMARY -->
-									<div class="widget">
-										<div class="widget-header">
-											<h3><i class="fa fa-gift"></i> Order Summary</h3>
-										</div>
-										<div class="widget-content">
-											<p>Shipping and additional costs are calculated based on the values you have entered.</p>
-											<div class="table-responsive">
-												<table class="table table-bordered">
-													<tbody>
-														<tr>
-															<td>Order subtotal</td>
-															<td>{{ sum_total|round(2)|number_format(2) }}</td>
-														</tr>
-														<tr>
-															<td>Tax</td>
-															<td>{{ sum_vat|round(2)|number_format(2) }}</td>
-														</tr>
-														<tr>
-															<td>Delivery Method <span id="delivery_method_label_summary"></span></td>
-															<td id="delivery_method_summary">--</td>
-														</tr>
-													</tbody>
-													<tfoot>
-														<tr class="total">
-															<td>Total</td>
-															<td>{{ sum_total|round(2)|number_format(2) }} {{ currency|upper }}</td>
-														</tr>
-													</tfoot>
-												</table>
+							{% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+								<div class="form-group">
+									<h4><strong>Notice:</strong></h4>
+									<span style="color:#ff0000">*</span> As an anonymous user, if you do not give an email, you must save your PINs after delivery!
+								</div>
+							{% endif %}
+							<div class="row">
+								<div class="col-md-6 col-sm-6">
+									<div class="clearfix">
+										<a href="{{ path('WebPage_main') ~ '#basket' }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Basket</a>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<div class="text-right clearfix">
+										<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="changeDeliveryMethod()" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="tab-pane" id="payment_method_tab"><!-- PAYMENT TAB -->
+							<div class="payment-methods clearfix">
+								<div class="btn-group clearfix" data-toggle="buttons">
+									{{ form_errors(form.method) }}
+
+									{% for method in form.method %}
+									<div class="btn" onclick="$('#go_to_order').prop('disabled', false)">
+									<div class="row">
+											<div class="col-sm-4">
+												<div class="button-title clearfix">
+													<h4>{{ method.vars.label }} Pay</h4>
+													<p>Payment made by {{ method.vars.label }} Pay</p>
+												</div>
 											</div>
+											<div class="col-sm-5">
+												<div class="button-thumb clearfix">
+													<img src="{{ asset('bundles/universalidt/home/img/' ~ method.vars.label|lower ~ '.png') }}" alt="{{ method.vars.label }}">
+													{{ form_widget(method) }}
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="button-select clearfix">
+													<span class="select-btn btn-primary">Select</span>
+													<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-sm-6">
+									<div class="clearfix">
+										<button type="button" data-target="#delivery_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Delivery Method</button>
+									</div>
+								</div>
+								<div class="col-md-6 col-sm-6">
+									<div class="text-right clearfix">
+										<button id="go_to_order" type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary" disabled>Continue to Order Review <i class="fa fa-chevron-right"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="tab-pane" id="order_review_tab"><!-- ORDER TAB -->
+							<div class="basket clearfix">
+								<h2 class="section-title">Order Details</h2>
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+										<tr>
+                                            <th colspan="2">Product</th>
+                                            <th>Type</th>
+                                            <th>Quantity</th>
+                                            <th>Unit price</th>
+                                            <th>Discount</th>
+                                            <th>Total</th>
+										</tr>
+										</thead>
+										<tbody>
+										{% for row in data %}
+											{% if row.type == "buy" %}
+												<tr>
+													<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
+													<td>{{ row.product.name }}</td>
+													<td>New Card</td>
+													<td>{{ row.count }}</td>
+													<td>{{ row.denomination }}</td>
+													<td>{{ row.discount }}</td>
+													<td>{{ row.row_total }}</td>
+												</tr>
+											{% else %}
+												<tr>
+													<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
+													<td>{{ row.product.name }}</td>
+													<td>Recharge</td>
+													<td>{{ row.count }}</td>
+													<td>{{ row.denomination }}</td>
+													<td>{{ row.discount }}</td>
+													<td>{{ row.row_total }}</td>
+												</tr>
+											{% endif %}
+										{% endfor %}
+										</tbody>
+										<tfoot>
+										<tr class="total">
+											<td colspan="6">Total</td>
+											<td>{{ sum_total|round(2)|number_format(2) }}</td>
+										</tr>
+										</tfoot>
+									</table>
+								</div>
+
+								<div class="order-summery-panel clearfix">
+									<h2 class="section-title">Order Summary</h2>
+									<p>Shipping and additional costs are calculated based on the values you have entered.</p>
+									<div class="table-responsive">
+										<table class="table table-bordered table-hover">
+											<tbody>
+											<tr>
+												<td>Order subtotal</td>
+												<td>{{ sum_total|round(2)|number_format(2) }}</td>
+											</tr>
+											<tr>
+												<td>Tax</td>
+												<td>{{ sum_vat|round(2)|number_format(2) }}</td>
+											</tr>
+											<tr>
+												<td>Delivery Method <span id="delivery_method_label_summary"></span></td>
+												<td id="delivery_method_summary">--</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr class="total">
+												<td>Total</td>
+												<td>{{ sum_total|round(2)|number_format(2) }} {{ currency|upper }}</td>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+								<h2 class="section-title">Agree</h2>
+								<p><span style="color:#ff0000">*</span> Required Field</p>
+
+								<div class="form-group">
+									<div class="checkbox">
+										<label>
+											{{ form_widget(form.agree) }} <span>I hereby accept <a href="#">General items and conditions</a> of <a href="#">universal.com</a></span>
+										</label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-sm-6">
+										<div class="clearfix">
+											<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Payment Method</button>
+										</div>
+									</div>
+									<div class="col-md-6 col-sm-6">
+										<div class="text-right clearfix">
+											{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					{{ form_rest(form) }}
+				</form>
 			</div>
 		</div>
 	</div>
