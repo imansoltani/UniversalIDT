@@ -93,6 +93,8 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Universal\IDTBundle\Entity\User
+    service:
+        mailer: fos_user.mailer.twig_swift
     registration:
         form:
             type: universal_idt_registration

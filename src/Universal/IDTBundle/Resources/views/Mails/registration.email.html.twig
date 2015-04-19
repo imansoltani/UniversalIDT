@@ -1,6 +1,6 @@
 {% block subject %}Email Confirmation{% endblock %}
 
-{% block body %}
+{% block body_text %}
     {% autoescape false %}
     Hello {{ user.firstName }} !
 
@@ -9,4 +9,13 @@
     Greetings,
     the IDT Universal Team
     {% endautoescape %}
-{% endblock %}
+{% endblock body_text %}
+
+{% block body_html %}
+    Hello {{ user.firstName }} !
+
+    Please confirm your email by accessing <a href="{{ confirmationUrl }}">here</a>
+
+    Greetings,
+    the IDT Universal Team
+{% endblock body_html %}
