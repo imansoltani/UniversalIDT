@@ -49,7 +49,7 @@ class CheckoutController extends Controller
             if($form->isValid()) {
                 $formData = $form->getData();
                 $formData['sms'] = "";
-                return $this->forward("UniversalIDTBundle:Checkout:placeOrder", array('formData' => $formData));
+                return $this->forward("UniversalIDTBundle:Checkout:placeOrder", array('formData' => $formData, 'language' => $request->getLocale()));
             }
         }
 
@@ -155,9 +155,30 @@ class CheckoutController extends Controller
             ), $response);
     }
 
-    public function sofortResultAction()
+    public function sofortResultAction(Request $request)
     {
+//        $orderDetail = new OrderDetail();
+//        $orderDetail->setAmount(2.22);
+//        $orderDetail->setCurrency('EUR');
+//        $url = $this->get('client_sofort')->getPaymentUrl($orderDetail,substr($request->getLocale(),0,2));
+//        return new Response('url: '.$url);
+
+
+
         return new Response('returned from sofort');
+    }
+
+    public function sofortNotificationAction(Request $request)
+    {
+//        if($request->getClientIp() != "193.104.32.100")
+//            throw new \Exception('Invalid Sofort IP');
+        $notification  = "193.104.32.100\n";
+        $notification .= "POST DATA: \n".print_r($request->request->all(), true)."\n\n";
+        $notification .= "GET  DATA: \n".print_r($request->query->all()  , true)."\n\n";
+
+        Log::save($notification, "sofort_notification");
+
+        return new Response();
     }
 
     /**
@@ -238,7 +259,7 @@ class CheckoutController extends Controller
         return true;
     }
 
-    public function placeOrderAction(array $formData)
+    public function placeOrderAction(array $formData, $language)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -303,12 +324,13 @@ class CheckoutController extends Controller
         //go to redirect page for methods
         switch($order_detail->getPaymentMethod()) {
             case PaymentMethodEnumType::OGONE:
-                $client = $this->get('client_ogone');
+                $ogone = $this->get('client_ogone');
                 return $this->render("UniversalIDTBundle:Checkout:redirectToOgone.html.twig", array(
-                        'form' => $client->generateForm($order_detail)
+                        'form' => $ogone->generateForm($order_detail)
                     ));
             case PaymentMethodEnumType::SOFORT:
-                break;
+                $sofort = $this->get('client_sofort');
+                return $this->redirect($sofort->getPaymentUrl($order_detail,substr($language,0,2)));
             default:
                 break;
         }

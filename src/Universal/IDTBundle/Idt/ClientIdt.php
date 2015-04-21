@@ -211,9 +211,9 @@ class ClientIdt
             throw new \Exception("Something wrong happened with IDT server.");
         }
 
-        Log::save($response->getBody(), "idt_response");
+        Log::save($response->getBody(true), "idt_response");
 
-        $arrayResponses = simplexml_load_string($response->getBody());
+        $arrayResponses = simplexml_load_string($response->getBody(true));
 
         if (isset($arrayResponses->DebitError)) {
             throw new \Exception($arrayResponses->DebitError->errordescription, 1234);

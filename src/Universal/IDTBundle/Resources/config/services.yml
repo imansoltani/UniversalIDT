@@ -21,6 +21,11 @@ services:
         arguments: [@request, @router, @doctrine.orm.default_entity_manager, @security.authorization_checker, %Ogone%]
         scope: request
 
+    client_sofort:
+        class: Universal\IDTBundle\PaymentGateway\ClientSofort
+        arguments: [@request, @router, @doctrine.orm.default_entity_manager, @security.authorization_checker, %Sofort%, @guzzle.client]
+        scope: request
+
     universal_idt.fos_listener:
         class: Universal\IDTBundle\EventListener\FOSListener
         arguments: [ @router, @white_october_breadcrumbs ]

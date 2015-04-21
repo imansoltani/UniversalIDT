@@ -39,5 +39,5 @@ parameters:
 
     Sofort:
         project_id: 222894
-        submit_url: "https://api.sofort.com/xml"
-        conf_key:   "102878:222894:bb2a772b476944424773467dbfb9d9e7"
+        submit_url: "https://api.sofort.com/api/xml"
+        conf_key:   "102878:bb2a772b476944424773467dbfb9d9e7"

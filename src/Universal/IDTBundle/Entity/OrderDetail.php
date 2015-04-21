@@ -106,9 +106,9 @@ class OrderDetail
     private $requestsStatus;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="paymentId", type="integer", options={"unsigned"=true}, nullable=true)
+     * @ORM\Column(name="paymentId", type="string", length=30, nullable=true)
      */
     private $paymentId;
 
@@ -452,7 +452,7 @@ class OrderDetail
     /**
      * Set paymentId
      *
-     * @param integer $paymentId
+     * @param string $paymentId
      * @return OrderDetail
      */
     public function setPaymentId($paymentId)
@@ -465,7 +465,7 @@ class OrderDetail
     /**
      * Get paymentId
      *
-     * @return integer 
+     * @return string
      */
     public function getPaymentId()
     {
