@@ -163,6 +163,7 @@ class CheckoutController extends Controller
 //        $url = $this->get('client_sofort')->getPaymentUrl($orderDetail,substr($request->getLocale(),0,2));
 //        return new Response('url: '.$url);
 
+//        $this->get('client_sofort')->processResult($request->query->get('trans'));
 
 
         return new Response('returned from sofort');

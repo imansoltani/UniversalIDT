@@ -41,7 +41,6 @@ WebPage_sofort_result:
 WebPage_sofort_notification:
     path:     /checkout/sofort-notification
     defaults: { _controller: UniversalIDTBundle:Checkout:sofortNotification }
-    schemes:  [https]
 
 WebPage_result_print:
     path:     /checkout/result/print

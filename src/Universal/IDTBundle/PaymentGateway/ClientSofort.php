@@ -116,8 +116,24 @@ class ClientSofort
 
     }
 
-    public function processResult(Request $request)
+    public function processResult($transaction)
     {
+        $requestXML =
+            '<?xml version="1.0" encoding="UTF-8" ?>
+            <transaction_request version="2">
+                <transaction>'.$transaction.'</transaction>
+            </transaction_request>';
 
+        Log::save(print_r($requestXML, true), "sofort_notify_request");
+
+        $response = $this->guzzle->post($this->submitUrl, array(
+                'Authorization' => 'Basic '.base64_encode($this->confKey),
+                'Content-Type' => 'application/xml; charset=UTF-8',
+                'Accept' => 'application/xml; charset=UTF-8'
+            ), $requestXML)->send();
+
+        Log::save($response->getBody(true), "sofort_notify_response");
+
+        return "done";
     }
 }
