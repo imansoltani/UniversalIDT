@@ -108,9 +108,6 @@ class ClientSofort
                 <success_link_redirect>1</success_link_redirect>
                 <abort_url>'.$this->resultUrl.'</abort_url>
                 <timeout_url>'.$this->resultUrl.'</timeout_url>
-                <notification_urls>
-                    <notification_url>'.$this->notifyUrl.'</notification_url>
-                </notification_urls>
                 <su />
             </multipay>';
 
@@ -118,6 +115,14 @@ class ClientSofort
 
     public function processResult($transaction)
     {
+        if(strlen($transaction) != 27)
+            throw new \Exception('Invalid Transaction Number -1');
+
+        $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
+
+        if(!$orderDetail)
+            throw new \Exception('Invalid Transaction Number -2');
+
         $requestXML =
             '<?xml version="1.0" encoding="UTF-8" ?>
             <transaction_request version="2">
@@ -134,6 +139,6 @@ class ClientSofort
 
         Log::save($response->getBody(true), "sofort_notify_response");
 
-        return "done";
+        return $orderDetail;
     }
 }

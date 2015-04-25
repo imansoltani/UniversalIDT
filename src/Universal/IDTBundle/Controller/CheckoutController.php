@@ -157,16 +157,62 @@ class CheckoutController extends Controller
 
     public function sofortResultAction(Request $request)
     {
-//        $orderDetail = new OrderDetail();
-//        $orderDetail->setAmount(2.22);
-//        $orderDetail->setCurrency('EUR');
-//        $url = $this->get('client_sofort')->getPaymentUrl($orderDetail,substr($request->getLocale(),0,2));
-//        return new Response('url: '.$url);
+        try {
+            $orderDetail = $this->get('client_sofort')->processResult($request->query->get('trans'));
 
-//        $this->get('client_sofort')->processResult($request->query->get('trans'));
+            Log::save($orderDetail->getId(),"order_id_after_sofort");
+
+        } catch (\Exception $e) {
+            Log::save($e->getMessage(),"error_in_Sofort");
+            throw new \Exception('Error in process result of Sofort: '. $e->getMessage());
+        }
+
+        try {
+            if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED && $orderDetail->getRequestsStatus() == null) {
+                $orderDetail = $this->get('idt')->processOrder($orderDetail);
+            }
+        } catch (\Exception $e) {
+            Log::save($e->getMessage(), "error_in_idt");
+        }
 
 
-        return new Response('returned from sofort');
+//        /** @var EntityManager $em */
+//        $em = $this->getDoctrine()->getManager();
+//        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(5);
+
+        $response = new Response();
+//        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+//        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
+
+        if(!$orderDetail->getDelivered()) {
+            if(!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                $this->get('session')->set('last_order_id', $orderDetail->getId());
+                $this->get('session')->set('last_order_count_shown', 0);
+                $this->get('session')->set('last_order_start_time', new \DateTime());
+            }
+            if($orderDetail->getDeliveryEmail()) {
+                $this->get('EmailService')->sendEmailMessage(
+                    $this->render("UniversalIDTBundle:Mails:checkout.email.html.twig", array(
+                            'order' =>  $orderDetail
+                        ))->getContent(),
+                    $this->container->getParameter('mailer_sender_address'),
+                    $orderDetail->getDeliveryEmail()
+                );
+                $this->get('session')->getFlashBag()->add('success', "Email sent.");
+            }
+
+            $orderDetail->setDelivered(true);
+
+            /** @var EntityManager $em */
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
+
+        return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
+                'orderDetail' => $orderDetail,
+                'maxCountShow' => CheckoutController::LAST_ORDER_COUNT_SHOWN,
+                'maxMinutesShow' => CheckoutController::LAST_ORDER_TIME_LENGTH
+            ), $response);
     }
 
     public function sofortNotificationAction(Request $request)
