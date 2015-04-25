@@ -110,7 +110,7 @@ class ClientSofort
                 <abort_url>'.$this->resultUrl.'</abort_url>
                 <timeout_url>'.$this->resultUrl.'</timeout_url>
                 <notification_urls>
-                    <notification_url>'.$this->notifyUrl.'</notification_url>
+                    <notification_url notify_on="received, loss">'.$this->notifyUrl.'</notification_url>
                 </notification_urls>
                 <su />
             </multipay>';
