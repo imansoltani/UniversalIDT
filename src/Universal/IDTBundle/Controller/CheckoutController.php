@@ -167,13 +167,13 @@ class CheckoutController extends Controller
             throw new \Exception('Error in process result of Sofort: '. $e->getMessage());
         }
 
-        try {
-            if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED && $orderDetail->getRequestsStatus() == null) {
-                $orderDetail = $this->get('idt')->processOrder($orderDetail);
-            }
-        } catch (\Exception $e) {
-            Log::save($e->getMessage(), "error_in_idt");
-        }
+//        try {
+//            if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED && $orderDetail->getRequestsStatus() == null) {
+//                $orderDetail = $this->get('idt')->processOrder($orderDetail);
+//            }
+//        } catch (\Exception $e) {
+//            Log::save($e->getMessage(), "error_in_idt");
+//        }
 
 
 //        /** @var EntityManager $em */
@@ -184,29 +184,29 @@ class CheckoutController extends Controller
 //        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
 //        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
-        if(!$orderDetail->getDelivered()) {
-            if(!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                $this->get('session')->set('last_order_id', $orderDetail->getId());
-                $this->get('session')->set('last_order_count_shown', 0);
-                $this->get('session')->set('last_order_start_time', new \DateTime());
-            }
-            if($orderDetail->getDeliveryEmail()) {
-                $this->get('EmailService')->sendEmailMessage(
-                    $this->render("UniversalIDTBundle:Mails:checkout.email.html.twig", array(
-                            'order' =>  $orderDetail
-                        ))->getContent(),
-                    $this->container->getParameter('mailer_sender_address'),
-                    $orderDetail->getDeliveryEmail()
-                );
-                $this->get('session')->getFlashBag()->add('success', "Email sent.");
-            }
-
-            $orderDetail->setDelivered(true);
-
-            /** @var EntityManager $em */
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-        }
+//        if(!$orderDetail->getDelivered()) {
+//            if(!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+//                $this->get('session')->set('last_order_id', $orderDetail->getId());
+//                $this->get('session')->set('last_order_count_shown', 0);
+//                $this->get('session')->set('last_order_start_time', new \DateTime());
+//            }
+//            if($orderDetail->getDeliveryEmail()) {
+//                $this->get('EmailService')->sendEmailMessage(
+//                    $this->render("UniversalIDTBundle:Mails:checkout.email.html.twig", array(
+//                            'order' =>  $orderDetail
+//                        ))->getContent(),
+//                    $this->container->getParameter('mailer_sender_address'),
+//                    $orderDetail->getDeliveryEmail()
+//                );
+//                $this->get('session')->getFlashBag()->add('success', "Email sent.");
+//            }
+//
+//            $orderDetail->setDelivered(true);
+//
+//            /** @var EntityManager $em */
+//            $em = $this->getDoctrine()->getManager();
+//            $em->flush();
+//        }
 
         return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
                 'orderDetail' => $orderDetail,
@@ -226,20 +226,7 @@ class CheckoutController extends Controller
         if($request->getClientIp() != "193.104.32.100")
             throw new \Exception('Invalid Sofort IP');
 
-        $transaction = $request->query->get('trans');
-
-        if(strlen($transaction) != 27)
-            $this->createNotFoundException('Invalid Transaction Number -1');
-
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-
-        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
-
-        if(!$orderDetail)
-            $this->createNotFoundException('Invalid Transaction Number -2');
-
-//        $this->get('client_sofort')->notification($request->request->all());
+        $this->get('client_sofort')->notification($request->getContent());
 
         return new Response("done");
     }

@@ -6,6 +6,7 @@ use Guzzle\Service\ClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Universal\IDTBundle\DBAL\Types\PaymentStatusEnumType;
 use Universal\IDTBundle\Entity\OrderDetail;
 use Universal\IDTBundle\Idt\Log;
 
@@ -134,19 +135,49 @@ class ClientSofort
 
         Log::save(print_r($requestXML, true), "sofort_notify_request");
 
-        $response = $this->guzzle->post($this->submitUrl, array(
-                'Authorization' => 'Basic '.base64_encode($this->confKey),
-                'Content-Type' => 'application/xml; charset=UTF-8',
-                'Accept' => 'application/xml; charset=UTF-8'
-            ), $requestXML)->send();
+        try {
+            $response = $this->guzzle->post(
+                $this->submitUrl,
+                array(
+                    'Authorization' => 'Basic ' . base64_encode($this->confKey),
+                    'Content-Type' => 'application/xml; charset=UTF-8',
+                    'Accept' => 'application/xml; charset=UTF-8'
+                ),
+                $requestXML
+            )->send();
 
-        Log::save($response->getBody(true), "sofort_notify_response");
+            Log::save($response->getBody(true), "sofort_notify_response");
+
+            $result = simplexml_load_string($response->getBody(true));
+
+            if ($result->getName() == "errors") {
+                $errors = "";
+
+                foreach ($result->error as $error) {
+                    $errors .= $error->code . " : " . $error->message . " (" . $error->field . ")\n";
+                }
+
+                throw new \Exception($errors, 1234);
+            }
+        }
+        catch (\Exception $e) {
+            throw new \Exception("Something wrong happened with Sofort server.\n".$e->getMessage());
+        }
+
+        if($result->transaction_details->status == "untraceable")
+            $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_ACCEPTED);
+        else
+            $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_UNKNOWN);
+
+        $this->em->flush();
 
         return $orderDetail;
     }
 
     public function notification($data)
     {
+//        Log::save($data, "sofort_notification_request_before");
+
         $result = simplexml_load_string($data);
 
         if ($result->getName() == "errors") {
@@ -158,5 +189,31 @@ class ClientSofort
 
             throw new \Exception($errors, 1234);
         }
+
+        $transaction = (string) $result->transaction;
+
+        if(strlen($transaction) != 27)
+            throw new \Exception('Invalid Transaction Number -1');
+
+        $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
+
+        if(!$orderDetail)
+            throw new \Exception('Invalid Transaction Number -2');
+
+        $requestXML =
+            '<?xml version="1.0" encoding="UTF-8" ?>
+            <transaction_request version="2">
+                <transaction>'.$transaction.'</transaction>
+            </transaction_request>';
+
+        Log::save(print_r($requestXML, true), "sofort_notify_notification_request");
+
+        $response = $this->guzzle->post($this->submitUrl, array(
+                'Authorization' => 'Basic '.base64_encode($this->confKey),
+                'Content-Type' => 'application/xml; charset=UTF-8',
+                'Accept' => 'application/xml; charset=UTF-8'
+            ), $requestXML)->send();
+
+        Log::save($response->getBody(true), "sofort_notify_notification_response");
     }
 }
