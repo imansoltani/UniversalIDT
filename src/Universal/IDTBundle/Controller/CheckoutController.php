@@ -219,6 +219,7 @@ class CheckoutController extends Controller
     {
         $notification = "POST DATA: \n".print_r($request->request->all(), true)."\n\n";
         $notification .= "GET  DATA: \n".print_r($request->query->all()  , true)."\n\n";
+        $notification .= "Content DATA: \n".print_r($request->getContent()  , true)."\n\n";
 
         Log::save($notification, "sofort_notification");
 
