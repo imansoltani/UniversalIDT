@@ -217,15 +217,30 @@ class CheckoutController extends Controller
 
     public function sofortNotificationAction(Request $request)
     {
-//        if($request->getClientIp() != "193.104.32.100")
-//            throw new \Exception('Invalid Sofort IP');
-        $notification  = "193.104.32.100\n";
-        $notification .= "POST DATA: \n".print_r($request->request->all(), true)."\n\n";
+        $notification = "POST DATA: \n".print_r($request->request->all(), true)."\n\n";
         $notification .= "GET  DATA: \n".print_r($request->query->all()  , true)."\n\n";
 
         Log::save($notification, "sofort_notification");
 
-        return new Response();
+        if($request->getClientIp() != "193.104.32.100")
+            throw new \Exception('Invalid Sofort IP');
+
+        $transaction = $request->query->get('trans');
+
+        if(strlen($transaction) != 27)
+            $this->createNotFoundException('Invalid Transaction Number -1');
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
+
+        if(!$orderDetail)
+            $this->createNotFoundException('Invalid Transaction Number -2');
+
+//        $this->get('client_sofort')->notification($request->request->all());
+
+        return new Response("done");
     }
 
     /**

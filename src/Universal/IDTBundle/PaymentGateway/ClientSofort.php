@@ -108,6 +108,9 @@ class ClientSofort
                 <success_link_redirect>1</success_link_redirect>
                 <abort_url>'.$this->resultUrl.'</abort_url>
                 <timeout_url>'.$this->resultUrl.'</timeout_url>
+                <notification_urls>
+                    <notification_url>'.$this->notifyUrl.'</notification_url>
+                </notification_urls>
                 <su />
             </multipay>';
 
@@ -140,5 +143,20 @@ class ClientSofort
         Log::save($response->getBody(true), "sofort_notify_response");
 
         return $orderDetail;
+    }
+
+    public function notification($data)
+    {
+        $result = simplexml_load_string($data);
+
+        if ($result->getName() == "errors") {
+            $errors = "";
+
+            foreach ($result->error as $error) {
+                $errors .= $error->code . " : " . $error->message . " (" . $error->field . ")\n";
+            }
+
+            throw new \Exception($errors, 1234);
+        }
     }
 }
