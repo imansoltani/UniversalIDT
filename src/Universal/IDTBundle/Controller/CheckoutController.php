@@ -366,7 +366,7 @@ class CheckoutController extends Controller
 
         $em->flush();
 
-        Log::save($order_detail->getId(),"order_id_before_ogone");
+        Log::save($order_detail->getId(),"order_id_before_order");
 
         //go to redirect page for methods
         switch($order_detail->getPaymentMethod()) {
