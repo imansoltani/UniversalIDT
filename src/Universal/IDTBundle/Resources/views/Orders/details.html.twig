@@ -1,20 +1,20 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    Order Details
+    {{ 'transactions_details.title_details'|trans({},'application') }}
 {% endblock subtitle %}
 
 {% block content %}
     <div class="content-container clearfix">
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <div class="order-general-info-panel clearfix"><!-- ORDER GENERL INFO -->
-                <h2 class="section-title">General Information</h2>
+                <h2 class="section-title">{{ 'transactions_details.title_info'|trans({},'application') }}</h2>
                 <ul>
-                    <li><i class="fa fa-circle-o"></i> <span>ID:</span> {{ order.paymentId }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Payment Status:</span> {{ order.paymentStatus|readable('PaymentStatusEnumType') }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Date:</span> {{ order.date|date('Y-m-d H:i:s') }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Payment method:</span> {{ order.paymentMethod|readable('PaymentMethodEnumType') }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span> Delivery method:</span>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.id'|trans({},'application') }}:</span> {{ order.paymentId }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_status'|trans({},'application') }}:</span> {{ order.paymentStatus|readable('PaymentStatusEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.date'|trans({},'application') }}:</span> {{ order.date|date('Y-m-d H:i:s') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_method'|trans({},'application') }}:</span> {{ order.paymentMethod|readable('PaymentMethodEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.delivery_method'|trans({},'application') }}:</span>
                         {% set delivery = order.deliveryEmail ? "Email: " ~ order.deliveryEmail ~ " " : "" %}
                         {% set delivery = delivery ~ ( order.deliverySMS ? "SMS: " ~ order.deliverySMS : "" ) %}
                         {{ delivery != "" ? delivery|raw : "--" }}
@@ -22,7 +22,7 @@
                 </ul>
             </div>
             <div class="order-details-panel clearfix"><!-- ORDER DETAILS PANEL -->
-                <h2 class="section-title">Order Details</h2>
+                <h2 class="section-title">{{ 'transactions_details.title_details'|trans({},'application') }}</h2>
                 <div class="order-table clearfix">
                     <div class="table-responsive">
                         <table class="table table-bordered table-hover table-striped" id="table2">
@@ -58,21 +58,20 @@
                 </div>
             </div>
             <div class="order-summery-panel clearfix"><!-- ORDER SUMMARY PANEL -->
-                <h2 class="section-title">Order Summary</h2>
-                <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+                <h2 class="section-title">{{ 'transactions_details.title_summary'|trans({},'application') }}</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <tbody>
                         <tr>
-                            <td>Order subtotal</td>
+                            <td>{{ 'transactions_details.order_subtotal'|trans({},'application') }}</td>
                             <td id="basket_summary_subtotal">{{ order.amount|round(2)|number_format(2) }}</td>
                         </tr>
                         <tr>
-                            <td>Tax</td>
+                            <td>{{ 'transactions_details.tax'|trans({},'application') }}</td>
                             <td id="basket_summary_tax">{{ vat|round(2)|number_format(2) }}</td>
                         </tr>
                         <tr>
-                            <td>Delivery Method</td>
+                            <td>{{ 'transactions_details.delivery_method'|trans({},'application') }}</td>
                             <td id="basket_summary_email">
                                 {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
                                 {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
@@ -82,7 +81,7 @@
                         </tbody>
                         <tfoot>
                         <tr class="total">
-                            <td>Total</td>
+                            <td>{{ 'transactions_details.total'|trans({},'application') }}</td>
                             <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }}</td>
                         </tr>
                         </tfoot>
@@ -92,11 +91,11 @@
             <div class="order-print-button clearfix"><!-- ORDER RINT BUTTON -->
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <a href="{{ path('user_order_details_print', {'id': order.id}) }}" class="btn btn-primary" target="_blank">
-                        <i class="fa fa-print"></i> Print
+                        <i class="fa fa-print"></i> {{ 'transactions_details.btn_print'|trans({},'application') }}
                     </a>
                 {% else %}
                     <a href="{{ path('WebPage_order_details_print') }}" class="btn btn-primary" target="_blank">
-                        <i class="fa fa-print"></i> Print
+                        <i class="fa fa-print"></i> {{ 'transactions_details.btn_print'|trans({},'application') }}
                     </a>
                 {% endif %}
             </div>

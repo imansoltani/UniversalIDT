@@ -1,12 +1,12 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    Orders|trans
+    {{ 'transactions_index.title'|trans({},'application') }}
 {% endblock subtitle %}
 
 {% block content %}
     <div class="content-container clearfix">
-        <h2 class="section-title">Orders</h2>
+        <h2 class="section-title">{{ 'transactions_index.title'|trans({},'application') }}</h2>
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <div class="billing-table clearfix"><!-- BILLING TABLE -->
                 <div class="table-responsive">

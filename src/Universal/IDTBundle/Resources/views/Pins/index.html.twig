@@ -1,12 +1,12 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    My PINs
+    {{ 'pins_index.title'|trans({},'application') }}
 {% endblock subtitle %}
 
 {% block content %}
     <div class="content-container clearfix">
-        <h2 class="section-title">My PINs</h2>
+        <h2 class="section-title">{{ 'pins_index.title'|trans({},'application') }}</h2>
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <div class="pins-table clearfix"><!-- PIN TABLE -->
                 <div class="table-responsive">
