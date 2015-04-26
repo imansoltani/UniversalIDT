@@ -42,10 +42,6 @@ user_sofort_result:
     path:     /checkout/sofort-result/{status}
     defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }
 
-user_sofort_notification:
-    path:     /checkout/sofort-notification
-    defaults: { _controller: UniversalIDTBundle:Checkout:sofortNotification }
-
 user_result_print:
     path:     /checkout/result/{id}/print
     defaults: { _controller: UniversalIDTBundle:Checkout:UserResultPrint }

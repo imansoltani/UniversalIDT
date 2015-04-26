@@ -56,10 +56,7 @@ class ClientSofort
                 : $router->generate("WebPage_sofort_result", ['status'=>'timeout'], true))
             . "?trans=-TRANSACTION-";
 
-        $this->notifyUrl = ($ac->isGranted('IS_AUTHENTICATED_REMEMBERED')
-            ? $router->generate("user_sofort_notification", [], true)
-            : $router->generate("WebPage_sofort_notification", [], true))
-            . "?trans=-TRANSACTION-";
+        $this->notifyUrl = $router->generate("WebPage_sofort_notification", [], true) . "?trans=-TRANSACTION-";
     }
 
     public function getPaymentUrl(OrderDetail $orderDetail, $language)
