@@ -157,9 +157,6 @@ class CheckoutController extends Controller
 
     public function sofortResultAction(Request $request, $status)
     {
-        if($request->getClientIp() != "193.104.32.100")
-            throw new \Exception('Invalid Sofort IP: '.$request->getClientIp());
-
         try {
             $orderDetail = $this->get('client_sofort')->processResult($status, $request->query->get('trans'));
 
