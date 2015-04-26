@@ -126,12 +126,14 @@ class ClientSofort
             throw new \Exception('Invalid Transaction Number -1');
 
         $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array(
-                'paymentId' => $transaction,
-                'paymentStatus' => PaymentStatusEnumType::STATUS_PENDING
+                'paymentId' => $transaction
             ));
 
         if(!$orderDetail)
             throw new \Exception('Invalid Transaction Number -2');
+
+        if($orderDetail->getPaymentStatus() != PaymentStatusEnumType::STATUS_PENDING)
+            return $orderDetail;
 
         switch ($status) {
             case 'timeout':

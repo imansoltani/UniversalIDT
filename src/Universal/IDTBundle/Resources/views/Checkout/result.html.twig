@@ -8,6 +8,13 @@
     <div class="content-container clearfix">
         <h2 class="section-title">Payment Result</h2>
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
+
+            {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") and not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <div class="alert alert-warning"><!-- ALERT -->
+                    This links is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.
+                </div>
+            {% endif %}
+
             <div class="order-general-info-panel clearfix">
                 <ul>
                     <li><i class="fa fa-circle-o"></i> <span>ID:</span> {{ orderDetail.paymentId }}</li>
@@ -23,9 +30,6 @@
                         <a href="{{ path('user_result_print', {'id': orderDetail.id}) }}" class="btn btn-default" target="_blank">Print</a>
                         <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-primary">Go to Details</a>
                     {% else %}
-                        <div class="alert alert-warning"><!-- ALERT -->
-                            This links is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.
-                        </div>
                         <a href="{{ path('WebPage_result_print') }}" class="btn btn-default" target="_blank">Print</a>
                         <a href="{{ path('WebPage_order_details') }}" class="btn btn-primary">Go to Details</a>
                     {% endif %}
