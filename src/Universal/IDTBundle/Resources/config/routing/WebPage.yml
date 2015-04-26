@@ -38,10 +38,6 @@ WebPage_sofort_result:
     path:     /checkout/sofort-result/{status}
     defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }
 
-WebPage_sofort_notification:
-    path:     /checkout/sofort-notification
-    defaults: { _controller: UniversalIDTBundle:Checkout:sofortNotification }
-
 WebPage_result_print:
     path:     /checkout/result/print
     defaults: { _controller: UniversalIDTBundle:Checkout:GuestResultPrint }

@@ -29,7 +29,6 @@ class ClientSofort
     private $successUrl;
     private $abortUrl;
     private $timeoutUrl;
-    private $notifyUrl;
 
     public function __construct(Request $request, Router $router, EntityManager $em, AuthorizationChecker $ac, array $sofort_parameters, ClientInterface $guzzle)
     {
@@ -55,8 +54,6 @@ class ClientSofort
                 ? $router->generate("user_sofort_result", ['status'=>'timeout'], true)
                 : $router->generate("WebPage_sofort_result", ['status'=>'timeout'], true))
             . "?trans=-TRANSACTION-";
-
-        $this->notifyUrl = $router->generate("WebPage_sofort_notification", [], true) . "?trans=-TRANSACTION-";
     }
 
     public function getPaymentUrl(OrderDetail $orderDetail, $language)
@@ -118,9 +115,6 @@ class ClientSofort
                 <success_link_redirect>1</success_link_redirect>
                 <abort_url>'.$this->abortUrl.'</abort_url>
                 <timeout_url>'.$this->timeoutUrl.'</timeout_url>
-                <notification_urls>
-                    <notification_url>'.$this->notifyUrl.'</notification_url>
-                </notification_urls>
                 <su />
             </multipay>';
 
@@ -131,7 +125,10 @@ class ClientSofort
         if(strlen($transaction) != 27)
             throw new \Exception('Invalid Transaction Number -1');
 
-        $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
+        $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array(
+                'paymentId' => $transaction,
+                'paymentStatus' => PaymentStatusEnumType::STATUS_PENDING
+            ));
 
         if(!$orderDetail)
             throw new \Exception('Invalid Transaction Number -2');
@@ -153,52 +150,5 @@ class ClientSofort
         $this->em->flush();
 
         return $orderDetail;
-    }
-
-    public function notification($data)
-    {
-//        Log::save($data, "sofort_notification_request_before");
-
-        try {
-            $result = simplexml_load_string($data);
-
-            if ($result->getName() == "errors") {
-                $errors = "";
-
-                foreach ($result->error as $error) {
-                    $errors .= $error->code . " : " . $error->message . " (" . $error->field . ")\n";
-                }
-
-                throw new \Exception($errors, 1234);
-            }
-
-            $transaction = (string) $result->transaction;
-        }
-        catch (\Exception $e) {
-            throw new \Exception("Something wrong happened with Sofort server.\n".$e->getMessage());
-        }
-
-        $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
-
-        if(!$orderDetail)
-            throw new \Exception('Transaction Not found.');
-
-        $requestXML =
-            '<?xml version="1.0" encoding="UTF-8" ?>
-            <transaction_request version="2">
-                <transaction>'.$transaction.'</transaction>
-            </transaction_request>';
-
-        Log::save(print_r($requestXML, true), "sofort_notify_notification_request");
-
-        $response = $this->guzzle->post($this->submitUrl, array(
-                'Authorization' => 'Basic '.base64_encode($this->confKey),
-                'Content-Type' => 'application/xml; charset=UTF-8',
-                'Accept' => 'application/xml; charset=UTF-8'
-            ), $requestXML)->send();
-
-        Log::save($response->getBody(true), "sofort_notify_notification_response");
-
-        return;
     }
 }
