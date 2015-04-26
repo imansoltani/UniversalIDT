@@ -26,7 +26,9 @@ class ClientSofort
     private $projectId;
     private $submitUrl;
     private $confKey;
-    private $resultUrl;
+    private $successUrl;
+    private $abortUrl;
+    private $timeoutUrl;
     private $notifyUrl;
 
     public function __construct(Request $request, Router $router, EntityManager $em, AuthorizationChecker $ac, array $sofort_parameters, ClientInterface $guzzle)
@@ -39,9 +41,19 @@ class ClientSofort
         $this->submitUrl = $sofort_parameters['submit_url'];
         $this->confKey   = $sofort_parameters['conf_key'];
 
-        $this->resultUrl = ($ac->isGranted('IS_AUTHENTICATED_REMEMBERED')
-            ? $router->generate("user_sofort_result", [], true)
-            : $router->generate("WebPage_sofort_result", [], true))
+        $this->successUrl = ($ac->isGranted('IS_AUTHENTICATED_REMEMBERED')
+            ? $router->generate("user_sofort_result", ['status'=>'success'], true)
+            : $router->generate("WebPage_sofort_result", ['status'=>'success'], true))
+            . "?trans=-TRANSACTION-";
+
+        $this->abortUrl = ($ac->isGranted('IS_AUTHENTICATED_REMEMBERED')
+                ? $router->generate("user_sofort_result", ['status'=>'abort'], true)
+                : $router->generate("WebPage_sofort_result", ['status'=>'abort'], true))
+            . "?trans=-TRANSACTION-";
+
+        $this->timeoutUrl = ($ac->isGranted('IS_AUTHENTICATED_REMEMBERED')
+                ? $router->generate("user_sofort_result", ['status'=>'timeout'], true)
+                : $router->generate("WebPage_sofort_result", ['status'=>'timeout'], true))
             . "?trans=-TRANSACTION-";
 
         $this->notifyUrl = ($ac->isGranted('IS_AUTHENTICATED_REMEMBERED')
@@ -105,10 +117,10 @@ class ClientSofort
                 </reasons>
                 <currency_code>'.$currencyCode.'</currency_code>
                 <language_code>'.$language.'</language_code>
-                <success_url>'.$this->resultUrl.'/untraceable</success_url>
+                <success_url>'.$this->successUrl.'</success_url>
                 <success_link_redirect>1</success_link_redirect>
-                <abort_url>'.$this->resultUrl.'/canceled</abort_url>
-                <timeout_url>'.$this->resultUrl.'/timeout</timeout_url>
+                <abort_url>'.$this->abortUrl.'</abort_url>
+                <timeout_url>'.$this->timeoutUrl.'</timeout_url>
                 <notification_urls>
                     <notification_url>'.$this->notifyUrl.'</notification_url>
                 </notification_urls>
@@ -131,12 +143,14 @@ class ClientSofort
             case 'timeout':
                 $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_DECLINED);
                 break;
-            case 'canceled':
+            case 'abort':
                 $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_CANCELED);
                 break;
-            case 'untraceable':
+            case 'success':
                 $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_ACCEPTED);
                 break;
+            default:
+                throw new \Exception('Invalid Status.');
         }
 
         $this->em->flush();
