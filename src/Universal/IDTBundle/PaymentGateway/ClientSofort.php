@@ -105,19 +105,19 @@ class ClientSofort
                 </reasons>
                 <currency_code>'.$currencyCode.'</currency_code>
                 <language_code>'.$language.'</language_code>
-                <success_url>'.$this->resultUrl.'</success_url>
+                <success_url>'.$this->resultUrl.'/untraceable</success_url>
                 <success_link_redirect>1</success_link_redirect>
-                <abort_url>'.$this->resultUrl.'</abort_url>
-                <timeout_url>'.$this->resultUrl.'</timeout_url>
+                <abort_url>'.$this->resultUrl.'/canceled</abort_url>
+                <timeout_url>'.$this->resultUrl.'/timeout</timeout_url>
                 <notification_urls>
-                    <notification_url notify_on="received, loss">'.$this->notifyUrl.'</notification_url>
+                    <notification_url>'.$this->notifyUrl.'</notification_url>
                 </notification_urls>
                 <su />
             </multipay>';
 
     }
 
-    public function processResult($transaction)
+    public function processResult($status, $transaction)
     {
         if(strlen($transaction) != 27)
             throw new \Exception('Invalid Transaction Number -1');
@@ -127,47 +127,17 @@ class ClientSofort
         if(!$orderDetail)
             throw new \Exception('Invalid Transaction Number -2');
 
-        $requestXML =
-            '<?xml version="1.0" encoding="UTF-8" ?>
-            <transaction_request version="2">
-                <transaction>'.$transaction.'</transaction>
-            </transaction_request>';
-
-        Log::save(print_r($requestXML, true), "sofort_notify_request");
-
-        try {
-            $response = $this->guzzle->post(
-                $this->submitUrl,
-                array(
-                    'Authorization' => 'Basic ' . base64_encode($this->confKey),
-                    'Content-Type' => 'application/xml; charset=UTF-8',
-                    'Accept' => 'application/xml; charset=UTF-8'
-                ),
-                $requestXML
-            )->send();
-
-            Log::save($response->getBody(true), "sofort_notify_response");
-
-            $result = simplexml_load_string($response->getBody(true));
-
-            if ($result->getName() == "errors") {
-                $errors = "";
-
-                foreach ($result->error as $error) {
-                    $errors .= $error->code . " : " . $error->message . " (" . $error->field . ")\n";
-                }
-
-                throw new \Exception($errors, 1234);
-            }
+        switch ($status) {
+            case 'timeout':
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_DECLINED);
+                break;
+            case 'canceled':
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_CANCELED);
+                break;
+            case 'untraceable':
+                $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_ACCEPTED);
+                break;
         }
-        catch (\Exception $e) {
-            throw new \Exception("Something wrong happened with Sofort server.\n".$e->getMessage());
-        }
-
-        if($result->transaction_details->status == "untraceable")
-            $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_ACCEPTED);
-        else
-            $orderDetail->setPaymentStatus(PaymentStatusEnumType::STATUS_UNKNOWN);
 
         $this->em->flush();
 
@@ -178,27 +148,29 @@ class ClientSofort
     {
 //        Log::save($data, "sofort_notification_request_before");
 
-        $result = simplexml_load_string($data);
+        try {
+            $result = simplexml_load_string($data);
 
-        if ($result->getName() == "errors") {
-            $errors = "";
+            if ($result->getName() == "errors") {
+                $errors = "";
 
-            foreach ($result->error as $error) {
-                $errors .= $error->code . " : " . $error->message . " (" . $error->field . ")\n";
+                foreach ($result->error as $error) {
+                    $errors .= $error->code . " : " . $error->message . " (" . $error->field . ")\n";
+                }
+
+                throw new \Exception($errors, 1234);
             }
 
-            throw new \Exception($errors, 1234);
+            $transaction = (string) $result->transaction;
         }
-
-        $transaction = (string) $result->transaction;
-
-        if(strlen($transaction) != 27)
-            throw new \Exception('Invalid Transaction Number -1');
+        catch (\Exception $e) {
+            throw new \Exception("Something wrong happened with Sofort server.\n".$e->getMessage());
+        }
 
         $orderDetail = $this->em->getRepository('UniversalIDTBundle:OrderDetail')->findOneBy(array('paymentId'=>$transaction));
 
         if(!$orderDetail)
-            throw new \Exception('Invalid Transaction Number -2');
+            throw new \Exception('Transaction Not found.');
 
         $requestXML =
             '<?xml version="1.0" encoding="UTF-8" ?>
@@ -215,5 +187,7 @@ class ClientSofort
             ), $requestXML)->send();
 
         Log::save($response->getBody(true), "sofort_notify_notification_response");
+
+        return;
     }
 }

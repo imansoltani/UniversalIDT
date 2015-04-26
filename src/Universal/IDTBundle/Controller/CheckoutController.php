@@ -155,10 +155,10 @@ class CheckoutController extends Controller
             ), $response);
     }
 
-    public function sofortResultAction(Request $request)
+    public function sofortResultAction(Request $request, $status)
     {
         try {
-            $orderDetail = $this->get('client_sofort')->processResult($request->query->get('trans'));
+            $orderDetail = $this->get('client_sofort')->processResult($status, $request->query->get('trans'));
 
             Log::save($orderDetail->getId(),"order_id_after_sofort");
 

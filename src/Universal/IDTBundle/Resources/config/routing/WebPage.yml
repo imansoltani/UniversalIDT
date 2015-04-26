@@ -35,7 +35,7 @@ WebPage_ogone_result:
     defaults: { _controller: UniversalIDTBundle:Checkout:ogoneResult }
 
 WebPage_sofort_result:
-    path:     /checkout/sofort-result
+    path:     /checkout/sofort-result/{status}
     defaults: { _controller: UniversalIDTBundle:Checkout:sofortResult }
 
 WebPage_sofort_notification:
