@@ -22,7 +22,7 @@ class OrdersController extends Controller
         /** @var User $user */
         $user = $this->getUser();
 
-        /** @var OrderDetail $orders */
+        /** @var OrderDetail[] $orders */
         $orders = $em->getRepository('UniversalIDTBundle:OrderDetail')->findBy(array('user' => $user));
 
         return $this->render('UniversalIDTBundle:Orders:index.html.twig', array(

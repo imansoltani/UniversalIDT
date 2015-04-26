@@ -45,7 +45,7 @@
                             <tr>
                                 <td>{{ orderProduct.product.name }}</td>
                                 <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
-                                <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }}</td>
+                                <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }} {{ orderProduct.product.currency }}</td>
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
                                 <td>{{ orderProduct.pin }}</td>
@@ -82,7 +82,7 @@
                         <tfoot>
                         <tr class="total">
                             <td>{{ 'transactions_details.total'|trans({},'application') }}</td>
-                            <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }}</td>
+                            <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }} {{ order.currency }}</td>
                         </tr>
                         </tfoot>
                     </table>

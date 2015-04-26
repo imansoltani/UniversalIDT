@@ -13,7 +13,7 @@
                     <table class="table table-bordered table-hover table-striped" id="table">
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Payment ID</th>
                             <th>Date, Time</th>
                             <th>Payment Status</th>
                             <th>Amount</th>
@@ -23,7 +23,7 @@
                         <tbody>
                         {% for order in orders %}
                             <tr>
-                                <td>{{ order.id }}</td>
+                                <td>{{ order.paymentId }}</td>
                                 <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                                 <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                                 <td>{{ order.amount }} ({{ order.currency|upper }})</td>

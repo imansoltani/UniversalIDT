@@ -52,23 +52,30 @@ class PinsController extends Controller
 
         /** @var OrderProduct $pin */
         $pin = $em->createQueryBuilder()
-            ->select('order_product', 'orderDetail', 'product')
+            ->select('order_product')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')
             ->where('order_product.id = :id')->setParameter('id', $id)
-            ->andWhere('order_product.requestType != :requestType')->setParameter('requestType', RequestTypeEnumType::RECHARGE)
             ->andWhere('order_product.requestStatus = :requestStatus')->setParameter('requestStatus', RequestStatusEnumType::SUCCEED)
-            ->orderBy('order_product.id', 'asc')
-            ->groupBy('order_product.pin')
             ->innerJoin('order_product.orderDetail', 'orderDetail')
             ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
-            ->innerJoin('order_product.product', 'product')
             ->getQuery()->getOneOrNullResult();
 
         if(!$pin)
             throw $this->createNotFoundException('Pin not found.');
 
-        if(!$pin->getPin())
-            throw $this->createNotFoundException('Pin is empty.');
+        $creation = $em->createQueryBuilder()
+            ->select('order_product', 'orderDetail', 'product')
+            ->from('UniversalIDTBundle:OrderProduct', 'order_product')
+            ->where('order_product.pin = :pin')->setParameter('pin', $pin->getPin())
+            ->andWhere('order_product.requestType = :requestType')->setParameter('requestType', RequestTypeEnumType::CREATION)
+            ->andWhere('order_product.requestStatus = :requestStatus')->setParameter('requestStatus', RequestStatusEnumType::SUCCEED)
+            ->innerJoin('order_product.orderDetail', 'orderDetail')
+            ->andWhere('orderDetail.user = :user')->setParameter('user', $user)
+            ->innerJoin('order_product.product', 'product')
+            ->getQuery()->getOneOrNullResult();
+
+        if(!$creation)
+            throw $this->createNotFoundException('Pin Creation not found.');
 
         $call_details = $this->get('IDT')->getCallDetails($pin);
 
@@ -87,7 +94,7 @@ class PinsController extends Controller
             ->getQuery()->getResult();
 
         return $this->render('UniversalIDTBundle:Pins:details.html.twig', array(
-                'pin' => $pin,
+                'pin' => $creation,
                 'call_details' => $call_details,
                 'calls' => (array) $call_details->calls,
                 'recharges' => $recharges
