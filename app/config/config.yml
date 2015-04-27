@@ -123,5 +123,4 @@ white_october_breadcrumbs:
 
 bazinga_js_translation:
     default_domain: javascript
-    active_locales: %languages%
     active_domains: [javascript]

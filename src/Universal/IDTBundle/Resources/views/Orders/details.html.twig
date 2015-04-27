@@ -107,7 +107,9 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table2').DataTable();
+            $('#table2').DataTable( {
+                paging: false
+            } );
         });
     </script>
 {% endblock javascripts %}

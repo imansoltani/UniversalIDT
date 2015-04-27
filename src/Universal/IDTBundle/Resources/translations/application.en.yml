@@ -22,6 +22,31 @@ menu:
         rates:              Rates
         help:               Help
 
+    breadcrumbs:
+        index:                      Home
+        account_index:              My Account
+
+        billing:                    Billing
+        billing_history:            Billing History
+        order:                      Order "%id%"
+
+        pins:                       My PINs
+        pin_details:                General Details
+        pin_history:                Calls History
+        pin_recharges:              Recharges
+
+        panel_contact:              Contact us
+
+        notifications_index:        Notifications
+
+        checkout:                   Checkout
+
+        user:                       My Account
+        user_settings:              Profile Settings
+        user_emailChange:           Email Settings
+        user_passwordChange:        Password Settings
+        user_notificationsChange:   Notifications Settings
+
 panels_home:
     title:              Welcome
     home:               Home
@@ -53,3 +78,56 @@ transactions_details:
     delivery_method:    Delivery method
     total:              Total
     btn_print:          Print
+
+settings:
+    profile:
+        title:          Profile settings
+        subtitle:       Profile settings
+        first_name:     First name
+        last_name:      Last name
+        country:        Country
+        langauge:       Site language
+        gender:         Gender
+        phone:          Phone	
+        password:       Password
+        btn_update:     Update profile
+        flash:
+            failure:    ""
+            success:    Your profile has been successfully updated.
+
+    email:
+        title:          Email settings
+        subtitle:       Email settings
+        paragraph:      Your current email is
+        new:            New email
+        password:       Password
+        btn_change:     Change your email
+        flash:
+            failure:    ""
+            success:    A confirmation mail has been sent to "%email%".
+
+    password:
+        title:          Password settings
+        subtitle:       Password settings
+        current_pw:     Your current password
+        new_pw:         Your New password
+        repeat_new_pw:  Repeat your new password
+        btn_change:     Change your password
+        flash:
+            failure:    ""
+            success:    You have successfully changed your password.
+
+    notifications:
+        title:          Notifications
+        subtitle:       Notifications
+        btn_update:     Update notifications
+        flash:
+            failure:    ""
+            success:    You have successfully updated your notifications.
+
+confirmation_new_email:
+    flash:
+        success:        Your email has been successfully changed.
+        invalid:        The email confirmation url is invalid.
+        expired:        The email confirmation url is expired.
+        taken:          "The email confirmation url was valid, but the email is already taken by another user."
