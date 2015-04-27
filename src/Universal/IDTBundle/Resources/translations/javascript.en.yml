@@ -5,25 +5,50 @@ datatables:
     showing:             Showing
     to:                  to
     of:                  of
-    filtered: '(filtered from'
-    total: 'total entries)'
-    perpage: per page
+    filtered:            '(filtered from'
+    total:               'total entries)'
+    perpage:             per page
 
 
-    processing: Processing...
+    processing:          Processing...
 
-    lengthMenu: Show _MENU_ entries
-    info: Showing _START_ to _END_ of _TOTAL_ entries
-    infoEmpty: Showing 0 to 0 of 0 entries
-    infoFiltered: (filtered from _MAX_ total entries)
-    loadingRecords: Loading...
-    zeroRecords: No matching records found
-    emptyTable: No data available in table
+    lengthMenu:          Show _MENU_ entries
+    info:                Showing _START_ to _END_ of _TOTAL_ entries
+    infoEmpty:           Showing 0 to 0 of 0 entries
+    infoFiltered:        (filtered from _MAX_ total entries)
+    loadingRecords:      Loading...
+    zeroRecords:         No matching records found
+    emptyTable:          No data available in table
     paginate:
-        first: First
-        previous: Previous
-        next: Next
-        last: Last
+        first:           First
+        previous:        Previous
+        next:            Next
+        last:            Last
     aria:
-        sortAscending: ': activate to sort column ascending'
-        sortDescending: ': activate to sort column descending'
+        sortAscending:   ': activate to sort column ascending'
+        sortDescending:  ': activate to sort column descending'
+
+    pins:
+        date_column:     Date of purchase
+        card_column:     Card name
+        pin_column:      PIN
+        action_column:   Action
+        action_pin:      PIN details
+
+    transactions:
+        id_column:       Order number
+        date_column:     Date of purchase
+        payment_status:  Payment status
+        amount_column:   Amount
+        action_column:   Action
+        action_order:    Order
+
+    transactions_details:
+        card_column:             Card name
+        type_column:             Type
+        denomination_column:     Denomination
+        tax_column:              Tax
+        ctrl_column:             Control number
+        pin_column:              PIN
+        action_column:           Action
+        action_pin:              PIN details

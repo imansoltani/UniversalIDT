@@ -120,3 +120,8 @@ white_october_breadcrumbs:
     listClass: breadcrumb
     viewTemplate: "UniversalIDTBundle:Menu:breadcrumbs.html.twig"
     translation_domain: "application"
+
+bazinga_js_translation:
+    default_domain: javascript
+    active_locales: %languages%
+    active_domains: [javascript]

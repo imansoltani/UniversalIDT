@@ -24,7 +24,8 @@
         "jms/i18n-routing-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "~2",
         "whiteoctober/breadcrumbs-bundle": "dev-master",
-        "pouyasoft_ir/sofort": "dev-master"
+        "pouyasoft_ir/sofort": "dev-master",
+        "willdurand/js-translation-bundle": "~2.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

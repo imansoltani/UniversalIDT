@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7 isIE"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie7 isIE"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie8 isIE"> <![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7 isIE" lang="{{ app.request.locale }}"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie7 isIE" lang="{{ app.request.locale }}"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie8 isIE" lang="{{ app.request.locale }}"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js notIe" lang="{{ app.request.locale }}"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
@@ -12,6 +12,8 @@
     {% block headers %}{% endblock headers %}
     {% block stylesheets %}{% endblock stylesheets %}
     <link href="{{ asset("bundles/universalidt/js/plugins/msgGrowl/css/msgGrowl.css") }}" rel="stylesheet">
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js') }}"></script>
 </head>
 <body {% block body_attr '' %}>
 <!--[if lt IE 7]>

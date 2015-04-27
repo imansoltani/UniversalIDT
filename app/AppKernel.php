@@ -23,6 +23,7 @@ class AppKernel extends Kernel
 //            new JMS\TranslationBundle\JMSTranslationBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
+            new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Universal\IDTBundle\UniversalIDTBundle(),
         );
 
