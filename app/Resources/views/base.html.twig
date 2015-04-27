@@ -13,7 +13,33 @@
     {% block stylesheets %}{% endblock stylesheets %}
     <link href="{{ asset("bundles/universalidt/js/plugins/msgGrowl/css/msgGrowl.css") }}" rel="stylesheet">
     <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
-    <script src="{{ url('bazinga_jstranslation_js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js',{'domain':'javascript'}) }}?locales=en,fr,it"></script>
+    <script type="text/javascript">
+        Translator.locale = '{{ app.request.locale|slice(0,2) }}';
+        var dataTableTranslation = {
+            "sEmptyTable":     Translator.trans('datatables.emptyTable', {}, 'javascript'),
+            "sInfo":           Translator.trans('datatables.info', {}, 'javascript'),
+            "sInfoEmpty":      Translator.trans('datatables.infoEmpty', {}, 'javascript'),
+            "sInfoFiltered":   Translator.trans('datatables.infoFiltered', {}, 'javascript'),
+            "sLengthMenu":     Translator.trans('datatables.lengthMenu', {}, 'javascript'),
+            "sLoadingRecords": Translator.trans('datatables.loadingRecords', {}, 'javascript'),
+            "sProcessing":     Translator.trans('datatables.processing', {}, 'javascript'),
+            "sSearch":         Translator.trans('datatables.search', {}, 'javascript'),
+            "sZeroRecords":    Translator.trans('datatables.zeroRecords', {}, 'javascript'),
+            "oPaginate": {
+                "sFirst":     Translator.trans('datatables.paginate.first', {}, 'javascript'),
+                "sLast":      Translator.trans('datatables.paginate.previous', {}, 'javascript'),
+                "sNext":      Translator.trans('datatables.paginate.next', {}, 'javascript'),
+                "sPrevious":  Translator.trans('datatables.paginate.last', {}, 'javascript')
+            },
+            "oAria": {
+                "sSortAscending":  Translator.trans('datatables.aria.sortAscending', {}, 'javascript'),
+                "sSortDescending": Translator.trans('datatables.aria.sortDescending', {}, 'javascript')
+            }
+        };
+
+        console.log(dataTableTranslation);
+    </script>
 </head>
 <body {% block body_attr '' %}>
 <!--[if lt IE 7]>

@@ -107,9 +107,9 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table2').DataTable( {
-                paging: false
-            } );
+            $('#table2').DataTable({
+                "language": dataTableTranslation
+            });
         });
     </script>
 {% endblock javascripts %}

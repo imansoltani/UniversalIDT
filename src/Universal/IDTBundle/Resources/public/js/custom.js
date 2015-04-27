@@ -25,10 +25,10 @@ $(document).ready(function() {
 	
 	
 	
-	
-	/*
-	==DATA TABLE==
-	*/
-	$('#table, #table1, #table2').dataTable();
+	//
+	///*
+	//==DATA TABLE==
+	//*/
+	//$('#table, #table1, #table2').dataTable();
 	
 });
