@@ -13,11 +13,11 @@
                     <table class="table table-bordered table-hover table-striped" id="table">
                         <thead>
                         <tr>
-                            <th>Payment ID</th>
-                            <th>Date, Time</th>
-                            <th>Payment Status</th>
-                            <th>Amount</th>
-                            <th>Action</th>
+                            <th>{{ 'datatables.transactions.id_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.transactions.date_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.transactions.payment_status'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.transactions.amount_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.transactions.action_column'|trans({},'javascript') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -27,7 +27,7 @@
                                 <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                                 <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                                 <td>{{ order.amount }} ({{ order.currency|upper }})</td>
-                                <td><a href="{{ path('user_order_details', {'id':order.id}) }}" class="link">details</a></td>
+                                <td><a href="{{ path('user_order_details', {'id':order.id}) }}" class="link">{{ 'datatables.transactions.action_order'|trans({},'javascript') }}</a></td>
                             </tr>
                         {% endfor %}
                         </tbody>

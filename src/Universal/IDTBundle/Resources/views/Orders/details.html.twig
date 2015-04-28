@@ -28,13 +28,13 @@
                         <table class="table table-bordered table-hover table-striped" id="table2">
                             <thead>
                             <tr>
-                                <th>Card Name</th>
-                                <th>Type</th>
-                                <th>Denomination</th>
-                                <th>Vat</th>
-                                <th>Serial Number</th>
-                                <th>Pin</th>
-                                <th>Action</th>
+                                <th>{{ 'datatables.transactions_details.card_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.type_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.denomination_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.tax_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.ctrl_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.pin_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.action_column'|trans({},'javascript') }}</th>
                             </tr>
                             </thead>
 
@@ -49,7 +49,7 @@
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
                                 <td>{{ orderProduct.pin }}</td>
-                                <td><a href="{{ path('user_pin_details', {'id':orderProduct.id}) }}" class="link">Pin Details</a></td>
+                                <td><a href="{{ path('user_pin_details', {'id':orderProduct.id}) }}" class="link">{{ 'datatables.transactions_details.action_pin'|trans({},'javascript') }}</a></td>
                             </tr>
                         {% endfor %}
                             </tbody>

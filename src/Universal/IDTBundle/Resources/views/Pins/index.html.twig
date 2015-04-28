@@ -13,10 +13,10 @@
                     <table class="table table-bordered table-hover table-striped" id="table">
                         <thead>
                         <tr>
-                            <th>Date Purchased</th>
-                            <th>Card Name</th>
-                            <th>PIN</th>
-                            <th>Action</th>
+                            <th>{{ 'datatables.pins.date_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.pins.card_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.pins.pin_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.pins.action_column'|trans({},'javascript') }}</th>
                         </tr>
                         </thead>
 
@@ -27,7 +27,7 @@
                                 <td>{{ pin.product.name }}</td>
                                 <td>{{ pin.pin }}</td>
                                 <td>
-                                    <a href="{{ path('user_pin_details', {'id':pin.id}) }}">Pin Details</a>
+                                    <a href="{{ path('user_pin_details', {'id':pin.id}) }}">{{ 'datatables.pins.action_pin'|trans({},'javascript') }}</a>
                                 </td>
                             </tr>
                             {% endfor %}
