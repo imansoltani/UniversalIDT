@@ -106,8 +106,12 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table1').DataTable();
-            $('#table2').DataTable();
+            $('#table1').DataTable({
+                "language": dataTableTranslation
+            });
+            $('#table2').DataTable({
+                "language": dataTableTranslation
+            });
         });
 
         $('form#form-recharge').submit(function(e) {
