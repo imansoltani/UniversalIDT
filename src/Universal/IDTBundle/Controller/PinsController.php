@@ -14,8 +14,8 @@ class PinsController extends Controller
     public function indexAction()
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem("My PINs", $this->get("router")->generate("user_pins"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.pins',[],'application'), $this->get("router")->generate("user_pins"));
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -40,9 +40,9 @@ class PinsController extends Controller
     public function detailsAction($id)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem("My PINs", $this->get("router")->generate("user_pins"));
-        $breadcrumbs->addItem("PIN details");
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.pins',[],'application'), $this->get("router")->generate("user_pins"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.pin_details',[],'application'));
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

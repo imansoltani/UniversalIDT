@@ -14,16 +14,16 @@ class UserController extends Controller
     public function HomeAction()
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
 
         return $this->render('UniversalIDTBundle:Settings:home.html.twig');
     }
     public function notificationAction(Request $request)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem("My Account");
-        $breadcrumbs->addItem("Notifications");
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user',[],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_notificationsChange',[],'application'));
 
         $notifications = array(
             'a' => 'abc',
@@ -55,9 +55,9 @@ class UserController extends Controller
     public function emailAction(Request $request)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem("Home", $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem("My Account");
-        $breadcrumbs->addItem("Email Settings");
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user',[],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_emailChange',[],'application'));
 
         /** @var User $user */
         $user = $this->getUser();
@@ -83,7 +83,7 @@ class UserController extends Controller
                     $user->getNewEmail()
                 );
 
-                $this->get('session')->getFlashBag()->add('success', "Email sent.");
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('settings.email.flash.success',['%email%'=>$user->getNewEmail()],'application'));
                 $em->flush();
             }
         }
@@ -105,18 +105,18 @@ class UserController extends Controller
 
         if(!$user)
         {
-            $this->get('session')->getFlashBag()->add('failed', "Token not found. Email change failed.");
+            $this->get('session')->getFlashBag()->add('failed', $this->get('translator')->trans('confirmation_new_email.flash.invalid',[],'application'));
 
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
 
         if(new \DateTime() > $user->getNewEmailExpireAt())
         {
-            $this->get('session')->getFlashBag()->add('failed', "Token expired");
+            $this->get('session')->getFlashBag()->add('failed', $this->get('translator')->trans('confirmation_new_email.flash.expired',[],'application'));
         }
         elseif($findUserEmail = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('emailCanonical' => $email_canonicalizer->canonicalize($user->getNewEmail()))))
         {
-            $this->get('session')->getFlashBag()->add('failed', "user with this email already exist.");
+            $this->get('session')->getFlashBag()->add('failed', $this->get('translator')->trans('confirmation_new_email.flash.taken',[],'application'));
         }
         else
         {
@@ -124,7 +124,7 @@ class UserController extends Controller
 
             $this->get('fos_user.user_manager')->updateCanonicalFields($user);
 
-            $this->get('session')->getFlashBag()->add('success', "Email successfully changed.");
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('confirmation_new_email.flash.success',[],'application'));
         }
 
         $user->setConfirmationToken(null);

@@ -17,16 +17,18 @@ class ChangeEmailType extends AbstractType
     {
         $builder
             ->add('newEmail', 'email', array(
-                    'label' => 'New email:',
+                    "label"=>"settings.email.new",
+                    'translation_domain' => 'application'
                 ))
             ->add('current_password', 'password', array(
-                    'label' => 'form.current_password',
-                    'translation_domain' => 'FOSUserBundle',
+                    "label"=>"settings.email.password",
+                    'translation_domain' => 'application',
                     'mapped' => false,
                     'constraints' => new UserPassword(),
                 ))
             ->add('submit', 'submit', array(
-                    'label' => 'Save new email'
+                    "label"=>"settings.email.btn_change",
+                    'translation_domain' => 'application'
                 ))
         ;
     }

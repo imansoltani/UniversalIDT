@@ -18,16 +18,32 @@ class ProfileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', 'text')
-            ->add('lastName', 'text')
+            ->add('firstName', 'text', array(
+                    "label"=>"settings.profile.first_name",
+                    'translation_domain' => 'application'
+                ))
+            ->add('lastName', 'text', array(
+                    "label"=>"settings.profile.last_name",
+                    'translation_domain' => 'application'
+                ))
             ->add('country', 'choice', array(
-                    'choices' => $this->countries
+                    'choices' => $this->countries,
+                    "label"=>"settings.profile.country",
+                    'translation_domain' => 'application'
                 ))
             ->add('language', 'choice', array(
-                'choices' => $this->locales
+                'choices' => $this->locales,
+                    "label"=>"settings.profile.language",
+                    'translation_domain' => 'application'
             ))
-            ->add('gender')
-            ->add('phone', "text")
+            ->add('gender', null, array(
+                    "label"=>"settings.profile.gender",
+                    'translation_domain' => 'application'
+                ))
+            ->add('phone', "text", array(
+                    "label"=>"settings.profile.phone",
+                    'translation_domain' => 'application'
+                ))
             ->remove('username')
             ->remove('email');
     }

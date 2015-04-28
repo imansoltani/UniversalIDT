@@ -8,6 +8,7 @@ use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\LoggingTranslator;
 use Universal\IDTBundle\Entity\User;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
@@ -17,10 +18,13 @@ class FOSListener implements EventSubscriberInterface
 
     protected $breadcrumbs;
 
-    public function __construct(RouterInterface $router, Breadcrumbs $breadcrumbs)
+    protected $translator;
+
+    public function __construct(RouterInterface $router, Breadcrumbs $breadcrumbs, LoggingTranslator $translator)
     {
         $this->router = $router;
         $this->breadcrumbs = $breadcrumbs;
+        $this->translator = $translator;
     }
 
     /**
@@ -53,9 +57,9 @@ class FOSListener implements EventSubscriberInterface
 
     public function onProfileEditInitialize(GetResponseUserEvent $event)
     {
-        $this->breadcrumbs->addItem("Home", $this->router->generate("user_home"));
-        $this->breadcrumbs->addItem("My Account");
-        $this->breadcrumbs->addItem("Profile Settings");
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.index',[],'application'), $this->router->generate("user_home"));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user',[],'application'));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_settings',[],'application'));
     }
 
     public function onProfileEditSuccess(FormEvent $event)
@@ -67,8 +71,8 @@ class FOSListener implements EventSubscriberInterface
 
     public function onChangePasswordInitialize(GetResponseUserEvent $event)
     {
-        $this->breadcrumbs->addItem("Home", $this->router->generate("user_home"));
-        $this->breadcrumbs->addItem("My Account");
-        $this->breadcrumbs->addItem("Password Settings");
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.index',[],'application'), $this->router->generate("user_home"));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user',[],'application'));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_passwordChange',[],'application'));
     }
 }
