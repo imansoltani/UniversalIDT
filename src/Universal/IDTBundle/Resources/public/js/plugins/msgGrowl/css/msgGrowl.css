@@ -1,6 +1,7 @@
 .msgGrowl-container {
 	width: 300px;
 	position: fixed;
+	z-index: 10000;
 }
 
 	.top-right { top: 10px; right: 15px; }

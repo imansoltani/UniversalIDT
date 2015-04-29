@@ -119,27 +119,7 @@ $(document).ready(function() {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	/*
-	==DATA TABLE==
-	*/
-	$('#rates-table').dataTable();
-	
-	$('#rates-table > tbody > tr').each(function() {
-		var denomination = $(this).find('select');
-		var rate = $(this).find('.rate').text();
-		
-		$(denomination).change(function() {
-			var minute = $(this).val() / rate;
-			$(this).closest('tr').find('.minutes').text(minute);
-		});
-	});
-	
+
 	
 	
 	
@@ -395,51 +375,6 @@ $(document).ready(function() {
 			content: '<h5>United Kingdom</h5><p><a href="#calling-card-by-country" data-toggle="target">Lorem ipsum dolor sit amet,<br> consectetuer adipiscing elit</a></p>'
 		}
 	});
-	
-	
-	
-	
-	
-	
-	/*
-	==ADD TO CART NOTIFICATION==
-	*/
-	$('.growl-type').live('click', function (e) {
-		e.preventDefault();
-		$.msgGrowl ({
-			type: $(this).attr ('data-type'),
-			title: $(this).attr ('title'),
-			text: $(this).attr ('data-content')
-		});
-	});
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 });
