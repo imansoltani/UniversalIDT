@@ -23,7 +23,7 @@
                         <tbody>
                         {% for order in orders %}
                             <tr>
-                                <td>{{ order.paymentId }}</td>
+                                <td>{{ order.id }}</td>
                                 <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                                 <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                                 <td>{{ order.amount }} ({{ order.currency|upper }})</td>

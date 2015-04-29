@@ -63,6 +63,7 @@ class PinsController extends Controller
         if(!$pin)
             throw $this->createNotFoundException('Pin not found.');
 
+        /** @var OrderProduct $creation */
         $creation = $em->createQueryBuilder()
             ->select('order_product', 'orderDetail', 'product')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')
