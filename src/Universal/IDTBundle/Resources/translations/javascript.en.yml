@@ -36,12 +36,13 @@ datatables:
         action_pin:      PIN details
 
     transactions:
-        id_column:       Order number
-        date_column:     Date of purchase
-        payment_status:  Payment status
-        amount_column:   Amount
-        action_column:   Action
-        action_order:    Order
+        id_column:          Order number
+        reference_column:   Reference
+        date_column:        Date of purchase
+        payment_status:     Payment status
+        amount_column:      Amount
+        action_column:      Action
+        action_order:       Order
 
     transactions_details:
         card_column:             Card name

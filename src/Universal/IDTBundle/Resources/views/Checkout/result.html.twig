@@ -17,7 +17,8 @@
 
             <div class="order-general-info-panel clearfix">
                 <ul>
-                    <li><i class="fa fa-circle-o"></i> <span>ID:</span> {{ orderDetail.paymentId }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>OrderID:</span> {{ orderDetail.id }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>Reference:</span> {{ orderDetail.orderReference }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>Status:</span> {{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>Date:</span> {{ orderDetail.date|date('Y-m-d H:i:s') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>method:</span> {{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</li>

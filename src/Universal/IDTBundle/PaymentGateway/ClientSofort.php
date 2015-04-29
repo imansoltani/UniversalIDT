@@ -62,7 +62,7 @@ class ClientSofort
             $orderDetail->getAmount(),
             $orderDetail->getCurrency(),
             $language,
-            $orderDetail->getId().'-'.$orderDetail->getDate()->getTimestamp()
+            $orderDetail->getOrderReference()
         );
 
         Log::save(print_r($request, true), "sofort_request");

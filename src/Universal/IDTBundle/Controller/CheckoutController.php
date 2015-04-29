@@ -386,7 +386,7 @@ class CheckoutController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var OrderDetail $order */
+        /** @var OrderDetail $orderDetail */
         $orderDetail = $em->createQueryBuilder()
             ->select('orderDetail')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')
@@ -407,7 +407,7 @@ class CheckoutController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        /** @var OrderDetail $order */
+        /** @var OrderDetail $orderDetail */
         $orderDetail = $em->createQueryBuilder()
             ->select('orderDetail')
             ->from('UniversalIDTBundle:OrderDetail', 'orderDetail')

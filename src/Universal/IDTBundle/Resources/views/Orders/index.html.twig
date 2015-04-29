@@ -14,6 +14,7 @@
                         <thead>
                         <tr>
                             <th>{{ 'datatables.transactions.id_column'|trans({},'javascript') }}</th>
+                            <th>{{ 'datatables.transactions.reference_column'|trans({},'javascript') }}</th>
                             <th>{{ 'datatables.transactions.date_column'|trans({},'javascript') }}</th>
                             <th>{{ 'datatables.transactions.payment_status'|trans({},'javascript') }}</th>
                             <th>{{ 'datatables.transactions.amount_column'|trans({},'javascript') }}</th>
@@ -24,6 +25,7 @@
                         {% for order in orders %}
                             <tr>
                                 <td>{{ order.id }}</td>
+                                <td>{{ order.orderReference }}</td>
                                 <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                                 <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                                 <td>{{ order.amount }} ({{ order.currency|upper }})</td>

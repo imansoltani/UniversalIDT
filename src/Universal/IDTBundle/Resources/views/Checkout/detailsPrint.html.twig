@@ -36,10 +36,10 @@
                     <table class="table table-bordered table-hover">
                         <tbody>
                         <tr>
-                            <th>ID</th>
+                            <th>Order ID</th>
                             <td>{{ order.id }}</td>
-                            <th>Date</th>
-                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
+                            <th>Reference</th>
+                            <td>{{ order.orderReference }}</td>
                         </tr>
                         <tr>
                             <th>Payment Status</th>
@@ -48,8 +48,10 @@
                             <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
                         </tr>
                         <tr>
+                            <th>Date</th>
+                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                             <th>Delivery method</th>
-                            <td colspan="3">
+                            <td>
                                 {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
                                 {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
                                 {{ delivery != "" ? delivery|raw : "--" }}

@@ -65,6 +65,7 @@ transactions_index:
 transactions_details:
     title_info:         General Information
     id:                 Order number
+    reference:          Reference
     payment_status:     Payment Status
     date:               Date
     payment_method:     Payment Method
