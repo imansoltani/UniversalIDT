@@ -27,7 +27,7 @@
                                 <td>{{ pin.product.name }}</td>
                                 <td>{{ pin.pin }}</td>
                                 <td>
-                                    <a href="{{ path('user_pin_details', {'id':pin.id}) }}">{{ 'datatables.pins.action_pin'|trans({},'javascript') }}</a>
+                                    <a href="{{ path('user_pin_details', {'id':pin.id}) }}" class="link">{{ 'datatables.pins.action_pin'|trans({},'javascript') }}</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -38,4 +38,13 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    </script>
+{% endblock javascripts %}
 
