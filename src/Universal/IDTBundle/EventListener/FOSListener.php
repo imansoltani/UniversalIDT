@@ -8,7 +8,7 @@ use FOS\UserBundle\FOSUserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Translation\LoggingTranslator;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Universal\IDTBundle\Entity\User;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
 
@@ -20,7 +20,7 @@ class FOSListener implements EventSubscriberInterface
 
     protected $translator;
 
-    public function __construct(RouterInterface $router, Breadcrumbs $breadcrumbs, LoggingTranslator $translator)
+    public function __construct(RouterInterface $router, Breadcrumbs $breadcrumbs, Translator $translator)
     {
         $this->router = $router;
         $this->breadcrumbs = $breadcrumbs;
