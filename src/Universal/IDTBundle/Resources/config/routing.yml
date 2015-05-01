@@ -11,7 +11,7 @@ fos_user:
     prefix:   /
 
 ogone_template:
-    path:   /ogone_template
+    path:   /ogone-template
     defaults:
         _controller: FrameworkBundle:Template:template
         template: UniversalIDTBundle:PaymentGateWay:ogoneTemplate.html.twig
