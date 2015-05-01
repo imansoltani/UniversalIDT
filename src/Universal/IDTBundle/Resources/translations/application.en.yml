@@ -112,7 +112,8 @@ checkout:
             print:          Print
             details:        Check your order
     template:
-        title:
+        title:              Secured payment powered by Ogone
+        subtitle:           Payment confirmation
 
 sofort:
 
