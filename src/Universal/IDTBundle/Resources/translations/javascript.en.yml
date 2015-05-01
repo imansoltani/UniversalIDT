@@ -35,9 +35,22 @@ datatables:
         action_column:   Action
         action_pin:      PIN details
 
+    pins_details:
+        call_history:
+            date_column:            Date of purchase
+            duration_column:        Card name
+            cost_column:            Cost
+            caller_column:          Caller Number
+            called_column:          Called Number
+        recharges:
+            date_column:            Date of purchase
+            card_column:            Card name
+            denomination_column:    Denomination
+            status_column:          Status
+
     transactions:
         id_column:          Order number
-        reference_column:   Reference
+        reference_column:   Order Reference
         date_column:        Date of purchase
         payment_status:     Payment status
         amount_column:      Amount
