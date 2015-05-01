@@ -1,30 +1,30 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    Pins Details
+    {{ 'pins_details.title'|trans({'%pin%':pin.pin},'application') }}
 {% endblock subtitle %}
 
 {% block content %}
     <div class="content-container clearfix">
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <div class="pin-panel clearfix"><!-- PIN ANEL -->
-                <h2 class="section-title">Pin {{ pin.pin }}</h2>
+                <h2 class="section-title">{{ 'pins_details.title'|trans({'%pin%':pin.pin},'application') }}</h2>
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#detailTab" data-toggle="tab">Details</a></li>
-                    <li><a href="#historyTab" data-toggle="tab">Call History</a></li>
-                    <li><a href="#rechargeTab" data-toggle="tab">Recharges</a></li>
+                    <li class="active"><a href="#detailTab" data-toggle="tab">{{ 'pins_details.details_tab.title'|trans({},'application') }}</a></li>
+                    <li><a href="#historyTab" data-toggle="tab">{{ 'pins_details.call_history_tab.title'|trans({},'application') }}</a></li>
+                    <li><a href="#rechargeTab" data-toggle="tab">{{ 'pins_details.recharges_tab.title'|trans({},'application') }}</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="detailTab"><!-- DETAILS TAB -->
                         <div class="pins-general-info clearfix">
                             <ul>
-                                <li><i class="fa fa-circle-o"></i> <span>Card Name:</span> {{ pin.product.name }}</li>
-                                <li><i class="fa fa-circle-o"></i> <span>Control number:</span> {{ pin.ctrlNumber }}</li>
-                                <li><i class="fa fa-circle-o"></i> <span>Order Number:</span> {{ pin.orderDetail.id }}</li>
-                                <li><i class="fa fa-circle-o"></i> <span>Reference:</span> {{ pin.orderDetail.orderReference }}</li>
-                                <li><i class="fa fa-circle-o"></i> <span>Total Usage:</span> {{ call_details.totalamount }}</li>
-                                <li><i class="fa fa-circle-o"></i> <span>Total Calls:</span> {{ call_details.totalcalls }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.card_name'|trans({},'application') }}:</span> {{ pin.product.name }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.control_no'|trans({},'application') }}:</span> {{ pin.ctrlNumber }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.order_no'|trans({},'application') }}:</span> {{ pin.orderDetail.id }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.reference'|trans({},'application') }}:</span> {{ pin.orderDetail.orderReference }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.usage'|trans({},'application') }}:</span> {{ call_details.totalamount }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.calls'|trans({},'application') }}:</span> {{ call_details.totalcalls }}</li>
                             </ul>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="recharge-panel clearfix"><!-- RECHARGE PANEL -->
-                <h2 class="section-title">Recharge</h2>
+                <h2 class="section-title">{{ 'pins_details.recharge.title'|trans({},'application') }}</h2>
                 <form id="form-recharge" method="post" class="form-inline">
                     <div class="form-group">
                         <label for="denomination_list"></label>
@@ -96,7 +96,7 @@
                             <option value="20">20CHF</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary" type="submit">Recharge</button>
+                    <button class="btn btn-primary" type="submit">{{ 'pins_details.recharge.button'|trans({},'application') }}</button>
                 </form>
             </div>
         </div>

@@ -13,8 +13,8 @@ class OrdersController extends Controller
     public function indexAction()
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.billing_history',[],'application'), $this->get("router")->generate("user_orders"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.transactions.index',[],'application'), $this->get("router")->generate("user_orders"));
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -32,9 +32,9 @@ class OrdersController extends Controller
     public function detailsAction($id)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.billing_history',[],'application'), $this->get("router")->generate("user_orders"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.order',['%id%'=> $id],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.transactions.index',[],'application'), $this->get("router")->generate("user_orders"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.transactions.details',['%id%'=> $id],'application'));
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();

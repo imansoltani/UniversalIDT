@@ -23,29 +23,25 @@ menu:
         help:               Help
 
     breadcrumbs:
-        index:                      Home
-        account_index:              My Account
-
-        billing:                    Billing
-        billing_history:            Billing History
-        order:                      Order "%id%"
-
-        pins:                       My PINs
-        pin_details:                General Details
-        pin_history:                Calls History
-        pin_recharges:              Recharges
-
-        panel_contact:              Contact us
-
-        notifications_index:        Notifications
-
-        checkout:                   Checkout
-
-        user:                       My Account
-        user_settings:              Profile Settings
-        user_emailChange:           Email Settings
-        user_passwordChange:        Password Settings
-        user_notificationsChange:   Notifications Settings
+        home_index:              Home
+        pins:
+            index:               My PINs
+            details:             PIN Details
+        transactions:
+            index:               Orders
+            details:             Order "%id%"
+        user_settings:
+            index:               My Account
+            profile:             Profile Settings
+            email:               Email Settings
+            password:            Password Settings
+            notifications:       Notifications Settings
+        payment:
+            title:               Payment Result
+        error:                   error "%number%" occurred
+        notifications:
+            index:               Notifications
+        checkout:                Checkout
 
 panels_home:
     title:              Welcome
@@ -58,6 +54,24 @@ panels_home:
 
 pins_index:
     title:              My PINs
+
+pins_details:
+    title:              PIN "%pin%"
+    details_tab:
+        title:          Details
+        card_name:      Card name
+        control_no:     Control number
+        order_no:       Order number
+        reference:      Reference
+        usage:          Total usage
+        calls:          Total calls
+    call_history_tab:
+        title:          Call History
+    recharges_tab:
+        title:          Recharges History
+    recharge:
+        title:          Recharge
+        button:         Recharge your PIN
 
 transactions_index:
     title:              Orders
@@ -79,6 +93,44 @@ transactions_details:
     delivery_method:    Delivery method
     total:              Total
     btn_print:          Print
+
+tranactions_print_details:
+   btn_close:          close    
+
+checkout:
+    result:
+        title:              Payment result
+        order_reference:    Order number
+        amount:             Amount
+        payment_status:     Payment Status
+        date:               Date
+        payment_method:     Payment Method
+        flash:
+            available:      The link below is available for "%count%" times and expires after 20 minutes!
+            exired:         The link to the order is expired!
+        button:
+            print:          Print
+            details:        Check your order
+    template:
+        title:
+
+sofort:
+
+checkout:
+    result:
+        button:
+            print:          Print
+            close:          close
+    delivery:
+        method:
+            email:			Email
+            SMS:			SMS
+
+payment:
+    status:
+        accepted:           Accepeted
+        pending:            Pending
+        failed:             Failed
 
 settings:
     profile:
@@ -131,4 +183,4 @@ confirmation_new_email:
         success:        Your email has been successfully changed.
         invalid:        The email confirmation url is invalid.
         expired:        The email confirmation url is expired.
-        taken:          "The email confirmation url was valid, but the email is already taken by another user."
+        taken:          The email confirmation url was valid, but the email is already taken by another user.

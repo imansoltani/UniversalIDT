@@ -57,9 +57,9 @@ class FOSListener implements EventSubscriberInterface
 
     public function onProfileEditInitialize(GetResponseUserEvent $event)
     {
-        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.index',[],'application'), $this->router->generate("user_home"));
-        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user',[],'application'));
-        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_settings',[],'application'));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.home_index',[],'application'), $this->router->generate("user_home"));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_settings.index',[],'application'));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_settings.profile',[],'application'));
     }
 
     public function onProfileEditSuccess(FormEvent $event)
@@ -71,8 +71,8 @@ class FOSListener implements EventSubscriberInterface
 
     public function onChangePasswordInitialize(GetResponseUserEvent $event)
     {
-        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.index',[],'application'), $this->router->generate("user_home"));
-        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user',[],'application'));
-        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_passwordChange',[],'application'));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.home_index',[],'application'), $this->router->generate("user_home"));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_settings.index',[],'application'));
+        $this->breadcrumbs->addItem($this->translator->trans('menu.breadcrumbs.user_settings.password',[],'application'));
     }
 }

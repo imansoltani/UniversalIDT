@@ -29,6 +29,9 @@ class CheckoutController extends Controller
 
     public function checkoutAction(Request $request)
     {
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.checkout',[],'application'));
+
         $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
         if($request->query->has('account') && !$granted) {

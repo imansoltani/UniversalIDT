@@ -14,16 +14,16 @@ class UserController extends Controller
     public function HomeAction()
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
 
         return $this->render('UniversalIDTBundle:Settings:home.html.twig');
     }
     public function notificationAction(Request $request)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user',[],'application'));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_notificationsChange',[],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_settings.index',[],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_settings.notifications',[],'application'));
 
         $notifications = array(
             'a' => 'abc',
@@ -55,9 +55,9 @@ class UserController extends Controller
     public function emailAction(Request $request)
     {
         $breadcrumbs = $this->get("white_october_breadcrumbs");
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.index',[],'application'), $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user',[],'application'));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_emailChange',[],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_settings.index',[],'application'));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.user_settings.email',[],'application'));
 
         /** @var User $user */
         $user = $this->getUser();
