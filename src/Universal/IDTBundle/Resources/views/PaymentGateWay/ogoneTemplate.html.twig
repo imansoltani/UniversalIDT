@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>IDT.Payment confirmation</title>
@@ -14,8 +15,8 @@
         body{
             height: 100%;
             width: 100%;
-            padding: 0px;
-            margin: 0px;
+            padding: 0;
+            margin: 0;
             display: block;
             background: #ffffff;
             font-size: 14px;
@@ -27,39 +28,36 @@
             padding: 15px;
         }
         body .navbar-fixed-top {
-            margin: 0px;
+            margin: 0;
             position: relative;
-            right: 0px;
-            left: 0px;
+            right: 0;
+            left: 0;
             z-index: 1030;
             overflow: visible;
         }
         body .navbar .navbar-inner {
             background-color: #eeeeee;
             z-index: 1000;
-            -webkit-border-radius: 0px;
-            -moz-border-radius: 0px;
-            border-radius: 0px;
-            padding: 1px 0px;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
             height: 20px;
             filter: none;
-            border-width: 0px 0px 1px;
             display: block;
-            border-color: #ddd;
-            border-style: solid;
-            margin-bottom: 0px;
+            border: 0 solid #ddd;
+            border-bottom-width: 1px;
+            margin-bottom: 0;
             -webkit-box-shadow: none;
             -moz-box-shadow: none;
             box-shadow: none;
-            padding-top: 11px;
-            padding-bottom: 11px;
+            padding: 11px 0;
         }
         .navbar .container {
             position: relative;
             width: auto;
             margin-right: auto;
             margin-left: auto;
-            padding: 0px 10px;
+            padding: 0 10px;
             display: block;
             height: 100%;
         }
@@ -84,7 +82,7 @@
         }
         .account-container.stacked {
             display: block;
-            padding: 0px;
+            padding: 0;
         }
         .stacked {
             position: relative;
@@ -92,10 +90,9 @@
         }
         .body_main {
             width:700px;
-            margin: 60px auto 0px;
-            margin-bottom: 30px;
+            margin: 60px auto 30px;
             background: #FFFFFF;
-            padding-bottom: 0px;
+            padding-bottom: 0;
             -webkit-border-radius: 5px;
             -moz-border-radius: 5px;
             border-radius: 5px;
@@ -105,17 +102,17 @@
             border: 1px solid #ddd;
         }
         .body_main h1 {
-            font-family: 'Open Sans';
+            font-family: 'Open Sans', sans-serif;
             font-weight: normal;
             font-size: 24px;
             color: #282828;
             background: #FFFFFF;
             display: block;
             text-align: center;
-            padding: 0px 0px 15px 0px;
-            -webkit-border-radius: 5px 5px 0px 0px;
-            -moz-border-radius: 5px 5px 0px 0px;
-            border-radius: 5px 5px 0px 0px;
+            padding: 0 0 15px 0;
+            -webkit-border-radius: 5px 5px 0 0;
+            -moz-border-radius: 5px 5px 0 0;
+            border-radius: 5px 5px 0 0;
             border-bottom: 1px solid #EEEEEE;
             margin: 15px 30px 30px 30px;
         }
@@ -177,11 +174,11 @@
         body .ncoltable2 input,
         body .ncoltable2 select{
             display: inline-block;
-            margin-bottom: 0px;
+            margin-bottom: 0;
             vertical-align: middle;
             background-color: #FFFFFF;
             border: 1px solid #cccccc;
-            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
             transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
             -webkit-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
             height: 30px;
@@ -200,7 +197,7 @@
         body .ncoltable2 select:active,
         body .ncoltable2 select:focus{
             border-color: #F7C514;
-            outline: 0px none;
+            outline: 0 none;
             -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),0 0 8px rgba(247, 197, 20, .6);
             -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),0 0 8px rgba(247, 197, 20, .6);
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075),0 0 8px rgba(247, 197, 20, .6);
@@ -256,19 +253,12 @@
             max-width:100%;
         }
         .content > h2{
-            margin: 0px 0px 20px;
             border-bottom: 2px solid rgb(251, 147, 55);
-            padding:0;
-            padding-top:10px;
-            padding-bottom:10px;
-            margin-left:10px;
-            margin-right:10px;
-            margin-top:10px;
-            margin-bottom:10px;
+            padding: 10px 0;
             display: block;
             vertical-align: baseline;
-            background: none repeat scroll 0% 0% transparent;
-            margin-bottom : 0 ;
+            background: none repeat scroll 0 0 transparent;
+            margin: 10px 10px 0;
             text-align:center;
         }
         .content > table.ncoltable1{
@@ -280,7 +270,7 @@
             margin-top:10px;
         }
         .content > table.ncoltable1:nth-child(7){
-            margin-top:0px;
+            margin-top:0;
             border:none;
             width:100%;
             padding-bottom:0;
@@ -341,7 +331,8 @@
             background-image:linear-gradient(to bottom,#08c,#04c);
             background-repeat:repeat-x;
             border-color:#04c #04c #002a80;
-            border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0044cc',GradientType=0);
+            border-color:rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc',endColorstr='#ff0044cc',GradientType=0);
             filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
             cursor:pointer;
             width:auto;
@@ -354,10 +345,8 @@
         }
         .content > table.ncoltable1:nth-child(11) td input[type="button"]:hover{
             color:#fff;
-            background-color:#04c;
-            background-color:#003bb3;
             text-decoration:none;
-            background-position:0 -15px;
+            background: #003bb3 0 -15px;
             -webkit-transition:background-position .1s linear;
             -moz-transition:background-position .1s linear;
             -o-transition:background-position .1s linear;
@@ -369,8 +358,7 @@
             outline:5px auto -webkit-focus-ring-color;
             outline-offset:-2px;
             background-color:#039;
-            box-shadow:none;
-            box-shadow:0px 2px 7px #192296 inset;
+            box-shadow:0 2px 7px #192296 inset;
         }
         .content >  table.ncoltable3{
             border-top:#ccc solid thin ;
@@ -413,7 +401,8 @@
             border-bottom-color:#b3b3b3;
             -webkit-border-radius:4px;
             -moz-border-radius:4px;
-            border-radius:4px;			filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
+            border-radius:4px;
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
             filter:progid:DXImageTransform.Microsoft.gradient(enabled=false);
             *zoom:1;
             -webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
@@ -423,10 +412,8 @@
         }
         .content > table.ncoltable3 input[type="button"]:hover{
             color:#333;
-            background-color:#e6e6e6;
-            background-color:#d9d9d9;
             text-decoration:none;
-            background-position:0 -15px;
+            background: #d9d9d9 0 -15px;
             -webkit-transition:background-position .1s linear;
             -moz-transition:background-position .1s linear;
             -o-transition:background-position .1s linear;
