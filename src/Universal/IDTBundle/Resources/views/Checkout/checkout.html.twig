@@ -118,7 +118,7 @@
 													<td>{{ row.product.name }}</td>
 													<td>New Card</td>
 													<td>{{ row.count }}</td>
-													<td>{{ row.denomination }}</td>
+													<td>{{ row.denomination }} {{ currency|upper }}</td>
 													<td>{{ row.discount }}</td>
 													<td>{{ row.row_total }}</td>
 												</tr>
@@ -138,7 +138,7 @@
 										<tfoot>
 										<tr class="total">
 											<td colspan="6">{{ 'checkout.form.review.total'|trans({},'website') }}</td>
-											<td>{{ sum_total|round(2)|number_format(2) }}</td>
+											<td>{{ sum_total|round(2)|number_format(2) }} {{ currency|upper }}</td>
 										</tr>
 										</tfoot>
 									</table>

@@ -13,11 +13,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group row">
-                                <label class="col-sm-6">{{ 'home.available_cards.modal.denominations'|trans({},'website') }}</label>
+                                <label for="pr_denominations" class="col-sm-6">{{ 'home.available_cards.modal.denominations'|trans({},'website') }}</label>
                                 <div class="col-sm-6">
                                     <select class="form-control" id="pr_denominations">
                                         {% for denomination in product.denominations %}
-                                            <option value="{{ denomination }}">{{ denomination }}</option>
+                                            <option value="{{ denomination }}">{{ denomination }} {{ product.currency|upper }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

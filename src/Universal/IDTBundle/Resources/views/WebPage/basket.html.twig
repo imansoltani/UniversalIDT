@@ -146,7 +146,7 @@
             vat += $(this).data('vat');
         });
 
-        $("#basket_table_total").html(total);
+        $("#basket_table_total").html(total + " " + selected_products_currency);
 
         $("#basket_summary_subtotal").html(total.toFixed(2));
         $("#basket_summary_tax").html(vat.toFixed(2));
@@ -205,7 +205,7 @@
                 '<td><a href="javascript:openDetails('+row['id']+', false)">'+row['name']+'</a></td>'+
                 '<td>New Card</td>'+
                 '<td id="quantity"><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
-                '<td id="denomination">'+row['denomination']+'</td>' +
+                '<td id="denomination">'+row['denomination']+ " " + selected_products_currency + '</td>' +
                 '<td id="discount">'+discount+'</td>' +
                 '<td id="total">'+total+'</td>' +
                 '<td><a href="javascript:;" onclick="basketRemoveProduct(this)"><i class="fa fa-trash-o"></i></a></td>' +

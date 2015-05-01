@@ -29,10 +29,13 @@ class CheckoutController extends Controller
 
     public function checkoutAction(Request $request)
     {
+        $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
         $breadcrumbs = $this->get("white_october_breadcrumbs");
+        if($granted)
+            $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
         $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.checkout',[],'application'));
 
-        $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
         if($request->query->has('account') && !$granted) {
             switch($request->query->get('account')) {
