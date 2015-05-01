@@ -48,6 +48,10 @@
                             <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
                         </tr>
                         <tr>
+                            <th>Amount</th>
+                            <td>{{ orderDetail.amount|round(2)|number_format(2) }} {{ orderDetail.currency|upper }}</td>
+                        </tr>
+                        <tr>
                             <th>Date</th>
                             <td>{{ orderDetail.date|date('Y-m-d H:i:s') }}</td>
                         </tr>
