@@ -40,7 +40,7 @@ class ClientOgone
         $this->catalogUrl   = $router->generate("WebPage_main", [], true)."#basket";
         $this->homeUrl      = $router->generate("WebPage_main", [], true);
 
-        $this->templateUrl = "http://46.225.114.114/idtuniversal.com/UniversalIDT/web/ogone_template.html";//$router->generate("ogone_template", [], true);
+        $this->templateUrl = $router->generate("ogone_template", [], true);
     }
 
     private function getSortedParameters(OrderDetail $payment)

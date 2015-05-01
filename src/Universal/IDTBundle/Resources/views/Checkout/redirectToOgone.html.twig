@@ -3,17 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <title>redirect</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('bundles/universalidt/img/favicon.ico') }}" />
         <script src="{{ asset('bundles/universalidt/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script>
     </head>
     <body>
     {{ form|raw }}
 
-    <a href="#" onclick="$('form').submit()">submit</a>
+    {#<a href="#" onclick="$('form').submit()">submit</a>#}
 
     <script type="text/javascript">
         $(document).ready(function () {
-//           $('form').submit();
+           $('form').submit();
         });
     </script>
     </body>
