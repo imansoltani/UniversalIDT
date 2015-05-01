@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% block subtitle '' %}Home :: Universal IDT{% endblock %}
+{% block title %}{% block subtitle '' %} {{ 'home.title'|trans({},'website') }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -38,15 +38,15 @@
                             <a href="#header-top-menu" data-toggle="collapse" class="header-top-menu-collapse"><i class="fa fa-gear"></i></a>
                             <div class="collapse" id="header-top-menu"><!-- HEADER TOP MENU -->
                                 <ul>
-                                    <li><a href="{{ path('WebPage_main') }}#basket" data-toggle="target"><i class="fa fa-shopping-cart"></i> {{ 'layout.header.subnav.cart'|trans({},'application') }}(<span id="cart_total_items">-</span>)</a></li>
+                                    <li><a href="{{ path('WebPage_main') }}#basket" data-toggle="target"><i class="fa fa-shopping-cart"></i> {{ 'menu.top.cart'|trans({},'website') }}(<span id="cart_total_items">-</span>)</a></li>
                                     {% if app.user and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                        <li><a href="{{ path('user_home') }}"><i class="fa fa-user"></i> {{ app.user.firstName }}</a></li>
+                                        <li><a href="{{ path('user_home') }}"><i class="fa fa-user"></i> {{ 'menu.top.my_account.user'|trans({'%user%':app.user.firstName}, 'website') }}</a></li>
                                     {% else %}
                                         <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
                                         <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
                                         {% if is_404 is defined or app.request.attributes.get('_route') is null %}
                                             <li class="dropdown">
-                                                <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">{{ 'layout.header.subnav.languages'|trans({},'application') }}<span class="caret"></span></a>
+                                                <a href="javascript:" class="dropdown-toggle" data-toggle="dropdown">{{ 'menu.top.language'|trans({},'website') }}<span class="caret"></span></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     {% for name, iso in languages %}
                                                         <li><a href="{{ path('WebPage_main', {'_locale':iso}) }}">{{ name }}</a></li>
@@ -87,23 +87,23 @@
                 {% if main_nav_bar is defined %}
                     <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#top">{{ 'menu.navbar.home'|trans({},'application') }}</a></li>
-                            <li><a href="#calling_cards">{{ 'menu.navbar.calling_cards'|trans({},'application') }}</a></li>
-                            <li><a href="#rates">{{ 'menu.navbar.rates'|trans({},'application') }}</a></li>
-                            <li><a href="#application">{{ 'menu.navbar.applications'|trans({},'application') }}</a></li>
-                            <li><a href="#basket">{{ 'menu.navbar.basket'|trans({},'application') }}</a></li>
-                            <li><a href="#contact">{{ 'menu.navbar.contact'|trans({},'application') }}</a></li>
+                            <li class="active"><a href="#top">{{ 'menu.main.home'|trans({},'website') }}</a></li>
+                            <li><a href="#calling_cards">{{ 'menu.main.calling_cards'|trans({},'website') }}</a></li>
+                            <li><a href="#rates">{{ 'menu.main.rates'|trans({},'website') }}</a></li>
+                            <li><a href="#application">{{ 'menu.main.application'|trans({},'website') }}</a></li>
+                            <li><a href="#basket">{{ 'menu.main.cart'|trans({},'website') }}</a></li>
+                            <li><a href="#contact">{{ 'menu.main.contact'|trans({},'website') }}</a></li>
                         </ul>
                     </div>
                 {% else %}
                     <div class="collapse navbar-collapse" id="main-menu"><!-- MAIN MENU -->
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="{{ path('WebPage_main') }}#top">{{ 'menu.navbar.home'|trans({},'application') }}</a></li>
-                            <li><a href="{{ path('WebPage_main') }}#calling_cards">{{ 'menu.navbar.calling_cards'|trans({},'application') }}</a></li>
-                            <li><a href="{{ path('WebPage_main') }}#rates">{{ 'menu.navbar.rates'|trans({},'application') }}</a></li>
-                            <li><a href="{{ path('WebPage_main') }}#application">{{ 'menu.navbar.applications'|trans({},'application') }}</a></li>
-                            <li><a href="{{ path('WebPage_main') }}#basket">{{ 'menu.navbar.basket'|trans({},'application') }}</a></li>
-                            <li><a href="{{ path('WebPage_main') }}#contact">{{ 'menu.navbar.contact'|trans({},'application') }}</a></li>
+                            <li class="active"><a href="{{ path('WebPage_main') }}#top">{{ 'menu.main.home'|trans({},'website') }}</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#calling_cards">{{ 'menu.main.calling_cards'|trans({},'website') }}</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#rates">{{ 'menu.main.rates'|trans({},'website') }}</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#application">{{ 'menu.main.application'|trans({},'website') }}</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#basket">{{ 'menu.main.cart'|trans({},'website') }}</a></li>
+                            <li><a href="{{ path('WebPage_main') }}#contact">{{ 'menu.main.contact'|trans({},'website') }}</a></li>
                         </ul>
                     </div>
                 {% endif %}

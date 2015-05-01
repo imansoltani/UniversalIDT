@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-head clearfix"><!-- SECTION HEAD -->
-                    <h1>Calling Cards</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                    <h1>{{ 'home.calling_cards.title'|trans({},'website') }}</h1>
+                    <p>{{ 'home.calling_cards.subtitle'|trans({},'website') }}</p>
                     <span class="underline"></span>
                 </div>
             </div>
@@ -16,11 +16,11 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-4">
                             <div class="map-note clearfix"><!-- MAP NOTE -->
-                                <h4>Please select the country you would call from to see the available cads or check the best rates</h4>
+                                <h4>{{ 'home.calling_cards.paragraph'|trans({},'website') }}</h4>
                             </div>
                             <div class="calling-card-countries-list clearfix"><!-- AVAILABLE COUNTRY LIST -->
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Select Country <span class="caret"></span></button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ 'home.calling_cards.link'|trans({},'website') }} <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         {% for iso, name in countries %}
                                         <li>
@@ -40,9 +40,9 @@
 
                     <div class="calling-card-by-country clearfix" id="calling-card-by-country"><!-- CALLING CARDS -->
                         <div class="page-header clearfix">
-                            <h3>Available Calling Cards for <span class="country-name">{{ countryName }}</span></h3>
+                            <h3>{{ 'home.available_cards.title'|trans({'%country%':'<span class="country-name">' ~ countryName ~ '</span>'},'website')|raw }}</h3>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p><br>
+                        <p>{{ 'home.available_cards.paragraph'|trans({},'website') }}</p><br>
                         <div class="calling-cards owl-carousel owl-theme">
                             {{ render(controller('UniversalIDTBundle:WebPage:cardsList',{}, {'country': countryISO})) }}
                         </div>

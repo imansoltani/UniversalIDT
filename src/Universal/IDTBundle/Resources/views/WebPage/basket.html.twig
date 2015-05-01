@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-head clearfix"><!-- SECTION HEAD -->
-                    <h1>Basket</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+                    <h1>{{ 'home.basket.title'|trans({},'website') }}</h1>
+                    <p>{{ 'home.basket.subtitle'|trans({},'website') }}</p>
                     <span class="underline"></span>
                 </div>
             </div>
@@ -19,12 +19,12 @@
                                     <table class="table">
                                         <thead>
                                         <tr>
-                                            <th colspan="2">Product</th>
-                                            <th>Type</th>
-                                            <th>Quantity</th>
-                                            <th>Unit price</th>
-                                            <th>Discount</th>
-                                            <th colspan="2">Total</th>
+                                            <th colspan="2">{{ 'home.basket.form.item'|trans({},'website') }}</th>
+                                            <th>{{ 'home.basket.form.type'|trans({},'website') }}</th>
+                                            <th>{{ 'home.basket.form.quantity'|trans({},'website') }}</th>
+                                            <th>{{ 'home.basket.form.denomination'|trans({},'website') }}</th>
+                                            <th>{{ 'home.basket.form.discount'|trans({},'website') }}</th>
+                                            <th colspan="2">{{ 'home.basket.form.subtotal'|trans({},'website') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody id="basket_table_items">
@@ -33,7 +33,7 @@
                                         </tbody>
                                         <tfoot>
                                         <tr class="total">
-                                            <td colspan="6">Total</td>
+                                            <td colspan="6">{{ 'home.basket.form.total'|trans({},'website') }}</td>
                                             <td id="basket_table_total" colspan="2">0</td>
                                         </tr>
                                         </tfoot>
@@ -62,7 +62,7 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6">
                                         <div class="clearfix">
-                                            <a href="#calling_cards" data-toggle="target" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Calling Cards</a>
+                                            <a href="#calling_cards" data-toggle="target" class="btn btn-default"><i class="fa fa-chevron-left"></i> {{ 'home.basket.form.back'|trans({},'website') }}</a>
                                             <a href="#basket" onclick="basketClearProducts()" class="btn btn-danger">Clear Basket</a>
                                         </div>
                                     </div>
@@ -87,29 +87,29 @@
                             <div class="order-summary clearfix"><!-- ORDER SUMMARY -->
                                 <div class="widget">
                                     <div class="widget-header">
-                                        <h3><i class="fa fa-gift"></i> Order Summary</h3>
+                                        <h3><i class="fa fa-gift"></i> {{ 'home.basket.summary.title'|trans({},'website') }}</h3>
                                     </div>
                                     <div class="widget-content">
-                                        <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+                                        <p>{{ 'home.basket.summary.paragraph'|trans({},'website') }}</p>
                                         <div class="table-responsive">
                                             <table class="table table-bordered">
                                                 <tbody>
                                                 <tr>
-                                                    <td>Order subtotal</td>
+                                                    <td>{{ 'home.basket.summary.subtotal'|trans({},'website') }}</td>
                                                     <td id="basket_summary_subtotal">0</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tax</td>
+                                                    <td>{{ 'home.basket.summary.tax'|trans({},'website') }}</td>
                                                     <td id="basket_summary_tax">0</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Delivery Method</td>
+                                                    <td>{{ 'home.basket.summary.delivery'|trans({},'website') }}</td>
                                                     <td id="basket_summary_email">--</td>
                                                 </tr>
                                                 </tbody>
                                                 <tfoot>
                                                 <tr class="total">
-                                                    <td>Total</td>
+                                                    <td>{{ 'home.basket.summary.total'|trans({},'website') }}</td>
                                                     <td id="basket_summary_total">0</td>
                                                 </tr>
                                                 </tfoot>

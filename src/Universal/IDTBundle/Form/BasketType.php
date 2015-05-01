@@ -26,17 +26,19 @@ class BasketType extends AbstractType
             $builder
                 ->add('account', 'choice', array(
                         'choices' => array(
-                            'login' => 'I have an account',
-                            'register' => 'I would like to create an account'
+                            'login' => 'home.basket.form.account.has',
+                            'register' => 'home.basket.form.account.wants'
                         ),
                         'expanded' => true,
-                        'empty_value' => 'I would like to buy without creating account',
-                        'required' => false
+                        'empty_value' => 'home.basket.form.account.guest',
+                        'required' => false,
+                        'translation_domain' => 'website'
                     ));
 
         $builder
             ->add('submit', 'submit', array(
-                    'label' => 'Checkout'
+                    "label"=>"home.basket.form.checkout",
+                    'translation_domain' => 'website',
                 ))
         ;
     }

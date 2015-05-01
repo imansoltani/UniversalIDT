@@ -27,14 +27,19 @@ class RatesType extends AbstractType
             ->add('from', 'choice', array(
                     'choices' => $this->origins,
                     'placeholder' => 'Select Country',
+                    "label"=>"home.rates.call.from",
+                    'translation_domain' => 'website',
                 ))
             ->add('destination', 'choice', array(
                     'choices' => $this->destinations,
                     'placeholder' => 'Select Destination',
+                    "label"=>"home.rates.call.to",
+                    'translation_domain' => 'website',
                 ))
             ->add('type', 'choice', array(
-                    'choices' => array('LAC'=>'Local Access', 'TF'=>'Toll Free', 'INT'=>'Internet'),
-                    'expanded' => true
+                    'choices' => array('LAC' => 'home.rates.type.lac', 'TF' => 'home.rates.type.tf', 'INT' => 'home.rates.type.internet'),
+                    'expanded' => true,
+                    'translation_domain' => 'website',
                 ))
         ;
     }

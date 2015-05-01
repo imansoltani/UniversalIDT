@@ -135,7 +135,8 @@ class WebPageController extends Controller
 
         $form = $this->createForm(new RatesType($from_s, $destinations), array('type' => 'LAC'))
             ->add('search', 'submit', array(
-                    'label' => 'Check the best rates'
+                    "label"=>"home.rates.check",
+                    'translation_domain' => 'website',
                 ));
 
         return $this->render(

@@ -1,0 +1,209 @@
+menu:
+    top:
+        my_account:             "My account"
+        my_account.user:        "My account (%user%)"
+        language:               "Language"
+        cart:                   "Cart"
+
+    main:
+        home:                   "Home"
+        calling_cards:          "Calling cards"
+        rates:                  "Rates"
+        application:            "Application"
+        cart:                   "My cart"
+        contact:                "Contact"
+
+    footer:
+        home:                   "Accueil"
+        our_offers:             "Nos offres"
+        prices:                 "Tarifs"
+        presence:               "Présence"
+        about_us:               "Qui Somme-nous"
+        contact:                "Contact"
+        faq:                    "FAQ"
+        languages:              "Langues"
+        cgv:                    "CGV"
+        legal:                  "Mentions légales"
+        my_account:             "Mon compte"
+        assistance:             "Assitance"
+
+# Home page
+home:
+    title: Universal
+
+# Home section
+    carousel:
+        firstslide:
+            title: "Calling cards"
+            paragraph: "Tired of paying excessive amounts for international calls, with IDT Universal save money and speak to your loved ones for longer."
+            link: Discover
+        secondslide:
+            title: Application
+            paragraph: "Why not try out our great new app and make cheaper calls using your WiFi or data bundles?"
+            link_discover: Discover
+            link_download: Download
+        thirdslide:
+            title: "Call abroad & save money"
+            paragraph: "Make the switch and use IDT Universal to call abroad and save yourself money!"
+
+# Calling cards section
+    calling_cards:
+        title: "Calling cards"
+        subtitle: "Simple and easy way to make your money go further"
+        paragraph: "Please select the country you would call from to see the available cards or check the best rates"
+        link: "Select country"
+
+# Available cards section
+    available_cards:
+        title: "Available cards for (%country%)"
+        paragraph: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat."
+        modal:
+            title: "calling card"
+            denominations: Denominations
+            choose: Choose
+            previous: Previous
+            next: Next
+            addtocart: "Add to basket"
+            generalinfo: "General Information"
+            rates: Rates
+            numbers: "Access Numbers"
+            instructions: "Dialling Instructions"
+            close: Close
+
+# Rates section
+    rates:
+        title: "Rates"
+        paragraph: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+        call:
+            from: "Call from..."
+            to: "Destination..."
+        type:
+            lac: "Local Access"
+            tf: "Toll Free"
+            internet: "Through Internet"
+        check: "Check the best rates"
+        result: Result
+        footermessage: "Le coût unitaire des communications est toujours basé sur un calcul dont la devise de référence est l'euro par minute + TVA du pays d'appel"
+
+# Application section
+    application:
+        header:
+            title: Application
+            subtitle: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+        features:
+            title: Features
+            subtitle: "If you can't make it good, at least make it look good."
+            paragraph1: "What's amazing is, if young people understood how doing well in school makes the rest of their life so much interesting, they would be more motivated. It's so far away in time that they can't appreciate what it means for their whole life. They would be more motivated. It's so far away in time."
+            paragraph2: "If young people understood how doing well in school makes the rest of their life so much interesting, they would be more."
+            feature1: "24/7 Support"
+            feature2: "Quick Install"
+            feature3: "Easy to Customize"
+            feature4: "Another Feature"
+        profile:
+            title: Profile
+            subtitle: "If you can't make it good, at least make it look good."
+            paragraph1: "What's amazing is, if young people understood how doing well in school makes the rest of their life so much interesting, they would be more motivated. It's so far away in time that they can't appreciate what it means for their whole life. They would be more motivated. It's so far away in time."
+            paragraph2: "If young people understood how doing well in school makes the rest of their life so much interesting, they would be more."
+        how_to_use:
+            title: "How to use"
+            subtitle: "If you can't make it good, at least make it look good."
+            paragraph1: "What's amazing is, if young people understood how doing well in school makes the rest of their life so much interesting, they would be more motivated. It's so far away in time that they can't appreciate what it means for their whole life. They would be more motivated. It's so far away in time."
+            paragraph2: "If young people understood how doing well in school makes the rest of their life so much interesting, they would be more."
+
+# Download section
+    download:
+        title: Downloads
+        subtitle: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+
+# Basket section
+    basket:
+        title: "Your basket"
+        subtitle: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+        form:
+            item: "Calling card"
+            type: Type
+            quantity: Quantity
+            denomination: Denomination
+            discount: Discount
+            subtotal: Subtotal
+            total: Total
+            account:
+                has: "I have an account"
+                wants: "I would like to create an account"
+                guest: "I would like to purchase without creating account"
+            back: "Back to calling cards"
+            checkout: Checkout
+        summary:
+            title: "Order Summary"
+            paragraph: "Shipping and additional costs are calculated based on the values you have entered."
+            subtotal: "Order subtotal"
+            tax: Tax
+            delivery: "Delivery method"
+            total: Total
+
+# Contact section
+    contact:
+        title: "Contact us"
+        subtitle: "Besoin d'un renseignement ou envie de nous laisser un commentaire ?"
+        text: ""
+        email: "contact@idtuniversal.com"
+        form:
+            name: Your name
+            email: "Your e-mail"
+            message: Your message
+            link: Send message
+
+# Checkout page
+checkout:
+    title: Checkout
+    header: Checkout
+    form:
+        address:
+            title: Address
+            firstname: First Name
+            lastname: Last Name
+            street: Street
+            city: City
+            zip: Zip
+            country: Country
+            back_link: Back to Basket
+            continue_link: Continue to Delivery Method
+        delivery:
+            title: Delivery Method
+            email: Email
+            email_placeholder: My Email
+            sms: SMS
+            sms_placeholder: "+1234567890"
+            back_link: Back to Address
+            continue_link: Continue to Payment Method
+        payment:
+            title: Payment Method
+            sofort: Sofort
+            sofort_message: Payment made by Sofort
+            ogone: Credit cards
+            ogone_message: Payment made by Ogone
+            footerbold: HelloBell Telecommunication SA
+            footerparagraph:
+            select: Select
+            selected: Selected
+            back_link: Back to Delivery Method
+            continue_link: Continue to Order Review
+        review:
+            title: Order Review
+            item: "Calling card"
+            type: Type
+            quantity: Quantity
+            denomination: Denomination
+            discount: Discount
+            subtotal: Subtotal
+            total: Total
+            agree:
+                title: Agree
+                footermessage: Required Field
+                text1: I hereby accept
+                link1: General items and conditions
+                text2: of
+                link2: "www.idtuniversal.com"
+            back_link: Back to Payment Method
+            order_link: Place an Order
+    summary: "id001"

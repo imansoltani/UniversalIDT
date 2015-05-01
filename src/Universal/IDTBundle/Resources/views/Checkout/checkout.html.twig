@@ -1,19 +1,19 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-	Universal IDT | Checkout
+	{{ 'checkout.title'|trans({},'website') }}
 {% endblock subtitle %}
 
 {% block content %}
 	<div class="content-container clearfix">
-		<h2 class="section-title">Checkout</h2>
+		<h2 class="section-title">{{ 'checkout.header'|trans({},'website') }}</h2>
 		<div class="main-content clearfix"><!-- MAIN CONTENT -->
 			<div class="checkout-tabs clearfix"><!-- START CHECKOUT TAB -->
 				<form id="checkout-form" method="post">
 					<ul class="nav nav-tabs" role="tablist" id="myTab"><!-- TAB BUTTONS -->
-						<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> Delivery Method</a></li>
-						<li><a href="#payment_method_tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> Payment Method</a></li>
-						<li><a href="#order_review_tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> Order Review</a></li>
+						<li class="active"><a href="#delivery_method_tab" onclick="event.preventDefault()"><i class="fa fa-truck"></i> {{ 'checkout.form.delivery.title'|trans({},'website') }}</a></li>
+						<li><a href="#payment_method_tab" onclick="event.preventDefault()"><i class="fa fa-money"></i> {{ 'checkout.form.payment.title'|trans({},'website') }}</a></li>
+						<li><a href="#order_review_tab" onclick="event.preventDefault()"><i class="fa fa-eye"></i> {{ 'checkout.form.review.title'|trans({},'website') }}</a></li>
 					</ul>
 
 					<div class="tab-content">
@@ -24,7 +24,7 @@
 									<div class="col-sm-6">
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-											{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+											{{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'checkout.form.delivery.email_placeholder'|trans({},'website') }}) }}
 											{{ form_errors(form.email) }}
 										</div>
 									</div>
@@ -39,12 +39,12 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6">
 									<div class="clearfix">
-										<a href="{{ path('WebPage_main') ~ '#basket' }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Basket</a>
+										<a href="{{ path('WebPage_main') ~ '#basket' }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> {{ 'checkout.form.delivery.back_link'|trans({},'website') }}</a>
 									</div>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<div class="text-right clearfix">
-										<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="changeDeliveryMethod()" class="btn btn-primary">Continue to Payment Method <i class="fa fa-chevron-right"></i></button>
+										<button type="button" data-target="#payment_method_tab" data-toggle="tab" onclick="changeDeliveryMethod()" class="btn btn-primary">{{ 'checkout.form.delivery.continue_link'|trans({},'website') }} <i class="fa fa-chevron-right"></i></button>
 									</div>
 								</div>
 							</div>
@@ -60,8 +60,8 @@
 									<div class="row">
 											<div class="col-sm-4">
 												<div class="button-title clearfix">
-													<h4>{{ method.vars.label }} Pay</h4>
-													<p>Payment made by {{ method.vars.label }} Pay</p>
+													<h4>{{ ('checkout.form.payment.'~method.vars.label|lower)|trans({},'website') }}</h4>
+													<p>{{ ('checkout.form.payment.'~method.vars.label|lower~'_message')|trans({},'website') }}</p>
 												</div>
 											</div>
 											<div class="col-sm-5">
@@ -72,8 +72,8 @@
 											</div>
 											<div class="col-md-3">
 												<div class="button-select clearfix">
-													<span class="select-btn btn-primary">Select</span>
-													<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> Selected</span>
+													<span class="select-btn btn-primary">{{ 'checkout.form.payment.select'|trans({},'website') }}</span>
+													<span class="select-btn btn-primary selected"><i class="fa fa-check"></i> {{ 'checkout.form.payment.selected'|trans({},'website') }}</span>
 												</div>
 											</div>
 										</div>
@@ -84,12 +84,12 @@
 							<div class="row">
 								<div class="col-md-6 col-sm-6">
 									<div class="clearfix">
-										<button type="button" data-target="#delivery_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Delivery Method</button>
+										<button type="button" data-target="#delivery_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> {{ 'checkout.form.payment.back_link'|trans({},'website') }}</button>
 									</div>
 								</div>
 								<div class="col-md-6 col-sm-6">
 									<div class="text-right clearfix">
-										<button id="go_to_order" type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary" disabled>Continue to Order Review <i class="fa fa-chevron-right"></i></button>
+										<button id="go_to_order" type="button" data-target="#order_review_tab" data-toggle="tab" class="btn btn-primary" disabled>{{ 'checkout.form.payment.continue_link'|trans({},'website') }} <i class="fa fa-chevron-right"></i></button>
 									</div>
 								</div>
 							</div>
@@ -102,12 +102,12 @@
 									<table class="table">
 										<thead>
 										<tr>
-                                            <th colspan="2">Product</th>
-                                            <th>Type</th>
-                                            <th>Quantity</th>
-                                            <th>Unit price</th>
-                                            <th>Discount</th>
-                                            <th>Total</th>
+                                            <th colspan="2">{{ 'checkout.form.review.item'|trans({},'website') }}</th>
+                                            <th>{{ 'checkout.form.review.type'|trans({},'website') }}</th>
+                                            <th>{{ 'checkout.form.review.quantity'|trans({},'website') }}</th>
+                                            <th>{{ 'checkout.form.review.denomination'|trans({},'website') }}</th>
+                                            <th>{{ 'checkout.form.review.discount'|trans({},'website') }}</th>
+                                            <th>{{ 'checkout.form.review.subtotal'|trans({},'website') }}</th>
 										</tr>
 										</thead>
 										<tbody>
@@ -137,7 +137,7 @@
 										</tbody>
 										<tfoot>
 										<tr class="total">
-											<td colspan="6">Total</td>
+											<td colspan="6">{{ 'checkout.form.review.total'|trans({},'website') }}</td>
 											<td>{{ sum_total|round(2)|number_format(2) }}</td>
 										</tr>
 										</tfoot>
@@ -173,8 +173,8 @@
 									</div>
 								</div>
 
-								<h2 class="section-title">Agree</h2>
-								<p><span style="color:#ff0000">*</span> Required Field</p>
+								<h2 class="section-title">{{ 'checkout.form.review.agree.title'|trans({},'website') }}</h2>
+								<p><span style="color:#ff0000">*</span> {{ 'checkout.form.review.agree.footermessage'|trans({},'website') }}</p>
 
 								<div class="form-group">
 									<div class="checkbox">
@@ -186,7 +186,7 @@
 								<div class="row">
 									<div class="col-md-6 col-sm-6">
 										<div class="clearfix">
-											<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> Back to Payment Method</button>
+											<button type="button" data-target="#payment_method_tab" data-toggle="tab" class="btn btn-default"><i class="fa fa-chevron-left"></i> {{ 'checkout.form.review.back_link'|trans({},'website') }}</button>
 										</div>
 									</div>
 									<div class="col-md-6 col-sm-6">

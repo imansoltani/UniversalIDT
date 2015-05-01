@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group row">
-                                <label class="col-sm-6">Denominations</label>
+                                <label class="col-sm-6">{{ 'home.available_cards.modal.denominations'|trans({},'website') }}</label>
                                 <div class="col-sm-6">
                                     <select class="form-control" id="pr_denominations">
                                         {% for denomination in product.denominations %}
@@ -28,14 +28,14 @@
                         <div class="col-sm-6">
                             <div class="calling-card-action-btn clearfix">
                                 <button class="btn btn-primary" onclick="addToCookie({{ product.id }}, '{{ product.name }}', '{{ asset(product.webPath) }}', $('#pr_denominations').val(), 1, '{{ product.currency }}', 'buy', {{ product.denominations[0] }}, {{ product.freeAmountDenomination1 }}, {{ OrderServices.getVat(product.countryISO) }});">
-                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                    <i class="fa fa-shopping-cart"></i> {{ 'home.available_cards.modal.addtocart'|trans({},'website') }}
                                 </button>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="calling-card-action-btn text-right clearfix">
-                                <button class="btn btn-default" id="prev_product_link" disabled>Previous</button>
-                                <button class="btn btn-default" id="next_product_link" disabled>Next</button>
+                                <button class="btn btn-default" id="prev_product_link" disabled>{{ 'home.available_cards.modal.previous'|trans({},'website') }}</button>
+                                <button class="btn btn-default" id="next_product_link" disabled>{{ 'home.available_cards.modal.next'|trans({},'website') }}</button>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-2">Rates</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-2">{{ 'home.available_cards.modal.rates'|trans({},'website') }}</a>
                             </h4>
                         </div>
                         <div id="collapse-2" class="panel-collapse collapse">
@@ -60,7 +60,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-3">Access Numbers</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-3">{{ 'home.available_cards.modal.numbers'|trans({},'website') }}</a>
                             </h4>
                         </div>
                         <div id="collapse-3" class="panel-collapse collapse">
@@ -93,7 +93,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-4">Dialling Instructions</a>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent=".accordion" href="#collapse-4">{{ 'home.available_cards.modal.instructions'|trans({},'website') }}</a>
                             </h4>
                         </div>
                         <div id="collapse-4" class="panel-collapse collapse in">
@@ -124,5 +124,5 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'home.available_cards.modal.close'|trans({},'website') }}</button>
 </div>

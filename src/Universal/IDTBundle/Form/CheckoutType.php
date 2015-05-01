@@ -17,7 +17,9 @@ class CheckoutType extends AbstractType
     {
         $builder
             ->add('email', 'email', array(
-                    'required' => false
+                    'required' => false,
+                    "label"=>"checkout.form.delivery.email",
+                    'translation_domain' => 'website',
                 ))
 //            ->add('sms', 'text', array(
 //                    'required' => false
@@ -31,7 +33,8 @@ class CheckoutType extends AbstractType
                     'required' => true
                 ))
             ->add('submit', 'submit', array(
-                    'label' => 'Place an order'
+                    "label"=>"checkout.form.reveiw.order_link",
+                    'translation_domain' => 'website',
                 ))
         ;
     }
