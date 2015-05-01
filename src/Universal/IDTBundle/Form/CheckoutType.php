@@ -33,7 +33,7 @@ class CheckoutType extends AbstractType
                     'required' => true
                 ))
             ->add('submit', 'submit', array(
-                    "label"=>"checkout.form.reveiw.order_link",
+                    "label"=>"checkout.form.review.order_link",
                     'translation_domain' => 'website',
                 ))
         ;
