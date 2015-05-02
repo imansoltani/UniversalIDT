@@ -113,7 +113,7 @@ class CheckoutController extends Controller
             throw new \Exception('Error in process result of Ogone: '. $e->getMessage());
         }
 
-        return $this->forward("UniversalIDTBundle:Checkout:Result", array('orderDetail'=>$orderDetail));
+        return $this->PaymentResult($orderDetail);
     }
 
     public function sofortResultAction(Request $request, $status)
@@ -128,10 +128,10 @@ class CheckoutController extends Controller
             throw new \Exception('Error in process result of Sofort: '. $e->getMessage());
         }
 
-        return $this->forward("UniversalIDTBundle:Checkout:Result", array('orderDetail'=>$orderDetail));
+        return $this->PaymentResult($orderDetail);
     }
 
-    public function ResultAction(OrderDetail $orderDetail)
+    private function PaymentResult(OrderDetail $orderDetail)
     {
         try {
             if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED && $orderDetail->getRequestsStatus() == null) {
