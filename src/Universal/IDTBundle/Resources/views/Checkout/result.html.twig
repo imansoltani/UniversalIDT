@@ -11,7 +11,7 @@
 
             {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") and not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <div class="alert alert-warning"><!-- ALERT -->
-                    This links is active for {{ maxMinutesShow }} minutes and {{ maxCountShow }} times.
+                    This links is active for {{ remainMinutesShow }} minutes and {{ remainCountShow }} times.
                 </div>
             {% endif %}
 

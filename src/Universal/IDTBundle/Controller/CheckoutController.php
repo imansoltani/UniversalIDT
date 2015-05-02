@@ -156,6 +156,10 @@ class CheckoutController extends Controller
                 $this->get('session')->set('last_order_count_shown', 0);
                 $this->get('session')->set('last_order_start_time', new \DateTime());
             }
+
+            $remainCountShow = CheckoutController::LAST_ORDER_COUNT_SHOWN;
+            $remainMinutesShow = CheckoutController::LAST_ORDER_TIME_LENGTH;
+
             if($orderDetail->getDeliveryEmail()) {
                 $this->get('EmailService')->sendEmailMessage(
                     $this->render("UniversalIDTBundle:Mails:checkout.email.html.twig", array(
@@ -173,11 +177,16 @@ class CheckoutController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->flush();
         }
+        else
+        {
+            $remainCountShow = CheckoutController::LAST_ORDER_COUNT_SHOWN - $this->get('session')->get('last_order_count_shown', CheckoutController::LAST_ORDER_COUNT_SHOWN);
+            $remainMinutesShow = 20 - date_diff($this->get('session')->get('last_order_start_time', (new \DateTime())->modify("-1 day")), new \DateTime())->i;
+        }
 
         return $this->render('UniversalIDTBundle:Checkout:result.html.twig', array(
                 'orderDetail' => $orderDetail,
-                'maxCountShow' => CheckoutController::LAST_ORDER_COUNT_SHOWN,
-                'maxMinutesShow' => CheckoutController::LAST_ORDER_TIME_LENGTH
+                'remainCountShow' => $remainCountShow,
+                'remainMinutesShow' => $remainMinutesShow
             ), $response);
     }
 
