@@ -36,7 +36,6 @@ class CheckoutController extends Controller
             $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
         $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.checkout',[],'application'));
 
-
         if($request->query->has('account') && !$granted) {
             switch($request->query->get('account')) {
                 case "login": return $this->redirect($this->generateUrl('fos_user_security_login'));
@@ -141,6 +140,12 @@ class CheckoutController extends Controller
             Log::save($e->getMessage(), "error_in_idt");
         }
 
+        $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
+
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        if($granted)
+            $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
+        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title',[],'application'));
 
 //        /** @var EntityManager $em */
 //        $em = $this->getDoctrine()->getManager();
@@ -151,7 +156,7 @@ class CheckoutController extends Controller
 //        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
         if(!$orderDetail->getDelivered()) {
-            if(!$this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            if(!$granted) {
                 $this->get('session')->set('last_order_id', $orderDetail->getId());
                 $this->get('session')->set('last_order_count_shown', 0);
                 $this->get('session')->set('last_order_start_time', new \DateTime());
