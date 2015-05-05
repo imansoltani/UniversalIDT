@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale }}">
-<head lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ asset('bundles/universalidt/img/favicon.ico') }}" />
     <title>Order {{ order.paymentId }} Details Print</title>
     <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('bundles/universalidt/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/universalidt/css/custom-responsive.css') }}" rel="stylesheet">
+    <link href="{{ asset("bundles/universalidt/home/css/font-awesome.min.css") }}" rel="stylesheet">
     <style>
         @media print
         {
@@ -24,67 +27,36 @@
     <a type="button" class="btn btn-default" href="#" onclick="window.close();">{{ 'tranactions_print_details.btn_close'|trans({},'application') }}</a>
 </div>
 <div class="row" style="margin: 10px">
-    <div class="col-md-8">
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <h3>General information</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <tbody>
-                        <tr>
-                            <th>Order ID</th>
-                            <td>{{ order.id }}</td>
-                            <th>Reference</th>
-                            <td>{{ order.orderReference }}</td>
-                        </tr>
-                        <tr>
-                            <th>Payment Status</th>
-                            <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-                            <th>Payment method</th>
-                            <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-                            <th>Delivery method</th>
-                            <td>
-                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
+    <div class="content-container clearfix">
+        <div class="main-content clearfix"><!-- MAIN CONTENT -->
+            <div class="order-general-info-panel clearfix"><!-- ORDER GENERAL INFO -->
+                <h2 class="section-title">{{ 'transactions_details.title_info'|trans({},'application') }}</h2>
+                <ul>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.id'|trans({},'application') }}:</span> {{ order.id }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.reference'|trans({},'application') }}:</span> {{ order.orderReference }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_status'|trans({},'application') }}:</span> {{ order.paymentStatus|readable('PaymentStatusEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.date'|trans({},'application') }}:</span> {{ order.date|date('Y-m-d H:i:s') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_method'|trans({},'application') }}:</span> {{ order.paymentMethod|readable('PaymentMethodEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.delivery_method'|trans({},'application') }}:</span>
+                        {% set delivery = order.deliveryEmail ? "Email: " ~ order.deliveryEmail ~ " " : "" %}
+                        {% set delivery = delivery ~ ( order.deliverySMS ? "SMS: " ~ order.deliverySMS : "" ) %}
                                 {{ delivery != "" ? delivery|raw : "--" }}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    </li>
+                </ul>
                 </div>
-            </div>
-            <!-- /widget-content -->
-
-        </div>
-        <!-- /widget -->
-
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <h3>Order Details</h3>
-            </div>
-            <!-- /widget-header -->
-
-            <div class="widget-content">
+            <div class="order-details-panel clearfix"><!-- ORDER DETAILS PANEL -->
+                <h2 class="section-title">{{ 'transactions_details.title_details'|trans({},'application') }}</h2>
+                <div class="order-table clearfix">
                 <div class="table-responsive">
-                    <table id="table2" class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover table-striped" id="table2">
                         <thead>
                         <tr>
-                            <th>Card name</th>
-                            <th>Type</th>
-                            <th>Denomination</th>
-                            <th>Vat</th>
-                            <th>Serial number</th>
-                            <th>Pin</th>
+                                <th>{{ 'datatables.transactions_details.card_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.type_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.denomination_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.tax_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.ctrl_column'|trans({},'javascript') }}</th>
+                                <th>{{ 'datatables.transactions_details.pin_column'|trans({},'javascript') }}</th>
                         </tr>
                         </thead>
 
@@ -95,7 +67,7 @@
                             <tr>
                                 <td>{{ orderProduct.product.name }}</td>
                                 <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
-                                <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }} {{ order.currency|upper }}</td>
+                                <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }} {{ orderProduct.product.currency }}</td>
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
                                 <td>{{ orderProduct.pin }}</td>
@@ -105,33 +77,22 @@
                     </table>
                 </div>
             </div>
-            <!-- /widget-content -->
-
         </div>
-        <!-- /widget -->
-    </div>
-
-    <div class="col-md-4">
-        <div class="widget stacked">
-
-            <div class="widget-header">
-                <h3>Order Summary</h3>
-            </div>
-            <div class="widget-content">
-                <p>Shipping and additional costs are calculated based on the values you have entered.</p>
+            <div class="order-summery-panel clearfix"><!-- ORDER SUMMARY PANEL -->
+                <h2 class="section-title">{{ 'transactions_details.title_summary'|trans({},'application') }}</h2>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <tbody>
                         <tr>
-                            <th>Order subtotal</th>
+                            <td>{{ 'transactions_details.order_subtotal'|trans({},'application') }}</td>
                             <td id="basket_summary_subtotal">{{ order.amount|round(2)|number_format(2) }}</td>
                         </tr>
                         <tr>
-                            <th>Tax</th>
+                            <td>{{ 'transactions_details.tax'|trans({},'application') }}</td>
                             <td id="basket_summary_tax">{{ vat|round(2)|number_format(2) }}</td>
                         </tr>
                         <tr>
-                            <th>Delivery Method</th>
+                            <td>{{ 'transactions_details.delivery_method'|trans({},'application') }}</td>
                             <td id="basket_summary_email">
                                 {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
                                 {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
@@ -141,8 +102,8 @@
                         </tbody>
                         <tfoot>
                         <tr class="total">
-                            <th>Total</th>
-                            <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }} {{ order.currency|upper }}</td>
+                            <td>{{ 'transactions_details.total'|trans({},'application') }}</td>
+                            <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }} {{ order.currency }}</td>
                         </tr>
                         </tfoot>
                     </table>
