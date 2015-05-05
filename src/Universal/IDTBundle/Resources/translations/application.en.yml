@@ -37,7 +37,9 @@ menu:
             password:            Password Settings
             notifications:       Notifications Settings
         payment:
-            title:               Payment Result
+            title:
+                Ogone:           Ogone Result
+                Sofort:          Sofort Result
         error:                   error "%number%" occurred
         notifications:
             index:               Notifications

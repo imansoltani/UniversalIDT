@@ -112,7 +112,7 @@ class CheckoutController extends Controller
             throw new \Exception('Error in process result of Ogone: '. $e->getMessage());
         }
 
-        return $this->PaymentResult($orderDetail);
+        return $this->PaymentResult($orderDetail, PaymentMethodEnumType::OGONE);
     }
 
     public function sofortResultAction(Request $request, $status)
@@ -127,10 +127,10 @@ class CheckoutController extends Controller
             throw new \Exception('Error in process result of Sofort: '. $e->getMessage());
         }
 
-        return $this->PaymentResult($orderDetail);
+        return $this->PaymentResult($orderDetail, PaymentMethodEnumType::SOFORT);
     }
 
-    private function PaymentResult(OrderDetail $orderDetail)
+    private function PaymentResult(OrderDetail $orderDetail, $payment)
     {
         try {
             if($orderDetail->getPaymentStatus() == PaymentStatusEnumType::STATUS_ACCEPTED && $orderDetail->getRequestsStatus() == null) {
@@ -145,7 +145,11 @@ class CheckoutController extends Controller
         $breadcrumbs = $this->get("white_october_breadcrumbs");
         if($granted)
             $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title',[],'application'));
+
+        switch($payment) {
+            case PaymentMethodEnumType::OGONE: $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title.Ogone',[],'application')); break;
+            case PaymentMethodEnumType::SOFORT: $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title.Sofort',[],'application')); break;
+        }
 
 //        /** @var EntityManager $em */
 //        $em = $this->getDoctrine()->getManager();

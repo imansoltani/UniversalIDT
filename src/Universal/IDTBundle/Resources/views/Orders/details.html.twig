@@ -89,7 +89,7 @@
                     </table>
                 </div>
             </div>
-            <div class="order-print-button clearfix"><!-- ORDER RINT BUTTON -->
+            <div class="order-print-button clearfix"><!-- ORDER PRINT BUTTON -->
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <a href="{{ path('user_order_details_print', {'id': order.id}) }}" class="btn btn-primary" target="_blank">
                         <i class="fa fa-print"></i> {{ 'transactions_details.btn_print'|trans({},'application') }}
