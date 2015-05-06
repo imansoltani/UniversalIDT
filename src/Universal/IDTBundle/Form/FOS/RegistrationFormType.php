@@ -35,7 +35,9 @@ class RegistrationFormType extends AbstractType
                 'preferred_choices' => array($this->request->get('_locale'))
             ))
             ->add('gender')
-            ->add('phone', "text")
+            ->add('phone', "text", array(
+                    'required' => false
+                ))
             ->remove('username')
             ->addEventListener(FormEvents::SUBMIT,function(FormEvent $event){
                     $data = $event->getData();

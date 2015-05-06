@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Fresh\DoctrineEnumBundle\Validator\Constraints as EnumAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
@@ -33,7 +34,12 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=11)
+     * @ORM\Column(name="phone", type="string", length=11, nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^\d{6,12}$/",
+     *     match=true,
+     *     message="Your Phone number is invalid."
+     * )
      */
     private $phone;
 

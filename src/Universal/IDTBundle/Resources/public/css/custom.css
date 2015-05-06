@@ -744,3 +744,8 @@ ul.pagination li.active a:active{
 .alert {
 	margin-bottom: 15px;
 }
+
+label.required::after {
+	content: " *";
+	color: red;
+}

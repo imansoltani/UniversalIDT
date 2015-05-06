@@ -156,8 +156,6 @@ class CheckoutController extends Controller
 //        $orderDetail = $em->getRepository('UniversalIDTBundle:OrderDetail')->find(5);
 
         $response = new Response();
-//        $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
-//        $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
         if(!$orderDetail->getDelivered()) {
             if(!$granted) {
@@ -168,6 +166,9 @@ class CheckoutController extends Controller
 
             $remainCountShow = CheckoutController::LAST_ORDER_COUNT_SHOWN;
             $remainMinutesShow = CheckoutController::LAST_ORDER_TIME_LENGTH;
+
+            $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
+            $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
             if($orderDetail->getDeliveryEmail()) {
                 $this->get('EmailService')->sendEmailMessage(

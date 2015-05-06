@@ -42,7 +42,8 @@ class ProfileFormType extends AbstractType
                 ))
             ->add('phone', "text", array(
                     "label"=>"settings.profile.phone",
-                    'translation_domain' => 'application'
+                    'translation_domain' => 'application',
+                    'required' => false
                 ))
             ->remove('username')
             ->remove('email');
