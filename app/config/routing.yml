@@ -1,3 +1,7 @@
+universal_user:
+    resource: "@UniversalUserBundle/Resources/config/routing.xml"
+    prefix:   /
+
 universal_idt:
     resource: "@UniversalIDTBundle/Resources/config/routing.yml"
     prefix:   /

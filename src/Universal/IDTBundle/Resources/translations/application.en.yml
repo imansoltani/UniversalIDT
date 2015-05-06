@@ -97,7 +97,7 @@ transactions_details:
     btn_print:          Print
 
 tranactions_print_details:
-   btn_close:          close    
+    btn_close:          close
 
 checkout:
     result:

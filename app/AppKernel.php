@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
             new Universal\IDTBundle\UniversalIDTBundle(),
+            new Universal\UserBundle\UniversalUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
