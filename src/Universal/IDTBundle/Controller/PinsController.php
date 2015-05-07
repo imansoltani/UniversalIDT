@@ -23,6 +23,7 @@ class PinsController extends Controller
         /** @var User $user */
         $user = $this->getUser();
 
+        /** @var OrderProduct[] $pins */
         $pins = $em->createQueryBuilder()
             ->select('order_product', 'orderDetail', 'product')
             ->from('UniversalIDTBundle:OrderProduct', 'order_product')

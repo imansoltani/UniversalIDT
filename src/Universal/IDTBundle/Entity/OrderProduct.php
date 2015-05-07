@@ -120,6 +120,16 @@ class OrderProduct
     }
 
     /**
+     * Get Formatted pin
+     *
+     * @return string
+     */
+    public function getFormattedPin()
+    {
+        return preg_replace('/(\d{4})(\d{3})(\d{4})/', "$1 $2 $3", $this->pin);
+    }
+
+    /**
      * Set pinDenomination
      *
      * @param string $pinDenomination

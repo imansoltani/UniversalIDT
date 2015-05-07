@@ -1,14 +1,14 @@
 {% extends '@UniversalIDT/layout.html.twig' %}
 
 {% block subtitle %}
-    {{ 'pins_details.title'|trans({'%pin%':pin.pin},'application') }}
+    {{ 'pins_details.title'|trans({'%pin%':pin.formattedPin},'application') }}
 {% endblock subtitle %}
 
 {% block content %}
     <div class="content-container clearfix">
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <div class="pin-panel clearfix"><!-- PIN ANEL -->
-                <h2 class="section-title">{{ 'pins_details.title'|trans({'%pin%':pin.pin},'application') }}</h2>
+                <h2 class="section-title">{{ 'pins_details.title'|trans({'%pin%':pin.formattedPin},'application') }}</h2>
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#detailTab" data-toggle="tab">{{ 'pins_details.details_tab.title'|trans({},'application') }}</a></li>
                     <li><a href="#historyTab" data-toggle="tab">{{ 'pins_details.call_history_tab.title'|trans({},'application') }}</a></li>

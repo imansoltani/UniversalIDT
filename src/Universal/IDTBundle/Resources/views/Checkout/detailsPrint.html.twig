@@ -70,7 +70,7 @@
                                 <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
-                                <td>{{ orderProduct.pin }}</td>
+                                <td>{{ orderProduct.formattedPin }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

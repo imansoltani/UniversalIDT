@@ -49,7 +49,7 @@
                                 <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
-                                <td>{{ orderProduct.pin }}</td>
+                                <td>{{ orderProduct.formattedPin }}</td>
                                 <td><a href="{{ path('user_pin_details', {'id':orderProduct.id}) }}" class="link">{{ 'datatables.transactions_details.action_pin'|trans({},'javascript') }}</a></td>
                             </tr>
                         {% endfor %}
