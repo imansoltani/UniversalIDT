@@ -441,7 +441,7 @@ class OrderDetail
      */
     public function getOrderReference()
     {
-        return $this->getDate()->format("ymdHi").$this->getId();
+        return $this->getDate()->format("ymdHi").str_pad($this->getId(),6,'0',STR_PAD_LEFT);
     }
 
     public function getOgoneAmount()
