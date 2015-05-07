@@ -31,10 +31,11 @@ class CheckoutController extends Controller
     {
         $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        if($granted)
+        if($granted) {
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
-        $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.checkout',[],'application'));
+            $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.checkout',[],'application'));
+        }
 
         if($request->query->has('account') && !$granted) {
             switch($request->query->get('account')) {
@@ -142,13 +143,14 @@ class CheckoutController extends Controller
 
         $granted = $this->isGranted('IS_AUTHENTICATED_REMEMBERED');
 
-        $breadcrumbs = $this->get("white_october_breadcrumbs");
-        if($granted)
+        if($granted) {
+            $breadcrumbs = $this->get("white_october_breadcrumbs");
             $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.home_index',[],'application'), $this->get("router")->generate("user_home"));
 
-        switch($payment) {
-            case PaymentMethodEnumType::OGONE: $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title.Ogone',[],'application')); break;
-            case PaymentMethodEnumType::SOFORT: $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title.Sofort',[],'application')); break;
+            switch($payment) {
+                case PaymentMethodEnumType::OGONE: $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title.Ogone',[],'application')); break;
+                case PaymentMethodEnumType::SOFORT: $breadcrumbs->addItem($this->get('translator')->trans('menu.breadcrumbs.payment.title.Sofort',[],'application')); break;
+            }
         }
 
 //        /** @var EntityManager $em */
