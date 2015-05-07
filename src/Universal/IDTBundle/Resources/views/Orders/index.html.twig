@@ -28,7 +28,7 @@
                                 <td>{{ order.orderReference }}</td>
                                 <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
                                 <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-                                <td>{{ order.amount }} {{ order.currency|upper }}</td>
+                                <td>{{ order.amount|number_format(2) }} {{ order.currency|upper }}</td>
                                 <td><a href="{{ path('user_order_details', {'id':order.id}) }}" class="link">{{ 'datatables.transactions.action_order'|trans({},'javascript') }}</a></td>
                             </tr>
                         {% endfor %}

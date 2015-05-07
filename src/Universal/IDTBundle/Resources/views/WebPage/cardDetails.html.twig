@@ -17,7 +17,7 @@
                                 <div class="col-sm-6">
                                     <select class="form-control" id="pr_denominations">
                                         {% for denomination in product.denominations %}
-                                            <option value="{{ denomination }}">{{ denomination }} {{ product.currency|upper }}</option>
+                                            <option value="{{ denomination }}">{{ denomination|number_format(2) }} {{ product.currency|upper }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

@@ -8,14 +8,14 @@
             <select id="denomination_list" name="denomination_list" class="form-control" style="width: 80px">
                 <option value="">Denomination</option>
                 {% for denom in row.product.denominations %}
-                    <option value="{{ denom }}">{{ denom }}{{ row.product.currency }}</option>
+                    <option value="{{ denom }}">{{ denom|number_format(2) }} {{ row.product.currency|upper }}</option>
                 {% endfor %}
             </select>
         </td>
         <td>{{ row.rate.countryName ~ (row.rate.location is null ? "" : " " ~ row.rate.location) }}</td>
-        <td class="rate">{{ row.rate.cost }}</td>
-        <td class="Discount" style="color: green; font-weight: bold">{{ row.cost|round(2)|number_format(2) }}</td>
-        <td class="connection_fee">{{ row.rate.connectionFees }}</td>
+        <td class="rate">{{ row.rate.cost|number_format(2) }}</td>
+        <td class="Discount" style="color: green; font-weight: bold">{{ row.cost|number_format(2) }}</td>
+        <td class="connection_fee">{{ row.rate.connectionFees|number_format(2) }}</td>
         <td class="minutes">0</td>
         <td>{{ row.rate.type }}</td>
         <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ row.product.id }}, '{{ row.product.name }}', '{{ asset(row.product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ row.product.currency }}', 'buy', {{ row.product.denominations[0] }}, {{ row.product.freeAmountDenomination1 }}, {{ OrderServices.getVat(row.product.countryISO) }}); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">Add to cart</button></td>

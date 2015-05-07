@@ -52,7 +52,7 @@
                 {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
                 <tr>
                     <td>{{ orderProduct.product.name }}</td>
-                    <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }}</td>
+                    <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
                     <td>{{ orderProduct.vat~'%' }}</td>
                     <td>{{ orderProduct.ctrlNumber }}</td>
                     <td>{{ orderProduct.pin }}</td>
@@ -69,11 +69,11 @@
             <tbody>
             <tr>
                 <th>Order subtotal</th>
-                <td id="basket_summary_subtotal">{{ order.amount|round(2)|number_format(2) }}</td>
+                <td id="basket_summary_subtotal">{{ order.amount|number_format(2) }}</td>
             </tr>
             <tr>
                 <th>Tax</th>
-                <td id="basket_summary_tax">{{ vat|round(2)|number_format(2) }}</td>
+                <td id="basket_summary_tax">{{ vat|number_format(2) }}</td>
             </tr>
             <tr>
                 <th>Delivery Method</th>
@@ -87,7 +87,7 @@
             <tfoot>
             <tr class="total">
                 <th>Total</th>
-                <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }}</td>
+                <td id="basket_summary_total">{{ order.amount|number_format(2) }} {{ order.currency|upper }}</td>
             </tr>
             </tfoot>
         </table>

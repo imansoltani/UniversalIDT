@@ -67,7 +67,7 @@
                             <tr>
                                 <td>{{ orderProduct.product.name }}</td>
                                 <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
-                                <td>{{ orderProduct.pinDenomination|round(2)|number_format(2) }} {{ orderProduct.product.currency }}</td>
+                                <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
                                 <td>{{ orderProduct.vat~'%' }}</td>
                                 <td>{{ orderProduct.ctrlNumber }}</td>
                                 <td>{{ orderProduct.pin }}</td>
@@ -85,11 +85,11 @@
                         <tbody>
                         <tr>
                             <td>{{ 'transactions_details.order_subtotal'|trans({},'application') }}</td>
-                            <td id="basket_summary_subtotal">{{ order.amount|round(2)|number_format(2) }}</td>
+                            <td id="basket_summary_subtotal">{{ order.amount|number_format(2) }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'transactions_details.tax'|trans({},'application') }}</td>
-                            <td id="basket_summary_tax">{{ vat|round(2)|number_format(2) }}</td>
+                            <td id="basket_summary_tax">{{ vat|number_format(2) }}</td>
                         </tr>
                         <tr>
                             <td>{{ 'transactions_details.delivery_method'|trans({},'application') }}</td>
@@ -103,7 +103,7 @@
                         <tfoot>
                         <tr class="total">
                             <td>{{ 'transactions_details.total'|trans({},'application') }}</td>
-                            <td id="basket_summary_total">{{ order.amount|round(2)|number_format(2) }} {{ order.currency }}</td>
+                            <td id="basket_summary_total">{{ order.amount|number_format(2) }} {{ order.currency|upper }}</td>
                         </tr>
                         </tfoot>
                     </table>

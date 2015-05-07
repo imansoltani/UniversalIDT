@@ -23,7 +23,7 @@
                                 <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.control_no'|trans({},'application') }}:</span> {{ pin.ctrlNumber }}</li>
                                 <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.order_no'|trans({},'application') }}:</span> {{ pin.orderDetail.id }}</li>
                                 <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.reference'|trans({},'application') }}:</span> {{ pin.orderDetail.orderReference }}</li>
-                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.usage'|trans({},'application') }}:</span> {{ call_details.totalamount }} {{ pin.orderDetail.currency|upper }}</li>
+                                <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.usage'|trans({},'application') }}:</span> {{ call_details.totalamount|number_format(2) }} {{ pin.orderDetail.currency|upper }}</li>
                                 <li><i class="fa fa-circle-o"></i> <span>{{ 'pins_details.details_tab.calls'|trans({},'application') }}:</span> {{ call_details.totalcalls }}</li>
                             </ul>
                         </div>
@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ call.callfulldate }}</td>
                                         <td>{{ call.minutes }}</td>
-                                        <td>{{ call.amount }}</td>
+                                        <td>{{ call.amount|number_format(2) }}</td>
                                         <td>{{ call.dialedfrom }}</td>
                                         <td>{{ call.dialedto }}</td>
                                     </tr>
@@ -73,7 +73,7 @@
                                     <tr>
                                         <td>{{ recharge.product.name }}</td>
                                         <td>{{ recharge.OrderDetail.date|date('Y-m-d H:i:s') }}</td>
-                                        <td>{{ recharge.pinDenomination }} {{ recharge.orderDetail.currency|upper }}</td>
+                                        <td>{{ recharge.pinDenomination|number_format(2) }} {{ recharge.orderDetail.currency|upper }}</td>
                                         <td>{{ recharge.requestStatus|readable('RequestStatusEnumType') }}</td>
                                     </tr>
                                     {% endfor %}
