@@ -43,7 +43,9 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table').DataTable();
+            $('#table').DataTable({
+                "language": dataTableTranslation
+            });
         });
     </script>
 {% endblock javascripts %}
