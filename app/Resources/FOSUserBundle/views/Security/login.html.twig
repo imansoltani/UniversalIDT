@@ -7,6 +7,12 @@
 {% endblock subtitle %}
 
 {% block content %}
+    {% if error %}
+        <div class="alert alert-danger"><!-- ALERT -->
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
     <div class="content-container clearfix">
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <form class="login-form clearfix" action="{{ path("fos_user_security_check") }}" method="post">
@@ -50,20 +56,4 @@
             </form>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% if error %}
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $.msgGrowl ({
-                type: 'error',
-                title: 'Message',
-                text: '{{ error.messageKey|trans(error.messageData, 'security') }}'
-            });
-        });
-    </script>
-    {% endif %}
 {% endblock %}

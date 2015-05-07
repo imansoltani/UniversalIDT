@@ -74,7 +74,7 @@ class CheckoutController extends Controller
             $valid = false;
         }
         elseif (!$valid = $this->checkCookie($added_items, $added_items_currency, $em, $sum_total, $sum_vat)) {
-            $this->get('session')->getFlashBag()->add('error','Error occurred in Cookies and Basket cleared.');
+            $this->get('session')->getFlashBag()->add('danger','Error occurred in Cookies and Basket cleared.');
         }
 
         //unset cookie if not valid
@@ -170,7 +170,7 @@ class CheckoutController extends Controller
             $response->headers->setCookie(new Cookie("products", "[]",0,"/",null,false,false ));
             $response->headers->setCookie(new Cookie("products_currency", "",0,"/",null,false,false ));
 
-            if($orderDetail->getDeliveryEmail()) {
+            if($orderDetail->getDeliveryEmail() && $orderDetail->isAccepted()) {
                 $this->get('EmailService')->sendEmailMessage(
                     $this->render("UniversalIDTBundle:Mails:checkout.email.html.twig", array(
                             'order' =>  $orderDetail
@@ -274,6 +274,8 @@ class CheckoutController extends Controller
             $added_item['row_total'] =  $added_item['count'] * ($added_item['denomination'] - $added_item['discount']);
             $sum_total += $added_item['row_total'];
         }
+
+        if($sum_total == 0 ) return false;
 
         return true;
     }

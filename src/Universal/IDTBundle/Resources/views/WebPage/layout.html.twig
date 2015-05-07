@@ -112,6 +112,12 @@
     </div><!-- END HEADER SECTION -->
 
     <div class="main clearfix">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
         {% block content %}
 
         {{ render(controller('UniversalIDTBundle:WebPage:slider')) }}

@@ -55,19 +55,6 @@
 <script type="text/javascript" src="{{ asset('bundles/universalidt/js/json2.js') }}"></script>
 <script type="text/javascript" src="{{ asset("bundles/universalidt/js/plugins/msgGrowl/js/msgGrowl.js") }}"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-    {% for type, messages in app.session.flashbag.all() %}
-        {% for message in messages %}
-            $.msgGrowl ({
-                type: '{{ type }}',
-                title: 'Message',
-                text: '{{ message }}'
-            });
-        {% endfor %}
-    {% endfor %}
-    });
-</script>
-<script type="text/javascript">
     var selected_products = {};
 
     var selected_products_currency = "";

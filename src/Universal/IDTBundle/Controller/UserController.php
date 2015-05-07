@@ -44,6 +44,8 @@ class UserController extends Controller
                 $em = $this->getDoctrine()->getManager();
 
                 $em->flush();
+
+                $this->get('session')->getFlashBag()->add('success', 'Notifications Updated.');
             }
         }
 
@@ -105,18 +107,18 @@ class UserController extends Controller
 
         if(!$user)
         {
-            $this->get('session')->getFlashBag()->add('failed', $this->get('translator')->trans('confirmation_new_email.flash.invalid',[],'application'));
+            $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('confirmation_new_email.flash.invalid',[],'application'));
 
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
 
         if(new \DateTime() > $user->getNewEmailExpireAt())
         {
-            $this->get('session')->getFlashBag()->add('failed', $this->get('translator')->trans('confirmation_new_email.flash.expired',[],'application'));
+            $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('confirmation_new_email.flash.expired',[],'application'));
         }
         elseif($findUserEmail = $em->getRepository('UniversalIDTBundle:User')->findOneBy(array('emailCanonical' => $email_canonicalizer->canonicalize($user->getNewEmail()))))
         {
-            $this->get('session')->getFlashBag()->add('failed', $this->get('translator')->trans('confirmation_new_email.flash.taken',[],'application'));
+            $this->get('session')->getFlashBag()->add('danger', $this->get('translator')->trans('confirmation_new_email.flash.taken',[],'application'));
         }
         else
         {

@@ -114,6 +114,12 @@
         {% endif %}
 
         <div class="{{ is_granted("IS_AUTHENTICATED_REMEMBERED") ? 'col-md-9 col-sm-9' : 'col-md-12 col-sm-12' }}">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+
             {% block content '' %}
         </div>
     </div> <!-- /container -->

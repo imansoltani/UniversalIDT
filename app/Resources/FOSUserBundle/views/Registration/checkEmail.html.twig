@@ -7,17 +7,7 @@
 {% endblock subtitle %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="widget stacked">
-
-            <div class="widget-content">
-                {{ 'registration.check_email'|trans({'%email%': user.email}) }}
-            </div>
-            <!-- /widget-content -->
-
-        </div>
-        <!-- /widget -->
+    <div class="alert alert-warning"><!-- ALERT -->
+        {{ 'registration.check_email'|trans({'%email%': user.email}) }}
     </div>
-</div>
 {% endblock %}

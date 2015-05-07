@@ -7,6 +7,12 @@
 {% endblock subtitle %}
 
 {% block content %}
+    {% if invalid_username is defined %}
+        <div class="alert alert-danger"><!-- ALERT -->
+            {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}
+        </div>
+    {% endif %}
+
     <div class="content-container clearfix">
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="reset-password-form fos_user_resetting_request clearfix">
@@ -26,20 +32,4 @@
             </form>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-
-    {% if invalid_username is defined %}
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $.msgGrowl ({
-                    type: 'error',
-                    title: 'Message',
-                    text: '{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}'
-                });
-            });
-        </script>
-    {% endif %}
 {% endblock %}
