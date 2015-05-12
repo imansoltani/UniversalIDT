@@ -113,21 +113,14 @@ checkout:
         button:
             print:          Print
             details:        Check your order
-    template:
-        title:              Secured payment powered by Ogone
-        subtitle:           Payment confirmation
-
-sofort:
-
-checkout:
-    result:
-        button:
-            print:          Print
             close:          close
     delivery:
         method:
             email:			Email
             SMS:			SMS
+    template:
+        title:              Secured payment powered by Ogone
+        subtitle:           Payment confirmation
 
 payment:
     status:
