@@ -211,4 +211,7 @@ checkout:
             subtotal: "Order subtotal"
             tax: Tax
             delivery: "Delivery method"
+            deliveryMethods:
+                email: Email
+                sms:   SMS
             total: Total
