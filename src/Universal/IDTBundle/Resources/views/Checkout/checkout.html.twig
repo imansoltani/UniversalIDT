@@ -97,7 +97,7 @@
 
 						<div class="tab-pane" id="order_review_tab"><!-- ORDER TAB -->
 							<div class="basket clearfix">
-								<h2 class="section-title">Order Details</h2>
+								<h2 class="section-title">{{ 'checkout.form.review.title'|trans({},'website') }}</h2>
 								<div class="table-responsive">
 									<table class="table">
 										<thead>
@@ -145,27 +145,27 @@
 								</div>
 
 								<div class="order-summery-panel clearfix">
-									<h2 class="section-title">Order Summary</h2>
-									<p>Shipping and additional costs are calculated based on the values you have entered.</p>
+									<h2 class="section-title">{{ 'checkout.form.summary.title'|trans({},'website') }}</h2>
+									<p>{{ 'checkout.form.summary.paragraph'|trans({},'website') }}</p>
 									<div class="table-responsive">
 										<table class="table table-bordered table-hover">
 											<tbody>
 											<tr>
-												<td>Order subtotal</td>
+												<td>{{ 'checkout.form.summary.subtotal'|trans({},'website') }}</td>
 												<td>{{ sum_total|number_format(2) }}</td>
 											</tr>
 											<tr>
-												<td>Tax</td>
+												<td>{{ 'checkout.form.summary.tax'|trans({},'website') }}</td>
 												<td>{{ sum_vat|number_format(2) }}</td>
 											</tr>
 											<tr>
-												<td>Delivery Method <span id="delivery_method_label_summary"></span></td>
+												<td>{{ 'checkout.form.summary.delivery'|trans({},'website') }} <span id="delivery_method_label_summary"></span></td>
 												<td id="delivery_method_summary">--</td>
 											</tr>
 											</tbody>
 											<tfoot>
 											<tr class="total">
-												<td>Total</td>
+												<td>{{ 'checkout.form.summary.total'|trans({},'website') }}</td>
 												<td>{{ sum_total|number_format(2) }} {{ currency|upper }}</td>
 											</tr>
 											</tfoot>
@@ -179,7 +179,10 @@
 								<div class="form-group">
 									<div class="checkbox">
 										<label>
-											{{ form_widget(form.agree) }} <span>I hereby accept <a href="#">General items and conditions</a> of <a href="#">universal.com</a></span>
+											{{ form_widget(form.agree) }} <span>{{ 'checkout.form.review.agree.text'|trans({
+													'%link1%': '<a href="#">'~('checkout.form.review.agree.link1'|trans({},'website'))~'</a>',
+													'%link2%': '<a href="#">'~('checkout.form.review.agree.link2'|trans({},'website'))~'</a>',
+												},'website')|raw }}</span>
 										</label>
 									</div>
 								</div>

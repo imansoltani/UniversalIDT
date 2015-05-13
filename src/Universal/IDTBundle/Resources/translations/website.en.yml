@@ -200,10 +200,15 @@ checkout:
             agree:
                 title: Agree
                 footermessage: Required Field
-                text1: I hereby accept
+                text: I hereby accept %link1% of %link2%
                 link1: General items and conditions
-                text2: of
                 link2: "www.idtuniversal.com"
             back_link: Back to Payment Method
             order_link: Place an Order
-    summary: "id001"
+        summary:
+            title: "Order Summary"
+            paragraph: "Shipping and additional costs are calculated based on the values you have entered."
+            subtotal: "Order subtotal"
+            tax: Tax
+            delivery: "Delivery method"
+            total: Total
