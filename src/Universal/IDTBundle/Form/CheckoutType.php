@@ -54,6 +54,6 @@ class CheckoutType extends AbstractType
      */
     public function getName()
     {
-        return 'universal_idt_rates';
+        return 'universal_idt_checkout';
     }
 }

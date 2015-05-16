@@ -102,13 +102,14 @@ tranactions_print_details:
 checkout:
     result:
         title:              Payment result
+        order_id:           Order ID
         order_reference:    Order number
         amount:             Amount
         payment_status:     Payment Status
         date:               Date
         payment_method:     Payment Method
         flash:
-            available:      The link below is available for "%count%" times and expires after 20 minutes!
+            available:      The link below is available for %count% times and expires after %minute% minutes!
             exired:         The link to the order is expired!
         button:
             print:          Print
