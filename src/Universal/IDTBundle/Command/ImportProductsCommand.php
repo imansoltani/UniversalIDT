@@ -64,7 +64,6 @@ class ImportProductsCommand extends AbstractImportCommand
                 $product->setFile(new UploadedFile($images_path."/".$imageFileName, $imageFileName, 'image/png', 1, null, true));
             }
             else {
-                $output->writeln("warning: ".$images_path."/".$imageFileName);
                 $output->writeln("warning: '" . $row['cid'] . " " . $row['country'] . " " . $row['name'] . "' don't has image.");
             }
 
