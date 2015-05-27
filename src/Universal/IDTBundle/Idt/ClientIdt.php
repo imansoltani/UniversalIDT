@@ -173,11 +173,10 @@ class ClientIdt
             </DebitRequest>
             ';
 
-
         $responses = $this->generateAndPostRequestAndGetResponse($debitRequests);
 
         if(isset($responses[$id]->status))
-            throw new \Exception("Error in IDT: ". $responses[0]->description. " (".$responses[0]->code.")");
+            throw new \Exception("Error in IDT: ". $responses[1]->description. " (".$responses[1]->code.")");
 
         return $responses[$id];
     }

@@ -1,17 +1,6 @@
 datatables:
-    show:                Show
-    entries:             entries
-    search:              Search :
-    showing:             Showing
-    to:                  to
-    of:                  of
-    filtered:            '(filtered from'
-    total:               'total entries)'
-    perpage:             per page
-
-
+    search:             Search :
     processing:          Processing...
-
     lengthMenu:          Show _MENU_ entries
     info:                Showing _START_ to _END_ of _TOTAL_ entries
     infoEmpty:           Showing 0 to 0 of 0 entries
@@ -66,3 +55,49 @@ datatables:
         pin_column:              PIN
         action_column:           Action
         action_pin:              PIN details
+	
+    rates:
+        Calling Cards:          Calling Cards
+        Denominations:          Denominations
+        Destination:            Destination
+        Rate:                   Rate
+        Offered:                Offered
+        Connection_fee:         Connection fee
+        Min:                    Min
+        Method:                 Method
+        Action:                 Action
+	
+      numbers:
+            type:               Type
+            num:                Number
+            loc:                Location
+            lang:               Language
+	
+base_twig:
+    outdated_browser:               "You are using an <strong>outdated</strong> browser."
+    update_browser:
+        text:                       Please %update% or %googleChromeFrame% to improve your experience.
+        update_link:                upgrade your browser
+        google_chrome_frame_link:   activate Google Chrome Frame
+	
+basket_messages:
+    invalid_cookie:
+        title:          Cookie is invalid
+        message:        Basket cleared.
+    currency_error:
+        title:          Currency Error
+        message:        You must select carts with same currency. this= %this% basket= %basket%
+    add_to_card:
+        title:          Added to Cart
+        message:        Item successfully added to your cart.
+    remove_from_card:
+        title:          Removed from Cart
+        message:        Item successfully removed from your cart.
+	
+contact_messages:
+    success:
+        title:          Message Sent
+        message:        Message successfully Sent.
+    fail:
+        title:          Message Not Send
+        message:        An Error occurred.

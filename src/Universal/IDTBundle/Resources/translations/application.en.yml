@@ -40,9 +40,6 @@ menu:
             title:
                 Ogone:           Ogone Result
                 Sofort:          Sofort Result
-        error:                   error "%number%" occurred
-        notifications:
-            index:               Notifications
         checkout:                Checkout
 
 panels_home:
@@ -73,6 +70,7 @@ pins_details:
         title:          Recharges History
     recharge:
         title:          Recharge
+        choose:         Choose
         button:         Recharge your PIN
 
 transactions_index:
@@ -96,7 +94,13 @@ transactions_details:
     total:              Total
     btn_print:          Print
 
+    delivery_method_types:
+        email:          Email
+        sms:            SMS
+	
 tranactions_print_details:
+    title:              Order "%id%" Details Print
+    btn_print:          Print
     btn_close:          close
 
 checkout:
@@ -114,20 +118,21 @@ checkout:
         button:
             print:          Print
             details:        Check your order
-            close:          close
+    result_print:
+        title:              Payment Result Print
+        close:              close
+    order_details_print:
+        title:              Order Details Print
     delivery:
         method:
             email:			Email
-            SMS:			SMS
+            sms:			SMS
     template:
         title:              Secured payment powered by Ogone
         subtitle:           Payment confirmation
-
-payment:
-    status:
-        accepted:           Accepeted
-        pending:            Pending
-        failed:             Failed
+    alerts:
+        empty_basket:       Basket is Empty.
+        invalid_cookie:     Invalid Basket Data. Cookie Cleared.
 
 settings:
     profile:
@@ -138,12 +143,10 @@ settings:
         country:        Country
         language:       Site language
         gender:         Gender
-        phone:          Phone	
-        password:       Password
-        btn_update:     Update profile
-        flash:
-            failure:    ""
-            success:    Your profile has been successfully updated.
+        gender_types:
+            male:       Male
+            female:     Female
+        phone:          Phone
 
     email:
         title:          Email settings
@@ -153,26 +156,17 @@ settings:
         password:       Password
         btn_change:     Change your email
         flash:
-            failure:    ""
             success:    A confirmation mail has been sent to "%email%".
 
     password:
         title:          Password settings
         subtitle:       Password settings
-        current_pw:     Your current password
-        new_pw:         Your New password
-        repeat_new_pw:  Repeat your new password
-        btn_change:     Change your password
-        flash:
-            failure:    ""
-            success:    You have successfully changed your password.
 
     notifications:
         title:          Notifications
         subtitle:       Notifications
         btn_update:     Update notifications
         flash:
-            failure:    ""
             success:    You have successfully updated your notifications.
 
 confirmation_new_email:
@@ -181,3 +175,32 @@ confirmation_new_email:
         invalid:        The email confirmation url is invalid.
         expired:        The email confirmation url is expired.
         taken:          The email confirmation url was valid, but the email is already taken by another user.
+
+error_page:
+    title:              "Universal IDT | Error %email%"
+    h1:                 Oops!
+    status_text:
+        not_found:      Not Found
+    paragraph:          Sorry, an error has occurred!
+    dashboard_btn:      Back to Dashboard
+    contact_btn:        Contact Support
+	
+db:
+    password_check:
+        min_one_letter: Your Password must have Min One Letter
+        min_one_digit:  Your Password must have Min One Digit
+    phone_invalid:      Your Phone number is invalid.
+	
+emails:
+    hello:              hello %first_name% !
+    confirm_url:        Please confirm your email by accessing %url%
+    confirm_url_link:   here
+    greetings:          "Greetings, <br> the IDT Universal Team"
+    email_sent:         Your Email sent.
+    title:
+        email_confirmation: Email Confirmation
+        checkout_result:    Checkout Result
+        contact:            "Contact From: %first_name% %email%"
+        contact_confirm:    Contact Email Confirmation
+        registration:       Email Confirmation
+        reset_password:     Resetting your password

@@ -68,6 +68,7 @@ home:
             rates: Rates
             numbers: "Access Numbers"
             instructions: "Dialling Instructions"
+            check_best_rates: Check the best rates
             close: Close
 
 # Rates section
@@ -75,8 +76,10 @@ home:
         title: "Rates"
         paragraph: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
         call:
-            from: "Call from..."
-            to: "Destination..."
+            from:   "Call from..."
+            from_placeholder:   Select Country
+            to:     "Destination..."
+            to_placeholder:     Select Destination
         type:
             lac: "Local Access"
             tf: "Toll Free"
@@ -84,12 +87,19 @@ home:
         check: "Check the best rates"
         result: Result
         footermessage: "Le coût unitaire des communications est toujours basé sur un calcul dont la devise de référence est l'euro par minute + TVA du pays d'appel"
+        denomination:   Denomination
+        addtocart:      Add to cart
+        exceptions	
+            invalid_country_from:           Invalid Country From.
+            invalid_country_destination:    Invalid Country Destination.
+            invalid_rate_type:              Invalid Rate Type.
 
 # Application section
     application:
         header:
             title: Application
             subtitle: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+        download: Download
         features:
             title: Features
             subtitle: "If you can't make it good, at least make it look good."
@@ -114,6 +124,10 @@ home:
     download:
         title: Downloads
         subtitle: "Lorem ipsum dolor sit amet, consectetur adipisicing elit"
+        download_btns:
+             app_store:         App Store
+             android_market:    Android Market
+             windows:           Windows
 
 # Basket section
     basket:
@@ -127,11 +141,16 @@ home:
             discount: Discount
             subtotal: Subtotal
             total: Total
+            empty: No Item
+            types:
+                new_card: New Card
+                recharge: Recharge
             account:
                 has: "I have an account"
                 wants: "I would like to create an account"
                 guest: "I would like to purchase without creating account"
             back: "Back to calling cards"
+            clear: Clear Basket
             checkout: Checkout
         summary:
             title: "Order Summary"
@@ -174,7 +193,10 @@ checkout:
             email_placeholder: My Email
             sms: SMS
             sms_placeholder: "+1234567890"
-            back_link: Back to Address
+            Notice:
+                title:      Notice:
+                message:    As an anonymous user, if you do not give an email, you must save your PINs after delivery!
+            back_link: Back to Basket
             continue_link: Continue to Payment Method
         payment:
             title: Payment Method
@@ -182,8 +204,6 @@ checkout:
             sofort_message: Payment made by Sofort
             ogone: Credit cards
             ogone_message: Payment made by Ogone
-            footerbold: HelloBell Telecommunication SA
-            footerparagraph:
             select: Select
             selected: Selected
             back_link: Back to Delivery Method
@@ -197,6 +217,9 @@ checkout:
             discount: Discount
             subtotal: Subtotal
             total: Total
+            types:
+                NewCard:  NewCard
+                Recharge: Recharge
             agree:
                 title: Agree
                 footermessage: Required Field
@@ -215,3 +238,54 @@ checkout:
                 email: Email
                 sms:   SMS
             total: Total
+    flashBag:
+        basket_empty:    Basket is Empty.
+        error_in_basket: Error occurred in Cookies and Basket cleared.
+
+registration:
+    title:          Registering
+    subtitle:       Registering
+    first_name:     First name
+    last_name:      Last name
+    country:        Country
+    country_placeholder:    Choose a Country
+    language:       Site language
+    gender:         Gender
+    gender_types:
+        male:       Male
+        female:     Female
+    phone:          Phone
+    check_email:    Check Email
+    confirmed:      Registeration Confirmed
+	
+reset_request:
+    title:          Resetting Request
+    subtitle:       Resetting Request
+    password_already_requested: Password already requested
+    check_email:    Check Email
+	
+login:
+    title:                  Login
+    subtitle:               Authentication
+    email_place_holder:     Email
+    password_place_holder:  Password
+	
+footer:
+    about:
+        about_us:           About Us
+    support:
+        frequently_asked_questions: Frequently Asked Questions
+        ask_question:       Ask a Question
+        video_tutorial:     Video Tutorial
+        feedback:           Feedback
+    legal:
+        license:            License
+        terms_of_use:       Terms of Use
+        privacy_policy:     Privacy Policy
+        security:           Security
+    settings:
+        consectetur_adipisicing:    Consectetur adipisicing
+        eiusmod_tempor:             Eiusmod tempor
+        fugiat_nulla_pariatur:      Fugiat nulla pariatur
+        officia_deserunt:           Officia deserunt
+    copyright:              "© 2015 Universal. All Right Reserved"
