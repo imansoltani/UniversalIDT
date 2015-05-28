@@ -55,7 +55,7 @@ datatables:
         pin_column:              PIN
         action_column:           Action
         action_pin:              PIN details
-	
+
     rates:
         Calling Cards:          Calling Cards
         Denominations:          Denominations
@@ -66,20 +66,20 @@ datatables:
         Min:                    Min
         Method:                 Method
         Action:                 Action
-	
-      numbers:
+
+        numbers:
             type:               Type
             num:                Number
             loc:                Location
             lang:               Language
-	
+
 base_twig:
     outdated_browser:               "You are using an <strong>outdated</strong> browser."
     update_browser:
         text:                       Please %update% or %googleChromeFrame% to improve your experience.
         update_link:                upgrade your browser
         google_chrome_frame_link:   activate Google Chrome Frame
-	
+
 basket_messages:
     invalid_cookie:
         title:          Cookie is invalid
@@ -93,7 +93,7 @@ basket_messages:
     remove_from_card:
         title:          Removed from Cart
         message:        Item successfully removed from your cart.
-	
+
 contact_messages:
     success:
         title:          Message Sent

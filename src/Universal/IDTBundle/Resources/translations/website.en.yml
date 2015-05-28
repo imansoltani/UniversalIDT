@@ -89,7 +89,7 @@ home:
         footermessage: "Le coût unitaire des communications est toujours basé sur un calcul dont la devise de référence est l'euro par minute + TVA du pays d'appel"
         denomination:   Denomination
         addtocart:      Add to cart
-        exceptions	
+        exceptions:
             invalid_country_from:           Invalid Country From.
             invalid_country_destination:    Invalid Country Destination.
             invalid_rate_type:              Invalid Rate Type.
@@ -257,19 +257,19 @@ registration:
     phone:          Phone
     check_email:    Check Email
     confirmed:      Registeration Confirmed
-	
+
 reset_request:
     title:          Resetting Request
     subtitle:       Resetting Request
     password_already_requested: Password already requested
     check_email:    Check Email
-	
+
 login:
     title:                  Login
     subtitle:               Authentication
     email_place_holder:     Email
     password_place_holder:  Password
-	
+
 footer:
     about:
         about_us:           About Us

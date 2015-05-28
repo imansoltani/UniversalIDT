@@ -97,7 +97,7 @@ transactions_details:
     delivery_method_types:
         email:          Email
         sms:            SMS
-	
+
 tranactions_print_details:
     title:              Order "%id%" Details Print
     btn_print:          Print
@@ -184,13 +184,13 @@ error_page:
     paragraph:          Sorry, an error has occurred!
     dashboard_btn:      Back to Dashboard
     contact_btn:        Contact Support
-	
+
 db:
     password_check:
         min_one_letter: Your Password must have Min One Letter
         min_one_digit:  Your Password must have Min One Digit
     phone_invalid:      Your Phone number is invalid.
-	
+
 emails:
     hello:              hello %first_name% !
     confirm_url:        Please confirm your email by accessing %url%
