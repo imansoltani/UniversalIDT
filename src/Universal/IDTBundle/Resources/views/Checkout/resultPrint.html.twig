@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ asset('bundles/universalidt/img/favicon.ico') }}" />
-    <title>Payment {{ orderDetail.paymentId }} Result Print</title>
+    <title>{{ 'checkout.result_print.title'|trans({'%id%':orderDetail.id},'application') }}</title>
     <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/universalidt/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
     <style>
@@ -20,8 +20,8 @@
 
 <body>
 <div class="no-print" style="text-align: center; margin: 10px">
-    <a type="button" class="btn btn-success" href="#" onclick="window.print();">Print</a>
-    <a type="button" class="btn btn-default" href="#" onclick="window.close();">Close</a>
+    <a type="button" class="btn btn-success" href="#" onclick="window.print();">{{ 'checkout.result_print.print'|trans({},'application') }}</a>
+    <a type="button" class="btn btn-default" href="#" onclick="window.close();">{{ 'checkout.result_print.close'|trans({},'application') }}</a>
 </div>
 <div class="row" style="margin: 10px">
     <div class="col-md-12">

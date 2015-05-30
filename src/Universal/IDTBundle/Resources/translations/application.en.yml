@@ -119,20 +119,12 @@ checkout:
             print:          Print
             details:        Check your order
     result_print:
-        title:              Payment Result Print
+        title:              Payment "%id%" Result Print
+        print:              Print
         close:              close
-    order_details_print:
-        title:              Order Details Print
-    delivery:
-        method:
-            email:			Email
-            sms:			SMS
     template:
         title:              Secured payment powered by Ogone
         subtitle:           Payment confirmation
-    alerts:
-        empty_basket:       Basket is Empty.
-        invalid_cookie:     Invalid Basket Data. Cookie Cleared.
 
 settings:
     profile:

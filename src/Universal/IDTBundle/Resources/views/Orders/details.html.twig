@@ -16,8 +16,8 @@
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.date'|trans({},'application') }}:</span> {{ order.date|date('Y-m-d H:i:s') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_method'|trans({},'application') }}:</span> {{ order.paymentMethod|readable('PaymentMethodEnumType') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.delivery_method'|trans({},'application') }}:</span>
-                        {% set delivery = order.deliveryEmail ? "Email: " ~ order.deliveryEmail ~ " " : "" %}
-                        {% set delivery = delivery ~ ( order.deliverySMS ? "SMS: " ~ order.deliverySMS : "" ) %}
+                        {% set delivery = order.deliveryEmail ? "<div style='display:inline'>" ~ 'transactions_details.delivery_method_types.email'|trans({},'application') ~ ": " ~ order.deliveryEmail ~ "</div>" : "" %}
+                        {% set delivery = delivery ~ ( order.deliverySMS ? "<div style='display:inline'>" ~ 'transactions_details.delivery_method_types.email'|trans({},'application') ~ ": " ~ order.deliverySMS ~ "</div>" : "" ) %}
                         {{ delivery != "" ? delivery|raw : "--" }}
                     </li>
                 </ul>
@@ -74,18 +74,14 @@
                         <tr>
                             <td>{{ 'transactions_details.delivery_method'|trans({},'application') }}</td>
                             <td id="basket_summary_email">
-                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
                                 {{ delivery != "" ? delivery|raw : "--" }}
                             </td>
                         </tr>
-                        </tbody>
-                        <tfoot>
                         <tr class="total">
                             <td>{{ 'transactions_details.total'|trans({},'application') }}</td>
                             <td id="basket_summary_total">{{ order.amount|number_format(2) }} {{ order.currency|upper }}</td>
                         </tr>
-                        </tfoot>
+                        </tbody>
                     </table>
                 </div>
             </div>

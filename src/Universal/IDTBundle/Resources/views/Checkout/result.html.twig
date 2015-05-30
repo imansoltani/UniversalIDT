@@ -1,12 +1,12 @@
 {% extends "@UniversalIDT/layout.html.twig" %}
 
 {% block subtitle %}
-    Checkout Result
+    {{ 'checkout.result.title'|trans({},'application') }}
 {% endblock %}
 
 {% block content %}
     <div class="content-container clearfix">
-        <h2 class="section-title">Payment Result</h2>
+        <h2 class="section-title">{{ 'checkout.result.title'|trans({},'application') }}</h2>
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
 
             {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") and not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -23,23 +23,23 @@
 
             <div class="order-general-info-panel clearfix">
                 <ul>
-                    <li><i class="fa fa-circle-o"></i> <span>OrderID:</span> {{ orderDetail.id }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Reference:</span> {{ orderDetail.orderReference }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Status:</span> {{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Amount:</span> {{ orderDetail.amount|number_format(2) }} {{ orderDetail.currency|upper }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>Date:</span> {{ orderDetail.date|date('Y-m-d H:i:s') }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>method:</span> {{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.order_id'|trans({},'application') }}:</span> {{ orderDetail.id }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.order_reference'|trans({},'application') }}:</span> {{ orderDetail.orderReference }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.payment_status'|trans({},'application') }}:</span> {{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.amount'|trans({},'application') }}:</span> {{ orderDetail.amount|number_format(2) }} {{ orderDetail.currency|upper }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.date'|trans({},'application') }}:</span> {{ orderDetail.date|date('Y-m-d H:i:s') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.payment_method'|trans({},'application') }}:</span> {{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</li>
                 </ul>
             </div>
 
             <div class="clearfix">
                 {% if orderDetail.paymentStatus == constant("Universal\\IDTBundle\\DBAL\\Types\\PaymentStatusEnumType::STATUS_ACCEPTED") %}
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <a href="{{ path('user_result_print', {'id': orderDetail.id}) }}" class="btn btn-default" target="_blank">Print</a>
-                        <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-primary">Go to Details</a>
+                        <a href="{{ path('user_result_print', {'id': orderDetail.id}) }}" class="btn btn-default" target="_blank">{{ 'checkout.result.button.print'|trans({},'application') }}</a>
+                        <a href="{{ path('user_order_details', {'id': orderDetail.id}) }}" class="btn btn-primary">{{ 'checkout.result.button.details'|trans({},'application') }}</a>
                     {% else %}
-                        <a href="{{ path('WebPage_result_print') }}" class="btn btn-default" target="_blank">Print</a>
-                        <a href="{{ path('WebPage_order_details') }}" class="btn btn-primary">Go to Details</a>
+                        <a href="{{ path('WebPage_result_print') }}" class="btn btn-default" target="_blank">{{ 'checkout.result.button.print'|trans({},'application') }}</a>
+                        <a href="{{ path('WebPage_order_details') }}" class="btn btn-primary">{{ 'checkout.result.button.details'|trans({},'application') }}</a>
                     {% endif %}
                 {% endif %}
             </div>

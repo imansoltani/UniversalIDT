@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="{{ asset('bundles/universalidt/img/favicon.ico') }}" />
-    <title>Order {{ order.paymentId }} Details Print</title>
+    <title>{{ 'tranactions_print_details.title'|trans({'%id%' : order.paymentId},'application') }}</title>
     <link href="{{ asset('bundles/universalidt/css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('bundles/universalidt/css/dataTables.bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('bundles/universalidt/css/custom.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
 
 <body style="padding-top: 0">
 <div class="no-print" style="text-align: center; margin: 10px">
-    <a type="button" class="btn btn-success" href="#" onclick="window.print();">Print</a>
+    <a type="button" class="btn btn-success" href="#" onclick="window.print();">{{ 'tranactions_print_details.btn_print'|trans({},'application') }}</a>
     <a type="button" class="btn btn-default" href="#" onclick="window.close();">{{ 'tranactions_print_details.btn_close'|trans({},'application') }}</a>
 </div>
 <div class="row" style="margin: 10px">
@@ -38,9 +38,9 @@
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.date'|trans({},'application') }}:</span> {{ order.date|date('Y-m-d H:i:s') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_method'|trans({},'application') }}:</span> {{ order.paymentMethod|readable('PaymentMethodEnumType') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.delivery_method'|trans({},'application') }}:</span>
-                        {% set delivery = order.deliveryEmail ? "Email: " ~ order.deliveryEmail ~ " " : "" %}
-                        {% set delivery = delivery ~ ( order.deliverySMS ? "SMS: " ~ order.deliverySMS : "" ) %}
-                                {{ delivery != "" ? delivery|raw : "--" }}
+                        {% set delivery = order.deliveryEmail ? "<div style='display:inline'>" ~ 'transactions_details.delivery_method_types.email'|trans({},'application') ~ ": " ~ order.deliveryEmail ~ "</div>" : "" %}
+                        {% set delivery = delivery ~ ( order.deliverySMS ? "<div style='display:inline'>" ~ 'transactions_details.delivery_method_types.email'|trans({},'application') ~ ": " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                        {{ delivery != "" ? delivery|raw : "--" }}
                     </li>
                 </ul>
                 </div>
@@ -94,8 +94,6 @@
                         <tr>
                             <td>{{ 'transactions_details.delivery_method'|trans({},'application') }}</td>
                             <td id="basket_summary_email">
-                                {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                                {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
                                 {{ delivery != "" ? delivery|raw : "--" }}
                             </td>
                         </tr>

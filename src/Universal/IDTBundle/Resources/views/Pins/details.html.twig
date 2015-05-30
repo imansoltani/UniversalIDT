@@ -90,7 +90,7 @@
                     <div class="form-group">
                         <label for="denomination_list"></label>
                         <select id="denomination_list" name="denomination_list" class="form-control" required="required" style="min-width: 250px;">
-                            <option value="">Choose</option>
+                            <option value="">{{ 'pins_details.recharge.choose'|trans({},'application') }}</option>
                             {% for denomination in pin.product.denominations %}
                             <option value="{{ denomination }}">{{ denomination|number_format(2) }} {{ pin.product.currency|upper }}</option>
                             {% endfor %}
