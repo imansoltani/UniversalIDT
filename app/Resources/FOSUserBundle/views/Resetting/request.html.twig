@@ -3,7 +3,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block subtitle %}
-    Resetting Request
+    {{ 'reset_request.title'|trans({},'website') }}
 {% endblock subtitle %}
 
 {% block content %}
@@ -17,7 +17,7 @@
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="reset-password-form fos_user_resetting_request clearfix">
                 <div class="form-heading clearfix">
-                    <h2>Resetting Request</h2>
+                    <h2>{{ 'reset_request.subtitle'|trans({},'website') }}</h2>
                 </div>
                 <div class="form-group">
                     <label for="username" class="required">{{ 'resetting.request.username'|trans }}</label>

@@ -3,7 +3,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block subtitle %}
-    Resetting Request
+    {{ 'reset_request.title'|trans({},'website') }}
 {% endblock subtitle %}
 
 {% block content %}
@@ -13,7 +13,7 @@
 
             <div class="widget-header">
                 <i class="icon-book"></i>
-                <h3>Resetting Request</h3>
+                <h3>{{ 'reset_request.subtitle'|trans({},'website') }}</h3>
             </div>
             <!-- /widget-header -->
 

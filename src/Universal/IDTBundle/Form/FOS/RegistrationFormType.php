@@ -24,19 +24,34 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', 'text')
-            ->add('lastName', 'text')
+            ->add('firstName', 'text', array(
+                    "label"=>"registration.first_name",
+                    'translation_domain' => 'website'
+                ))
+            ->add('lastName', 'text', array(
+                    "label"=>"registration.last_name",
+                    'translation_domain' => 'website'
+                ))
             ->add('country', 'choice', array(
-                    'placeholder' => 'Choose a Country',
+                    "label"=>"registration.country",
+                    'placeholder' => 'registration.country_placeholder',
+                    'translation_domain' => 'website',
                     'choices' => $this->countries
                 ))
             ->add('language', 'choice', array(
                 'choices' => $this->locales,
-                'preferred_choices' => array($this->request->get('_locale'))
+                'preferred_choices' => array($this->request->get('_locale')),
+                "label"=>"registration.language",
+                'translation_domain' => 'website'
             ))
-            ->add('gender')
+            ->add('gender', null, array(
+                    "label"=>"registration.gender",
+                    'translation_domain' => 'website'
+                ))
             ->add('phone', "text", array(
-                    'required' => false
+                    'required' => false,
+                    "label"=>"registration.phone",
+                    'translation_domain' => 'website'
                 ))
             ->remove('username')
             ->addEventListener(FormEvents::SUBMIT,function(FormEvent $event){

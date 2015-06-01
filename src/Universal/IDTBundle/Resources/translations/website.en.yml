@@ -272,18 +272,22 @@ login:
 
 footer:
     about:
+        title:              About
         about_us:           About Us
     support:
+        title:              Support
         frequently_asked_questions: Frequently Asked Questions
         ask_question:       Ask a Question
         video_tutorial:     Video Tutorial
         feedback:           Feedback
     legal:
+        title:              Legal
         license:            License
         terms_of_use:       Terms of Use
         privacy_policy:     Privacy Policy
         security:           Security
     settings:
+        title:                      Settings
         consectetur_adipisicing:    Consectetur adipisicing
         eiusmod_tempor:             Eiusmod tempor
         fugiat_nulla_pariatur:      Fugiat nulla pariatur

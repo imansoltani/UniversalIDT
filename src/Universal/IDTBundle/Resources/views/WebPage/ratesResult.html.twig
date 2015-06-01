@@ -6,7 +6,7 @@
         <td><a href="javascript:openDetails('{{ row.product.id }}', false)">{{ row.product.name }}</a></td>
         <td>
             <select id="denomination_list" name="denomination_list" class="form-control" style="width: 80px">
-                <option value="">Denomination</option>
+                <option value="">{{ 'home.rates.denomination'|trans({},'website') }}</option>
                 {% for denom in row.product.denominations %}
                     <option value="{{ denom }}">{{ denom|number_format(2) }} {{ row.product.currency|upper }}</option>
                 {% endfor %}
@@ -18,6 +18,6 @@
         <td class="connection_fee">{{ row.rate.connectionFees|number_format(2) }}</td>
         <td class="minutes">0</td>
         <td>{{ row.rate.type }}</td>
-        <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ row.product.id }}, '{{ row.product.name }}', '{{ asset(row.product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ row.product.currency }}', 'buy', {{ row.product.denominations[0] }}, {{ row.product.freeAmountDenomination1 }}, {{ OrderServices.getVat(row.product.countryISO) }}); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">Add to cart</button></td>
+        <td><button class="btn btn-primary btn-sm" onclick="if($(this).closest('tr').find('#denomination_list').val() != '')addToCookie({{ row.product.id }}, '{{ row.product.name }}', '{{ asset(row.product.webPath) }}', $(this).closest('tr').find('#denomination_list').val(), 1, '{{ row.product.currency }}', 'buy', {{ row.product.denominations[0] }}, {{ row.product.freeAmountDenomination1 }}, {{ OrderServices.getVat(row.product.countryISO) }}); else $.msgGrowl ({type: 'warning',title: 'Denomination',text: 'Please select a denomination.'});">{{ 'home.rates.addtocart'|trans({},'website') }}</button></td>
     </tr>
 {% endfor %}

@@ -63,7 +63,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="clearfix">
                                             <a href="#calling_cards" data-toggle="target" class="btn btn-default"><i class="fa fa-chevron-left"></i> {{ 'home.basket.form.back'|trans({},'website') }}</a>
-                                            <a href="#basket" onclick="basketClearProducts()" class="btn btn-danger">Clear Basket</a>
+                                            <a href="#basket" onclick="basketClearProducts()" class="btn btn-danger">{{ 'home.basket.form.clear'|trans({},'website') }}</a>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6">
@@ -157,7 +157,7 @@
     function basketCheckEmpty() {
 //        console.log(Object.keys(selected_products).length);
         if(Object.keys(selected_products).length == 0) {
-            $("#basket_table_items").html('<tr class="empty" data-total="0" data-vat="0"><td colspan="7">'+'No Item'+'</td></tr>');
+            $("#basket_table_items").html('<tr class="empty" data-total="0" data-vat="0"><td colspan="7">'+'{{ 'home.basket.form.empty'|trans({},'website') }}'+'</td></tr>');
             $("#basket_form_submit").prop('disabled', true);
         }
         else {
@@ -203,7 +203,7 @@
             $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
                 '<td><a href="javascript:openDetails('+row['id']+', false)"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
                 '<td><a href="javascript:openDetails('+row['id']+', false)">'+row['name']+'</a></td>'+
-                '<td>New Card</td>'+
+                '<td>{{ 'home.basket.form.types.new_card'|trans({},'website') }}</td>'+
                 '<td id="quantity"><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
                 '<td id="denomination">'+row['denomination'].toFixed(2)+ " " + selected_products_currency + '</td>' +
                 '<td id="discount">'+discount.toFixed(2)+'</td>' +
@@ -214,7 +214,7 @@
             $("#basket_table_items").append('<tr data-cookie_id="'+cookie_row_id+'" data-total="'+total+'" data-vat="'+row_vat+'">' +
                 '<td><a href="javascript:openPin('+row['id']+', false)"><img style="max-height: 40px;" src="'+row['image']+'" alt="'+row['name']+'"></a></td>'+
                 '<td><a href="javascript:openPin('+row['id']+', false)">'+row['name']+'</a></td>'+
-                '<td>Recharge</td>'+
+                '<td>{{ 'home.basket.form.types.recharge'|trans({},'website') }}</td>'+
                 '<td id="quantity"><input class="form-control" onchange="basketUpdateProduct(this)" type="number" min="1" value="'+row['count']+'"></td>'+
                 '<td id="denomination">'+row['denomination'].toFixed(2)+'</td>' +
                 '<td id="discount">'+discount.toFixed(2)+'</td>' +

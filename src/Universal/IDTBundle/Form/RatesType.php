@@ -26,13 +26,13 @@ class RatesType extends AbstractType
         $builder
             ->add('from', 'choice', array(
                     'choices' => $this->origins,
-                    'placeholder' => 'Select Country',
+                    'placeholder' => "home.rates.call.from_placeholder",
                     "label"=>"home.rates.call.from",
                     'translation_domain' => 'website',
                 ))
             ->add('destination', 'choice', array(
                     'choices' => $this->destinations,
-                    'placeholder' => 'Select Destination',
+                    'placeholder' => "home.rates.call.to_placeholder",
                     "label"=>"home.rates.call.to",
                     'translation_domain' => 'website',
                 ))

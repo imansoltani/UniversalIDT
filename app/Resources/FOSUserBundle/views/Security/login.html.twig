@@ -3,7 +3,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block subtitle %}
-    Login
+    {{ 'login.title'|trans({},'website') }}
 {% endblock subtitle %}
 
 {% block content %}
@@ -17,21 +17,21 @@
         <div class="main-content clearfix"><!-- MAIN CONTENT -->
             <form class="login-form clearfix" action="{{ path("fos_user_security_check") }}" method="post">
                 <div class="form-heading clearfix">
-                    <h2>Authentication</h2>
+                    <h2>{{ 'login.subtitle'|trans({},'website') }}</h2>
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
                 <div class="form-group">
                     <label for="username" class="required">{{ 'form.email'|trans }}</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="Email" />
+                        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'login.email_place_holder'|trans({},'website') }}" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password" class="required">{{ 'security.login.password'|trans }}</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                        <input class="form-control" type="password" id="password" name="_password" required="required" placeholder="Password" />
+                        <input class="form-control" type="password" id="password" name="_password" required="required" placeholder="{{ 'login.password_place_holder'|trans({},'website') }}" />
                     </div>
                 </div>
                 <div class="checkbox">

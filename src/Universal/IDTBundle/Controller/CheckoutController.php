@@ -71,11 +71,11 @@ class CheckoutController extends Controller
 
         //check cookie validation
         if(is_null($added_items) || !is_array($added_items) || count($added_items) == 0) {
-            $this->get('session')->getFlashBag()->add('warning','Basket is Empty.');
+            $this->get('session')->getFlashBag()->add('warning',$this->get('translator')->trans('checkout.flashBag.basket_empty',[],'website'));
             $valid = false;
         }
         elseif (!$valid = $this->checkCookie($added_items, $added_items_currency, $em, $sum_total, $sum_vat)) {
-            $this->get('session')->getFlashBag()->add('danger','Error occurred in Cookies and Basket cleared.');
+            $this->get('session')->getFlashBag()->add('danger',$this->get('translator')->trans('checkout.flashBag.error_in_basket',[],'website'));
         }
 
         //unset cookie if not valid

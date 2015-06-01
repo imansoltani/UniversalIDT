@@ -32,8 +32,8 @@
 							</div>
 							{% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 								<div class="form-group">
-									<h4><strong>Notice:</strong></h4>
-									<span style="color:#ff0000">*</span> As an anonymous user, if you do not give an email, you must save your PINs after delivery!
+									<h4><strong>{{ 'checkout.form.delivery.Notice.title'|trans({},'website') }}</strong></h4>
+									<span style="color:#ff0000">*</span> {{ 'checkout.form.delivery.Notice.message'|trans({},'website') }}
 								</div>
 							{% endif %}
 							<div class="row">
@@ -116,7 +116,7 @@
 												<tr>
 													<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
 													<td>{{ row.product.name }}</td>
-													<td>New Card</td>
+													<td>{{ 'checkout.form.review.types.NewCard'|trans({},'website') }}</td>
 													<td>{{ row.count }}</td>
 													<td>{{ row.denomination|number_format(2) }} {{ currency|upper }}</td>
 													<td>{{ row.discount|number_format(2) }}</td>
@@ -126,7 +126,7 @@
 												<tr>
 													<td><img src="{{ asset(row.product.webPath) }}" style="max-height: 40px;" alt="Thumbnail"></td>
 													<td>{{ row.product.name }}</td>
-													<td>Recharge</td>
+													<td>{{ 'checkout.form.review.types.Recharge'|trans({},'website') }}</td>
 													<td>{{ row.count }}</td>
 													<td>{{ row.denomination|number_format(2) }} {{ currency|upper }}</td>
 													<td>{{ row.discount|number_format(2) }}</td>
