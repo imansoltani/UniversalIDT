@@ -1,98 +1,105 @@
 {% block subject %}{{ 'emails.title.checkout_result'|trans({},'application') }}{% endblock %}
 
 {% block body %}
+    <style>
+        ul li span {
+            width: 200px;
+            display: inline-block;
+        }
+        table td ,table th {
+            margin: 0;
+            border: 1px solid black;
+        }
+        table {
+            width: 100%;
+        }
+    </style>
+
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <h4 style="margin-bottom: 20px">{{ 'emails.hello'|trans({'%first_name%':app.user.firstName},'application') }}</h4>
     {% endif %}
-    <div style="margin-bottom: 20px">
-        <h3>General information</h3>
-        <table border="1">
-            <tbody>
-            <tr>
-                <th>ID</th>
-                <td>{{ order.paymentId }}</td>
-                <th>Date</th>
-                <td>{{ order.date|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Payment Status</th>
-                <td>{{ order.paymentStatus|readable('PaymentStatusEnumType') }}</td>
-                <th>Payment method</th>
-                <td>{{ order.paymentMethod|readable('PaymentMethodEnumType') }}</td>
-            </tr>
-            <tr>
-                <th>Delivery method</th>
-                <td colspan="3">
-                    {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                    {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
-                    {{ delivery != "" ? delivery|raw : "--" }}
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+    <div class="order-general-info-panel clearfix"><!-- ORDER GENERAL INFO -->
+        <h2 class="section-title">{{ 'transactions_details.title_info'|trans({},'application') }}</h2>
+        <ul>
+            <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.id'|trans({},'application') }}:</span> {{ order.id }}</li>
+            <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.reference'|trans({},'application') }}:</span> {{ order.orderReference }}</li>
+            <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_status'|trans({},'application') }}:</span> {{ order.paymentStatus|readable('PaymentStatusEnumType') }}</li>
+            <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.date'|trans({},'application') }}:</span> {{ order.date|date('Y-m-d H:i:s') }}</li>
+            <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.payment_method'|trans({},'application') }}:</span> {{ order.paymentMethod|readable('PaymentMethodEnumType') }}</li>
+            <li><i class="fa fa-circle-o"></i> <span>{{ 'transactions_details.delivery_method'|trans({},'application') }}:</span>
+                {% set delivery = order.deliveryEmail ? "<div style='display:inline'>" ~ 'transactions_details.delivery_method_types.email'|trans({},'application') ~ ": " ~ order.deliveryEmail ~ "</div>" : "" %}
+                {% set delivery = delivery ~ ( order.deliverySMS ? "<div style='display:inline'>" ~ 'transactions_details.delivery_method_types.email'|trans({},'application') ~ ": " ~ order.deliverySMS ~ "</div>" : "" ) %}
+                {{ delivery != "" ? delivery|raw : "--" }}
+            </li>
+        </ul>
     </div>
+    <div class="order-details-panel clearfix"><!-- ORDER DETAILS PANEL -->
+        <h2 class="section-title">{{ 'transactions_details.title_details'|trans({},'application') }}</h2>
+        <div class="order-table clearfix">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped" id="table2">
+                    <thead>
+                    <tr>
+                        <th>{{ 'datatables.transactions_details.card_column'|trans({},'javascript') }}</th>
+                        <th>{{ 'datatables.transactions_details.type_column'|trans({},'javascript') }}</th>
+                        <th>{{ 'datatables.transactions_details.denomination_column'|trans({},'javascript') }}</th>
+                        <th>{{ 'datatables.transactions_details.tax_column'|trans({},'javascript') }}</th>
+                        <th>{{ 'datatables.transactions_details.ctrl_column'|trans({},'javascript') }}</th>
+                        <th>{{ 'datatables.transactions_details.pin_column'|trans({},'javascript') }}</th>
+                    </tr>
+                    </thead>
 
-    <div style="margin-bottom: 20px">
-        <h3>Order Details</h3>
-        <table border="1">
-            <thead>
-            <tr>
-                <th>Card name</th>
-                <th>Denomination</th>
-                <th>Vat</th>
-                <th>Serial number</th>
-                <th>Pin</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            {% set vat = 0 %}
-            {% for orderProduct in order.orderProducts %}
-                {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
+                    <tbody>
+                    {% set vat = 0 %}
+                    {% for orderProduct in order.orderProducts %}
+                        {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
+                        <tr>
+                            <td>{{ orderProduct.product.name }}</td>
+                            <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
+                            <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
+                            <td>{{ orderProduct.vat~'%' }}</td>
+                            <td>{{ orderProduct.ctrlNumber }}</td>
+                            <td>{{ orderProduct.formattedPin }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="order-summery-panel clearfix"><!-- ORDER SUMMARY PANEL -->
+        <h2 class="section-title">{{ 'transactions_details.title_summary'|trans({},'application') }}</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tbody>
                 <tr>
-                    <td>{{ orderProduct.product.name }}</td>
-                    <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
-                    <td>{{ orderProduct.vat~'%' }}</td>
-                    <td>{{ orderProduct.ctrlNumber }}</td>
-                    <td>{{ orderProduct.formattedPin }}</td>
+                    <td>{{ 'transactions_details.order_subtotal'|trans({},'application') }}</td>
+                    <td id="basket_summary_subtotal">{{ order.amount|number_format(2) }}</td>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                <tr>
+                    <td>{{ 'transactions_details.tax'|trans({},'application') }}</td>
+                    <td id="basket_summary_tax">{{ vat|number_format(2) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'transactions_details.delivery_method'|trans({},'application') }}</td>
+                    <td id="basket_summary_email">
+                        {{ delivery != "" ? delivery|raw : "--" }}
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr class="total">
+                    <td>{{ 'transactions_details.total'|trans({},'application') }}</td>
+                    <td id="basket_summary_total">{{ order.amount|number_format(2) }} {{ order.currency|upper }}</td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 
-    <div style="margin-bottom: 20px">
-        <h3>Order Summary</h3>
-        <p>Shipping and additional costs are calculated based on the values you have entered.</p>
-        <table border="1">
-            <tbody>
-            <tr>
-                <th>Order subtotal</th>
-                <td id="basket_summary_subtotal">{{ order.amount|number_format(2) }}</td>
-            </tr>
-            <tr>
-                <th>Tax</th>
-                <td id="basket_summary_tax">{{ vat|number_format(2) }}</td>
-            </tr>
-            <tr>
-                <th>Delivery Method</th>
-                <td id="basket_summary_email">
-                    {% set delivery = order.deliveryEmail ? "<div>Email: " ~ order.deliveryEmail ~ "</div>" : "" %}
-                    {% set delivery = delivery ~ ( order.deliverySMS ? "<div>SMS: " ~ order.deliverySMS ~ "</div>" : "" ) %}
-                    {{ delivery != "" ? delivery|raw : "--" }}
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr class="total">
-                <th>Total</th>
-                <td id="basket_summary_total">{{ order.amount|number_format(2) }} {{ order.currency|upper }}</td>
-            </tr>
-            </tfoot>
-        </table>
-    </div>
     <br /><br />
     <h4>
-    {{ 'emails.greetings'|trans({},'application') }}
+    {{ 'emails.greetings'|trans({},'application')|raw }}
     </h4>
 {% endblock %}

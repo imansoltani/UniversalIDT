@@ -43,41 +43,41 @@
                         {{ delivery != "" ? delivery|raw : "--" }}
                     </li>
                 </ul>
-                </div>
+            </div>
             <div class="order-details-panel clearfix"><!-- ORDER DETAILS PANEL -->
                 <h2 class="section-title">{{ 'transactions_details.title_details'|trans({},'application') }}</h2>
                 <div class="order-table clearfix">
-                <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped" id="table2">
-                        <thead>
-                        <tr>
-                                <th>{{ 'datatables.transactions_details.card_column'|trans({},'javascript') }}</th>
-                                <th>{{ 'datatables.transactions_details.type_column'|trans({},'javascript') }}</th>
-                                <th>{{ 'datatables.transactions_details.denomination_column'|trans({},'javascript') }}</th>
-                                <th>{{ 'datatables.transactions_details.tax_column'|trans({},'javascript') }}</th>
-                                <th>{{ 'datatables.transactions_details.ctrl_column'|trans({},'javascript') }}</th>
-                                <th>{{ 'datatables.transactions_details.pin_column'|trans({},'javascript') }}</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        {% set vat = 0 %}
-                        {% for orderProduct in order.orderProducts %}
-                            {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
+                    <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped" id="table2">
+                            <thead>
                             <tr>
-                                <td>{{ orderProduct.product.name }}</td>
-                                <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
-                                <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
-                                <td>{{ orderProduct.vat~'%' }}</td>
-                                <td>{{ orderProduct.ctrlNumber }}</td>
-                                <td>{{ orderProduct.formattedPin }}</td>
+                                    <th>{{ 'datatables.transactions_details.card_column'|trans({},'javascript') }}</th>
+                                    <th>{{ 'datatables.transactions_details.type_column'|trans({},'javascript') }}</th>
+                                    <th>{{ 'datatables.transactions_details.denomination_column'|trans({},'javascript') }}</th>
+                                    <th>{{ 'datatables.transactions_details.tax_column'|trans({},'javascript') }}</th>
+                                    <th>{{ 'datatables.transactions_details.ctrl_column'|trans({},'javascript') }}</th>
+                                    <th>{{ 'datatables.transactions_details.pin_column'|trans({},'javascript') }}</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+
+                            <tbody>
+                            {% set vat = 0 %}
+                            {% for orderProduct in order.orderProducts %}
+                                {% set vat = vat + OrderServices.calcVat(orderProduct.product, orderProduct.pinDenomination) %}
+                                <tr>
+                                    <td>{{ orderProduct.product.name }}</td>
+                                    <td>{{ orderProduct.requestType|readable('RequestTypeEnumType') }}</td>
+                                    <td>{{ orderProduct.pinDenomination|number_format(2) }} {{ orderProduct.product.currency|upper }}</td>
+                                    <td>{{ orderProduct.vat~'%' }}</td>
+                                    <td>{{ orderProduct.ctrlNumber }}</td>
+                                    <td>{{ orderProduct.formattedPin }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
             <div class="order-summery-panel clearfix"><!-- ORDER SUMMARY PANEL -->
                 <h2 class="section-title">{{ 'transactions_details.title_summary'|trans({},'application') }}</h2>
                 <div class="table-responsive">
