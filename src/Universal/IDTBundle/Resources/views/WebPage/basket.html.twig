@@ -185,8 +185,8 @@
 
         $.msgGrowl ({
             type: "success",
-            title: "Removed from Cart",
-            text: 'Item successfully removed from your cart.'
+            title: "{{ 'basket_messages.remove_from_card.title'|trans({},'javascript') }}",
+            text: "{{ 'basket_messages.remove_from_card.message'|trans({},'javascript') }}"
         });
     }
 

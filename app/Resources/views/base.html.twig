@@ -41,10 +41,16 @@
 //        console.log(dataTableTranslation);
     </script>
 </head>
+
 <body {% block body_attr '' %}>
 <!--[if lt IE 7]>
-<p class="chromeframe">You are using an <strong>outdated</strong> browser.
-    Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<p class="chromeframe">
+    {{ 'base_twig.outdated_browser'|trans({},'javascript')|raw }}
+    {{ 'base_twig.update_browser.text'|trans( {
+        '%update%': '<a href="http://browsehappy.com/">' ~ ('base_twig.update_browser.update_link'|trans({},'javascript')) ~ '</a>',
+        '%googleChromeFrame%': '<a href="http://www.google.com/chromeframe/?redirect=true">' ~ ('base_twig.update_browser.google_chrome_frame_link'|trans({},'javascript')) ~ '</a>'
+    },'javascript')|raw }}
+</p>
 <![endif]-->
 
 {% block body %}{% endblock %}
@@ -94,9 +100,9 @@
         if(!valid) {
             cookieClear();
             $.msgGrowl ({
-                type: "error",
-                title: "Cookie is invalid",
-                text: 'Basket cleared.'
+                type:  "error",
+                title: "{{ 'basket_messages.invalid_cookie.title'|trans({},'javascript') }}",
+                text:  "{{ 'basket_messages.invalid_cookie.message'|trans({},'javascript') }}"
             });
         }
 
@@ -122,8 +128,8 @@
         if(selected_products_currency != "" && selected_products_currency != _currency) {
             $.msgGrowl ({
                 type: "warning",
-                title: "Currency Error",
-                text: ('You must select carts with same currency. this='+_currency+ ' basket='+selected_products_currency)
+                title: "{{ 'basket_messages.currency_error.title'|trans({},'javascript') }}",
+                text: Translator.trans('basket_messages.currency_error.message', {'this':_currency,'basket':selected_products_currency}, 'javascript')
             });
             return;
         }
@@ -170,8 +176,8 @@
 
         $.msgGrowl ({
             type: "success",
-            title: "Added to Cart",
-            text: 'Item successfully added to your cart.'
+            title: "{{ 'basket_messages.add_to_card.title'|trans({},'javascript') }}",
+            text: "{{ 'basket_messages.add_to_card.message'|trans({},'javascript') }}"
         });
     }
 

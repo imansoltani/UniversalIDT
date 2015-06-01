@@ -57,21 +57,21 @@ datatables:
         action_pin:              PIN details
 
     rates:
-        Calling Cards:          Calling Cards
-        Denominations:          Denominations
-        Destination:            Destination
-        Rate:                   Rate
-        Offered:                Offered
-        Connection_fee:         Connection fee
-        Min:                    Min
-        Method:                 Method
-        Action:                 Action
+        calling_cards:          Calling Cards
+        denominations:          Denominations
+        destination:            Destination
+        rate:                   Rate
+        offered:                Offered
+        connection_fee:         Connection fee
+        min:                    Min
+        method:                 Method
+        action:                 Action
 
-        numbers:
-            type:               Type
-            num:                Number
-            loc:                Location
-            lang:               Language
+    modal_access_numbers:
+        type:               Type
+        num:                Number
+        loc:                Location
+        lang:               Language
 
 base_twig:
     outdated_browser:               "You are using an <strong>outdated</strong> browser."

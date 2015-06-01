@@ -64,14 +64,14 @@
                 if(result == "S")
                     $.msgGrowl ({
                         type: "success",
-                        title: "Message Sent",
-                        text: 'Message successfully Sent.'
+                        title: "{{ 'contact_messages.success.title'|trans({},'javascript') }}",
+                        text: "{{ 'contact_messages.success.message'|trans({},'javascript') }}"
                     });
                 else
                     $.msgGrowl ({
                         type: "error",
-                        title: "Message Not Send",
-                        text: 'An Error occurred.'
+                        title: "{{ 'contact_messages.fail.title'|trans({},'javascript') }}",
+                        text: "{{ 'contact_messages.fail.message'|trans({},'javascript') }}"
                     });
                 form[0].reset();
                 waitingDialog.hide();
