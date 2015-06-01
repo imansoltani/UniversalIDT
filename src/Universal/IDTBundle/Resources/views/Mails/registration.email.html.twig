@@ -6,7 +6,7 @@
     <br /><br />
     {{ 'emails.confirm_url'|trans({'%url%':'<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>'},'application')|raw }}
     <br /><br />
-    {{ 'emails.greetings'|trans({},'application') }}
+    {{ 'emails.greetings'|trans({},'application')|raw }}
     {% endautoescape %}
 {% endblock body_text %}
 
@@ -15,5 +15,5 @@
     <br /><br />
     {{ 'emails.confirm_url'|trans({'%url%':'<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>'},'application')|raw }}
     <br /><br />
-    {{ 'emails.greetings'|trans({},'application') }}
+    {{ 'emails.greetings'|trans({},'application')|raw }}
 {% endblock body_html %}
