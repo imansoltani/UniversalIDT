@@ -2,8 +2,8 @@
 
 {% block body %}
     {{ 'emails.hello'|trans({'%first_name%':user.firstName},'application') }}
-    <br />{{ confirmationUrl }}<br /> {{ ('<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>')|e('html') }} <br/>
-    {{ ('emails.confirm_url'|trans({'%url%':'<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>'},'application'))|e('html') }}
+    <br /><br />
+    {{ ('emails.confirm_url'|trans({'%url%':'<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>'},'application'))|raw }}
     <br /><br />
     {{ 'emails.greetings'|trans({},'application')|raw }}
 {% endblock %}
