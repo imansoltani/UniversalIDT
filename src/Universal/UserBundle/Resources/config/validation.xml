@@ -29,7 +29,7 @@
             <constraint name="Regex">
                 <option name="pattern">/\d/</option>
                 <option name="match">true</option>
-                <option name="message">Your Password must have Min One Digit</option>
+                <option name="message">fos_user.password.min_one_digit</option>
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>
@@ -40,7 +40,7 @@
             <constraint name="Regex">
                 <option name="pattern">/[a-z]/i</option>
                 <option name="match">true</option>
-                <option name="message">Your Password must have Min One Letter</option>
+                <option name="message">fos_user.password.min_one_letter</option>
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>

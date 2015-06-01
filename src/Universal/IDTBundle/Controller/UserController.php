@@ -45,7 +45,7 @@ class UserController extends Controller
 
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success', 'Notifications Updated.');
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('settings.notifications.flash.success',[],'application'));
             }
         }
 

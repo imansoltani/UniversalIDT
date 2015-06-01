@@ -1,0 +1,7 @@
+fos_user:
+    password:
+        min_one_letter: Your Password must have Min One Letter
+        min_one_digit:  Your Password must have Min One Digit
+
+    phone:
+        invalid:        Your Phone number is invalid.

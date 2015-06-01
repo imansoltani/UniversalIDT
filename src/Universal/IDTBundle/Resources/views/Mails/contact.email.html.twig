@@ -1,7 +1,5 @@
-{% block subject %}Contact From: {{ name }} {{ email }}{% endblock %}
+{% block subject %}{{ 'emails.title.contact'|trans({'%first_name%':name,'%email%':email},'application') }}{% endblock %}
 
 {% block body %}
-    {% autoescape false %}
-        {{ message|raw }}
-    {% endautoescape %}
+    {{ message|raw }}
 {% endblock %}

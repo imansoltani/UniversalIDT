@@ -1,12 +1,9 @@
-{% block subject %}Email Confirmation{% endblock %}
+{% block subject %}{{ 'emails.title.email_confirmation'|trans({},'application') }}{% endblock %}
 
 {% block body %}
-    {% autoescape false %}
-    Hello {{ user.firstName }} !
-
-    Please confirm your email by accessing <a href="{{ confirmationUrl }}">here</a>
-
-    Greetings,
-    the IDT Universal Team
-    {% endautoescape %}
+    {{ 'emails.hello'|trans({'%first_name%':user.firstName},'application') }}
+    <br />{{ confirmationUrl }}<br /> {{ ('<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>')|e('html') }} <br/>
+    {{ ('emails.confirm_url'|trans({'%url%':'<a href="'~ confirmationUrl ~'">'~ ('emails.confirm_url_link'|trans({},'application')) ~'</a>'},'application'))|e('html') }}
+    <br /><br />
+    {{ 'emails.greetings'|trans({},'application')|raw }}
 {% endblock %}

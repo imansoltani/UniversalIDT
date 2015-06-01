@@ -1,9 +1,8 @@
-{% block subject %}Checkout Result{% endblock %}
+{% block subject %}{{ 'emails.title.checkout_result'|trans({},'application') }}{% endblock %}
 
 {% block body %}
-    {% autoescape false %}
     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <h4 style="margin-bottom: 20px">Hello {{ app.user.firstName }} !</h4>
+        <h4 style="margin-bottom: 20px">{{ 'emails.hello'|trans({'%first_name%':app.user.firstName},'application') }}</h4>
     {% endif %}
     <div style="margin-bottom: 20px">
         <h3>General information</h3>
@@ -92,10 +91,8 @@
             </tfoot>
         </table>
     </div>
-
+    <br /><br />
     <h4>
-    Greetings,<br>
-    the IDT Universal Team
+    {{ 'emails.greetings'|trans({},'application') }}
     </h4>
-    {% endautoescape %}
 {% endblock %}

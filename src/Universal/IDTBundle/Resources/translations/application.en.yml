@@ -157,6 +157,7 @@ settings:
     notifications:
         title:          Notifications
         subtitle:       Notifications
+        notifications:  Subscribe to notifications
         btn_update:     Update notifications
         flash:
             success:    You have successfully updated your notifications.
@@ -169,19 +170,11 @@ confirmation_new_email:
         taken:          The email confirmation url was valid, but the email is already taken by another user.
 
 error_page:
-    title:              "Universal IDT | Error %email%"
+    title:              "Universal IDT | Error %error%"
     h1:                 Oops!
-    status_text:
-        not_found:      Not Found
     paragraph:          Sorry, an error has occurred!
     dashboard_btn:      Back to Dashboard
     contact_btn:        Contact Support
-
-db:
-    password_check:
-        min_one_letter: Your Password must have Min One Letter
-        min_one_digit:  Your Password must have Min One Digit
-    phone_invalid:      Your Phone number is invalid.
 
 emails:
     hello:              hello %first_name% !
@@ -192,7 +185,7 @@ emails:
     title:
         email_confirmation: Email Confirmation
         checkout_result:    Checkout Result
-        contact:            "Contact From: %first_name% %email%"
+        contact:            Contact From: %first_name% %email%
         contact_confirm:    Contact Email Confirmation
         registration:       Email Confirmation
         reset_password:     Resetting your password

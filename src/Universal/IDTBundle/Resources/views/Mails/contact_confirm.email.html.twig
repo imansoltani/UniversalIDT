@@ -1,12 +1,9 @@
-{% block subject %}Contact Email Confirmation{% endblock %}
+{% block subject %}{{ 'emails.title.contact_confirm'|trans({},'application') }}{% endblock %}
 
 {% block body %}
-    {% autoescape false %}
-    Hello {{ name }} !
-
-    Your Email sent.
-
-    Greetings,
-    the IDT Universal Team
-    {% endautoescape %}
+    {{ 'emails.hello'|trans({'%first_name%':name},'application') }}
+    <br /><br />
+    {{ 'emails.email_sent'|trans({},'application') }}
+    <br /><br />
+    {{ 'emails.greetings'|trans({},'application') }}
 {% endblock %}

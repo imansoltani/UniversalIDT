@@ -38,7 +38,7 @@ class User extends BaseUser
      * @Assert\Regex(
      *     pattern="/^\d{6,12}$/",
      *     match=true,
-     *     message="Your Phone number is invalid."
+     *     message="fos_user.phone.invalid"
      * )
      */
     private $phone;

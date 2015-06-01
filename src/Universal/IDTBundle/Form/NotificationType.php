@@ -28,7 +28,8 @@ class NotificationType extends AbstractType
                     'expanded' => true,
                     'multiple' => true,
                         'required' => false,
-                    'label' => 'Subscribe to notifications'
+                    'label' => 'settings.notifications.notifications',
+                    'translation_domain' => 'application'
                 ))
             ->add('submit', 'submit', array(
                     "label"=>"settings.notifications.btn_update",
