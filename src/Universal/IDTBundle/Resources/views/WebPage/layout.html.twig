@@ -6,11 +6,11 @@
     {{ parent() }}
     <!-- FONT -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-    <link href="{{ asset("bundles/universalidt/home/css/font-awesome.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("bundles/universalidt/css/font-awesome.min.css") }}" rel="stylesheet">
 
     <!-- STYLESHEET -->
-    <link href="{{ asset("bundles/universalidt/home/css/bootstrap.min.css") }}" rel="stylesheet">
-    <link href="{{ asset("bundles/universalidt/home/css/dataTables.bootstrap.css") }}" rel="stylesheet">
+    <link href="{{ asset("bundles/universalidt/css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("bundles/universalidt/css/dataTables.bootstrap.css") }}" rel="stylesheet">
     <link href="{{ asset("bundles/universalidt/home/css/owl.carousel.css") }}" rel="stylesheet">
     <link href="{{ asset("bundles/universalidt/home/css/owl.theme.css") }}" rel="stylesheet">
     <link href="{{ asset("bundles/universalidt/css/ui-lightness/jquery-ui-1.10.0.custom.min.css") }}" rel="stylesheet">
@@ -81,7 +81,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ path('WebPage_main') }}"><img src="{{ asset('bundles/universalidt/home/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
+                    <a class="navbar-brand" href="{{ path('WebPage_main') }}"><img src="{{ asset('bundles/universalidt/img/logo.png') }}" alt="Universal"></a><!-- LOGO -->
                 </div>
 
                 {% if main_nav_bar is defined %}
@@ -177,10 +177,10 @@
     {{ parent() }}
     <!-- SET ALL SCRIPT AT BODY BOTTOM TO LOAD PAGE FAST -->
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/bootstrap.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/universalidt/js/libs/bootstrap.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/universalidt/js/libs/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("bundles/universalidt/js/libs/dataTables.bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/bootstrap.waiting.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/jquery.dataTables.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/dataTables.bootstrap.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/jquery.fs.stepper.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/owl.carousel.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("bundles/universalidt/home/js/gmaps.js") }}"></script>

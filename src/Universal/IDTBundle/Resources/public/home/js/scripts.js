@@ -211,7 +211,7 @@ $(document).ready(function() {
 		lat: 47.528329,
 		lng: 13.930664,
 		title: "Austria",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Austria');
 		},
@@ -224,7 +224,7 @@ $(document).ready(function() {
 		lat: 51.189673,
 		lng: 4.702148,
 		title: "Belgium",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Belgium');
 		},
@@ -237,7 +237,7 @@ $(document).ready(function() {
 		lat: 55.686875,
 		lng: 10.063477,
 		title: "Denmark",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Denmark');
 		},
@@ -250,7 +250,7 @@ $(document).ready(function() {
 		lat: 46.690899,
 		lng: 2.416992,
 		title: "France",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('France');
 		},
@@ -263,7 +263,7 @@ $(document).ready(function() {
 		lat: 51.409486,
 		lng: 10.151367,
 		title: "Germany",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Germany');
 		},
@@ -276,7 +276,7 @@ $(document).ready(function() {
 		lat: 43.655950,
 		lng: 12.260742,
 		title: "Italy",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Italy');
 		},
@@ -289,7 +289,7 @@ $(document).ready(function() {
 		lat: 53.235633,
 		lng: -8.569336,
 		title: "Ireland",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Ireland');
 		},
@@ -302,7 +302,7 @@ $(document).ready(function() {
 		lat: 49.815273,
 		lng: 6.129583,
 		title: "Luxembourg",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Luxembourg');
 		},
@@ -315,7 +315,7 @@ $(document).ready(function() {
 		lat: 52.812723,
 		lng: 6.108398,
 		title: "Netherlands",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Netherlands');
 		},
@@ -328,7 +328,7 @@ $(document).ready(function() {
 		lat: 62.070453,
 		lng: 9.184570,
 		title: "Norway",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Norway');
 		},
@@ -341,7 +341,7 @@ $(document).ready(function() {
 		lat: 64.743674,
 		lng: 16.567383,
 		title: "Sweden",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Sweden');
 		},
@@ -354,7 +354,7 @@ $(document).ready(function() {
 		lat: 46.955887,
 		lng: 7.844238,
 		title: "Switzerland",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('Switzerland');
 		},
@@ -367,7 +367,7 @@ $(document).ready(function() {
 		lat: 55.637299,
 		lng: -2.680664,
 		title: "United Kingdom",
-		icon: "one-page/img/mapMarker.png",
+		icon: "../img/mapMarker.png",
 		click: function(e) {
 			$('.country-name').text('United Kingdom');
 		},
