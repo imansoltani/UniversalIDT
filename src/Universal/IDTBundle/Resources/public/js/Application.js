@@ -7,35 +7,14 @@ $(function () {
 
 
 var Application = function () {
-	
+
 	var validationRules = getValidationRules ();
-	
+
 	return { init: init, validationRules: validationRules };
-	
+
 	function init () {
-		
 		enableBackToTop ();
-		enableLightbox ();
-		enableCirque ();
 		enableEnhancedAccordion ();
-
-
-		$('.ui-tooltip').tooltip();
-	    $('.ui-popover').popover();
-    
-
-	}
-
-	function enableCirque () {
-		if ($.fn.lightbox) {
-			$('.ui-lightbox').lightbox ();
-		}
-	}
-
-	function enableLightbox () {
-		if ($.fn.cirque) {
-			$('.ui-cirque').cirque ({  });
-		}
 	}
 
 	function enableBackToTop () {
@@ -44,7 +23,7 @@ var Application = function () {
 
 		backToTop.appendTo ('body');
 		icon.appendTo (backToTop);
-		
+
 	    backToTop.hide();
 
 	    $(window).scroll(function () {
@@ -63,39 +42,37 @@ var Application = function () {
 	        }, 600);
 	    });
 	}
-	
+
 	function enableEnhancedAccordion () {
-		$('.accordion-toggle').on('click', function (e) {			
+		$('.accordion-toggle').on('click', function (e) {
 	         $(e.target).parent ().parent ().parent ().addClass('open');
 	    });
-	
+
 	    $('.accordion-toggle').on('click', function (e) {
 	        $(this).parents ('.panel').siblings ().removeClass ('open');
 	    });
-	    
+
 	}
-	
+
 	function getValidationRules () {
-		var custom = {
-	    	focusCleanup: false,
-			
+		return {
+			focusCleanup: false,
+
 			wrapper: 'div',
 			errorElement: 'span',
-			
-			highlight: function(element) {
-				$(element).parents ('.form-group').removeClass ('success').addClass('error');
+
+			highlight: function (element) {
+				$(element).parents('.form-group').removeClass('success').addClass('error');
 			},
-			success: function(element) {
-				$(element).parents ('.form-group').removeClass ('error').addClass('success');
-				$(element).parents ('.form-group:not(:has(.clean))').find ('div:last').before ('<div class="clean"></div>');
+			success: function (element) {
+				$(element).parents('.form-group').removeClass('error').addClass('success');
+				$(element).parents('.form-group:not(:has(.clean))').find('div:last').before('<div class="clean"></div>');
 			},
-			errorPlacement: function(error, element) {
-				error.prependTo(element.parents ('.form-group'));
+			errorPlacement: function (error, element) {
+				error.prependTo(element.parents('.form-group'));
 			}
-	    	
-	    };
-	    
-	    return custom;
+
+		};
 	}
-	
+
 }();
