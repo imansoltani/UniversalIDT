@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Request;
+use Universal\IDTBundle\DBAL\Types\GenderEnumType;
 use Universal\IDTBundle\Entity\User;
 
 class RegistrationFormType extends AbstractType
@@ -44,7 +45,8 @@ class RegistrationFormType extends AbstractType
                 "label"=>"registration.language",
                 'translation_domain' => 'website'
             ))
-            ->add('gender', null, array(
+            ->add('gender', 'choice', array(
+                    'choices' => GenderEnumType::getChoicesWithPrefix("registration.gender_types.", true),
                     "label"=>"registration.gender",
                     'translation_domain' => 'website'
                 ))

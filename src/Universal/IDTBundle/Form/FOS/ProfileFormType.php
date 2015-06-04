@@ -3,6 +3,7 @@ namespace Universal\IDTBundle\Form\FOS;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Universal\IDTBundle\DBAL\Types\GenderEnumType;
 
 class ProfileFormType extends AbstractType
 {
@@ -36,7 +37,8 @@ class ProfileFormType extends AbstractType
                     "label"=>"settings.profile.language",
                     'translation_domain' => 'application'
             ))
-            ->add('gender', null, array(
+            ->add('gender', 'choice', array(
+                    'choices' => GenderEnumType::getChoicesWithPrefix("settings.profile.gender_types.", true),
                     "label"=>"settings.profile.gender",
                     'translation_domain' => 'application'
                 ))

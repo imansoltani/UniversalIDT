@@ -189,3 +189,26 @@ emails:
         contact_confirm:    Contact Email Confirmation
         registration:       Email Confirmation
         reset_password:     Resetting your password
+
+enums:
+    PaymentStatus:
+        A:  Accepted
+        C:  Canceled
+        D:  Declined
+        P:  Pending
+        T:  Uncertain
+        U:  Unknown
+
+    RequestStatus:
+        R:  Registered
+        PC: Pending for creation
+        PR: Pending for recharge
+        FC: Failed at creation
+        FR: Failed at recharge
+        S:  Succeed
+
+    RequestType:
+        C:  Creation
+        A:  Activation
+        R:  Recharge
+        D:  Deactivation

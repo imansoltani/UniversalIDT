@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <th>Status</th>
-                            <td>{{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</td>
+                            <td>{{ ('enums.PaymentStatus.' ~ orderDetail.paymentStatus)|trans({},'application') }}</td>
                         </tr>
                         <tr>
                             <th>Amount</th>

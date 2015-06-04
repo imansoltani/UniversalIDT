@@ -25,7 +25,7 @@
                 <ul>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.order_id'|trans({},'application') }}:</span> {{ orderDetail.id }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.order_reference'|trans({},'application') }}:</span> {{ orderDetail.orderReference }}</li>
-                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.payment_status'|trans({},'application') }}:</span> {{ orderDetail.paymentStatus|readable('PaymentStatusEnumType') }}</li>
+                    <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.payment_status'|trans({},'application') }}:</span> {{ ('enums.PaymentStatus.' ~ orderDetail.paymentStatus)|trans({},'application') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.amount'|trans({},'application') }}:</span> {{ orderDetail.amount|number_format(2) }} {{ orderDetail.currency|upper }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.date'|trans({},'application') }}:</span> {{ orderDetail.date|date('Y-m-d H:i:s') }}</li>
                     <li><i class="fa fa-circle-o"></i> <span>{{ 'checkout.result.payment_method'|trans({},'application') }}:</span> {{ orderDetail.paymentMethod|readable('PaymentMethodEnumType') }}</li>
